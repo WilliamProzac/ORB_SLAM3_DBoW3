@@ -24,8 +24,8 @@
 
 #include <vector>
 
-#include "Thirdparty/DBoW2/DBoW2/BowVector.h"
-#include "Thirdparty/DBoW2/DBoW2/FeatureVector.h"
+#include "Thirdparty/DBoW3/src/BowVector.h"
+#include "Thirdparty/DBoW3/src/FeatureVector.h"
 
 #include "Thirdparty/Sophus/sophus/geometry.hpp"
 
@@ -40,6 +40,7 @@
 
 #include "Eigen/Core"
 #include "sophus/se3.hpp"
+using namespace std;
 
 namespace ORB_SLAM3 {
 #define FRAME_GRID_ROWS 48
@@ -244,8 +245,8 @@ public:
   std::vector<float> mvDepth;
 
   // Bag of Words Vector structures.
-  DBoW2::BowVector mBowVec;
-  DBoW2::FeatureVector mFeatVec;
+  DBoW3::BowVector mBowVec;
+  DBoW3::FeatureVector mFeatVec;
 
   // ORB descriptor, each row associated to a keypoint.
   cv::Mat mDescriptors, mDescriptorsRight;

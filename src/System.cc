@@ -33,6 +33,7 @@
 #include <openssl/md5.h>
 #include <pangolin/pangolin.h>
 #include <thread>
+using namespace std;
 
 namespace ORB_SLAM3 {
 
@@ -118,12 +119,21 @@ System::System(const string &strVocFile, const string &strSettingsFile,
          << "Loading ORB Vocabulary. This could take a while..." << endl;
 
     mpVocabulary = new ORBVocabulary();
-    bool bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
-    if (!bVocLoad) {
-      cerr << "Wrong path to vocabulary. " << endl;
-      cerr << "Falied to open at: " << strVocFile << endl;
-      exit(-1);
+    mpVocabulary->load(strVocFile);
+    if (strVocFile.find(".txt") != string::npos) {
+      string strVocBin =
+          strVocFile.substr(0, strVocFile.find_last_of('.')) + ".bin";
+      cout << "Saving binary vocabulary to " << strVocBin
+           << " for fast loading next time..." << endl;
+      mpVocabulary->save(strVocBin);
+      cout << "Saved! Please update your settings to the .bin file." << endl;
     }
+    // bool bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
+    // if (!bVocLoad) {
+    //   cerr << "Wrong path to vocabulary. " << endl;
+    //   cerr << "Falied to open at: " << strVocFile << endl;
+    //   exit(-1);
+    // }
     cout << "Vocabulary loaded!" << endl << endl;
 
     // Create KeyFrame Database
@@ -138,12 +148,13 @@ System::System(const string &strVocFile, const string &strSettingsFile,
          << "Loading ORB Vocabulary. This could take a while..." << endl;
 
     mpVocabulary = new ORBVocabulary();
-    bool bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
-    if (!bVocLoad) {
-      cerr << "Wrong path to vocabulary. " << endl;
-      cerr << "Falied to open at: " << strVocFile << endl;
-      exit(-1);
-    }
+    mpVocabulary->load(strVocFile);
+    // bool bVocLoad = mpVocabulary->loadFromTextFile(strVocFile);
+    // if (!bVocLoad) {
+    //   cerr << "Wrong path to vocabulary. " << endl;
+    //   cer"Falied to open at: " << strVocFile << endl;
+    //   exit(-1);
+    // }
     cout << "Vocabulary loaded!" << endl << endl;
 
     // Create KeyFrame Database
