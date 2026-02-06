@@ -181,7 +181,17 @@ System::System(const string &strVocFile, const string &strSettingsFile,
 
     loadedAtlas = true;
 
-    mpAtlas->CreateNewMap();
+    // Only create new map when continuing mapping (SaveAtlasToFile is set)
+    // For pure localization mode (SaveAtlasToFile is empty), use loaded map
+    if (!mStrSaveAtlasToFile.empty()) {
+      mpAtlas->CreateNewMap();
+    } else {
+      // Set current map to the first loaded map for localization
+      vector<Map *> vpMaps = mpAtlas->GetAllMaps();
+      if (!vpMaps.empty()) {
+        mpAtlas->ChangeMap(vpMaps.back());
+      }
+    }
 
     // clock_t timeElapsed = clock() - start;
     // unsigned msElapsed = timeElapsed / (CLOCKS_PER_SEC / 1000);
@@ -256,6 +266,34 @@ System::System(const string &strVocFile, const string &strSettingsFile,
 
   // Fix verbosity
   Verbose::SetTh(Verbose::VERBOSITY_QUIET);
+
+  // Auto-enable localization mode when loading map without save path
+  if (!mStrLoadAtlasFromFile.empty() && mStrSaveAtlasToFile.empty()) {
+    mbActivateLocalizationMode = true;
+
+    // Set localization mode immediately (before first frame)
+    mpTracker->InformOnlyTracking(true);
+    mpLocalMapper->RequestStop();
+
+    // Initialize tracking reference from loaded map
+    Map *pCurrentMap = mpAtlas->GetCurrentMap();
+    if (pCurrentMap) {
+      vector<KeyFrame *> vpKFs = pCurrentMap->GetAllKeyFrames();
+      if (!vpKFs.empty()) {
+        // Find the KeyFrame with highest ID (most recent)
+        KeyFrame *pRefKF = vpKFs[0];
+        for (KeyFrame *pKF : vpKFs) {
+          if (pKF && !pKF->isBad() && pKF->mnId > pRefKF->mnId) {
+            pRefKF = pKF;
+          }
+        }
+        // Set the reference KF in tracker for localization
+        mpTracker->SetReferenceKeyFrame(pRefKF);
+        cout << "Localization mode: Set reference KF to " << pRefKF->mnId
+             << endl;
+      }
+    }
+  }
 }
 
 Sophus::SE3f System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight,
@@ -528,25 +566,32 @@ void System::Shutdown() {
   }
 
   // Wait until all thread have effectively stopped
-  /*while(!mpLocalMapper->isFinished() || !mpLoopCloser->isFinished() ||
-  mpLoopCloser->isRunningGBA())
-  {
-      if(!mpLocalMapper->isFinished())
-          cout << "mpLocalMapper is not finished" << endl;*/
-  /*if(!mpLoopCloser->isFinished())
-      cout << "mpLoopCloser is not finished" << endl;
-  if(mpLoopCloser->isRunningGBA()){
-      cout << "mpLoopCloser is running GBA" << endl;
-      cout << "break anyway..." << endl;
-      break;
-  }*/
-  /*usleep(5000);
-}*/
+  cout << "Shutdown: Waiting for threads..." << endl;
+  while ((mpLocalMapper && !mpLocalMapper->isFinished()) ||
+         (mpLoopCloser && !mpLoopCloser->isFinished())) {
+    usleep(5000);
+  }
+  cout << "Shutdown: All threads finished." << endl;
 
+  // Extra wait to ensure all resources are released
+  cout << "Shutdown: Waiting 100ms..." << flush;
+  usleep(100000);
+  cout << " done." << endl;
+
+  cout << "Shutdown: Checking save file..." << flush;
   if (!mStrSaveAtlasToFile.empty()) {
-    Verbose::PrintMess("Atlas saving to file " + mStrSaveAtlasToFile,
-                       Verbose::VERBOSITY_NORMAL);
-    SaveAtlas(FileType::BINARY_FILE);
+    cout << " will save to " << mStrSaveAtlasToFile << endl;
+    try {
+      cout << "Shutdown: Calling SaveAtlas..." << flush;
+      SaveAtlas(FileType::BINARY_FILE);
+      cout << " done." << endl;
+    } catch (const std::exception &e) {
+      cerr << "Shutdown: Error saving Atlas: " << e.what() << endl;
+    } catch (...) {
+      cerr << "Shutdown: Unknown error saving Atlas." << endl;
+    }
+  } else {
+    cout << " no save file configured." << endl;
   }
 
   /*if(mpViewer)
@@ -1426,16 +1471,20 @@ void System::SaveAtlas(int type) {
     // clock_t start = clock();
 
     // Save the current session
+    cout << "SaveAtlas: PreSave..." << flush;
     mpAtlas->PreSave();
+    cout << " done." << endl;
 
     string pathSaveFileName = "./";
     pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
     pathSaveFileName = pathSaveFileName.append(".osa");
 
+    cout << "SaveAtlas: CalculateCheckSum..." << flush;
     string strVocabularyChecksum =
         CalculateCheckSum(mStrVocabularyFilePath, TEXT_FILE);
     std::size_t found = mStrVocabularyFilePath.find_last_of("/\\");
     string strVocabularyName = mStrVocabularyFilePath.substr(found + 1);
+    cout << " done." << endl;
 
     if (type == TEXT_FILE) // File text
     {
@@ -1451,12 +1500,27 @@ void System::SaveAtlas(int type) {
     } else if (type == BINARY_FILE) // File binary
     {
       cout << "Starting to write the save binary file" << endl;
+      cout << "SaveAtlas: Opening file..." << flush;
       std::remove(pathSaveFileName.c_str());
       std::ofstream ofs(pathSaveFileName, std::ios::binary);
+      cout << " done." << endl;
+
+      cout << "SaveAtlas: Creating archive..." << flush;
       boost::archive::binary_oarchive oa(ofs);
+      cout << " done." << endl;
+
+      cout << "SaveAtlas: Writing vocabulary name..." << flush;
       oa << strVocabularyName;
+      cout << " done." << endl;
+
+      cout << "SaveAtlas: Writing checksum..." << flush;
       oa << strVocabularyChecksum;
+      cout << " done." << endl;
+
+      cout << "SaveAtlas: Writing Atlas..." << flush;
       oa << mpAtlas;
+      cout << " done." << endl;
+
       cout << "End to write save binary file" << endl;
     }
   }

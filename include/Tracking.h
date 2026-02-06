@@ -85,6 +85,7 @@ public:
   void SetLocalMapper(LocalMapping *pLocalMapper);
   void SetLoopClosing(LoopClosing *pLoopClosing);
   void SetViewer(Viewer *pViewer);
+  void SetReferenceKeyFrame(KeyFrame *pKF);
   void SetStepByStep(bool bSet);
   bool GetStepByStep();
 
