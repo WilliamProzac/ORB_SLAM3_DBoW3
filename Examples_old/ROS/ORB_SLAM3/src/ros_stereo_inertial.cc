@@ -250,68 +250,69 @@ void ImageGrabber::SyncWithImu() {
   while (!g_shutdown_requested.load()) {
     cv::Mat imLeft, imRight;
     double tImLeft = 0, tImRight = 0;
-
-    // Check if we have data to process
-    if (imgLeftBuf.empty() || imgRightBuf.empty() || mpImuGb->imuBuf.empty()) {
-      // No data available, sleep briefly and check shutdown flag again
-      std::this_thread::sleep_for(std::chrono::milliseconds(5));
-      continue;
-    }
-
-    tImLeft = imgLeftBuf.front()->header.stamp.toSec();
-    tImRight = imgRightBuf.front()->header.stamp.toSec();
-
-    this->mBufMutexRight.lock();
-    while ((tImLeft - tImRight) > maxTimeDiff && imgRightBuf.size() > 1) {
-      imgRightBuf.pop();
-      tImRight = imgRightBuf.front()->header.stamp.toSec();
-    }
-    this->mBufMutexRight.unlock();
-
-    this->mBufMutexLeft.lock();
-    while ((tImRight - tImLeft) > maxTimeDiff && imgLeftBuf.size() > 1) {
-      imgLeftBuf.pop();
-      tImLeft = imgLeftBuf.front()->header.stamp.toSec();
-    }
-    this->mBufMutexLeft.unlock();
-
-    if ((tImLeft - tImRight) > maxTimeDiff ||
-        (tImRight - tImLeft) > maxTimeDiff) {
-      // std::cout << "big time difference" << std::endl;
-      continue;
-    }
-    if (tImLeft > mpImuGb->imuBuf.back()->header.stamp.toSec())
-      continue;
-
-    this->mBufMutexLeft.lock();
-    imLeft = GetImage(imgLeftBuf.front());
-    imgLeftBuf.pop();
-    this->mBufMutexLeft.unlock();
-
-    this->mBufMutexRight.lock();
-    imRight = GetImage(imgRightBuf.front());
-    imgRightBuf.pop();
-    this->mBufMutexRight.unlock();
-
+    sensor_msgs::ImageConstPtr msgLeft, msgRight;
     vector<ORB_SLAM3::IMU::Point> vImuMeas;
-    mpImuGb->mBufMutex.lock();
-    if (!mpImuGb->imuBuf.empty()) {
-      // Load imu measurements from buffer
-      vImuMeas.clear();
-      while (!mpImuGb->imuBuf.empty() &&
-             mpImuGb->imuBuf.front()->header.stamp.toSec() <= tImLeft) {
-        double t = mpImuGb->imuBuf.front()->header.stamp.toSec();
-        cv::Point3f acc(mpImuGb->imuBuf.front()->linear_acceleration.x,
-                        mpImuGb->imuBuf.front()->linear_acceleration.y,
-                        mpImuGb->imuBuf.front()->linear_acceleration.z);
-        cv::Point3f gyr(mpImuGb->imuBuf.front()->angular_velocity.x,
-                        mpImuGb->imuBuf.front()->angular_velocity.y,
-                        mpImuGb->imuBuf.front()->angular_velocity.z);
-        vImuMeas.push_back(ORB_SLAM3::IMU::Point(acc, gyr, t));
-        mpImuGb->imuBuf.pop();
+
+    {
+      // Lock all buffers together to avoid races between empty/front/back checks.
+      std::unique_lock<std::mutex> lockLeft(mBufMutexLeft, std::defer_lock);
+      std::unique_lock<std::mutex> lockRight(mBufMutexRight, std::defer_lock);
+      std::unique_lock<std::mutex> lockImu(mpImuGb->mBufMutex, std::defer_lock);
+      std::lock(lockLeft, lockRight, lockImu);
+
+      if (imgLeftBuf.empty() || imgRightBuf.empty() || mpImuGb->imuBuf.empty()) {
+        // No data available yet.
+      } else {
+        tImLeft = imgLeftBuf.front()->header.stamp.toSec();
+        tImRight = imgRightBuf.front()->header.stamp.toSec();
+
+        while ((tImLeft - tImRight) > maxTimeDiff && imgRightBuf.size() > 1) {
+          imgRightBuf.pop();
+          tImRight = imgRightBuf.front()->header.stamp.toSec();
+        }
+
+        while ((tImRight - tImLeft) > maxTimeDiff && imgLeftBuf.size() > 1) {
+          imgLeftBuf.pop();
+          tImLeft = imgLeftBuf.front()->header.stamp.toSec();
+        }
+
+        if ((tImLeft - tImRight) <= maxTimeDiff &&
+            (tImRight - tImLeft) <= maxTimeDiff &&
+            tImLeft <= mpImuGb->imuBuf.back()->header.stamp.toSec()) {
+          msgLeft = imgLeftBuf.front();
+          msgRight = imgRightBuf.front();
+          imgLeftBuf.pop();
+          imgRightBuf.pop();
+
+          // Load IMU measurements up to image timestamp.
+          // Keep one boundary sample in queue for the next frame to reduce
+          // zero/one-measurement preintegration cases.
+          while (!mpImuGb->imuBuf.empty() &&
+                 mpImuGb->imuBuf.front()->header.stamp.toSec() <= tImLeft) {
+            double t = mpImuGb->imuBuf.front()->header.stamp.toSec();
+            cv::Point3f acc(mpImuGb->imuBuf.front()->linear_acceleration.x,
+                            mpImuGb->imuBuf.front()->linear_acceleration.y,
+                            mpImuGb->imuBuf.front()->linear_acceleration.z);
+            cv::Point3f gyr(mpImuGb->imuBuf.front()->angular_velocity.x,
+                            mpImuGb->imuBuf.front()->angular_velocity.y,
+                            mpImuGb->imuBuf.front()->angular_velocity.z);
+            vImuMeas.push_back(ORB_SLAM3::IMU::Point(acc, gyr, t));
+            if (mpImuGb->imuBuf.size() == 1)
+              break;
+            mpImuGb->imuBuf.pop();
+          }
+        }
       }
     }
-    mpImuGb->mBufMutex.unlock();
+
+    if (!msgLeft || !msgRight) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+      continue;
+    }
+
+    imLeft = GetImage(msgLeft);
+    imRight = GetImage(msgRight);
+
     if (mbClahe) {
       mClahe->apply(imLeft, imLeft);
       mClahe->apply(imRight, imRight);

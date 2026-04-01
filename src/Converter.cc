@@ -216,11 +216,30 @@ Eigen::Matrix<double,4,4> Converter::toMatrix4d(const cv::Mat &cvMat4)
 
 Eigen::Matrix<float,3,3> Converter::toMatrix3f(const cv::Mat &cvMat3)
 {
-    Eigen::Matrix<float,3,3> M;
+    Eigen::Matrix<float,3,3> M = Eigen::Matrix<float,3,3>::Identity();
+    if(cvMat3.empty() || cvMat3.rows!=3 || cvMat3.cols!=3)
+        return M;
 
-    M << cvMat3.at<float>(0,0), cvMat3.at<float>(0,1), cvMat3.at<float>(0,2),
-            cvMat3.at<float>(1,0), cvMat3.at<float>(1,1), cvMat3.at<float>(1,2),
-            cvMat3.at<float>(2,0), cvMat3.at<float>(2,1), cvMat3.at<float>(2,2);
+    if(cvMat3.type()==CV_32F)
+    {
+        M << cvMat3.at<float>(0,0), cvMat3.at<float>(0,1), cvMat3.at<float>(0,2),
+                cvMat3.at<float>(1,0), cvMat3.at<float>(1,1), cvMat3.at<float>(1,2),
+                cvMat3.at<float>(2,0), cvMat3.at<float>(2,1), cvMat3.at<float>(2,2);
+    }
+    else if(cvMat3.type()==CV_64F)
+    {
+        M << static_cast<float>(cvMat3.at<double>(0,0)), static_cast<float>(cvMat3.at<double>(0,1)), static_cast<float>(cvMat3.at<double>(0,2)),
+                static_cast<float>(cvMat3.at<double>(1,0)), static_cast<float>(cvMat3.at<double>(1,1)), static_cast<float>(cvMat3.at<double>(1,2)),
+                static_cast<float>(cvMat3.at<double>(2,0)), static_cast<float>(cvMat3.at<double>(2,1)), static_cast<float>(cvMat3.at<double>(2,2));
+    }
+    else
+    {
+        cv::Mat cvMat32f;
+        cvMat3.convertTo(cvMat32f,CV_32F);
+        M << cvMat32f.at<float>(0,0), cvMat32f.at<float>(0,1), cvMat32f.at<float>(0,2),
+                cvMat32f.at<float>(1,0), cvMat32f.at<float>(1,1), cvMat32f.at<float>(1,2),
+                cvMat32f.at<float>(2,0), cvMat32f.at<float>(2,1), cvMat32f.at<float>(2,2);
+    }
 
     return M;
 }

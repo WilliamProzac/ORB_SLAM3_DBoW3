@@ -250,6 +250,12 @@ protected:
   // PreintegrateIMU)
   std::vector<IMU::Point> mvImuFromLastFrame;
   std::mutex mMutexImuQueue;
+  bool mbHasLastImuMeas;
+  Eigen::Vector3f mLastImuAcc;
+  Eigen::Vector3f mLastImuGyro;
+  double mLastImuStamp;
+  // True when current frame preintegration used real IMU samples (not fallback).
+  bool mbCurrentFrameHasValidIMU;
 
   // Imu calibration parameters
   IMU::Calib *mpImuCalib;

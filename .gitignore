@@ -80,7 +80,7 @@ LocalMapTimeStats.txt
 TrackLocalMapStats.txt
 TrackingTimeStats.txt
 time*
-Time*
+Time*.txt
 Table_Euroc
 Table_TUMVI_rooms/
 *.pyc

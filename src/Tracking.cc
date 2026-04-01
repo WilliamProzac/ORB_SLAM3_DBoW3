@@ -51,7 +51,9 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
       mpFrameDrawer(pFrameDrawer), mpMapDrawer(pMapDrawer), mpAtlas(pAtlas),
       mnLastRelocFrameId(0), time_recently_lost(5.0), mnInitialFrameId(0),
       mbCreatedMap(false), mnFirstFrameId(0), mpCamera2(nullptr),
-      mpLastKeyFrame(static_cast<KeyFrame *>(NULL)) {
+      mpLastKeyFrame(static_cast<KeyFrame *>(NULL)), mbHasLastImuMeas(false),
+      mLastImuAcc(Eigen::Vector3f::Zero()), mLastImuGyro(Eigen::Vector3f::Zero()),
+      mLastImuStamp(0.0), mbCurrentFrameHasValidIMU(false) {
   // Load camera parameters from settings file
   if (settings) {
     newParameterLoader(settings);
@@ -622,7 +624,7 @@ void Tracking::newParameterLoader(Settings *settings) {
   Sophus::SE3f Tbc = settings->Tbc();
   mInsertKFsLost = settings->insertKFsWhenLost();
   mImuFreq = settings->imuFrequency();
-  mImuPer = 0.001; // 1.0 / (double) mImuFreq;     //TODO: ESTO ESTA BIEN?
+  mImuPer = (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
   float Ng = settings->noiseGyro();
   float Na = settings->noiseAcc();
   float Ngw = settings->gyroWalk();
@@ -1275,7 +1277,8 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings) {
   node = fSettings["IMU.Frequency"];
   if (!node.empty() && node.isInt()) {
     mImuFreq = node.operator int();
-    mImuPer = 0.001; // 1.0 / (double) mImuFreq;
+    mImuPer =
+        (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
   } else {
     std::cerr << "*IMU.Frequency parameter doesn't exist or is not an integer*"
               << std::endl;
@@ -1538,9 +1541,14 @@ Sophus::SE3f Tracking::GrabImageMonocular(const cv::Mat &im,
 void Tracking::GrabImuData(const IMU::Point &imuMeasurement) {
   unique_lock<mutex> lock(mMutexImuQueue);
   mlQueueImuData.push_back(imuMeasurement);
+  mbHasLastImuMeas = true;
+  mLastImuAcc = imuMeasurement.a;
+  mLastImuGyro = imuMeasurement.w;
+  mLastImuStamp = imuMeasurement.t;
 }
 
 void Tracking::PreintegrateIMU() {
+  mbCurrentFrameHasValidIMU = false;
 
   if (!mCurrentFrame.mpPrevFrame) {
     Verbose::PrintMess("non prev frame ", Verbose::VERBOSITY_NORMAL);
@@ -1553,8 +1561,6 @@ void Tracking::PreintegrateIMU() {
   if (mlQueueImuData.size() == 0) {
     Verbose::PrintMess("Not IMU data in mlQueueImuData!!",
                        Verbose::VERBOSITY_NORMAL);
-    mCurrentFrame.setIntegrated();
-    return;
   }
 
   while (true) {
@@ -1582,9 +1588,47 @@ void Tracking::PreintegrateIMU() {
       usleep(500);
   }
 
-  const int n = mvImuFromLastFrame.size() - 1;
-  if (n == 0) {
-    cout << "Empty IMU measurements vector!!!\n";
+  const int n = static_cast<int>(mvImuFromLastFrame.size()) - 1;
+  if (n <= 0) {
+    IMU::Preintegrated *pImuPreintegratedFromLastFrame =
+        new IMU::Preintegrated(mLastFrame.mImuBias, mCurrentFrame.mImuCalib);
+
+    if (!mpImuPreintegratedFromLastKF) {
+      mpImuPreintegratedFromLastKF =
+          new IMU::Preintegrated(mLastFrame.mImuBias, mCurrentFrame.mImuCalib);
+    }
+
+    Eigen::Vector3f acc = Eigen::Vector3f::Zero();
+    Eigen::Vector3f angVel = Eigen::Vector3f::Zero();
+    bool bHasFallbackMeas = false;
+
+    if (!mvImuFromLastFrame.empty()) {
+      acc = mvImuFromLastFrame.back().a;
+      angVel = mvImuFromLastFrame.back().w;
+      bHasFallbackMeas = true;
+    } else {
+      unique_lock<mutex> lock(mMutexImuQueue);
+      if (mbHasLastImuMeas) {
+        acc = mLastImuAcc;
+        angVel = mLastImuGyro;
+        bHasFallbackMeas = true;
+      }
+    }
+
+    float tstep = mCurrentFrame.mTimeStamp - mCurrentFrame.mpPrevFrame->mTimeStamp;
+    if (tstep > 0.f && bHasFallbackMeas) {
+      mpImuPreintegratedFromLastKF->IntegrateNewMeasurement(acc, angVel, tstep);
+      pImuPreintegratedFromLastFrame->IntegrateNewMeasurement(acc, angVel,
+                                                              tstep);
+    }
+
+    mCurrentFrame.mpImuPreintegratedFrame = pImuPreintegratedFromLastFrame;
+    mCurrentFrame.mpImuPreintegrated = mpImuPreintegratedFromLastKF;
+    mCurrentFrame.mpLastKeyFrame = mpLastKeyFrame;
+    mCurrentFrame.setIntegrated();
+    mbCurrentFrameHasValidIMU = false;
+
+    cout << "Empty IMU measurements vector -> fallback preintegration used.\n";
     return;
   }
 
@@ -1641,12 +1685,19 @@ void Tracking::PreintegrateIMU() {
   mCurrentFrame.mpLastKeyFrame = mpLastKeyFrame;
 
   mCurrentFrame.setIntegrated();
+  mbCurrentFrameHasValidIMU = true;
 
   // Verbose::PrintMess("Preintegration is finished!! ",
   // Verbose::VERBOSITY_DEBUG);
 }
 
 bool Tracking::PredictStateIMU() {
+  if (!mbCurrentFrameHasValidIMU) {
+    Verbose::PrintMess("PredictStateIMU skipped: fallback IMU for current frame",
+                       Verbose::VERBOSITY_DEBUG);
+    return false;
+  }
+
   if (!mCurrentFrame.mpPrevFrame) {
     Verbose::PrintMess("No last frame", Verbose::VERBOSITY_NORMAL);
     return false;
@@ -1904,7 +1955,7 @@ void Tracking::Track() {
           if ((mSensor == System::IMU_MONOCULAR ||
                mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD)) {
             if (pCurrentMap->isImuInitialized())
-              PredictStateIMU();
+              bOK = PredictStateIMU();
             else
               bOK = false;
 
@@ -2067,20 +2118,25 @@ void Tracking::Track() {
     // Save frame if recent relocalization, since they are used for IMU reset
     // (as we are making copy, it shluld be once mCurrFrame is completely
     // modified)
-    if ((mCurrentFrame.mnId < (mnLastRelocFrameId + mnFramesToResetIMU)) &&
+    if (!mbOnlyTracking &&
+        (mCurrentFrame.mnId < (mnLastRelocFrameId + mnFramesToResetIMU)) &&
         (mCurrentFrame.mnId > mnFramesToResetIMU) &&
         (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
          mSensor == System::IMU_RGBD) &&
-        pCurrentMap->isImuInitialized()) {
+        pCurrentMap->isImuInitialized() && !mLastFrame.mK.empty()) {
       // TODO check this situation
       Verbose::PrintMess("Saving pointer to frame. imu needs reset...",
                          Verbose::VERBOSITY_NORMAL);
       Frame *pF = new Frame(mCurrentFrame);
       pF->mpPrevFrame = new Frame(mLastFrame);
 
-      // Load preintegration
-      pF->mpImuPreintegratedFrame =
-          new IMU::Preintegrated(mCurrentFrame.mpImuPreintegratedFrame);
+      // Load preintegration if available.
+      if (mCurrentFrame.mpImuPreintegratedFrame) {
+        pF->mpImuPreintegratedFrame =
+            new IMU::Preintegrated(mCurrentFrame.mpImuPreintegratedFrame);
+      } else {
+        pF->mpImuPreintegratedFrame = nullptr;
+      }
     }
 
     if (pCurrentMap->isImuInitialized()) {
@@ -2120,9 +2176,15 @@ void Tracking::Track() {
     if (bOK || mState == RECENTLY_LOST) {
       // Update motion model
       if (mLastFrame.isSet() && mCurrentFrame.isSet()) {
-        Sophus::SE3f LastTwc = mLastFrame.GetPose().inverse();
-        mVelocity = mCurrentFrame.GetPose() * LastTwc;
-        mbVelocity = true;
+        // Right after relocalization, the pose jump can make a stale/large
+        // velocity model that destabilizes pure localization.
+        if (mCurrentFrame.mnId <= mnLastRelocFrameId + 5) {
+          mbVelocity = false;
+        } else {
+          Sophus::SE3f LastTwc = mLastFrame.GetPose().inverse();
+          mVelocity = mCurrentFrame.GetPose() * LastTwc;
+          mbVelocity = true;
+        }
       } else {
         mbVelocity = false;
       }
@@ -2683,9 +2745,11 @@ bool Tracking::TrackReferenceKeyFrame() {
   }
 
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
-      mSensor == System::IMU_RGBD)
+      mSensor == System::IMU_RGBD) {
+    if (mbOnlyTracking)
+      return nmatchesMap >= 15;
     return true;
-  else
+  } else
     return nmatchesMap >= 10;
 }
 
@@ -2762,11 +2826,16 @@ bool Tracking::TrackWithMotionModel() {
   // Create "visual odometry" points if in Localization Mode
   UpdateLastFrame();
 
-  if (mpAtlas->isImuInitialized() &&
+  bool bPredictedWithIMU = false;
+  if (mpAtlas->isImuInitialized() && mbCurrentFrameHasValidIMU &&
       (mCurrentFrame.mnId > mnLastRelocFrameId + mnFramesToResetIMU)) {
     // Predict state with IMU if it is initialized and it doesnt need reset
     PredictStateIMU();
-    return true;
+    bPredictedWithIMU = true;
+    // In pure localization mode we still require visual correspondences to
+    // avoid drifting away after relocalization.
+    if (!mbOnlyTracking)
+      return true;
   } else {
     mCurrentFrame.SetPose(mVelocity * mLastFrame.GetPose());
   }
@@ -2803,9 +2872,11 @@ bool Tracking::TrackWithMotionModel() {
   if (nmatches < 20) {
     Verbose::PrintMess("Not enough matches!!", Verbose::VERBOSITY_NORMAL);
     if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
-        mSensor == System::IMU_RGBD)
+        mSensor == System::IMU_RGBD) {
+      if (mbOnlyTracking || bPredictedWithIMU)
+        return false;
       return true;
-    else
+    } else
       return false;
   }
 
@@ -2835,7 +2906,7 @@ bool Tracking::TrackWithMotionModel() {
 
   if (mbOnlyTracking) {
     mbVO = nmatchesMap < 10;
-    return nmatches > 20;
+    return nmatches > 20 && nmatchesMap >= 10;
   }
 
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
@@ -2876,7 +2947,8 @@ bool Tracking::TrackLocalMap() {
       // optimization
       bool bImuDataValid = mCurrentFrame.mpImuPreintegratedFrame != nullptr &&
                            mCurrentFrame.mpImuPreintegrated != nullptr &&
-                           mCurrentFrame.mpPrevFrame != nullptr;
+                           mCurrentFrame.mpPrevFrame != nullptr &&
+                           mbCurrentFrameHasValidIMU;
 
       // In localization mode after relocalization, IMU data may be stale
       // Fall back to vision-only optimization in that case
@@ -2886,11 +2958,23 @@ bool Tracking::TrackLocalMap() {
             Verbose::VERBOSITY_DEBUG);
         Optimizer::PoseOptimization(&mCurrentFrame);
       } else if (!mbMapUpdated) {
-        Verbose::PrintMess("TLM: PoseInertialOptimizationLastFrame ",
-                           Verbose::VERBOSITY_DEBUG);
-        inliers = Optimizer::PoseInertialOptimizationLastFrame(&mCurrentFrame);
-        // If IMU optimization failed (e.g. mpcpi null), fall back to
-        // vision-only
+        const bool bHasPrevPrior = mCurrentFrame.mpPrevFrame &&
+                                   mCurrentFrame.mpPrevFrame->mpcpi != nullptr;
+
+        if (bHasPrevPrior) {
+          Verbose::PrintMess("TLM: PoseInertialOptimizationLastFrame ",
+                             Verbose::VERBOSITY_DEBUG);
+          inliers = Optimizer::PoseInertialOptimizationLastFrame(&mCurrentFrame);
+        } else {
+          // In localization mode after relocalization, previous-frame IMU prior
+          // may be missing. Bootstrap with last-keyframe inertial optimization.
+          Verbose::PrintMess("TLM: Bootstrap with LastKeyFrame inertial optimization",
+                             Verbose::VERBOSITY_DEBUG);
+          inliers =
+              Optimizer::PoseInertialOptimizationLastKeyFrame(&mCurrentFrame);
+        }
+
+        // If IMU optimization failed, fall back to vision-only.
         if (inliers < 0) {
           cout << "TLM: IMU optimization failed, falling back to "
                   "PoseOptimization"
@@ -2943,6 +3027,14 @@ bool Tracking::TrackLocalMap() {
   mpLocalMapper->mnMatchesInliers = mnMatchesInliers;
   if (mCurrentFrame.mnId < mnLastRelocFrameId + mMaxFrames &&
       mnMatchesInliers < 50)
+    return false;
+
+  // In pure localization + IMU mode, keep a stricter gate to prevent drift
+  // when visual constraints become weak.
+  if (mbOnlyTracking &&
+      (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
+       mSensor == System::IMU_RGBD) &&
+      mnMatchesInliers < 25)
     return false;
 
   if ((mnMatchesInliers > 10) && (mState == RECENTLY_LOST))
@@ -3565,6 +3657,7 @@ bool Tracking::Relocalization() {
   // Alternatively perform some iterations of P4P RANSAC
   // Until we found a camera pose supported by enough inliers
   bool bMatch = false;
+  KeyFrame *pMatchedRelocKF = nullptr;
   ORBmatcher matcher2(0.9, true);
 
   while (nCandidates > 0 && !bMatch) {
@@ -3649,6 +3742,7 @@ bool Tracking::Relocalization() {
         // If the pose is supported by enough inliers stop ransacs and continue
         if (nGood >= 50) {
           bMatch = true;
+          pMatchedRelocKF = vpCandidateKFs[i];
           break;
         }
       }
@@ -3659,6 +3753,32 @@ bool Tracking::Relocalization() {
     return false;
   } else {
     mnLastRelocFrameId = mCurrentFrame.mnId;
+    if (pMatchedRelocKF && !pMatchedRelocKF->isBad()) {
+      mpReferenceKF = pMatchedRelocKF;
+      mpLastKeyFrame = pMatchedRelocKF;
+      mCurrentFrame.mpReferenceKF = pMatchedRelocKF;
+    }
+    // Drop stale velocity prediction after relocalization to avoid immediate
+    // overshoot on the next frames.
+    mbVelocity = false;
+
+    // Re-bootstrap IMU preintegration chain from the matched keyframe.
+    // Do not delete the previous object here: current/previous frame copies
+    // can still reference it in this tracking iteration.
+    if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
+        mSensor == System::IMU_RGBD) {
+      KeyFrame *pBaseKF = pMatchedRelocKF ? pMatchedRelocKF : mpLastKeyFrame;
+      if (pBaseKF) {
+        mpImuPreintegratedFromLastKF =
+            new IMU::Preintegrated(pBaseKF->GetImuBias(), pBaseKF->mImuCalib);
+      } else {
+        mpImuPreintegratedFromLastKF =
+            new IMU::Preintegrated(IMU::Bias(), *mpImuCalib);
+      }
+      mCurrentFrame.mpImuPreintegrated = mpImuPreintegratedFromLastKF;
+      mCurrentFrame.mpLastKeyFrame = mpLastKeyFrame;
+    }
+
     cout << "Relocalized!!" << endl;
     return true;
   }
