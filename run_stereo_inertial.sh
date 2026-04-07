@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ORB-SLAM3 Stereo Inertial 快捷测试脚本
-# 用法: ./run_stereo_inertial.sh [模式] [传感器]
+# 用法: ./run_stereo_inertial.sh [模式] [传感器] [--log]
 # 模式:
 #   mapping      - 默认建图模式
 #   mapping_save - 建图模式并保存地图
@@ -10,6 +10,8 @@
 #   stereo_inertial - 双目惯性模式 (默认, 使用 MyD435i.yaml)
 #   rgbd            - RGB-D 模式 (使用 RealSense_D435i.yaml)
 #   stereo          - 双目模式 (使用 MyD435i_stereo.yaml)
+# 选项:
+#   --log           - 将所有输出同时保存到 logs/ 目录下的日志文件
 
 # 检查当前目录是否是 ORB_SLAM3_DBoW3 根目录
 if [ ! -f "Vocabulary/ORBvoc.bin" ]; then
@@ -17,12 +19,23 @@ if [ ! -f "Vocabulary/ORBvoc.bin" ]; then
   exit 1
 fi
 
-MODE=$1
-SENSOR=$2
+# --log 参数可放在任意位置，先过滤出来
+SAVE_LOG=false
+ARGS=()
+for arg in "$@"; do
+  if [ "$arg" == "--log" ]; then
+    SAVE_LOG=true
+  else
+    ARGS+=("$arg")
+  fi
+done
+
+MODE=${ARGS[0]}
+SENSOR=${ARGS[1]}
 
 if [ -z "$MODE" ]; then
   echo "请指定运行模式！"
-  echo "用法: ./run_stereo_inertial.sh [mapping | mapping_save | localization] [stereo_inertial | rgbd | stereo]"
+  echo "用法: ./run_stereo_inertial.sh [mapping | mapping_save | localization] [stereo_inertial | rgbd | stereo] [--log]"
   exit 1
 fi
 
@@ -53,9 +66,20 @@ else
   exit 1
 fi
 
+# 日志配置
+if [ "$SAVE_LOG" == "true" ]; then
+  mkdir -p ./logs
+  LOG_FILE="./logs/${MODE}_${SENSOR}_$(date +%Y%m%d_%H%M%S).log"
+  # 将后续所有输出（stdout + stderr）同时写入日志文件和终端
+  # 使用 trap '' INT 免疫 Ctrl+C 信号，防止 tee 进程过早退出导致主进程触发 SIGPIPE 异常中断
+  exec > >(trap '' INT; tee "$LOG_FILE") 2>&1
+  echo "日志已开启，保存路径: $LOG_FILE"
+fi
+
 echo "=================================================="
 echo "启动 ORB-SLAM3 Stereo_Inertial ROS 节点"
 echo "模式: $MODE"
+echo "日志: $([ "$SAVE_LOG" == "true" ] && echo "$LOG_FILE" || echo "未开启")"
 echo "=================================================="
 
 case "$MODE" in

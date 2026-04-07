@@ -1367,9 +1367,18 @@ void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
   if (pKF && !pKF->isBad()) {
     mpReferenceKF = pKF;
     mpLastKeyFrame = pKF;
-    // Set state to OK so tracking can start directly with loaded map
-    mState = OK;
-    cout << "Tracking: Initialized with reference KF " << pKF->mnId << endl;
+    
+    if (mbOnlyTracking) {
+      // In localization mode, force LOST so the system relocalizes immediately 
+      // instead of blindly assuming it starts at the reference KF.
+      mState = LOST;
+      cout << "Tracking: Initialized with reference KF " << pKF->mnId 
+           << " but force-set state to LOST to trigger Relocalization" << endl;
+    } else {
+      // Set state to OK so tracking can start directly with loaded map (normal mapping continuation)
+      mState = OK;
+      cout << "Tracking: Initialized with reference KF " << pKF->mnId << endl;
+    }
   }
 }
 
@@ -2306,6 +2315,19 @@ void Tracking::Track() {
 }
 
 void Tracking::StereoInitialization() {
+  // In pure localization mode, skip initialization entirely so that the
+  // Relocalization() path is triggered on the very first frame.  Without
+  // this guard the system forcibly assigns the first frame as the world
+  // origin (Tcw = Identity), which only works when the camera happens to
+  // be at the map's original starting point.
+  if (mbOnlyTracking) {
+    cout << "Localization mode: Skipping StereoInitialization, setting LOST "
+            "to trigger Relocalization."
+         << endl;
+    mState = LOST;
+    return;
+  }
+
   if (mCurrentFrame.N > 500) {
     if (mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) {
       if (!mCurrentFrame.mpImuPreintegrated || !mLastFrame.mpImuPreintegrated) {
@@ -2417,6 +2439,16 @@ void Tracking::StereoInitialization() {
 }
 
 void Tracking::MonocularInitialization() {
+  // Same guard as StereoInitialization: in pure localization mode skip
+  // monocular initialization and go directly to LOST so Relocalization()
+  // is triggered on the first frame.
+  if (mbOnlyTracking) {
+    cout << "Localization mode: Skipping MonocularInitialization, setting LOST "
+            "to trigger Relocalization."
+         << endl;
+    mState = LOST;
+    return;
+  }
 
   if (!mbReadyToInitializate) {
     // Set Reference Frame
@@ -3639,14 +3671,20 @@ bool Tracking::Relocalization() {
     else {
       int nmatches =
           matcher.SearchByBoW(pKF, mCurrentFrame, vvpMapPointMatches[i]);
-      if (nmatches < 15) {
+      // Lowered from 15 to 10: mid-map positions visited once may have fewer
+      // overlapping features with the stored KF.
+      cout << "Relocalization candidate KF " << pKF->mnId
+           << ": BoW matches=" << nmatches << endl;
+      if (nmatches < 10) {
         vbDiscarded[i] = true;
         continue;
       } else {
         MLPnPsolver *pSolver =
             new MLPnPsolver(mCurrentFrame, vvpMapPointMatches[i]);
+        // minInliers lowered from 10 to 6 (minimal solver size) so that RANSAC
+        // isn't blocked before even attempting a pose.
         pSolver->SetRansacParameters(
-            0.99, 10, 300, 6, 0.5,
+            0.99, 6, 300, 6, 0.5,
             5.991); // This solver needs at least 6 points
         vpMLPnPsolvers[i] = pSolver;
         nCandidates++;
@@ -3699,6 +3737,8 @@ bool Tracking::Relocalization() {
         }
 
         int nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+        cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
+             << ": inliers after 1st PoseOpt=" << nGood << endl;
 
         if (nGood < 10)
           continue;
@@ -3708,28 +3748,54 @@ bool Tracking::Relocalization() {
             mCurrentFrame.mvpMapPoints[io] = static_cast<MapPoint *>(NULL);
 
         // If few inliers, search by projection in a coarse window and optimize
-        // again
+        // again.
+        // Strategy for mid-map single-visit locations:
+        //   1. Wider initial search radius (15px)
+        //   2. Also search covisible KFs' MapPoints to expand the pool
+        //   3. Final threshold lowered to 20 (stereo depth gives accurate 3D)
         if (nGood < 50) {
+          // Primary: wider search of candidate KF's own MapPoints
           int nadditional = matcher2.SearchByProjection(
-              mCurrentFrame, vpCandidateKFs[i], sFound, 10, 100);
+              mCurrentFrame, vpCandidateKFs[i], sFound, 15, 100);
 
-          if (nadditional + nGood >= 50) {
+          // Secondary: also pull in MapPoints from the top-5 covisible KFs.
+          vector<KeyFrame *> vpCovis =
+              vpCandidateKFs[i]->GetBestCovisibilityKeyFrames(5);
+          for (KeyFrame *pKFcov : vpCovis) {
+            if (!pKFcov || pKFcov->isBad())
+              continue;
+            int nFromCov = matcher2.SearchByProjection(mCurrentFrame, pKFcov,
+                                                       sFound, 15, 100);
+            nadditional += nFromCov;
+          }
+          cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
+               << ": additional via projection+covis=" << nadditional << endl;
+
+          if (nadditional + nGood >= 20) {
             nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+            cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
+                 << ": inliers after 2nd PoseOpt=" << nGood << endl;
 
-            // If many inliers but still not enough, search by projection again
-            // in a narrower window the camera has been already optimized with
-            // many points
-            if (nGood > 30 && nGood < 50) {
+            // Tight second-pass search if still borderline
+            if (nGood > 10 && nGood < 50) {
               sFound.clear();
               for (int ip = 0; ip < mCurrentFrame.N; ip++)
                 if (mCurrentFrame.mvpMapPoints[ip])
                   sFound.insert(mCurrentFrame.mvpMapPoints[ip]);
               nadditional = matcher2.SearchByProjection(
                   mCurrentFrame, vpCandidateKFs[i], sFound, 3, 64);
+              // Second-pass on covisible KFs
+              for (KeyFrame *pKFcov : vpCovis) {
+                if (!pKFcov || pKFcov->isBad())
+                  continue;
+                nadditional += matcher2.SearchByProjection(
+                    mCurrentFrame, pKFcov, sFound, 3, 64);
+              }
 
-              // Final optimization
-              if (nGood + nadditional >= 50) {
+              if (nGood + nadditional >= 20) {
                 nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+                cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
+                     << ": inliers after 3rd PoseOpt=" << nGood << endl;
 
                 for (int io = 0; io < mCurrentFrame.N; io++)
                   if (mCurrentFrame.mvbOutlier[io])
@@ -3739,11 +3805,18 @@ bool Tracking::Relocalization() {
           }
         }
 
-        // If the pose is supported by enough inliers stop ransacs and continue
-        if (nGood >= 50) {
+
+        // Accept if >= 20 inliers (was 50, then 30).
+        // Stereo depth gives accurate 3D → 20 reliable inliers is sufficient.
+        if (nGood >= 20) {
           bMatch = true;
           pMatchedRelocKF = vpCandidateKFs[i];
+          cout << "Relocalization: accepted with " << nGood << " inliers"
+               << endl;
           break;
+        } else {
+          cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
+               << ": rejected, only " << nGood << " inliers" << endl;
         }
       }
     }
@@ -3758,9 +3831,17 @@ bool Tracking::Relocalization() {
       mpLastKeyFrame = pMatchedRelocKF;
       mCurrentFrame.mpReferenceKF = pMatchedRelocKF;
     }
-    // Drop stale velocity prediction after relocalization to avoid immediate
-    // overshoot on the next frames.
-    mbVelocity = false;
+    // After relocalization, enable TrackWithMotionModel (projection-based) for
+    // the next frame instead of TrackReferenceKeyFrame (BoW-based).
+    // Reason: BoW matching of D435i infrared images against an RGB-trained
+    // vocabulary yields only 3-12 matches, which is too few to maintain
+    // tracking. Projection-based search uses the known pose to reproject all
+    // visible MapPoints into the new frame within a pixel search radius,
+    // returning 100+ matches regardless of vocabulary quality.
+    // We use identity velocity (zero motion assumption) as a conservative
+    // starting point; the actual pose will be refined by PoseOptimization.
+    mVelocity = Sophus::SE3f(); // identity = assume zero motion for 1 frame
+    mbVelocity = true;
 
     // Re-bootstrap IMU preintegration chain from the matched keyframe.
     // Do not delete the previous object here: current/previous frame copies
