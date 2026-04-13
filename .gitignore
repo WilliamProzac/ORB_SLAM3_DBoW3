@@ -79,7 +79,7 @@ LBA_Stats.txt
 LocalMapTimeStats.txt
 TrackLocalMapStats.txt
 TrackingTimeStats.txt
-time*
+time*.txt
 Time*.txt
 Table_Euroc
 Table_TUMVI_rooms/
