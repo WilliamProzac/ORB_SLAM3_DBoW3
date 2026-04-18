@@ -38,7 +38,7 @@ RGBD.DepthMapFactor: 1000.0
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
-ORBextractor.nFeatures: 1500
+ORBextractor.nFeatures: 1200
 ORBextractor.scaleFactor: 1.2
 ORBextractor.nLevels: 8
 ORBextractor.iniThFAST: 15

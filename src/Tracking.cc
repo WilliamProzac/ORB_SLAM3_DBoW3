@@ -52,8 +52,9 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
       mnLastRelocFrameId(0), time_recently_lost(5.0), mnInitialFrameId(0),
       mbCreatedMap(false), mnFirstFrameId(0), mpCamera2(nullptr),
       mpLastKeyFrame(static_cast<KeyFrame *>(NULL)), mbHasLastImuMeas(false),
-      mLastImuAcc(Eigen::Vector3f::Zero()), mLastImuGyro(Eigen::Vector3f::Zero()),
-      mLastImuStamp(0.0), mbCurrentFrameHasValidIMU(false) {
+      mLastImuAcc(Eigen::Vector3f::Zero()),
+      mLastImuGyro(Eigen::Vector3f::Zero()), mLastImuStamp(0.0),
+      mbCurrentFrameHasValidIMU(false) {
   // Load camera parameters from settings file
   if (settings) {
     newParameterLoader(settings);
@@ -1367,15 +1368,16 @@ void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
   if (pKF && !pKF->isBad()) {
     mpReferenceKF = pKF;
     mpLastKeyFrame = pKF;
-    
+
     if (mbOnlyTracking) {
-      // In localization mode, force LOST so the system relocalizes immediately 
+      // In localization mode, force LOST so the system relocalizes immediately
       // instead of blindly assuming it starts at the reference KF.
       mState = LOST;
-      cout << "Tracking: Initialized with reference KF " << pKF->mnId 
+      cout << "Tracking: Initialized with reference KF " << pKF->mnId
            << " but force-set state to LOST to trigger Relocalization" << endl;
     } else {
-      // Set state to OK so tracking can start directly with loaded map (normal mapping continuation)
+      // Set state to OK so tracking can start directly with loaded map (normal
+      // mapping continuation)
       mState = OK;
       cout << "Tracking: Initialized with reference KF " << pKF->mnId << endl;
     }
@@ -1624,7 +1626,8 @@ void Tracking::PreintegrateIMU() {
       }
     }
 
-    float tstep = mCurrentFrame.mTimeStamp - mCurrentFrame.mpPrevFrame->mTimeStamp;
+    float tstep =
+        mCurrentFrame.mTimeStamp - mCurrentFrame.mpPrevFrame->mTimeStamp;
     if (tstep > 0.f && bHasFallbackMeas) {
       mpImuPreintegratedFromLastKF->IntegrateNewMeasurement(acc, angVel, tstep);
       pImuPreintegratedFromLastFrame->IntegrateNewMeasurement(acc, angVel,
@@ -1702,8 +1705,9 @@ void Tracking::PreintegrateIMU() {
 
 bool Tracking::PredictStateIMU() {
   if (!mbCurrentFrameHasValidIMU) {
-    Verbose::PrintMess("PredictStateIMU skipped: fallback IMU for current frame",
-                       Verbose::VERBOSITY_DEBUG);
+    Verbose::PrintMess(
+        "PredictStateIMU skipped: fallback IMU for current frame",
+        Verbose::VERBOSITY_DEBUG);
     return false;
   }
 
@@ -2996,12 +3000,14 @@ bool Tracking::TrackLocalMap() {
         if (bHasPrevPrior) {
           Verbose::PrintMess("TLM: PoseInertialOptimizationLastFrame ",
                              Verbose::VERBOSITY_DEBUG);
-          inliers = Optimizer::PoseInertialOptimizationLastFrame(&mCurrentFrame);
+          inliers =
+              Optimizer::PoseInertialOptimizationLastFrame(&mCurrentFrame);
         } else {
           // In localization mode after relocalization, previous-frame IMU prior
           // may be missing. Bootstrap with last-keyframe inertial optimization.
-          Verbose::PrintMess("TLM: Bootstrap with LastKeyFrame inertial optimization",
-                             Verbose::VERBOSITY_DEBUG);
+          Verbose::PrintMess(
+              "TLM: Bootstrap with LastKeyFrame inertial optimization",
+              Verbose::VERBOSITY_DEBUG);
           inliers =
               Optimizer::PoseInertialOptimizationLastKeyFrame(&mCurrentFrame);
         }
@@ -3805,7 +3811,6 @@ bool Tracking::Relocalization() {
           }
         }
 
-
         // Accept if >= 20 inliers (was 50, then 30).
         // Stereo depth gives accurate 3D → 20 reliable inliers is sufficient.
         if (nGood >= 20) {
@@ -3840,8 +3845,8 @@ bool Tracking::Relocalization() {
     // returning 100+ matches regardless of vocabulary quality.
     // We use identity velocity (zero motion assumption) as a conservative
     // starting point; the actual pose will be refined by PoseOptimization.
-    mVelocity = Sophus::SE3f(); // identity = assume zero motion for 1 frame
-    mbVelocity = true;
+    // mVelocity = Sophus::SE3f(); // identity = assume zero motion for 1 frame
+    mbVelocity = false;
 
     // Re-bootstrap IMU preintegration chain from the matched keyframe.
     // Do not delete the previous object here: current/previous frame copies

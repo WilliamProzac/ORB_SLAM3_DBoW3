@@ -82,6 +82,33 @@ echo "模式: $MODE"
 echo "日志: $([ "$SAVE_LOG" == "true" ] && echo "$LOG_FILE" || echo "未开启")"
 echo "=================================================="
 
+# 启动系统资源监控 (使用 pidstat)
+mkdir -p ./logs
+RES_LOG_FILE="./logs/resource_usage_${MODE}_${SENSOR}_$(date +%Y%m%d_%H%M%S).txt"
+echo "资源监控已开启，数据保存路径: $RES_LOG_FILE"
+pidstat -u -r -C "$NODE_NAME" 1 > "$RES_LOG_FILE" &
+PIDSTAT_PID=$!
+
+# 启动 rosbag 录制
+mkdir -p ./bags
+ROSBAG_FILE="./bags/${MODE}_${SENSOR}_$(date +%Y%m%d_%H%M%S).bag"
+
+if [ "$SENSOR" == "rgbd" ]; then
+  RECORD_TOPICS="/camera/color/image_raw /camera/aligned_depth_to_color/image_raw"
+elif [ "$SENSOR" == "stereo" ]; then
+  RECORD_TOPICS="/camera/infra1/image_rect_raw /camera/infra2/image_rect_raw"
+elif [ "$SENSOR" == "stereo_inertial" ]; then
+  RECORD_TOPICS="/camera/infra1/image_rect_raw /camera/infra2/image_rect_raw /camera/imu"
+fi
+
+echo "rosbag录制已开启，保存路径: $ROSBAG_FILE"
+echo "录制的话题: $RECORD_TOPICS"
+rosbag record -O "$ROSBAG_FILE" $RECORD_TOPICS &
+ROSBAG_PID=$!
+
+# 当脚本退出时（包括按 Ctrl+C），自动发送 SIGINT 确保 rosbag 正常保存退出，并杀死 pidstat 进程
+trap 'kill -INT $ROSBAG_PID 2>/dev/null; kill $PIDSTAT_PID 2>/dev/null' EXIT INT TERM
+
 case "$MODE" in
 "mapping")
   echo "使用配置文件: $MAPPING_YAML"

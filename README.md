@@ -1,3 +1,77 @@
+# ORB-SLAM3_DBoW3 (Modified Version)
+
+本项目在原有的 ORB-SLAM3 基础上进行了多项定制化修改，主要针对工程实用性、性能监控、快速启动与测试流程进行了优化。
+
+## 本项目主要修改内容 (Modifications)
+
+### 1. 词袋库替换 (DBoW3 Support)
+* 将原本项目内聚的 DBoW2 替换与迁移，支持使用更高性能的 DBoW3 词典文件 (`Vocabulary/orbvoc.dbow3`)，提升了加载速度和词汇树处理的灵活性。
+
+### 2. 纯定位模式 (Localization) 启动优化
+* **快速全局重定位**：优化了 ORB-SLAM3 在纯定位模式下的启动追踪逻辑。消除了在纯定位加载地图时默认“盲目”从上次地图最后一帧起始追踪引发的长时间丢失问题。强制改变系统逻辑使其在启动初始瞬间直接强制进行全局重定位 (Global Relocalization)，显著提升了任意位置冷启动时的快速鲁棒恢复能力。
+
+### 3. 一键运行与综合测试脚本 (`run_stereo_inertial.sh`)
+* **多功能模式**：可以通过命令行快速切换 `mapping`（正常建图）、`mapping_save`（建图后保存）以及 `localization`（加载地图纯定位）模式。
+* **多传感器解耦选项**：自动适配了不同的实验设备场景。可以在启动时直接传入传感器参数（`rgbd`, `stereo`, `stereo_inertial`），系统将自动加载对应该设定的 `.yaml` 文件或读取指定的默认配置（如 Realsense D435i 配置文件）。
+* **自动化日志归档 (`--log`)**：增加了日志选项，自动同步接管所有 `stdout` 与 `stderr`，自动将其备份到 `./logs/` 文件夹中并带入时间戳，且不影响前台屏幕检视。
+* **节点资源消耗监控**：每次运行程序时，自动在后台利用 `pidstat` 挂载实时资源消耗监控程序（评估 CPU 与系统内存占用），并在退出时自动终止，生成分析记录到 `./logs/` 目录下。
+* **自动 RosBag 录制功能**：与节点的启动和退出完全同步。根据实际所选相机的不同类型（如 RGBD 时录制 color + depth_aligned；Stereo_Inertial 时录制 infra1 + infra2 + imu），在后台静默录制当前运行时的话题。进程优雅退出并保存至 `./bags/`。
+
+### 4. 重构了 ROS 通信接口层
+* 取消了死板的默认话题代码绑定。适配了真实世界相机和传感器的深度/红外流特征（比如 `/camera/infra1/image_rect_raw`），并在 ROS 处理节点的 `SyncWithImu()` 中加入了优雅的主动 Shutdown 钩子，从源头避免由于 Ctrl+C 引发的宕机或者进程成僵尸。
+
+### 5. 编译与运行指南 (Build & Run Instructions)
+
+#### 编译项目 (Build)
+1. **编译核心库与第三方库 (DBoW3, g2o)**
+```bash
+cd ORB_SLAM3_DBoW3
+chmod +x build.sh
+./build.sh
+```
+2. **编译 ROS 节点**
+由于 ROS 目录更名为 `Examples_old/ROS`，您需要将其所在的路径添加到您的 `ROS_PACKAGE_PATH` 中（您可以将其加入您的 `~/.bashrc`）：
+```bash
+export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/您的绝对路径/ORB_SLAM3_DBoW3/Examples_old/ROS
+chmod +x build_ros.sh
+./build_ros.sh
+```
+
+#### 运行与测试 (Run)
+本项目推荐直接使用修改后的 `run_stereo_inertial.sh` 脚本进行日常启动，它封装好了底层传参并附带扩展功能。
+
+**使用语法：**
+```bash
+./run_stereo_inertial.sh <模式> <传感器> [--log]
+```
+
+* **模式 `<模式>`:** 
+  * `mapping`（默认建图）
+  * `mapping_save`（建图模式，程序中开启了保存地图逻辑支持）
+  * `localization`（纯定位模式，程序会自动加载已有地图 `System.LoadMap`）
+* **传感器 `<传感器>`:** 
+  * `stereo_inertial`（双目IMU，默认）
+  * `rgbd`（RGB-D模式）
+  * `stereo`（纯双目模式）
+* **选项:**
+  * `--log`: 将屏幕标准输出同步写入到 `logs/`，并执行后续的一系列录包 (`rosbag record`) 和监控进程联动。
+
+**运行实例：以双目IMU模式开始建图，同时记录终端日志、系统资源与录制 RosBag 数据：**
+```bash
+./run_stereo_inertial.sh mapping stereo_inertial --log
+```
+
+**运行实例：利用此前建立好的地图，开启 RGB-D 纯定位任务：**
+```bash
+./run_stereo_inertial.sh localization rgbd
+```
+
+---
+
+*以下为官方原版 ORB-SLAM3 的 README 内容*
+
+---
+
 # ORB-SLAM3
 
 ### V1.0, December 22th, 2021
@@ -97,7 +171,7 @@ This will create **libORB_SLAM3.so**  at *lib* folder and the executables in *Ex
 
 # 4. Running ORB-SLAM3 with your camera
 
-Directory `Examples` contains several demo programs and calibration files to run ORB-SLAM3 in all sensor configurations with Intel Realsense cameras T265 and D435i. The steps needed to use your own camera are: 
+Directory `Examples` contains several demo programs and calibration files to run ORB-SLAM3 in all sensor configurations with Intel Realsense cameras T265 and D435i. The steps needed to use your camera are: 
 
 1. Calibrate your camera following `Calibration_Tutorial.pdf` and write your calibration file `your_camera.yaml`
 
