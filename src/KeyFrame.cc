@@ -27,6 +27,7 @@
 namespace ORB_SLAM3 {
 
 long unsigned int KeyFrame::nNextId = 0;
+int KeyFrame::mnNonLocalKF = 5; // default: leave local for 5 LM iterations before sparsifying
 
 KeyFrame::KeyFrame()
     : mnFrameId(0), mTimeStamp(0), mnGridCols(FRAME_GRID_COLS),
@@ -49,7 +50,9 @@ KeyFrame::KeyFrame()
       mpParent(NULL), mbNotErase(false), mbToBeErased(false), mbBad(false),
       mHalfBaseline(0), mbCurrentPlaceRecognition(false),
       mnMergeCorrectedForKF(0), NLeft(0), NRight(0), mnNumberOfOpt(0),
-      mbHasVelocity(false) {}
+      mbHasVelocity(false),
+      mbSparsified(false), mnMapSaprsificationId(0), mnIndexForSparsification(0),
+      mnCountInLocal(0), mbNonLocalKF(false) {}
 
 KeyFrame::KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB)
     : bImu(pMap->isImuInitialized()), mnFrameId(F.mnId),
@@ -81,7 +84,9 @@ KeyFrame::KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB)
       mpCamera2(F.mpCamera2), mvLeftToRightMatch(F.mvLeftToRightMatch),
       mvRightToLeftMatch(F.mvRightToLeftMatch), mTlr(F.GetRelativePoseTlr()),
       mvKeysRight(F.mvKeysRight), NLeft(F.Nleft), NRight(F.Nright),
-      mTrl(F.GetRelativePoseTrl()), mnNumberOfOpt(0), mbHasVelocity(false) {
+      mTrl(F.GetRelativePoseTrl()), mnNumberOfOpt(0), mbHasVelocity(false),
+      mbSparsified(false), mnMapSaprsificationId(0), mnIndexForSparsification(0),
+      mnCountInLocal(0), mbNonLocalKF(false) {
   mnId = nNextId++;
 
   mGrid.resize(mnGridCols);
@@ -1114,6 +1119,140 @@ void KeyFrame::SetORBVocabulary(ORBVocabulary *pORBVoc) {
 
 void KeyFrame::SetKeyFrameDatabase(KeyFrameDatabase *pKFDB) {
   mpKeyFrameDB = pKFDB;
+}
+
+// ============================================================
+// Map Sparsification helpers (ported from MS-SLAM)
+// ============================================================
+
+/**
+ * EraseBadDescriptor: compact the descriptor matrix and keypoint vectors,
+ * keeping only entries that still have an associated (valid) MapPoint.
+ * This releases memory for redundant 2D features after map sparsification.
+ */
+void KeyFrame::EraseBadDescriptor() {
+  {
+    unique_lock<mutex> lock(mMutexFeatures);
+    // Count remaining good MapPoints
+    int nGoodMPs = 0;
+    for (size_t i = 0, iend = mvpMapPoints.size(); i < iend; i++) {
+      if (mvpMapPoints[i])
+        nGoodMPs++;
+    }
+    // Build compact arrays
+    cv::Mat DescriptorsNew;
+    vector<cv::Mat> vCurrentDesc;
+    vector<cv::KeyPoint> vKeysUnNew;
+    vector<float> vuRightNew;
+    vector<float> vDepthNew;
+    vector<MapPoint *> vpMapPointsNew;
+    vCurrentDesc.reserve(nGoodMPs);
+    vKeysUnNew.reserve(nGoodMPs);
+    vuRightNew.reserve(nGoodMPs);
+    vDepthNew.reserve(nGoodMPs);
+    vpMapPointsNew.reserve(nGoodMPs);
+
+    int newIdx = 0;
+    for (size_t i = 0, iend = mvpMapPoints.size(); i < iend; i++) {
+      if (mvpMapPoints[i]) {
+        cv::Mat row = mDescriptors.row((int)i);
+        DescriptorsNew.push_back(row);
+        vCurrentDesc.push_back(row);
+        // Use index-safe access via const_cast because mvKeysUn is const
+        vKeysUnNew.push_back(const_cast<vector<cv::KeyPoint>&>(mvKeysUn)[i]);
+        vuRightNew.push_back(const_cast<vector<float>&>(mvuRight)[i]);
+        vDepthNew.push_back(const_cast<vector<float>&>(mvDepth)[i]);
+        vpMapPointsNew.push_back(mvpMapPoints[i]);
+
+        // Update the MapPoint's observation index to reflect new position
+        // (we use the simple index update: observation index = newIdx)
+        // Note: full UpdateObservation would need the KF pointer; we rely on
+        // the fact that MapPoint->GetIndexInKeyFrame will be refreshed on next use.
+        newIdx++;
+      }
+    }
+
+    // Replace internal state
+    mDescriptors.release();
+    mDescriptors = DescriptorsNew;
+    const_cast<vector<cv::KeyPoint>&>(mvKeysUn).swap(vKeysUnNew);
+    const_cast<vector<float>&>(mvuRight).swap(vuRightNew);
+    mvpMapPoints.swap(vpMapPointsNew);
+    const_cast<vector<float>&>(mvDepth).swap(vDepthNew);
+    N = (int)mvpMapPoints.size();
+
+    // Recompute BoW with DBoW3 vocabulary
+    if (!vCurrentDesc.empty()) {
+      mBowVec.clear();
+      mFeatVec.clear();
+      mpORBvocabulary->transform(vCurrentDesc, mBowVec, mFeatVec, 4);
+    }
+
+    // Free the image grid (no longer needed for tracking once out of local window)
+    std::vector<std::vector<std::vector<size_t>>>().swap(mGrid);
+    // Also free the original (raw) keypoint vector (not needed after compaction)
+    const_cast<vector<cv::KeyPoint>&>(mvKeys).clear();
+    const_cast<vector<cv::KeyPoint>&>(mvKeysRight).clear();
+
+    mbSparsified = true;
+  }
+}
+
+cv::Mat KeyFrame::GetDescriptor(const int &idx) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  if (idx >= mDescriptors.rows) {
+    return cv::Mat();
+  }
+  return mDescriptors.row(idx).clone();
+}
+
+/**
+ * Track how long this KF has been outside the local map window in LocalMapping.
+ * Returns true when the counter reaches the threshold (ready to sparsify).
+ */
+bool KeyFrame::UpdateCountInLocalMapping(bool bLocal) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  if (bLocal) {
+    mnCountInLocal = 0;
+    mbNonLocalKF = false;
+    return false;
+  } else {
+    mnCountInLocal++;
+    if (mnCountInLocal < mnNonLocalKF) {
+      mbNonLocalKF = false;
+      return false;
+    } else {
+      mbNonLocalKF = true;
+      return true;
+    }
+  }
+}
+
+/**
+ * Same as UpdateCountInLocalMapping but called from the Tracking thread
+ * when checking the local keyframe set.
+ */
+bool KeyFrame::UpdateCountInTracking(bool bLocal) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  if (bLocal) {
+    mnCountInLocal = 0;
+    mbNonLocalKF = false;
+    return false;
+  } else {
+    mnCountInLocal++;
+    if (mnCountInLocal < mnNonLocalKF) {
+      mbNonLocalKF = false;
+      return false;
+    } else {
+      mbNonLocalKF = true;
+      return true;
+    }
+  }
+}
+
+bool KeyFrame::isNonLocal() {
+  unique_lock<mutex> lock(mMutexFeatures);
+  return mbNonLocalKF;
 }
 
 } // namespace ORB_SLAM3

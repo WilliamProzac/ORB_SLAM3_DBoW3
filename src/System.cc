@@ -240,15 +240,31 @@ System::System(const string &strVocFile, const string &strSettingsFile,
                       mSensor != MONOCULAR, activeLC); // mSensor!=MONOCULAR);
   mptLoopClosing = new thread(&ORB_SLAM3::LoopClosing::Run, mpLoopCloser);
 
+  // Initialize the Map Sparsification thread and launch
+  mpMapSaprsification = new MapSparsification(
+      strSettingsFile, mpAtlas,
+      mSensor == IMU_MONOCULAR || mSensor == IMU_STEREO || mSensor == IMU_RGBD);
+  mptMapSparsification =
+      new thread(&ORB_SLAM3::MapSparsification::Run, mpMapSaprsification);
+  mpMapSaprsification->SetLoopClosing(mpLoopCloser);
+
+  // Read NonLocalKF threshold from settings
+  cv::FileNode nodeNLKF = fsSettings["Sparsification.NonLocalKF"];
+  if (!nodeNLKF.empty())
+    KeyFrame::mnNonLocalKF = (int)nodeNLKF;
+
   // Set pointers between threads
   mpTracker->SetLocalMapper(mpLocalMapper);
   mpTracker->SetLoopClosing(mpLoopCloser);
+  mpTracker->SetMapSparsification(mpMapSaprsification);
 
   mpLocalMapper->SetTracker(mpTracker);
   mpLocalMapper->SetLoopCloser(mpLoopCloser);
+  mpLocalMapper->SetMapSparsification(mpMapSaprsification);
 
   mpLoopCloser->SetTracker(mpTracker);
   mpLoopCloser->SetLocalMapper(mpLocalMapper);
+  mpLoopCloser->SetMapSparsification(mpMapSaprsification);
 
   // usleep(10*1000*1000);
 
@@ -548,7 +564,18 @@ void System::ResetActiveMap() {
   mbResetActiveMap = true;
 }
 
+void System::ShutdownMapCompressing() {
+  if (mpMapSaprsification) {
+    mpMapSaprsification->RequestFinish();
+    while (!mpMapSaprsification->isFinished()) {
+      usleep(5000);
+    }
+    cout << "Shutdown Map Sparsification" << endl;
+  }
+}
+
 void System::Shutdown() {
+  ShutdownMapCompressing();
   {
     unique_lock<mutex> lock(mMutexReset);
     mbShutDown = true;

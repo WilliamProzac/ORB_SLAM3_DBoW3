@@ -36,6 +36,7 @@
 #include "LocalMapping.h"
 #include "LoopClosing.h"
 #include "MapDrawer.h"
+#include "MapSparsification.h"
 #include "ORBVocabulary.h"
 #include "Settings.h"
 #include "Tracking.h"
@@ -72,6 +73,7 @@ class Atlas;
 class Tracking;
 class LocalMapping;
 class LoopClosing;
+class MapSparsification;
 class Settings;
 
 class System {
@@ -145,6 +147,7 @@ public:
   // This function must be called before saving the trajectory.
   void Shutdown();
   bool isShutDown();
+  void ShutdownMapCompressing();
 
   // Save camera trajectory in the TUM RGB-D dataset format.
   // Only for stereo and RGB-D. This method does not work for monocular.
@@ -245,6 +248,10 @@ private:
   std::thread *mptLocalMapping;
   std::thread *mptLoopClosing;
   std::thread *mptViewer;
+
+  // Map Sparsification thread
+  MapSparsification *mpMapSaprsification;
+  std::thread *mptMapSparsification;
 
   // Reset flag
   std::mutex mMutexReset;

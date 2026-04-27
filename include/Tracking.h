@@ -30,6 +30,7 @@
 #include "LocalMapping.h"
 #include "LoopClosing.h"
 #include "MapDrawer.h"
+#include "MapSparsification.h"
 #include "ORBVocabulary.h"
 #include "ORBextractor.h"
 #include "Settings.h"
@@ -53,6 +54,7 @@ class LocalMapping;
 class LoopClosing;
 class System;
 class Settings;
+class MapSparsification;
 
 class Tracking {
 
@@ -84,6 +86,7 @@ public:
 
   void SetLocalMapper(LocalMapping *pLocalMapper);
   void SetLoopClosing(LoopClosing *pLoopClosing);
+  void SetMapSparsification(MapSparsification *pMapSparsification);
   void SetViewer(Viewer *pViewer);
   void SetReferenceKeyFrame(KeyFrame *pKF);
   void SetStepByStep(bool bSet);
@@ -273,6 +276,10 @@ protected:
   // Other Thread Pointers
   LocalMapping *mpLocalMapper;
   LoopClosing *mpLoopClosing;
+  MapSparsification *mpMapSparsification;
+
+  // Queue of non-local KFs for sparsification (inertial mode)
+  std::list<KeyFrame *> mlpKeyFramesToSparsification;
 
   // ORB
   ORBextractor *mpORBextractorLeft, *mpORBextractorRight;

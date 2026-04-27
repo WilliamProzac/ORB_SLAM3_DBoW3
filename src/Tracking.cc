@@ -1362,6 +1362,10 @@ void Tracking::SetLoopClosing(LoopClosing *pLoopClosing) {
   mpLoopClosing = pLoopClosing;
 }
 
+void Tracking::SetMapSparsification(MapSparsification *pMapSparsification) {
+  mpMapSparsification = pMapSparsification;
+}
+
 void Tracking::SetViewer(Viewer *pViewer) { mpViewer = pViewer; }
 
 void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
@@ -2422,6 +2426,9 @@ void Tracking::StereoInitialization() {
 
     mpLocalMapper->InsertKeyFrame(pKFini);
 
+    if (mpMapSparsification)
+      mlpKeyFramesToSparsification.push_back(pKFini);
+
     mLastFrame = Frame(mCurrentFrame);
     mnLastKeyFrameId = mCurrentFrame.mnId;
     mpLastKeyFrame = pKFini;
@@ -2619,6 +2626,11 @@ void Tracking::CreateInitialMapMonocular() {
 
   mpLocalMapper->InsertKeyFrame(pKFini);
   mpLocalMapper->InsertKeyFrame(pKFcur);
+
+  if (mpMapSparsification) {
+    mlpKeyFramesToSparsification.push_back(pKFcur);
+    mlpKeyFramesToSparsification.push_back(pKFini);
+  }
   mpLocalMapper->mFirstTs = pKFcur->mTimeStamp;
 
   mCurrentFrame.SetPose(pKFcur->GetPose());
@@ -3374,6 +3386,9 @@ void Tracking::CreateNewKeyFrame() {
 
   mpLocalMapper->InsertKeyFrame(pKF);
 
+  if (mpMapSparsification)
+    mlpKeyFramesToSparsification.push_back(pKF);
+
   mpLocalMapper->SetNotStop(false);
 
   mnLastKeyFrameId = mCurrentFrame.mnId;
@@ -3630,6 +3645,31 @@ void Tracking::UpdateLocalKeyFrames() {
   if (pKFmax) {
     mpReferenceKF = pKFmax;
     mCurrentFrame.mpReferenceKF = mpReferenceKF;
+  }
+
+  Map *pCurrentMap = mpAtlas->GetCurrentMap();
+  if (pCurrentMap && pCurrentMap->GetIniertialBA2() && mpMapSparsification) {
+    for (list<KeyFrame *>::iterator lit = mlpKeyFramesToSparsification.begin(),
+                                    lend = mlpKeyFramesToSparsification.end();
+         lit != lend;) {
+      KeyFrame *pKFi = *lit;
+      if (!pKFi || pKFi->GetMap() != pCurrentMap || pKFi->isBad()) {
+        lit = mlpKeyFramesToSparsification.erase(lit);
+      } else {
+        if (pKFi->mnTrackReferenceForFrame != mCurrentFrame.mnId) {
+          bool bToSparse = pKFi->UpdateCountInTracking(false);
+          if (bToSparse) {
+            mpMapSparsification->InsertKeyFrame(pKFi);
+            lit = mlpKeyFramesToSparsification.erase(lit);
+          } else {
+            lit++;
+          }
+        } else {
+          pKFi->UpdateCountInTracking(true);
+          lit++;
+        }
+      }
+    }
   }
 }
 

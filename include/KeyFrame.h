@@ -256,6 +256,18 @@ public:
   int TrackedMapPoints(const int &minObs);
   MapPoint *GetMapPoint(const size_t &idx);
 
+  // Sparsification helpers (ported from MS-SLAM)
+  cv::Mat GetDescriptor(const int &idx);
+  void EraseBadDescriptor();
+  bool UpdateCountInLocalMapping(bool bLocal);
+  bool UpdateCountInTracking(bool bLocal);
+  bool isNonLocal();
+
+  // Grid accessor for MapSparsification
+  std::vector<std::vector<std::vector<size_t>>> GetFeatureGrids() {
+    return mGrid;
+  }
+
   // KeyPoint functions
   std::vector<size_t> GetFeaturesInArea(const float &x, const float &y,
                                         const float &r,
@@ -376,14 +388,14 @@ public:
   cv::Mat mDistCoef;
 
   // Number of KeyPoints
-  const int N;
+  int N;
 
   // KeyPoints, stereo coordinate and descriptors (all associated by an index)
   const std::vector<cv::KeyPoint> mvKeys;
   const std::vector<cv::KeyPoint> mvKeysUn;
   const std::vector<float> mvuRight; // negative value for monocular points
   const std::vector<float> mvDepth;  // negative value for monocular points
-  const cv::Mat mDescriptors;
+  cv::Mat mDescriptors; // non-const to allow EraseBadDescriptor() compaction
 
   // BoW
   DBoW3::BowVector mBowVec;
@@ -421,6 +433,12 @@ public:
 
   std::vector<KeyFrame *> mvpLoopCandKFs;
   std::vector<KeyFrame *> mvpMergeCandKFs;
+
+  // ---- Map Sparsification fields (ported from MS-SLAM) ----
+  bool mbSparsified;                     // true after EraseBadDescriptor called
+  long unsigned int mnMapSaprsificationId; // batch ID from MapSparsification
+  long unsigned int mnIndexForSparsification; // GUROBI variable index
+  static int mnNonLocalKF;              // global threshold: frames out-of-local before sparsifying
 
   // bool mbHasHessian;
   // cv::Mat mHessianPose;
@@ -464,6 +482,11 @@ protected:
   std::vector<int> mvOrderedWeights;
   // For save relation without pointer, this is necessary for save/load function
   std::map<long unsigned int, int> mBackupConnectedKeyFrameIdWeights;
+
+  // Sparsification state
+  int mnCountInLocal;  // counts how many LM iterations this KF stayed outside local
+  bool mbNonLocalKF;   // true once KF has been outside local long enough
+  std::mutex mMutexSparsify; // protects descriptor/keypoint arrays during compaction
 
   // Spanning Tree and Loop Edges
   bool mbFirstConnection;

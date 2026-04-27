@@ -34,7 +34,8 @@ MapPoint::MapPoint()
       mnLastFrameSeen(0), mnBALocalForKF(0), mnFuseCandidateForKF(0),
       mnLoopPointForKF(0), mnCorrectedByKF(0), mnCorrectedReference(0),
       mnBAGlobalForKF(0), mnVisible(1), mnFound(1), mbBad(false),
-      mpReplaced(static_cast<MapPoint *>(NULL)) {
+      mpReplaced(static_cast<MapPoint *>(NULL)),
+      mnMapSparsificationId(0), mnIndexForSparsification(0) {
   mpReplaced = static_cast<MapPoint *>(NULL);
 }
 
@@ -45,7 +46,8 @@ MapPoint::MapPoint(const Eigen::Vector3f &Pos, KeyFrame *pRefKF, Map *pMap)
       mnCorrectedReference(0), mnBAGlobalForKF(0), mpRefKF(pRefKF),
       mnVisible(1), mnFound(1), mbBad(false),
       mpReplaced(static_cast<MapPoint *>(NULL)), mfMinDistance(0),
-      mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()) {
+      mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()),
+      mnMapSparsificationId(0), mnIndexForSparsification(0) {
   SetWorldPos(Pos);
 
   mNormalVector.setZero();
@@ -67,7 +69,8 @@ MapPoint::MapPoint(const double invDepth, cv::Point2f uv_init, KeyFrame *pRefKF,
       mnCorrectedReference(0), mnBAGlobalForKF(0), mpRefKF(pRefKF),
       mnVisible(1), mnFound(1), mbBad(false),
       mpReplaced(static_cast<MapPoint *>(NULL)), mfMinDistance(0),
-      mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()) {
+      mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()),
+      mnMapSparsificationId(0), mnIndexForSparsification(0) {
   mInvDepth = invDepth;
   mInitU = (double)uv_init.x;
   mInitV = (double)uv_init.y;
@@ -90,7 +93,9 @@ MapPoint::MapPoint(const Eigen::Vector3f &Pos, Map *pMap, Frame *pFrame,
       mnCorrectedReference(0), mnBAGlobalForKF(0),
       mpRefKF(static_cast<KeyFrame *>(NULL)), mnVisible(1), mnFound(1),
       mbBad(false), mpReplaced(NULL), mpMap(pMap),
-      mnOriginMapId(pMap->GetId()) {
+      mnOriginMapId(pMap->GetId()),
+      mnMapSparsificationId(0), mnIndexForSparsification(0) {
+
   SetWorldPos(Pos);
 
   Eigen::Vector3f Ow;

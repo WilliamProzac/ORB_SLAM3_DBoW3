@@ -62,6 +62,10 @@ void LocalMapping::SetLoopCloser(LoopClosing *pLoopCloser) {
 
 void LocalMapping::SetTracker(Tracking *pTracker) { mpTracker = pTracker; }
 
+void LocalMapping::SetMapSparsification(MapSparsification *pMapSparsification) {
+  mpMapSparsification = pMapSparsification;
+}
+
 void LocalMapping::Run() {
   mbFinished = false;
 
@@ -267,6 +271,33 @@ void LocalMapping::Run() {
 #endif
 
       mpLoopCloser->InsertKeyFrame(mpCurrentKeyFrame);
+
+      // Feed the sparsification queue for non-inertial mode
+      // (for inertial mode, the Tracking thread feeds the queue instead)
+      if (!mbInertial && mpMapSparsification) {
+        mlpKeyFramesToSparsification.push_back(mpCurrentKeyFrame);
+        for (list<KeyFrame *>::iterator lit = mlpKeyFramesToSparsification.begin(),
+                                        lend = mlpKeyFramesToSparsification.end();
+             lit != lend;) {
+          KeyFrame *pKFi = *lit;
+          if (pKFi->isBad())
+            lit = mlpKeyFramesToSparsification.erase(lit);
+          else {
+            if (pKFi->mnBALocalForKF != mpCurrentKeyFrame->mnId &&
+                pKFi->mnBAFixedForKF != mpCurrentKeyFrame->mnId) {
+              bool bToSparse = pKFi->UpdateCountInLocalMapping(false);
+              if (bToSparse) {
+                mpMapSparsification->InsertKeyFrame(pKFi);
+                lit = mlpKeyFramesToSparsification.erase(lit);
+              } else
+                lit++;
+            } else {
+              pKFi->UpdateCountInLocalMapping(true);
+              lit++;
+            }
+          }
+        }
+      }
 
 #ifdef REGISTER_TIMES
       std::chrono::steady_clock::time_point time_EndLocalMap =

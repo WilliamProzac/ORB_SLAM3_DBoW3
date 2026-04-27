@@ -42,6 +42,7 @@ class Tracking;
 class LocalMapping;
 class KeyFrameDatabase;
 class Map;
+class MapSparsification;
 
 class LoopClosing {
 public:
@@ -58,10 +59,16 @@ public:
 
   void SetLocalMapper(LocalMapping *pLocalMapper);
 
+  void SetMapSparsification(MapSparsification *pMapSparse);
+
   // Main function
   void Run();
 
   void InsertKeyFrame(KeyFrame *pKF);
+
+  // Called by MapSparsification: receive sparsified KFs,
+  // call EraseBadDescriptor and add to the KF database.
+  void InsertSparsifiedKeyFrame(KeyFrame *pKF);
 
   void RequestReset();
   void RequestResetActiveMap(Map *pMap);
@@ -174,8 +181,11 @@ protected:
   ORBVocabulary *mpORBVocabulary;
 
   LocalMapping *mpLocalMapper;
+  MapSparsification *mpMapSparsification;
 
   std::list<KeyFrame *> mlpLoopKeyFrameQueue;
+  std::list<KeyFrame *> mlpSparsifiedKeyFrameQueue;
+  std::mutex mMutexSparsifiedQueue;
 
   std::mutex mMutexLoopQueue;
 

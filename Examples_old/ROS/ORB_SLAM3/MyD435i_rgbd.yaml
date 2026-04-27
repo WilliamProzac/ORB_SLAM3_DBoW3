@@ -62,3 +62,12 @@ Viewer.ViewpointF: 500.0
 #--------------------------------------------------------------------------------------------
 System.LoadAtlasFromFile: ""
 System.SaveAtlasToFile: "rgbd_map.bin"
+
+#--------------------------------------------------------------------------------------------
+# Parameters for sliding window map sparsification
+#--------------------------------------------------------------------------------------------
+Sparsification.N: 75
+Sparsification.Lambda: 500
+Sparsification.GridLambda: 10
+Sparsification.WindowLength: 30
+Sparsification.NonLocalKF: 15

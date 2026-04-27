@@ -26,6 +26,7 @@
 #include "KeyFrame.h"
 #include "KeyFrameDatabase.h"
 #include "LoopClosing.h"
+#include "MapSparsification.h"
 #include "Settings.h"
 #include "Tracking.h"
 
@@ -38,6 +39,7 @@ class System;
 class Tracking;
 class LoopClosing;
 class Atlas;
+class MapSparsification;
 
 class LocalMapping {
 public:
@@ -48,6 +50,8 @@ public:
   void SetLoopCloser(LoopClosing *pLoopCloser);
 
   void SetTracker(Tracking *pTracker);
+
+  void SetMapSparsification(MapSparsification *pMapSparsification);
 
   // Main function
   void Run();
@@ -159,6 +163,10 @@ protected:
 
   LoopClosing *mpLoopCloser;
   Tracking *mpTracker;
+  MapSparsification *mpMapSparsification;
+
+  // Queue of KFs to be considered for sparsification
+  std::list<KeyFrame *> mlpKeyFramesToSparsification;
 
   std::list<KeyFrame *> mlNewKeyFrames;
 

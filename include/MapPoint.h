@@ -206,6 +206,10 @@ public:
 
   unsigned int mnOriginMapId;
 
+  // ---- Map Sparsification fields (ported from MS-SLAM) ----
+  long unsigned int mnMapSparsificationId;   // marks the current sparsification batch
+  long unsigned int mnIndexForSparsification; // index into the GUROBI variable array
+
 protected:
   // Position in absolute coordinates
   Eigen::Vector3f mWorldPos;

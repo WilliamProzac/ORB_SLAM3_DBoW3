@@ -89,6 +89,15 @@ void LoopClosing::SetLocalMapper(LocalMapping *pLocalMapper) {
   mpLocalMapper = pLocalMapper;
 }
 
+void LoopClosing::SetMapSparsification(MapSparsification *pMapSparse) {
+  mpMapSparsification = pMapSparse;
+}
+
+void LoopClosing::InsertSparsifiedKeyFrame(KeyFrame *pKF) {
+  unique_lock<mutex> lock(mMutexSparsifiedQueue);
+  mlpSparsifiedKeyFrameQueue.push_back(pKF);
+}
+
 void LoopClosing::Run() {
   mbFinished = false;
 
@@ -307,6 +316,20 @@ void LoopClosing::Run() {
     }
 
     ResetIfRequested();
+
+    // Process sparsified keyframes: erase descriptors then add to DB
+    if (!mlpSparsifiedKeyFrameQueue.empty()) {
+      unique_lock<mutex> lock(mMutexSparsifiedQueue);
+      while (!mlpSparsifiedKeyFrameQueue.empty()) {
+        KeyFrame *pKFi = mlpSparsifiedKeyFrameQueue.front();
+        mlpSparsifiedKeyFrameQueue.pop_front();
+        if (pKFi && !pKFi->isBad()) {
+          pKFi->EraseBadDescriptor();
+          // Re-add to the DB after descriptor compaction so BoW is updated
+          mpKeyFrameDB->add(pKFi);
+        }
+      }
+    }
 
     if (CheckFinish()) {
       break;

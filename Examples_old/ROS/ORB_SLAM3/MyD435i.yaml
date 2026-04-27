@@ -100,3 +100,12 @@ System.LoadAtlasFromFile: ""
 #System.SaveAtlasToFile: "stereo_inertial_map.bin"
 
 System.SaveAtlasToFile: "rgbd_map"
+
+#--------------------------------------------------------------------------------------------
+# Parameters for sliding window map sparsification
+#--------------------------------------------------------------------------------------------
+Sparsification.N: 75
+Sparsification.Lambda: 500
+Sparsification.GridLambda: 10
+Sparsification.WindowLength: 30
+Sparsification.NonLocalKF: 15

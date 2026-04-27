@@ -114,3 +114,12 @@ Viewer.ViewpointF: 500.0
 #--------------------------------------------------------------------------------------------
 System.LoadAtlasFromFile: "stereo_map"
 System.SaveAtlasToFile: ""
+
+#--------------------------------------------------------------------------------------------
+# Parameters for sliding window map sparsification
+#--------------------------------------------------------------------------------------------
+Sparsification.N: 75
+Sparsification.Lambda: 500
+Sparsification.GridLambda: 10
+Sparsification.WindowLength: 30
+Sparsification.NonLocalKF: 15
