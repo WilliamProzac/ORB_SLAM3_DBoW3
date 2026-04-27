@@ -1206,7 +1206,7 @@ cv::Mat KeyFrame::GetDescriptor(const int &idx) {
   if (idx >= mDescriptors.rows) {
     return cv::Mat();
   }
-  return mDescriptors.row(idx).clone();
+  return mDescriptors.row(idx);
 }
 
 /**

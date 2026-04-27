@@ -370,10 +370,16 @@ void MapPoint::ComputeDistinctiveDescriptors() {
       int leftIndex = get<0>(indexes), rightIndex = get<1>(indexes);
 
       if (leftIndex != -1) {
-        vDescriptors.push_back(pKF->mDescriptors.row(leftIndex));
+        cv::Mat des = pKF->GetDescriptor(leftIndex);
+        if (!des.empty()) {
+          vDescriptors.push_back(des);
+        }
       }
       if (rightIndex != -1) {
-        vDescriptors.push_back(pKF->mDescriptors.row(rightIndex));
+        cv::Mat des = pKF->GetDescriptor(rightIndex);
+        if (!des.empty()) {
+          vDescriptors.push_back(des);
+        }
       }
     }
   }
