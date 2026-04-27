@@ -175,6 +175,25 @@ void MapPoint::AddObservation(KeyFrame *pKF, int idx) {
     nObs++;
 }
 
+void MapPoint::UpdateObservation(KeyFrame *pKF, int idx) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  tuple<int, int> indexes;
+
+  if (mObservations.count(pKF)) {
+    indexes = mObservations[pKF];
+  } else {
+    indexes = tuple<int, int>(-1, -1);
+  }
+
+  if (pKF->NLeft != -1 && idx >= pKF->NLeft) {
+    get<1>(indexes) = idx;
+  } else {
+    get<0>(indexes) = idx;
+  }
+
+  mObservations[pKF] = indexes;
+}
+
 void MapPoint::EraseObservation(KeyFrame *pKF) {
   bool bBad = false;
   {

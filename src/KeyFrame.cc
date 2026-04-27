@@ -665,6 +665,11 @@ vector<size_t> KeyFrame::GetFeaturesInArea(const float &x, const float &y,
                                            const float &r,
                                            const bool bRight) const {
   vector<size_t> vIndices;
+  if (!bRight && mGrid.empty())
+    return vIndices;
+  if (bRight && mGridRight.empty())
+    return vIndices;
+
   vIndices.reserve(N);
 
   float factorX = r;
@@ -1165,9 +1170,7 @@ void KeyFrame::EraseBadDescriptor() {
         vpMapPointsNew.push_back(mvpMapPoints[i]);
 
         // Update the MapPoint's observation index to reflect new position
-        // (we use the simple index update: observation index = newIdx)
-        // Note: full UpdateObservation would need the KF pointer; we rely on
-        // the fact that MapPoint->GetIndexInKeyFrame will be refreshed on next use.
+        mvpMapPoints[i]->UpdateObservation(this, newIdx);
         newIdx++;
       }
     }

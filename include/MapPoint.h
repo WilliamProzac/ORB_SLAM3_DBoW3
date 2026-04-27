@@ -125,6 +125,7 @@ public:
 
   void AddObservation(KeyFrame *pKF, int idx);
   void EraseObservation(KeyFrame *pKF);
+  void UpdateObservation(KeyFrame *pKF, int idx);
 
   std::tuple<int, int> GetIndexInKeyFrame(KeyFrame *pKF);
   bool IsInKeyFrame(KeyFrame *pKF);

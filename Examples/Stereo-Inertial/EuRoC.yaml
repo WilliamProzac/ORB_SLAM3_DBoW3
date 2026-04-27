@@ -112,3 +112,12 @@ Viewer.ViewpointZ: -1.8
 Viewer.ViewpointF: 500.0
 Viewer.imageViewScale: 1.0
 
+#--------------------------------------------------------------------------------------------
+# Parameters for sliding window map sparsification
+#--------------------------------------------------------------------------------------------
+Sparsification.N: 75
+Sparsification.Lambda: 500
+Sparsification.GridLambda: 10
+Sparsification.WindowLength: 30
+Sparsification.NonLocalKF: 15
+
