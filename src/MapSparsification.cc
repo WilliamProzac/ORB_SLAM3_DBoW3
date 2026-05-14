@@ -41,7 +41,7 @@ void MapSparsification::Run() {
                 unique_lock<mutex> lock2(mMutexStop);
                 mbStopped = false;
             }
-            vector<KeyFrame*> vpKFs = GetLastestKeyFrames();
+            vector<std::shared_ptr<KeyFrame>> vpKFs = GetLastestKeyFrames();
             Sparsifying(vpKFs);
             {
                 unique_lock<mutex> lock2(mMutexStop);
@@ -50,14 +50,14 @@ void MapSparsification::Run() {
         }
         if (CheckFinish()) {
             // Process remaining keyframes at shutdown
-            vector<KeyFrame*> vAllKeyFrames = mpAtlas->GetAllKeyFrames();
-            vector<KeyFrame*> vRemainKeyFrames;
-            for (KeyFrame* pKFi : vAllKeyFrames) {
+            vector<std::shared_ptr<KeyFrame>> vAllKeyFrames = mpAtlas->GetAllKeyFrames();
+            vector<std::shared_ptr<KeyFrame>> vRemainKeyFrames;
+            for (std::shared_ptr<KeyFrame> pKFi : vAllKeyFrames) {
                 if (!pKFi->mbSparsified)
                     vRemainKeyFrames.push_back(pKFi);
             }
             Sparsifying(vRemainKeyFrames);
-            for (KeyFrame* pKFi : vRemainKeyFrames) {
+            for (std::shared_ptr<KeyFrame> pKFi : vRemainKeyFrames) {
                 pKFi->EraseBadDescriptor();
             }
             break;
@@ -67,20 +67,20 @@ void MapSparsification::Run() {
     SetFinish();
 }
 
-void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
-    vector<KeyFrame*> vAllKFs = mpAtlas->GetAllKeyFrames();
+void MapSparsification::Sparsifying(vector<std::shared_ptr<KeyFrame>> &vpKFs) {
+    vector<std::shared_ptr<KeyFrame>> vAllKFs = mpAtlas->GetAllKeyFrames();
     mnId++;
     GRBModel model = GRBModel(mGRBEnv);
     std::vector<GRBVar> vxs; // decision variables for each MapPoint
     GRBLinExpr expr = 0;    // cost function
-    vector<MapPoint*> vLocalMapPoints;
+    vector<std::shared_ptr<MapPoint>> vLocalMapPoints;
     long unsigned int index = 0;
     int nMaxObservation = 0;
 
     // Find maximum observation count across window keyframes
-    for (KeyFrame* pKFi : vpKFs) {
-        vector<MapPoint*> vMPs = pKFi->GetMapPointMatches();
-        for (MapPoint* pMPi : vMPs) {
+    for (std::shared_ptr<KeyFrame> pKFi : vpKFs) {
+        vector<std::shared_ptr<MapPoint>> vMPs = pKFi->GetMapPointMatches();
+        for (std::shared_ptr<MapPoint> pMPi : vMPs) {
             if (!pMPi || pMPi->isBad())
                 continue;
             int nObservation = pMPi->Observations();
@@ -102,7 +102,7 @@ void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
                 GRBLinExpr expr_cons_grid = 0;
                 bool bValidCell = false;
                 for (size_t i : grid) {
-                    MapPoint* pMP = (*lit)->GetMapPoint(i);
+                    std::shared_ptr<MapPoint> pMP = (*lit)->GetMapPoint(i);
                     if (pMP && (!pMP->isBad())) {
                         if (pMP->mnMapSparsificationId != mnId) {
                             vLocalMapPoints.push_back(pMP);
@@ -139,13 +139,13 @@ void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
     }
 
     // Add constraints for observations from outside-window keyframes
-    map<KeyFrame*, int> extraNum;
-    map<KeyFrame*, GRBLinExpr> extraConstraints;
+    map<std::shared_ptr<KeyFrame>, int> extraNum;
+    map<std::shared_ptr<KeyFrame>, GRBLinExpr> extraConstraints;
     for (auto pMPi : vLocalMapPoints) {
         long unsigned int iForComp = pMPi->mnIndexForSparsification;
-        const map<KeyFrame*, tuple<int, int>> observations = pMPi->GetObservations();
+        const map<std::shared_ptr<KeyFrame>, tuple<int, int>> observations = pMPi->GetObservations();
         for (auto mit = observations.begin(), mend = observations.end(); mit != mend; mit++) {
-            KeyFrame* pKFi = mit->first;
+            std::shared_ptr<KeyFrame> pKFi = mit->first;
             if (pKFi->mnMapSaprsificationId != mnId) {
                 if (extraNum.count(pKFi)) {
                     extraNum[pKFi]++;
@@ -159,7 +159,7 @@ void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
     }
 
     for (auto it = extraNum.begin(), itend = extraNum.end(); it != itend; it++) {
-        KeyFrame* pKFi = it->first;
+        std::shared_ptr<KeyFrame> pKFi = it->first;
         float nTotal = (float)pKFi->GetNumberMPs();
         float nMini = (float)it->second / nTotal * (float)mnMinNum;
         GRBVar th = model.addVar(0, 1000, 0, GRB_INTEGER);
@@ -176,7 +176,7 @@ void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
 
     // Apply decisions: set bad flag for points to be removed
     for (int i = 0; i < (int)vLocalMapPoints.size(); ++i) {
-        MapPoint* pMPi = vLocalMapPoints[i];
+        std::shared_ptr<MapPoint> pMPi = vLocalMapPoints[i];
         long unsigned int iForComp = pMPi->mnIndexForSparsification;
         double keep = vxs[iForComp].get(GRB_DoubleAttr_X);
         if (keep <= 0) {
@@ -185,27 +185,27 @@ void MapSparsification::Sparsifying(vector<KeyFrame*> &vpKFs) {
     }
 
     // Hand sparsified KFs to LoopClosing for descriptor cleanup and DB insertion
-    for (KeyFrame* pKFi : vpKFs) {
+    for (std::shared_ptr<KeyFrame> pKFi : vpKFs) {
         mpLoopClosing->InsertSparsifiedKeyFrame(pKFi);
     }
 }
 
-vector<KeyFrame*> MapSparsification::GetLastestKeyFrames() {
+vector<std::shared_ptr<KeyFrame>> MapSparsification::GetLastestKeyFrames() {
     unique_lock<mutex> lock(mMutexNewKFs);
     if ((int)mvpNewKeyFrames.size() > mnWindowLength) {
-        vector<KeyFrame*> vKFs(mvpNewKeyFrames.begin(),
+        vector<std::shared_ptr<KeyFrame>> vKFs(mvpNewKeyFrames.begin(),
                                 mvpNewKeyFrames.begin() + mnWindowLength);
         mvpNewKeyFrames.erase(mvpNewKeyFrames.begin(),
                                mvpNewKeyFrames.begin() + mnWindowLength);
         return vKFs;
     } else {
-        vector<KeyFrame*> vKFs(mvpNewKeyFrames.begin(), mvpNewKeyFrames.end());
+        vector<std::shared_ptr<KeyFrame>> vKFs(mvpNewKeyFrames.begin(), mvpNewKeyFrames.end());
         mvpNewKeyFrames.clear();
         return vKFs;
     }
 }
 
-void MapSparsification::InsertKeyFrame(KeyFrame* pKF) {
+void MapSparsification::InsertKeyFrame(std::shared_ptr<KeyFrame> pKF) {
     unique_lock<mutex> lock(mMutexNewKFs);
     mvpNewKeyFrames.push_back(pKF);
 }

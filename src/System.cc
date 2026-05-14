@@ -294,11 +294,11 @@ System::System(const string &strVocFile, const string &strSettingsFile,
     // Initialize tracking reference from loaded map
     Map *pCurrentMap = mpAtlas->GetCurrentMap();
     if (pCurrentMap) {
-      vector<KeyFrame *> vpKFs = pCurrentMap->GetAllKeyFrames();
+      vector<std::shared_ptr<KeyFrame>> vpKFs = pCurrentMap->GetAllKeyFrames();
       if (!vpKFs.empty()) {
         // Find the KeyFrame with highest ID (most recent)
-        KeyFrame *pRefKF = vpKFs[0];
-        for (KeyFrame *pKF : vpKFs) {
+        std::shared_ptr<KeyFrame> pRefKF = vpKFs[0];
+        for (std::shared_ptr<KeyFrame> pKF : vpKFs) {
           if (pKF && !pKF->isBad() && pKF->mnId > pRefKF->mnId) {
             pRefKF = pKF;
           }
@@ -316,6 +316,12 @@ Sophus::SE3f System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight,
                                  const double &timestamp,
                                  const vector<IMU::Point> &vImuMeas,
                                  string filename) {
+  {
+    unique_lock<mutex> lock(mMutexReset);
+    if (mbShutDown)
+      return Sophus::SE3f();
+  }
+
   if (mSensor != STEREO && mSensor != IMU_STEREO) {
     cerr << "ERROR: you called TrackStereo but input sensor was not set to "
             "Stereo nor Stereo-Inertial."
@@ -396,6 +402,12 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap,
                                const double &timestamp,
                                const vector<IMU::Point> &vImuMeas,
                                string filename) {
+  {
+    unique_lock<mutex> lock(mMutexReset);
+    if (mbShutDown)
+      return Sophus::SE3f();
+  }
+
   if (mSensor != RGBD && mSensor != IMU_RGBD) {
     cerr << "ERROR: you called TrackRGBD but input sensor was not set to RGBD."
          << endl;
@@ -641,7 +653,7 @@ void System::SaveTrajectoryTUM(const string &filename) {
     return;
   }
 
-  vector<KeyFrame *> vpKFs = mpAtlas->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = mpAtlas->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -659,7 +671,7 @@ void System::SaveTrajectoryTUM(const string &filename) {
 
   // For each frame we have a reference keyframe (lRit), the timestamp (lT) and
   // a flag which is true when tracking failed (lbL).
-  list<ORB_SLAM3::KeyFrame *>::iterator lRit = mpTracker->mlpReferences.begin();
+  list<std::shared_ptr<KeyFrame>>::iterator lRit = mpTracker->mlpReferences.begin();
   list<double>::iterator lT = mpTracker->mlFrameTimes.begin();
   list<bool>::iterator lbL = mpTracker->mlbLost.begin();
   for (list<Sophus::SE3f>::iterator
@@ -669,7 +681,7 @@ void System::SaveTrajectoryTUM(const string &filename) {
     if (*lbL)
       continue;
 
-    KeyFrame *pKF = *lRit;
+    std::shared_ptr<KeyFrame> pKF = *lRit;
 
     Sophus::SE3f Trw;
 
@@ -700,7 +712,7 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename) {
   cout << endl
        << "Saving keyframe trajectory to " << filename << " ..." << endl;
 
-  vector<KeyFrame *> vpKFs = mpAtlas->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = mpAtlas->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -710,7 +722,7 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename) {
   f << fixed;
 
   for (size_t i = 0; i < vpKFs.size(); i++) {
-    KeyFrame *pKF = vpKFs[i];
+    std::shared_ptr<KeyFrame> pKF = vpKFs[i];
 
     // pKF->SetPose(pKF->GetPose()*Two);
 
@@ -752,7 +764,7 @@ void System::SaveTrajectoryEuRoC(const string &filename) {
     }
   }
 
-  vector<KeyFrame *> vpKFs = pBiggerMap->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = pBiggerMap->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -776,7 +788,7 @@ void System::SaveTrajectoryEuRoC(const string &filename) {
 
   // For each frame we have a reference keyframe (lRit), the timestamp (lT) and
   // a flag which is true when tracking failed (lbL).
-  list<ORB_SLAM3::KeyFrame *>::iterator lRit = mpTracker->mlpReferences.begin();
+  list<std::shared_ptr<KeyFrame>>::iterator lRit = mpTracker->mlpReferences.begin();
   list<double>::iterator lT = mpTracker->mlFrameTimes.begin();
   list<bool>::iterator lbL = mpTracker->mlbLost.begin();
 
@@ -793,7 +805,7 @@ void System::SaveTrajectoryEuRoC(const string &filename) {
     if (*lbL)
       continue;
 
-    KeyFrame *pKF = *lRit;
+    std::shared_ptr<KeyFrame> pKF = *lRit;
     // cout << "KF: " << pKF->mnId << endl;
 
     Sophus::SE3f Trw;
@@ -861,7 +873,7 @@ void System::SaveTrajectoryEuRoC(const string &filename, Map *pMap) {
 
   int numMaxKFs = 0;
 
-  vector<KeyFrame *> vpKFs = pMap->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = pMap->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -885,7 +897,7 @@ void System::SaveTrajectoryEuRoC(const string &filename, Map *pMap) {
 
   // For each frame we have a reference keyframe (lRit), the timestamp (lT) and
   // a flag which is true when tracking failed (lbL).
-  list<ORB_SLAM3::KeyFrame *>::iterator lRit = mpTracker->mlpReferences.begin();
+  list<std::shared_ptr<KeyFrame>>::iterator lRit = mpTracker->mlpReferences.begin();
   list<double>::iterator lT = mpTracker->mlFrameTimes.begin();
   list<bool>::iterator lbL = mpTracker->mlbLost.begin();
 
@@ -902,7 +914,7 @@ void System::SaveTrajectoryEuRoC(const string &filename, Map *pMap) {
     if (*lbL)
       continue;
 
-    KeyFrame *pKF = *lRit;
+    std::shared_ptr<KeyFrame> pKF = *lRit;
     // cout << "KF: " << pKF->mnId << endl;
 
     Sophus::SE3f Trw;
@@ -979,7 +991,7 @@ endl; return;
         }
     }
 
-    vector<KeyFrame*> vpKFs = pBiggerMap->GetAllKeyFrames();
+    vector<std::shared_ptr<KeyFrame>> vpKFs = pBiggerMap->GetAllKeyFrames();
     sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
 
     // Transform all keyframes so that the first keyframe is at the origin.
@@ -1106,7 +1118,7 @@ endl;
         }
     }
 
-    vector<KeyFrame*> vpKFs = pBiggerMap->GetAllKeyFrames();
+    vector<std::shared_ptr<KeyFrame>> vpKFs = pBiggerMap->GetAllKeyFrames();
     sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
 
     // Transform all keyframes so that the first keyframe is at the origin.
@@ -1168,7 +1180,7 @@ void System::SaveKeyFrameTrajectoryEuRoC(const string &filename) {
     return;
   }
 
-  vector<KeyFrame *> vpKFs = pBiggerMap->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = pBiggerMap->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -1178,7 +1190,7 @@ void System::SaveKeyFrameTrajectoryEuRoC(const string &filename) {
   f << fixed;
 
   for (size_t i = 0; i < vpKFs.size(); i++) {
-    KeyFrame *pKF = vpKFs[i];
+    std::shared_ptr<KeyFrame> pKF = vpKFs[i];
 
     // pKF->SetPose(pKF->GetPose()*Two);
 
@@ -1210,7 +1222,7 @@ void System::SaveKeyFrameTrajectoryEuRoC(const string &filename, Map *pMap) {
        << "Saving keyframe trajectory of map " << pMap->GetId() << " to "
        << filename << " ..." << endl;
 
-  vector<KeyFrame *> vpKFs = pMap->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = pMap->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -1220,7 +1232,7 @@ void System::SaveKeyFrameTrajectoryEuRoC(const string &filename, Map *pMap) {
   f << fixed;
 
   for (size_t i = 0; i < vpKFs.size(); i++) {
-    KeyFrame *pKF = vpKFs[i];
+    std::shared_ptr<KeyFrame> pKF = vpKFs[i];
 
     if (!pKF || pKF->isBad())
       continue;
@@ -1254,7 +1266,7 @@ endl; if(mSensor==MONOCULAR)
 endl; return;
     }
 
-    vector<KeyFrame*> vpKFs = mpAtlas->GetAllKeyFrames();
+    vector<std::shared_ptr<KeyFrame>> vpKFs = mpAtlas->GetAllKeyFrames();
     sort(vpKFs.begin(),vpKFs.end(),KeyFrame::lId);
 
     // Transform all keyframes so that the first keyframe is at the origin.
@@ -1313,7 +1325,7 @@ void System::SaveTrajectoryKITTI(const string &filename) {
     return;
   }
 
-  vector<KeyFrame *> vpKFs = mpAtlas->GetAllKeyFrames();
+  vector<std::shared_ptr<KeyFrame>> vpKFs = mpAtlas->GetAllKeyFrames();
   sort(vpKFs.begin(), vpKFs.end(), KeyFrame::lId);
 
   // Transform all keyframes so that the first keyframe is at the origin.
@@ -1331,13 +1343,13 @@ void System::SaveTrajectoryKITTI(const string &filename) {
 
   // For each frame we have a reference keyframe (lRit), the timestamp (lT) and
   // a flag which is true when tracking failed (lbL).
-  list<ORB_SLAM3::KeyFrame *>::iterator lRit = mpTracker->mlpReferences.begin();
+  list<std::shared_ptr<KeyFrame>>::iterator lRit = mpTracker->mlpReferences.begin();
   list<double>::iterator lT = mpTracker->mlFrameTimes.begin();
   for (list<Sophus::SE3f>::iterator
            lit = mpTracker->mlRelativeFramePoses.begin(),
            lend = mpTracker->mlRelativeFramePoses.end();
        lit != lend; lit++, lRit++, lT++) {
-    ORB_SLAM3::KeyFrame *pKF = *lRit;
+    std::shared_ptr<KeyFrame> pKF = *lRit;
 
     Sophus::SE3f Trw;
 
@@ -1435,7 +1447,7 @@ int System::GetTrackingState() {
   return mTrackingState;
 }
 
-vector<MapPoint *> System::GetTrackedMapPoints() {
+std::vector<MapPoint *> System::GetTrackedMapPoints() {
   unique_lock<mutex> lock(mMutexState);
   return mTrackedMapPoints;
 }
@@ -1495,6 +1507,15 @@ void System::InsertTrackTime(double &time) {
 
 void System::SaveAtlas(int type) {
   if (!mStrSaveAtlasToFile.empty()) {
+    vector<Map *> vpMapsToLock = mpAtlas->GetAllMaps();
+    vector<std::unique_lock<std::mutex>> vMapUpdateLocks;
+    vMapUpdateLocks.reserve(vpMapsToLock.size());
+    for (Map *pMap : vpMapsToLock) {
+      if (pMap) {
+        vMapUpdateLocks.emplace_back(pMap->mMutexMapUpdate);
+      }
+    }
+
     // clock_t start = clock();
 
     // Save the current session

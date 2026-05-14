@@ -138,10 +138,10 @@ void MapDrawer::DrawMapPoints()
     if(!pActiveMap)
         return;
 
-    const vector<MapPoint*> &vpMPs = pActiveMap->GetAllMapPoints();
-    const vector<MapPoint*> &vpRefMPs = pActiveMap->GetReferenceMapPoints();
+    const vector<std::shared_ptr<MapPoint>> &vpMPs = pActiveMap->GetAllMapPoints();
+    const vector<std::shared_ptr<MapPoint>> &vpRefMPs = pActiveMap->GetReferenceMapPoints();
 
-    set<MapPoint*> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
+    set<std::shared_ptr<MapPoint>> spRefMPs(vpRefMPs.begin(), vpRefMPs.end());
 
     if(vpMPs.empty())
         return;
@@ -163,7 +163,7 @@ void MapDrawer::DrawMapPoints()
     glBegin(GL_POINTS);
     glColor3f(1.0,0.0,0.0);
 
-    for(set<MapPoint*>::iterator sit=spRefMPs.begin(), send=spRefMPs.end(); sit!=send; sit++)
+    for(set<std::shared_ptr<MapPoint>>::iterator sit=spRefMPs.begin(), send=spRefMPs.end(); sit!=send; sit++)
     {
         if((*sit)->isBad())
             continue;
@@ -189,13 +189,13 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
     if(!pActiveMap)
         return;
 
-    const vector<KeyFrame*> vpKFs = pActiveMap->GetAllKeyFrames();
+    const vector<std::shared_ptr<KeyFrame>> vpKFs = pActiveMap->GetAllKeyFrames();
 
     if(bDrawKF)
     {
         for(size_t i=0; i<vpKFs.size(); i++)
         {
-            KeyFrame* pKF = vpKFs[i];
+            std::shared_ptr<KeyFrame> pKF = vpKFs[i];
             Eigen::Matrix4f Twc = pKF->GetPoseInverse().matrix();
             unsigned int index_color = pKF->mnOriginMapId;
 
@@ -272,11 +272,11 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
         for(size_t i=0; i<vpKFs.size(); i++)
         {
             // Covisibility Graph
-            const vector<KeyFrame*> vCovKFs = vpKFs[i]->GetCovisiblesByWeight(100);
+            const vector<std::shared_ptr<KeyFrame>> vCovKFs = vpKFs[i]->GetCovisiblesByWeight(100);
             Eigen::Vector3f Ow = vpKFs[i]->GetCameraCenter();
             if(!vCovKFs.empty())
             {
-                for(vector<KeyFrame*>::const_iterator vit=vCovKFs.begin(), vend=vCovKFs.end(); vit!=vend; vit++)
+                for(vector<std::shared_ptr<KeyFrame>>::const_iterator vit=vCovKFs.begin(), vend=vCovKFs.end(); vit!=vend; vit++)
                 {
                     if((*vit)->mnId<vpKFs[i]->mnId)
                         continue;
@@ -287,7 +287,7 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
             }
 
             // Spanning tree
-            KeyFrame* pParent = vpKFs[i]->GetParent();
+            std::shared_ptr<KeyFrame> pParent = vpKFs[i]->GetParent();
             if(pParent)
             {
                 Eigen::Vector3f Owp = pParent->GetCameraCenter();
@@ -296,8 +296,8 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
             }
 
             // Loops
-            set<KeyFrame*> sLoopKFs = vpKFs[i]->GetLoopEdges();
-            for(set<KeyFrame*>::iterator sit=sLoopKFs.begin(), send=sLoopKFs.end(); sit!=send; sit++)
+            set<std::shared_ptr<KeyFrame>> sLoopKFs = vpKFs[i]->GetLoopEdges();
+            for(set<std::shared_ptr<KeyFrame>>::iterator sit=sLoopKFs.begin(), send=sLoopKFs.end(); sit!=send; sit++)
             {
                 if((*sit)->mnId<vpKFs[i]->mnId)
                     continue;
@@ -319,9 +319,9 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
         //Draw inertial links
         for(size_t i=0; i<vpKFs.size(); i++)
         {
-            KeyFrame* pKFi = vpKFs[i];
+            std::shared_ptr<KeyFrame> pKFi = vpKFs[i];
             Eigen::Vector3f Ow = pKFi->GetCameraCenter();
-            KeyFrame* pNext = pKFi->mNextKF;
+            std::shared_ptr<KeyFrame> pNext = pKFi->mNextKF;
             if(pNext)
             {
                 Eigen::Vector3f Owp = pNext->GetCameraCenter();
@@ -342,11 +342,11 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
             if(pMap == pActiveMap)
                 continue;
 
-            vector<KeyFrame*> vpKFs = pMap->GetAllKeyFrames();
+            vector<std::shared_ptr<KeyFrame>> vpKFs = pMap->GetAllKeyFrames();
 
             for(size_t i=0; i<vpKFs.size(); i++)
             {
-                KeyFrame* pKF = vpKFs[i];
+                std::shared_ptr<KeyFrame> pKF = vpKFs[i];
                 Eigen::Matrix4f Twc = pKF->GetPoseInverse().matrix();
                 unsigned int index_color = pKF->mnOriginMapId;
 

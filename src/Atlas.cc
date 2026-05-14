@@ -92,12 +92,12 @@ void Atlas::SetViewer(Viewer *pViewer) {
   mHasViewer = true;
 }
 
-void Atlas::AddKeyFrame(KeyFrame *pKF) {
+void Atlas::AddKeyFrame(std::shared_ptr<KeyFrame> pKF) {
   Map *pMapKF = pKF->GetMap();
   pMapKF->AddKeyFrame(pKF);
 }
 
-void Atlas::AddMapPoint(MapPoint *pMP) {
+void Atlas::AddMapPoint(std::shared_ptr<MapPoint> pMP) {
   Map *pMapMP = pMP->GetMap();
   pMapMP->AddMapPoint(pMP);
 }
@@ -138,7 +138,7 @@ GeometricCamera *Atlas::AddCamera(GeometricCamera *pCam) {
 
 std::vector<GeometricCamera *> Atlas::GetAllCameras() { return mvpCameras; }
 
-void Atlas::SetReferenceMapPoints(const std::vector<MapPoint *> &vpMPs) {
+void Atlas::SetReferenceMapPoints(const std::vector<std::shared_ptr<MapPoint>> &vpMPs) {
   unique_lock<mutex> lock(mMutexAtlas);
   mpCurrentMap->SetReferenceMapPoints(vpMPs);
 }
@@ -163,17 +163,17 @@ long unsigned Atlas::KeyFramesInMap() {
   return mpCurrentMap->KeyFramesInMap();
 }
 
-std::vector<KeyFrame *> Atlas::GetAllKeyFrames() {
+std::vector<std::shared_ptr<KeyFrame>> Atlas::GetAllKeyFrames() {
   unique_lock<mutex> lock(mMutexAtlas);
   return mpCurrentMap->GetAllKeyFrames();
 }
 
-std::vector<MapPoint *> Atlas::GetAllMapPoints() {
+std::vector<std::shared_ptr<MapPoint>> Atlas::GetAllMapPoints() {
   unique_lock<mutex> lock(mMutexAtlas);
   return mpCurrentMap->GetAllMapPoints();
 }
 
-std::vector<MapPoint *> Atlas::GetReferenceMapPoints() {
+std::vector<std::shared_ptr<MapPoint>> Atlas::GetReferenceMapPoints() {
   unique_lock<mutex> lock(mMutexAtlas);
   return mpCurrentMap->GetReferenceMapPoints();
 }
@@ -279,6 +279,8 @@ void Atlas::PreSave() {
   };
 
   cout << "Atlas::PreSave: mspMaps.size()=" << mspMaps.size() << endl;
+  mvpBackupMaps.clear();
+  mvpBackupMaps.reserve(mspMaps.size());
   std::copy(mspMaps.begin(), mspMaps.end(), std::back_inserter(mvpBackupMaps));
   sort(mvpBackupMaps.begin(), mvpBackupMaps.end(), compFunctor());
 
@@ -370,12 +372,12 @@ long unsigned int Atlas::GetNumLivedMP() {
   return num;
 }
 
-map<long unsigned int, KeyFrame *> Atlas::GetAtlasKeyframes() {
-  map<long unsigned int, KeyFrame *> mpIdKFs;
+map<long unsigned int, std::shared_ptr<KeyFrame>> Atlas::GetAtlasKeyframes() {
+  map<long unsigned int, std::shared_ptr<KeyFrame>> mpIdKFs;
   for (Map *pMap_i : mvpBackupMaps) {
-    vector<KeyFrame *> vpKFs_Mi = pMap_i->GetAllKeyFrames();
+    vector<std::shared_ptr<KeyFrame>> vpKFs_Mi = pMap_i->GetAllKeyFrames();
 
-    for (KeyFrame *pKF_j_Mi : vpKFs_Mi) {
+    for (std::shared_ptr<KeyFrame> pKF_j_Mi : vpKFs_Mi) {
       mpIdKFs[pKF_j_Mi->mnId] = pKF_j_Mi;
     }
   }

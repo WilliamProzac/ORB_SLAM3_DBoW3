@@ -29,6 +29,7 @@
 
 #include "SerializationUtils.h"
 
+#include <memory>
 #include <mutex>
 #include <opencv2/core/core.hpp>
 
@@ -43,7 +44,7 @@ class KeyFrame;
 class Map;
 class Frame;
 
-class MapPoint {
+class MapPoint : public std::enable_shared_from_this<MapPoint> {
 
   friend class boost::serialization::access;
   template <class Archive>
@@ -106,9 +107,10 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   MapPoint();
 
-  MapPoint(const Eigen::Vector3f &Pos, KeyFrame *pRefKF, Map *pMap);
-  MapPoint(const double invDepth, cv::Point2f uv_init, KeyFrame *pRefKF,
-           KeyFrame *pHostKF, Map *pMap);
+  MapPoint(const Eigen::Vector3f &Pos, std::shared_ptr<KeyFrame> pRefKF, Map *pMap);
+  MapPoint(const double invDepth, cv::Point2f uv_init,
+           std::shared_ptr<KeyFrame> pRefKF,
+           std::shared_ptr<KeyFrame> pHostKF, Map *pMap);
   MapPoint(const Eigen::Vector3f &Pos, Map *pMap, Frame *pFrame,
            const int &idxF);
 
@@ -118,23 +120,23 @@ public:
   Eigen::Vector3f GetNormal();
   void SetNormalVector(const Eigen::Vector3f &normal);
 
-  KeyFrame *GetReferenceKeyFrame();
+  std::shared_ptr<KeyFrame> GetReferenceKeyFrame();
 
-  std::map<KeyFrame *, std::tuple<int, int>> GetObservations();
+  std::map<std::shared_ptr<KeyFrame>, std::tuple<int, int>> GetObservations();
   int Observations();
 
-  void AddObservation(KeyFrame *pKF, int idx);
-  void EraseObservation(KeyFrame *pKF);
-  void UpdateObservation(KeyFrame *pKF, int idx);
+  void AddObservation(std::shared_ptr<KeyFrame> pKF, int idx);
+  void EraseObservation(std::shared_ptr<KeyFrame> pKF);
+  void UpdateObservation(std::shared_ptr<KeyFrame> pKF, int idx);
 
-  std::tuple<int, int> GetIndexInKeyFrame(KeyFrame *pKF);
-  bool IsInKeyFrame(KeyFrame *pKF);
+  std::tuple<int, int> GetIndexInKeyFrame(std::shared_ptr<KeyFrame> pKF);
+  bool IsInKeyFrame(std::shared_ptr<KeyFrame> pKF);
 
   void SetBadFlag();
   bool isBad();
 
-  void Replace(MapPoint *pMP);
-  MapPoint *GetReplaced();
+  void Replace(std::shared_ptr<MapPoint> pMP);
+  std::shared_ptr<MapPoint> GetReplaced();
 
   void IncreaseVisible(int n = 1);
   void IncreaseFound(int n = 1);
@@ -149,7 +151,7 @@ public:
 
   float GetMinDistanceInvariance();
   float GetMaxDistanceInvariance();
-  int PredictScale(const float &currentDist, KeyFrame *pKF);
+  int PredictScale(const float &currentDist, std::shared_ptr<KeyFrame> pKF);
   int PredictScale(const float &currentDist, Frame *pF);
 
   Map *GetMap();
@@ -157,9 +159,10 @@ public:
 
   void PrintObservations();
 
-  void PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP);
-  void PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                map<long unsigned int, MapPoint *> &mpMPid);
+  void PreSave(std::set<std::shared_ptr<KeyFrame>> &spKF,
+               std::set<std::shared_ptr<MapPoint>> &spMP);
+  void PostLoad(std::map<long unsigned int, std::shared_ptr<KeyFrame>> &mpKFid,
+                std::map<long unsigned int, std::shared_ptr<MapPoint>> &mpMPid);
 
 public:
   long unsigned int mnId;
@@ -201,7 +204,7 @@ public:
   double mInvDepth;
   double mInitU;
   double mInitV;
-  KeyFrame *mpHostKF;
+  std::weak_ptr<KeyFrame> mpHostKF;  // weak_ptr: avoid KF↔MP circular ownership
 
   static std::mutex mGlobalMutex;
 
@@ -216,7 +219,7 @@ protected:
   Eigen::Vector3f mWorldPos;
 
   // Keyframes observing the point and associated index in keyframe
-  std::map<KeyFrame *, std::tuple<int, int>> mObservations;
+  std::map<std::shared_ptr<KeyFrame>, std::tuple<int, int>> mObservations;
   // For save relation without pointer, this is necessary for save/load function
   std::map<long unsigned int, int> mBackupObservationsId1;
   std::map<long unsigned int, int> mBackupObservationsId2;
@@ -227,8 +230,8 @@ protected:
   // Best descriptor to fast matching
   cv::Mat mDescriptor;
 
-  // Reference KeyFrame
-  KeyFrame *mpRefKF;
+  // Reference KeyFrame (weak_ptr: KF may be set bad before MP; avoid MP keeping KF alive)
+  std::weak_ptr<KeyFrame> mpRefKF;
   long unsigned int mBackupRefKFId;
 
   // Tracking counters
@@ -237,7 +240,7 @@ protected:
 
   // Bad flag (we do not currently erase MapPoint from memory)
   bool mbBad;
-  MapPoint *mpReplaced;
+  std::weak_ptr<MapPoint> mpReplaced;  // weak_ptr: avoid replace-chain circular refs
   // For save relation without pointer, this is necessary for save/load function
   long long int mBackupReplacedId;
 

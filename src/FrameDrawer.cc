@@ -24,6 +24,19 @@
 
 #include<mutex>
 
+namespace {
+std::shared_ptr<ORB_SLAM3::MapPoint> TryMapPointShared(
+    ORB_SLAM3::MapPoint *pMP) {
+    if (!pMP)
+        return nullptr;
+    try {
+        return pMP->shared_from_this();
+    } catch (const std::bad_weak_ptr &) {
+        return nullptr;
+    }
+}
+}
+
 namespace ORB_SLAM3
 {
 
@@ -47,11 +60,11 @@ cv::Mat FrameDrawer::DrawFrame(float imageScale)
     float thDepth;
 
     Frame currentFrame;
-    vector<MapPoint*> vpLocalMap;
+    vector<std::shared_ptr<MapPoint>> vpLocalMap;
     vector<cv::KeyPoint> vMatchesKeys;
-    vector<MapPoint*> vpMatchedMPs;
+    vector<std::shared_ptr<MapPoint>> vpMatchedMPs;
     vector<cv::KeyPoint> vOutlierKeys;
-    vector<MapPoint*> vpOutlierMPs;
+    vector<std::shared_ptr<MapPoint>> vpOutlierMPs;
     map<long unsigned int, cv::Point2f> mProjectPoints;
     map<long unsigned int, cv::Point2f> mMatchedInImage;
 
@@ -426,7 +439,7 @@ void FrameDrawer::Update(Tracking *pTracker)
                 }
                 else
                 {
-                    mvpOutlierMPs.push_back(pMP);
+                    mvpOutlierMPs.push_back(TryMapPointShared(pMP));
                     mvOutlierKeys.push_back(mvCurrentKeys[i]);
                 }
             }

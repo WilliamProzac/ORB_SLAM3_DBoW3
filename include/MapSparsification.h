@@ -37,11 +37,11 @@ public:
 
     bool CheckNewKeyFrames();
 
-    void InsertKeyFrame(KeyFrame* pKF);
+    void InsertKeyFrame(std::shared_ptr<KeyFrame> pKF);
 
     void SetLoopClosing(LoopClosing *pLoopClosing);
 
-    vector<KeyFrame*> GetLastestKeyFrames();
+    vector<std::shared_ptr<KeyFrame>> GetLastestKeyFrames();
 
     bool isStopped();
     void RequestStop();
@@ -52,7 +52,7 @@ public:
     int mnMinNum;
 
 private:
-    void Sparsifying(vector<KeyFrame*> &vpKFs);
+    void Sparsifying(vector<std::shared_ptr<KeyFrame>> &vpKFs);
     bool CheckFinish();
     void SetFinish();
 
@@ -68,7 +68,7 @@ private:
     float mfLambda;
     float mfGridLambda;
     int mnWindowLength;
-    std::vector<KeyFrame*> mvpNewKeyFrames;
+    std::vector<std::shared_ptr<KeyFrame>> mvpNewKeyFrames;
     std::mutex mMutexNewKFs;
     std::mutex mMutexStop;
     LoopClosing *mpLoopClosing;

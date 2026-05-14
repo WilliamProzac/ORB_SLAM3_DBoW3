@@ -88,7 +88,7 @@ public:
   void SetLoopClosing(LoopClosing *pLoopClosing);
   void SetMapSparsification(MapSparsification *pMapSparsification);
   void SetViewer(Viewer *pViewer);
-  void SetReferenceKeyFrame(KeyFrame *pKF);
+  void SetReferenceKeyFrame(std::shared_ptr<KeyFrame> pKF);
   void SetStepByStep(bool bSet);
   bool GetStepByStep();
 
@@ -102,8 +102,8 @@ public:
   void InformOnlyTracking(const bool &flag);
 
   void UpdateFrameIMU(const float s, const IMU::Bias &b,
-                      KeyFrame *pCurrentKeyFrame);
-  KeyFrame *GetLastKeyFrame() { return mpLastKeyFrame; }
+                      std::shared_ptr<KeyFrame> pCurrentKeyFrame);
+  std::shared_ptr<KeyFrame> GetLastKeyFrame() { return mpLastKeyFrame; }
 
   void CreateMapInAtlas();
   // std::mutex mMutexTracks;
@@ -163,7 +163,7 @@ public:
   // execution. Basically we store the reference keyframe for each frame and its
   // relative transformation
   list<Sophus::SE3f> mlRelativeFramePoses;
-  list<KeyFrame *> mlpReferences;
+  list<std::shared_ptr<KeyFrame>> mlpReferences;
   list<double> mlFrameTimes;
   list<bool> mlbLost;
 
@@ -185,7 +185,7 @@ public:
   double t0IMU; // time-stamp of IMU initialization
   bool mFastInit = false;
 
-  vector<MapPoint *> GetLocalMapMPS();
+  vector<std::shared_ptr<MapPoint>> GetLocalMapMPS();
 
   bool mbWriteStats;
 
@@ -279,7 +279,7 @@ protected:
   MapSparsification *mpMapSparsification;
 
   // Queue of non-local KFs for sparsification (inertial mode)
-  std::list<KeyFrame *> mlpKeyFramesToSparsification;
+  std::list<std::shared_ptr<KeyFrame>> mlpKeyFramesToSparsification;
 
   // ORB
   ORBextractor *mpORBextractorLeft, *mpORBextractorRight;
@@ -294,9 +294,9 @@ protected:
   bool mbSetInit;
 
   // Local Map
-  KeyFrame *mpReferenceKF;
-  std::vector<KeyFrame *> mvpLocalKeyFrames;
-  std::vector<MapPoint *> mvpLocalMapPoints;
+  std::shared_ptr<KeyFrame> mpReferenceKF;
+  std::vector<std::shared_ptr<KeyFrame>> mvpLocalKeyFrames;
+  std::vector<std::shared_ptr<MapPoint>> mvpLocalMapPoints;
 
   // System
   System *mpSystem;
@@ -342,7 +342,7 @@ protected:
   int mnMatchesInliers;
 
   // Last Frame, KeyFrame and Relocalisation Info
-  KeyFrame *mpLastKeyFrame;
+  std::shared_ptr<KeyFrame> mpLastKeyFrame;
   unsigned int mnLastKeyFrameId;
   unsigned int mnLastRelocFrameId;
   double mTimeStampLost;
@@ -361,7 +361,7 @@ protected:
   // Color order (true RGB, false BGR, ignored if grayscale)
   bool mbRGB;
 
-  list<MapPoint *> mlpTemporalPoints;
+  list<std::shared_ptr<MapPoint>> mlpTemporalPoints;
 
   // int nMapChangeIndex;
 

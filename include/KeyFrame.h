@@ -34,12 +34,11 @@
 #include "GeometricCamera.h"
 #include "SerializationUtils.h"
 
+#include <memory>
 #include <mutex>
-
-#include <boost/serialization/base_object.hpp>
-#include <boost/serialization/map.hpp>
-#include <boost/serialization/vector.hpp>
+#include <atomic>
 using namespace std;
+
 
 namespace ORB_SLAM3 {
 
@@ -50,7 +49,7 @@ class KeyFrameDatabase;
 
 class GeometricCamera;
 
-class KeyFrame {
+class KeyFrame : public std::enable_shared_from_this<KeyFrame> {
   friend class boost::serialization::access;
 
   template <class Archive>
@@ -122,8 +121,8 @@ class KeyFrame {
     // KeyPoints
     serializeVectorKeyPoints<Archive>(ar, mvKeys, version);
     serializeVectorKeyPoints<Archive>(ar, mvKeysUn, version);
-    ar &const_cast<vector<float> &>(mvuRight);
-    ar &const_cast<vector<float> &>(mvDepth);
+    ar & mvuRight;  // now non-const
+    ar & mvDepth;   // now non-const
     serializeMatrix<Archive>(ar, mDescriptors, version);
     // BOW
     ar & mBowVec;
@@ -215,49 +214,56 @@ public:
 
   // Bag of Words Representation
   void ComputeBoW();
+  DBoW3::BowVector GetBowVector();
+  DBoW3::FeatureVector GetFeatureVector();
 
   // Covisibility graph functions
-  void AddConnection(KeyFrame *pKF, const int &weight);
-  void EraseConnection(KeyFrame *pKF);
+  void AddConnection(std::shared_ptr<KeyFrame> pKF, const int &weight);
+  void EraseConnection(std::shared_ptr<KeyFrame> pKF);
 
   void UpdateConnections(bool upParent = true);
   void UpdateBestCovisibles();
-  std::set<KeyFrame *> GetConnectedKeyFrames();
-  std::vector<KeyFrame *> GetVectorCovisibleKeyFrames();
-  std::vector<KeyFrame *> GetBestCovisibilityKeyFrames(const int &N);
-  std::vector<KeyFrame *> GetCovisiblesByWeight(const int &w);
-  int GetWeight(KeyFrame *pKF);
+  std::set<std::shared_ptr<KeyFrame>> GetConnectedKeyFrames();
+  std::vector<std::shared_ptr<KeyFrame>> GetVectorCovisibleKeyFrames();
+  std::vector<std::shared_ptr<KeyFrame>> GetBestCovisibilityKeyFrames(const int &N);
+  std::vector<std::shared_ptr<KeyFrame>> GetCovisiblesByWeight(const int &w);
+  int GetWeight(std::shared_ptr<KeyFrame> pKF);
 
   // Spanning tree functions
-  void AddChild(KeyFrame *pKF);
-  void EraseChild(KeyFrame *pKF);
-  void ChangeParent(KeyFrame *pKF);
-  std::set<KeyFrame *> GetChilds();
-  KeyFrame *GetParent();
-  bool hasChild(KeyFrame *pKF);
+  void AddChild(std::shared_ptr<KeyFrame> pKF);
+  void EraseChild(std::shared_ptr<KeyFrame> pKF);
+  void ChangeParent(std::shared_ptr<KeyFrame> pKF);
+  std::set<std::shared_ptr<KeyFrame>> GetChilds();
+  std::shared_ptr<KeyFrame> GetParent();
+  bool hasChild(std::shared_ptr<KeyFrame> pKF);
   void SetFirstConnection(bool bFirst);
 
   // Loop Edges
-  void AddLoopEdge(KeyFrame *pKF);
-  std::set<KeyFrame *> GetLoopEdges();
+  void AddLoopEdge(std::shared_ptr<KeyFrame> pKF);
+  std::set<std::shared_ptr<KeyFrame>> GetLoopEdges();
 
   // Merge Edges
-  void AddMergeEdge(KeyFrame *pKF);
-  set<KeyFrame *> GetMergeEdges();
+  void AddMergeEdge(std::shared_ptr<KeyFrame> pKF);
+  std::set<std::shared_ptr<KeyFrame>> GetMergeEdges();
 
   // MapPoint observation functions
   int GetNumberMPs();
-  void AddMapPoint(MapPoint *pMP, const size_t &idx);
+  void AddMapPoint(std::shared_ptr<MapPoint> pMP, const size_t &idx);
   void EraseMapPointMatch(const int &idx);
-  void EraseMapPointMatch(MapPoint *pMP);
-  void ReplaceMapPointMatch(const int &idx, MapPoint *pMP);
-  std::set<MapPoint *> GetMapPoints();
-  std::vector<MapPoint *> GetMapPointMatches();
+  void EraseMapPointMatch(std::shared_ptr<MapPoint> pMP);
+  void ReplaceMapPointMatch(const int &idx, std::shared_ptr<MapPoint> pMP);
+  std::set<std::shared_ptr<MapPoint>> GetMapPoints();
+  std::vector<std::shared_ptr<MapPoint>> GetMapPointMatches();
   int TrackedMapPoints(const int &minObs);
-  MapPoint *GetMapPoint(const size_t &idx);
+  std::shared_ptr<MapPoint> GetMapPoint(const size_t &idx);
 
   // Sparsification helpers (ported from MS-SLAM)
   cv::Mat GetDescriptor(const int &idx);
+  bool TryGetOctaveFromObservationIndex(const int &idx, int &octave);
+  bool TryGetLeftObservationData(const int &leftIdx, cv::KeyPoint &kpUn,
+                                 float &uRight, float &invSigma2);
+  bool TryGetRightObservationData(const int &rightIdx, cv::KeyPoint &kp,
+                                  float &invSigma2);
   void EraseBadDescriptor();
   bool UpdateCountInLocalMapping(bool bLocal);
   bool UpdateCountInTracking(bool bLocal);
@@ -290,7 +296,8 @@ public:
 
   static bool weightComp(int a, int b) { return a > b; }
 
-  static bool lId(KeyFrame *pKF1, KeyFrame *pKF2) {
+  static bool lId(std::shared_ptr<KeyFrame> pKF1,
+                  std::shared_ptr<KeyFrame> pKF2) {
     return pKF1->mnId < pKF2->mnId;
   }
 
@@ -304,15 +311,16 @@ public:
 
   IMU::Bias GetImuBias();
 
-  bool ProjectPointDistort(MapPoint *pMP, cv::Point2f &kp, float &u, float &v);
-  bool ProjectPointUnDistort(MapPoint *pMP, cv::Point2f &kp, float &u,
+  bool ProjectPointDistort(std::shared_ptr<MapPoint> pMP, cv::Point2f &kp, float &u, float &v);
+  bool ProjectPointUnDistort(std::shared_ptr<MapPoint> pMP, cv::Point2f &kp, float &u,
                              float &v);
 
-  void PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP,
-               set<GeometricCamera *> &spCam);
-  void PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                map<long unsigned int, MapPoint *> &mpMPid,
-                map<unsigned int, GeometricCamera *> &mpCamId);
+  void PreSave(std::set<std::shared_ptr<KeyFrame>> &spKF,
+               std::set<std::shared_ptr<MapPoint>> &spMP,
+               std::set<GeometricCamera *> &spCam);
+  void PostLoad(std::map<long unsigned int, std::shared_ptr<KeyFrame>> &mpKFid,
+                std::map<long unsigned int, std::shared_ptr<MapPoint>> &mpMPid,
+                std::map<unsigned int, GeometricCamera *> &mpCamId);
 
   void SetORBVocabulary(ORBVocabulary *pORBVoc);
   void SetKeyFrameDatabase(KeyFrameDatabase *pKFDB);
@@ -392,9 +400,9 @@ public:
 
   // KeyPoints, stereo coordinate and descriptors (all associated by an index)
   const std::vector<cv::KeyPoint> mvKeys;
-  const std::vector<cv::KeyPoint> mvKeysUn;
-  const std::vector<float> mvuRight; // negative value for monocular points
-  const std::vector<float> mvDepth;  // negative value for monocular points
+  std::vector<cv::KeyPoint> mvKeysUn;   // non-const: modified by EraseBadDescriptor()
+  std::vector<float> mvuRight;           // non-const: modified by EraseBadDescriptor()
+  std::vector<float> mvDepth;            // non-const: modified by EraseBadDescriptor()
   cv::Mat mDescriptors; // non-const to allow EraseBadDescriptor() compaction
 
   // BoW
@@ -419,8 +427,8 @@ public:
   const int mnMaxY;
 
   // Preintegrated IMU measurements from previous keyframe
-  KeyFrame *mPrevKF;
-  KeyFrame *mNextKF;
+  std::shared_ptr<KeyFrame> mPrevKF;
+  std::shared_ptr<KeyFrame> mNextKF;
 
   IMU::Preintegrated *mpImuPreintegrated;
   IMU::Calib mImuCalib;
@@ -431,8 +439,8 @@ public:
 
   int mnDataset;
 
-  std::vector<KeyFrame *> mvpLoopCandKFs;
-  std::vector<KeyFrame *> mvpMergeCandKFs;
+  std::vector<std::shared_ptr<KeyFrame>> mvpLoopCandKFs;
+  std::vector<std::shared_ptr<KeyFrame>> mvpMergeCandKFs;
 
   // ---- Map Sparsification fields (ported from MS-SLAM) ----
   bool mbSparsified;                     // true after EraseBadDescriptor called
@@ -466,7 +474,7 @@ protected:
   IMU::Bias mImuBias;
 
   // MapPoints associated to keypoints
-  std::vector<MapPoint *> mvpMapPoints;
+  std::vector<std::shared_ptr<MapPoint>> mvpMapPoints;
   // For save relation without pointer, this is necessary for save/load function
   std::vector<long long int> mvBackupMapPointsId;
 
@@ -477,8 +485,8 @@ protected:
   // Grid over the image to speed up feature matching
   std::vector<std::vector<std::vector<size_t>>> mGrid;
 
-  std::map<KeyFrame *, int> mConnectedKeyFrameWeights;
-  std::vector<KeyFrame *> mvpOrderedConnectedKeyFrames;
+  std::map<std::shared_ptr<KeyFrame>, int> mConnectedKeyFrameWeights;
+  std::vector<std::shared_ptr<KeyFrame>> mvpOrderedConnectedKeyFrames;
   std::vector<int> mvOrderedWeights;
   // For save relation without pointer, this is necessary for save/load function
   std::map<long unsigned int, int> mBackupConnectedKeyFrameIdWeights;
@@ -486,14 +494,13 @@ protected:
   // Sparsification state
   int mnCountInLocal;  // counts how many LM iterations this KF stayed outside local
   bool mbNonLocalKF;   // true once KF has been outside local long enough
-  std::mutex mMutexSparsify; // protects descriptor/keypoint arrays during compaction
 
   // Spanning Tree and Loop Edges
   bool mbFirstConnection;
-  KeyFrame *mpParent;
-  std::set<KeyFrame *> mspChildrens;
-  std::set<KeyFrame *> mspLoopEdges;
-  std::set<KeyFrame *> mspMergeEdges;
+  std::shared_ptr<KeyFrame> mpParent;
+  std::set<std::shared_ptr<KeyFrame>> mspChildrens;
+  std::set<std::shared_ptr<KeyFrame>> mspLoopEdges;
+  std::set<std::shared_ptr<KeyFrame>> mspMergeEdges;
   // For save relation without pointer, this is necessary for save/load function
   long long int mBackupParentId;
   std::vector<long unsigned int> mvBackupChildrensId;
@@ -523,8 +530,10 @@ protected:
   // Mutex
   std::mutex mMutexPose; // for pose, velocity and biases
   std::mutex mMutexConnections;
-  std::mutex mMutexFeatures;
+  mutable std::mutex mMutexFeatures;
   std::mutex mMutexMap;
+  std::mutex mMutexSparsify; // protects mvKeysUn/mvuRight/mvDepth during sparsification
+  std::atomic<bool> mbErasingDescriptors; // set true while EraseBadDescriptor is running
 
 public:
   GeometricCamera *mpCamera, *mpCamera2;
