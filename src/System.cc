@@ -1413,6 +1413,8 @@ vector<MapPoint *> System::GetTrackedMapPoints() {
   return mTrackedMapPoints;
 }
 
+vector<KeyFrame *> System::GetAllKeyFrames() { return mpAtlas->GetAllKeyFrames(); }
+
 vector<cv::KeyPoint> System::GetTrackedKeyPointsUn() {
   unique_lock<mutex> lock(mMutexState);
   return mTrackedKeyPointsUn;

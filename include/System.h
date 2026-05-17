@@ -182,6 +182,7 @@ public:
   // You can call this right after TrackMonocular (or stereo or RGBD)
   int GetTrackingState();
   std::vector<MapPoint *> GetTrackedMapPoints();
+  std::vector<KeyFrame *> GetAllKeyFrames();
   std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
 
   // For debugging

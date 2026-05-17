@@ -84,7 +84,7 @@ IMU.T_b_c1: !!opencv-matrix
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 1200
+ORBextractor.nFeatures: 2400
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.2
@@ -94,7 +94,7 @@ ORBextractor.nLevels: 8
 
 # ORB Extractor: Fast threshold
 ORBextractor.iniThFAST: 15
-ORBextractor.minThFAST: 5
+ORBextractor.minThFAST: 6   
 
 #--------------------------------------------------------------------------------------------
 # Viewer Parameters
