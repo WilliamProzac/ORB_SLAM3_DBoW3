@@ -2,19 +2,86 @@
 
 ## Current Active Feature
 
-- Feature ID: none
-- Started: 2026-05-17
-- Current state: no active feature; most recently completed feature is `F12` (`passing`)
-- Owner/session: stable pose interface for grid-map consumers on `grid_map`
+- Feature ID: F15
+- Started: 2026-05-19
+- Current state: `F15` is `passing`
+- Owner/session: stereo odometry-interface implementation and replay-backed runtime validation on `grid_map`
 - Blockers:
   - TODO: `F13` remains blocked on loop-closure rebuild runtime evidence.
-  - TODO: `F14` and `F15` remain not started.
+  - TODO: `F14` remains not started.
   - TODO: `F18` remains blocked on gravity-aligned activation and tilt-test evidence.
+  - TODO: `F15` passed on 2026-05-19. The remaining open work on this branch is outside the `F15` scope.
 
 ## Command Log
 
 | Date | Command | Result | Evidence |
 |---|---|---|---|
+| 2026-05-19 | `git status --short` | passed | confirmed dirty worktree before the `F15` implementation session and preserved unrelated user changes |
+| 2026-05-19 | `sed -n '1,260p' README.md` | passed | project workflow notes re-read before scoping the odometry-interface feature |
+| 2026-05-19 | `sed -n '1,260p' docs/repo-map.md` | passed | repo lane reconfirmed as `ros` with wrapper-only implementation target |
+| 2026-05-19 | `sed -n '1,260p' docs/validation.md` | passed | `F15` verification gap identified and then tightened before code edits |
+| 2026-05-19 | `sed -n '1,260p' docs/features.md` | passed | confirmed `F15` was the only feature selected for this session |
+| 2026-05-19 | `sed -n '1,260p' docs/progress.md` | passed | previous session notes reviewed before promoting `F15` |
+| 2026-05-19 | `sed -n '1,260p' docs/session-handoff.md` | passed | previous handoff reviewed before recording the new session |
+| 2026-05-19 | `sed -n '730,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc` | passed | existing `/grid_map/pose` publisher and current wrapper structure reviewed before edit |
+| 2026-05-19 | `sed -n '960,1035p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc` | passed | tracking gate and publish path reviewed before adding `/odometry` |
+| 2026-05-19 | `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh` | passed | ROS package rebuilt successfully after adding the wrapper-only `/odometry` publisher |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra1/image_rect_raw` | failed | initial sandbox precheck could not communicate with the master using the localhost URI |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra2/image_rect_raw` | failed | initial sandbox precheck could not communicate with the master using the localhost URI |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/imu` | failed | initial sandbox precheck could not communicate with the master using the localhost URI |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/infra1/image_rect_raw` | blocked | outside the sandbox, the topic existed but produced no new image messages during the precheck window |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/infra2/image_rect_raw` | blocked | outside the sandbox, the topic existed but produced no new image messages during the precheck window |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/imu` | blocked | outside the sandbox, the IMU topic existed but produced no new messages during the precheck window |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && ./run_stereo_inertial.sh mapping stereo --log --no-bag` | passed | replay-ready stereo wrapper started successfully without nested bag recording |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic info /odometry` | passed | confirmed `/Stereo` advertised the new `/odometry` topic during runtime |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic type /odometry` | passed | confirmed `/odometry` type is `nav_msgs/Odometry` |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic type /grid_map/pose` | passed | confirmed `/grid_map/pose` remained `geometry_msgs/PoseStamped` after the `F15` change |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rosbag play mapping_stereo_20260517_133550.bag` from `/home/ywl/Project/ORB_SLAM3_DBoW3/bags` | passed | replay fed stereo and IMU input to the wrapper for bounded `F15` runtime validation |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 25s rostopic echo -n 3 /odometry` | passed | captured live `/odometry` samples showing `map -> left_camera`, changing pose values, zero twist, and `1e6` diagonal covariance sentinels |
+| 2026-05-19 | `export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 10s rostopic echo -n 1 /grid_map/pose` | passed | confirmed `/grid_map/pose` still published live `geometry_msgs/PoseStamped` messages in the `map` frame |
+| 2026-05-18 | `git status --short` | passed | confirmed dirty worktree before opening the relocalization-status docs feature |
+| 2026-05-18 | `sed -n '1,220p' AGENTS.md` | passed | governance rules re-read before selecting the new feature |
+| 2026-05-18 | `sed -n '1,220p' README.md` | passed | pure-localization workflow notes re-read before scoping the relocalization-status feature |
+| 2026-05-18 | `sed -n '1,220p' docs/repo-map.md` | passed | work lane reconfirmed as `ros` plus `core` tracking analysis |
+| 2026-05-18 | `sed -n '1,260p' docs/validation.md` | passed | validation entrypoints checked before defining the new feature |
+| 2026-05-18 | `sed -n '1,220p' docs/progress.md` | passed | previous session state reviewed before promoting a new active feature |
+| 2026-05-18 | `sed -n '1,220p' docs/session-handoff.md` | passed | prior handoff reviewed before updating docs |
+| 2026-05-18 | `sed -n '1,220p' Examples_old/ROS/ORB_SLAM3/CMakeLists.txt` | passed | rosbuild package structure reviewed to assess custom-message feasibility |
+| 2026-05-18 | `find Examples_old/ROS/ORB_SLAM3 -maxdepth 2 \( -type d -name msg -o -type f -name '*.msg' \) -print` | passed | confirmed there is currently no package-local ROS message definition on this branch |
+| 2026-05-18 | `rg -n "Relocalization|relocalization|localization mode|OnlyTracking|LOST|RECENTLY_LOST|mbVO|DetectRelocalizationCandidates|Relocalized" src/Tracking.cc src/System.cc include/Tracking.h Examples_old/ROS/ORB_SLAM3/src` | passed | located the pure-localization startup path, relocalization call sites, and existing tracking states |
+| 2026-05-18 | `sed -n '250,360p' src/System.cc` | passed | confirmed pure localization auto-enables `mbOnlyTracking` and seeds the tracker from the loaded map |
+| 2026-05-18 | `sed -n '1360,1405p' src/Tracking.cc` | passed | confirmed localization startup forces `mState = LOST` to trigger relocalization immediately |
+| 2026-05-18 | `sed -n '1888,2075p' src/Tracking.cc` | passed | confirmed the localization-mode tracking branch calls `Relocalization()` when `mState == LOST` and may also call it in `mbVO` fallback handling |
+| 2026-05-18 | `sed -n '2098,2175p' src/Tracking.cc` | passed | confirmed successful relocalization returns the tracker to `OK` via the shared `bOK` path |
+| 2026-05-18 | `sed -n '3636,3875p' src/Tracking.cc` | passed | confirmed the current `Relocalization()` API exposes only running, success, and failure semantics |
+| 2026-05-18 | `sed -n '130,145p' include/Tracking.h` | passed | confirmed the public tracking-state enum has `OK`, `RECENTLY_LOST`, `LOST`, and `OK_KLT`, but no dedicated relocalization-status enum |
+| 2026-05-18 | `nl -ba include/Tracking.h | sed -n '130,145p'` | passed | captured exact tracking-state enum lines for the docs analysis |
+| 2026-05-18 | `nl -ba src/System.cc | sed -n '270,295p'` | passed | captured exact pure-localization auto-activation lines for the docs analysis |
+| 2026-05-18 | `nl -ba src/Tracking.cc | sed -n '1370,1385p'` | passed | captured exact forced-LOST startup lines for the docs analysis |
+| 2026-05-18 | `nl -ba src/Tracking.cc | sed -n '2010,2070p'` | passed | captured exact localization-branch relocalization call sites for the docs analysis |
+| 2026-05-18 | `nl -ba src/Tracking.cc | sed -n '2105,2125p'` | passed | captured the shared `bOK -> mState = OK` success transition after localization recovery |
+| 2026-05-18 | `nl -ba src/Tracking.cc | sed -n '3636,3870p'` | passed | captured the direct running/success/failure semantics of `Tracking::Relocalization()` |
+| 2026-05-19 | `git status --short` | passed | confirmed dirty worktree before the `F19` implementation session and preserved unrelated user changes |
+| 2026-05-19 | `sed -n '1,220p' README.md` | passed | project workflow and localization wrapper notes re-read before code edits |
+| 2026-05-19 | `sed -n '1,220p' docs/repo-map.md` | passed | repo lane reconfirmed as `ros` with minimal `core` support for `F19` |
+| 2026-05-19 | `sed -n '1,260p' docs/validation.md` | passed | `F19` verification path re-read and tightened before code edits |
+| 2026-05-19 | `sed -n '1,260p' docs/features.md` | passed | confirmed `F19` remained the only active feature before implementation |
+| 2026-05-19 | `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh` | failed | first rebuild exposed undefined references because the updated `System` methods had not yet been rebuilt into `libORB_SLAM3.so` |
+| 2026-05-19 | `./build.sh` | partial | used to rebuild the native library after the `F19` core-interface changes; `libORB_SLAM3.so` linked successfully before the broader native example build was allowed to continue |
+| 2026-05-19 | `make -j1` in `/home/ywl/Project/ORB_SLAM3_DBoW3/build` | passed | serialized rebuild confirmed the updated `System` and `Tracking` code compiled into the core library without new errors |
+| 2026-05-19 | `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh` | passed | ROS package rebuilt successfully after adding the custom message and periodic relocalization-status publisher |
+| 2026-05-19 | `rosbag info bags/mapping_stereo_20260517_133550.bag` | passed | confirmed the fallback replay bag contains `/camera/infra1/image_rect_raw`, `/camera/infra2/image_rect_raw`, and `/camera/imu` |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 rostopic list` | passed | confirmed the source topic names existed, but later rate checks showed they were dormant rather than truly live |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra1/image_rect_raw` | blocked | source topic name existed but produced no new image messages during the precheck window |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/imu` | blocked | source topic name existed but produced no new IMU messages during the precheck window |
+| 2026-05-19 | `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh localization stereo --log` | partial | initial direct localization attempt advertised `/grid_map/relocalization_status`, but no status messages were published because the upstream publishers were dormant |
+| 2026-05-19 | `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh localization stereo --log --no-bag` | passed | replay-ready pure-localization node started successfully without nested recording |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 3s rostopic echo -n 1 /grid_map/relocalization_status` | passed | no message arrived before replay began, matching the no-pre-attempt-publication contract |
+| 2026-05-19 | `rosbag play mapping_stereo_20260517_133550.bag` from `/home/ywl/Project/ORB_SLAM3_DBoW3/bags` | passed | replay fed stereo and IMU input to the localization node for bounded `F19` runtime validation |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 rostopic info /grid_map/relocalization_status` | passed | confirmed `/Stereo` advertised the new topic during runtime |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 rostopic type /grid_map/relocalization_status` | passed | confirmed the topic type is `ORB_SLAM3/RelocalizationStatus` |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 25s rostopic echo /grid_map/relocalization_status` | passed | captured live samples showing `timestamp_ns` plus `status`, with observed values including `RelocalizationRunning` and `RelocalizationFailed` |
+| 2026-05-19 | `ROS_MASTER_URI=http://localhost:11311 timeout 15s rostopic hz /grid_map/relocalization_status` | passed | measured approximately `10.000 Hz` publication during replay-backed localization |
 | 2026-05-17 | `git status --short` | passed | confirmed dirty worktree before opening `F12` |
 | 2026-05-17 | `sed -n '1,120p' docs/features.md` | passed | `F12` and `F15` boundaries re-read before edits |
 | 2026-05-17 | `sed -n '1,180p' docs/validation.md` | passed | `F12` verification path re-read before edits |
@@ -154,3 +221,11 @@
 - `F12` is now implemented in `ros_stereo.cc` as a minimal downstream pose interface, separate from `F15`. The `Stereo` node publishes `/grid_map/pose` as `geometry_msgs/PoseStamped` from `Tcw.inverse()` only when tracking is `OK` or `OK_KLT`, using the same `map` world frame expected by `/grid_map`.
 - The `F12` doc boundary is now explicit: this feature is only the single `/grid_map/pose` consumer-facing pose topic, while `F15` remains reserved for any later generalized ego-motion or odometry-style contract.
 - `F12` is now `passing`: after the earlier build and bounded runtime checks confirmed advertise and type, the user completed the runtime validation and confirmed the pose stream can be extracted successfully from `/grid_map/pose`.
+- `F19` is now implemented and passing. The stereo localization wrapper publishes `/grid_map/relocalization_status` as `ORB_SLAM3/RelocalizationStatus` with the narrowed three-state contract only: `RelocalizationRunning`, `RelocalizationSucceeded`, and `RelocalizationFailed`.
+- The implementation keeps periodic publication in the ROS wrapper, not the SLAM core. `Tracking::Relocalization()` only updates a minimal latest-status slot, while `ros_stereo.cc` publishes the cached latest status every `0.1 s` when pure localization is active.
+- The replay-backed runtime validation captured the intended semantics: no status message arrived before replay began, then the stream emitted `RelocalizationRunning` and `RelocalizationFailed` while `rostopic hz` measured approximately `10 Hz`.
+- The source-topic precheck caught an important validation pitfall on this workstation: `/camera/infra1/image_rect_raw`, `/camera/infra2/image_rect_raw`, and `/camera/imu` existed in the ROS graph by topic name, but they were not publishing new messages. The first direct `localization stereo --log` attempt therefore did not satisfy the `F19` validation contract, and the final passing evidence came from the required `--no-bag` plus `rosbag play mapping_stereo_20260517_133550.bag` fallback path instead.
+- `F15` is now implemented and passing as a wrapper-only follow-up to `F12`. The `Stereo` node continues to publish `/grid_map/pose` as `geometry_msgs/PoseStamped` for existing consumers, and now also publishes `/odometry` as `nav_msgs/Odometry` from the same `Tcw.inverse()` pose source.
+- The `F15` odometry contract is intentionally narrow: `header.frame_id` is `map`, `child_frame_id` is `left_camera`, `twist` is zero-filled because the wrapper does not estimate velocity, and both covariance arrays use `1e6` diagonal sentinel values to advertise “unknown / not estimated” rather than a real uncertainty model.
+- The `F15` runtime used the same important validation guardrail as `F19`: the stereo image and IMU topics existed in the ROS graph but were not live, so the passing evidence came from `./run_stereo_inertial.sh mapping stereo --log --no-bag` plus `rosbag play mapping_stereo_20260517_133550.bag`, not from a no-input direct launch.
+- Replay-backed live samples from `/odometry` confirmed the expected `map -> left_camera` framing, changing pose values across consecutive messages, zero twist fields, and `1e6` diagonal sentinel values in both pose and twist covariance arrays, while `/grid_map/pose` remained available as `geometry_msgs/PoseStamped`.

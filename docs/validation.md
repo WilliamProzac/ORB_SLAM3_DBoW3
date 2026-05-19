@@ -11,9 +11,21 @@ Source basis: `run_stereo_inertial.sh`, `README.md`, repository tree scan, and b
 - Use `mapping`, `mapping_save`, or `localization` according to the target workflow.
 - The sensor mode must be one of `stereo_inertial`, `rgbd`, or `stereo`.
 - `run_stereo_inertial.sh` records bags with `rosbag record`; it does not replay existing bags.
+- Before treating a runtime validation attempt as meaningful, verify whether the
+  required upstream ROS input topics are already live for the selected mode,
+  especially stereo image topics and IMU topics when the feature depends on
+  them.
+- If the required upstream topics are absent, start the wrapper with
+  `--no-bag` and replay a checked-in bag manually rather than letting the
+  wrapper record a nested bag while no input exists.
 - The runtime wrapper writes terminal logs to `logs/` when `--log` is used.
 - It also writes resource logs in `logs/resource_usage_*`.
 - It also records output bags in `bags/`.
+- A known replay path for this workstation is:
+  start the wrapper with
+  `./run_stereo_inertial.sh <mode> <sensor> --log --no-bag`
+  and then from `/home/ywl/Project/ORB_SLAM3_DBoW3/bags` run
+  `rosbag play mapping_stereo_20260517_133550.bag`.
 
 ## Feature-Specific ROS Validation Notes
 
@@ -50,6 +62,41 @@ Source basis: `run_stereo_inertial.sh`, `README.md`, repository tree scan, and b
 - If loop closure cannot be induced reliably with the available ROS/hardware
   setup, record `F13` runtime validation as blocked or partial instead of
   claiming that stale pre-closure accumulation was removed.
+- For `F15`, first run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh`
+- Before launching the `F15` runtime, inspect whether the required stereo
+  image source topics are already live with:
+  `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra1/image_rect_raw`
+  and
+  `ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra2/image_rect_raw`
+- If the stereo image topics are already live, run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh mapping stereo --log`
+- If the stereo image topics are not live, run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh mapping stereo --log --no-bag`
+  and then from `/home/ywl/Project/ORB_SLAM3_DBoW3/bags` run:
+  `rosbag play mapping_stereo_20260517_133550.bag`
+- During the `F15` runtime session, confirm `/odometry` is advertised,
+  confirm `rostopic type /odometry` reports `nav_msgs/Odometry`, confirm
+  `rostopic echo -n 1 /odometry` returns a live message, confirm the echoed
+  `header.frame_id` is `map`, confirm the echoed `child_frame_id` is
+  `left_camera`, confirm the pose values change plausibly with live or replayed
+  motion, confirm `twist.twist` remains zero-filled, confirm pose and twist
+  covariance diagonals are set to the documented large sentinel values rather
+  than a real estimated covariance, and confirm `/grid_map/pose` still reports
+  `geometry_msgs/PoseStamped`.
+- For `F15`, the pose source is still `Tcw.inverse()` from the valid tracked
+  stereo frame. The richer contract adds clearer odometry framing metadata, but
+  it does not add a new velocity estimator, TF broadcaster, or covariance
+  estimator.
+- For `F15`, validation must reject a runtime procedure that launches
+  `run_stereo_inertial.sh` with no live stereo input and no replay source. If
+  the image topics are dormant, use `--no-bag` and replay the documented bag
+  so the node actually receives frames before judging the odometry topic.
+- For `F15` to be `passing`, the ROS build must succeed and the runtime
+  session must produce live `/odometry` messages that match the documented
+  `map -> left_camera` contract. If code is implemented but runtime evidence is
+  missing, leave `F15` as `active` or mark it `blocked` instead of claiming
+  `passing`.
 - For `F16`, first run:
   `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh`
   then run:
@@ -95,6 +142,46 @@ Source basis: `run_stereo_inertial.sh`, `README.md`, repository tree scan, and b
 - If the build passes and the topic still publishes but no live tilt
   correctness evidence is captured, record `F18` as `blocked` instead of
   claiming `passing`.
+- For `F19`, first run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh`
+- Before launching the `F19` runtime, inspect whether the required source
+  topics for localization are already live, for example the stereo image
+  topics and any IMU topic expected by the running setup.
+- If those source topics are already live, run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh localization stereo --log`
+- If those source topics are not live, run:
+  `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./run_stereo_inertial.sh localization stereo --log --no-bag`
+  and then from `/home/ywl/Project/ORB_SLAM3_DBoW3/bags` run:
+  `rosbag play mapping_stereo_20260517_133550.bag`
+- During the `F19` runtime session, confirm the relocalization-status topic is
+  advertised as `/grid_map/relocalization_status`, confirm
+  `rostopic type /grid_map/relocalization_status` reports
+  `ORB_SLAM3/RelocalizationStatus`, confirm the payload includes
+  `timestamp_ns` and `status`, confirm `timestamp_ns` is populated from
+  `ros::Time::now().toNSec()` at publish time rather than from a stored event
+  timestamp, confirm no relocalization-status message is published before the
+  first relocalization attempt begins, confirm the latest status is then
+  published every `0.1 s`, confirm `rostopic hz /grid_map/relocalization_status`
+  or equivalent inspection reports an approximately `10 Hz` publish rate while
+  the node is running, confirm pure localization startup emits
+  `RelocalizationRunning` when the tracker is forced into `LOST`, and confirm
+  the stream later emits either `RelocalizationSucceeded` on successful
+  relocalization or `RelocalizationFailed` when `Tracking::Relocalization()`
+  returns false.
+- For `F19`, the implementation boundary intentionally excludes
+  `RelocalizationNone` and `RelocalizationCanceled` because the current code
+  does not expose clean, first-class state transitions for those cases. If a
+  later implementation needs either status, document the new source-of-truth
+  transition before expanding the contract.
+- For `F19`, the `10 Hz` requirement means validation must reject an
+  implementation that only publishes on state-transition edges. The runtime
+  contract is to publish the latest relocalization status continuously at
+  approximately `10 Hz` during pure-localization operation, while updating the
+  `status` field when the underlying relocalization outcome changes.
+- For `F19`, validation must also reject a runtime procedure that launches
+  `run_stereo_inertial.sh` with no live input topics and no replay source.
+  If upstream topics are absent, use `--no-bag` and replay the documented bag
+  so the localization node actually receives data.
 - If ROS, live stereo topics, IMU data, or hardware are unavailable, record
   the runtime validation as skipped or blocked instead of guessing.
 - In this workstation session, ROS Python tooling required
@@ -121,9 +208,6 @@ Source basis: `run_stereo_inertial.sh`, `README.md`, repository tree scan, and b
 - No dedicated repo-local validation wrapper such as `test_euroc.sh` was found on this branch.
 - No checked-in deterministic loop-closure validation flow is currently documented for grid-map refresh behavior after loop closure.
 - No checked-in fixture or replay-based validation flow is currently documented for height-threshold occupancy classification in the grid-map path.
-- No checked-in runtime validation flow is currently documented for a
-  generalized odometry-class or richer ego-motion topic beyond the minimal
-  `/grid_map/pose` contract now scoped under `F12`.
 - No checked-in deterministic fixture or bag-replay validation flow is
   currently documented for proving gravity-aligned horizontal-grid correctness;
   `F18` still depends on live runtime evidence under an intentionally tilted

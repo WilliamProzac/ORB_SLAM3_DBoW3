@@ -19,6 +19,9 @@
 
 ### 4. 重构了 ROS 通信接口层
 * 取消了死板的默认话题代码绑定。适配了真实世界相机和传感器的深度/红外流特征（比如 `/camera/infra1/image_rect_raw`），并在 ROS 处理节点的 `SyncWithImu()` 中加入了优雅的主动 Shutdown 钩子，从源头避免由于 Ctrl+C 引发的宕机或者进程成僵尸。
+* **Grid-map 与位姿接口补充**：`Stereo` ROS wrapper 现在除了发布栅格地图外，还保留了面向 grid-map 消费者的最小位姿接口 `/grid_map/pose`（`geometry_msgs/PoseStamped`），并新增了更明确的 `/odometry`（`nav_msgs/Odometry`）接口。其中 `/odometry` 的 `header.frame_id` 为 `map`、`child_frame_id` 为 `left_camera`，pose 直接来自当前跟踪帧的 `Tcw.inverse()`。
+* **Odometry 语义显式化**：当前 `/odometry` 只对外暴露实时位姿，不在 ROS wrapper 内伪造速度估计或协方差估计。因此 `twist` 字段固定为零值，`pose.covariance` 与 `twist.covariance` 使用大对角线哨兵值（`1e6`）明确表达“未知/未估计”，避免下游误把这些字段当成高置信度状态估计。
+* **纯定位状态可观测性**：纯定位模式下新增 `/grid_map/relocalization_status` 状态流，用于周期性输出重定位过程的最新状态，便于下游系统区分“正在重定位”“重定位成功”“重定位失败”等运行阶段。
 
 ### 5. 编译与运行指南 (Build & Run Instructions)
 
@@ -55,6 +58,7 @@ chmod +x build_ros.sh
   * `stereo`（纯双目模式）
 * **选项:**
   * `--log`: 将屏幕标准输出同步写入到 `logs/`，并执行后续的一系列录包 (`rosbag record`) 和监控进程联动。
+  * `--no-bag`: 禁用自动录包。这个选项在使用已有 `.bag` 做 replay 验证时很重要，可以避免在没有实时上游输入时又额外嵌套录制一份空 bag。
 
 **运行实例：以双目IMU模式开始建图，同时记录终端日志、系统资源与录制 RosBag 数据：**
 ```bash
@@ -65,6 +69,13 @@ chmod +x build_ros.sh
 ```bash
 ./run_stereo_inertial.sh localization rgbd
 ```
+
+#### 常用 ROS 输出话题
+
+* `/grid_map`：`nav_msgs/OccupancyGrid`，面向规划器或地图消费者的占据栅格输出。
+* `/grid_map/pose`：`geometry_msgs/PoseStamped`，保留给已有 grid-map 消费链路的最小位姿接口。
+* `/odometry`：`nav_msgs/Odometry`，更明确的实时 ego-motion 接口，frame 语义为 `map -> left_camera`。
+* `/grid_map/relocalization_status`：`ORB_SLAM3/RelocalizationStatus`，纯定位模式下的重定位状态输出。
 
 ---
 

@@ -184,6 +184,8 @@ public:
   std::vector<MapPoint *> GetTrackedMapPoints();
   std::vector<KeyFrame *> GetAllKeyFrames();
   std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
+  bool IsOnlyTrackingEnabled();
+  bool TryGetLatestRelocalizationStatus(int &status_code);
 
   // For debugging
   double GetTimeFromIMUInit();

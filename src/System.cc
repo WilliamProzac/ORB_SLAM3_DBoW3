@@ -1420,6 +1420,24 @@ vector<cv::KeyPoint> System::GetTrackedKeyPointsUn() {
   return mTrackedKeyPointsUn;
 }
 
+bool System::IsOnlyTrackingEnabled() {
+  return mpTracker && mpTracker->IsOnlyTrackingEnabled();
+}
+
+bool System::TryGetLatestRelocalizationStatus(int &status_code) {
+  if (!mpTracker) {
+    return false;
+  }
+
+  Tracking::eRelocalizationStatus status;
+  if (!mpTracker->TryGetLatestRelocalizationStatus(status)) {
+    return false;
+  }
+
+  status_code = static_cast<int>(status);
+  return true;
+}
+
 double System::GetTimeFromIMUInit() {
   double aux = mpLocalMapper->GetCurrKFTime() - mpLocalMapper->mFirstTs;
   if ((aux > 0.) && mpAtlas->isImuInitialized())

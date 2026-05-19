@@ -32,11 +32,13 @@
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <ORB_SLAM3/RelocalizationStatus.h>
 #include <cv_bridge/cv_bridge.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <message_filters/subscriber.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <message_filters/time_synchronizer.h>
+#include <nav_msgs/Odometry.h>
 #include <nav_msgs/OccupancyGrid.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Imu.h>
@@ -57,6 +59,33 @@ struct ProjectionState {
   Eigen::Vector3f gravity_world = Eigen::Vector3f::Zero();
   std::string fallback_reason;
 };
+
+constexpr double kUnknownOdometryCovariance = 1e6;
+
+template <typename CovarianceArray>
+void SetUnknownCovariance(CovarianceArray &covariance) {
+  std::fill(covariance.begin(), covariance.end(), 0.0);
+  covariance[0] = kUnknownOdometryCovariance;
+  covariance[7] = kUnknownOdometryCovariance;
+  covariance[14] = kUnknownOdometryCovariance;
+  covariance[21] = kUnknownOdometryCovariance;
+  covariance[28] = kUnknownOdometryCovariance;
+  covariance[35] = kUnknownOdometryCovariance;
+}
+
+std::string RelocalizationStatusToString(
+    ORB_SLAM3::Tracking::eRelocalizationStatus status) {
+  switch (status) {
+  case ORB_SLAM3::Tracking::RelocalizationRunning:
+    return "RelocalizationRunning";
+  case ORB_SLAM3::Tracking::RelocalizationSucceeded:
+    return "RelocalizationSucceeded";
+  case ORB_SLAM3::Tracking::RelocalizationFailed:
+    return "RelocalizationFailed";
+  }
+
+  return "RelocalizationFailed";
+}
 
 class ImuGravityEstimator {
 public:
@@ -739,9 +768,20 @@ public:
                const std::string &settings_path)
       : mpSLAM(pSLAM),
         grid_map_builder_(nh),
-        gravity_estimator_(settings_path) {
+        gravity_estimator_(settings_path),
+        publish_relocalization_status_(pSLAM &&
+                                       pSLAM->IsOnlyTrackingEnabled()) {
     pose_publisher_ =
         nh.advertise<geometry_msgs::PoseStamped>("grid_map/pose", 1);
+    odometry_publisher_ = nh.advertise<nav_msgs::Odometry>("odometry", 1);
+    if (publish_relocalization_status_) {
+      relocalization_status_publisher_ =
+          nh.advertise<ORB_SLAM3::RelocalizationStatus>(
+              "grid_map/relocalization_status", 1);
+      relocalization_status_timer_ = nh.createTimer(
+          ros::Duration(0.1),
+          &ImageGrabber::PublishRelocalizationStatusTimer, this);
+    }
   }
 
   void GrabImu(const sensor_msgs::ImuConstPtr &imu_msg) {
@@ -770,10 +810,86 @@ public:
     pose_publisher_.publish(pose_msg);
   }
 
+  void PublishOdometry(const Sophus::SE3f &Tcw, const ros::Time &stamp) {
+    const Sophus::SE3f Twc = Tcw.inverse();
+    const Eigen::Vector3f translation = Twc.translation();
+    Eigen::Quaternionf orientation(Twc.rotationMatrix());
+    orientation.normalize();
+
+    nav_msgs::Odometry odom_msg;
+    odom_msg.header.stamp = stamp;
+    odom_msg.header.frame_id = "map";
+    odom_msg.child_frame_id = "left_camera";
+    odom_msg.pose.pose.position.x = translation.x();
+    odom_msg.pose.pose.position.y = translation.y();
+    odom_msg.pose.pose.position.z = translation.z();
+    odom_msg.pose.pose.orientation.x = orientation.x();
+    odom_msg.pose.pose.orientation.y = orientation.y();
+    odom_msg.pose.pose.orientation.z = orientation.z();
+    odom_msg.pose.pose.orientation.w = orientation.w();
+    odom_msg.twist.twist.linear.x = 0.0;
+    odom_msg.twist.twist.linear.y = 0.0;
+    odom_msg.twist.twist.linear.z = 0.0;
+    odom_msg.twist.twist.angular.x = 0.0;
+    odom_msg.twist.twist.angular.y = 0.0;
+    odom_msg.twist.twist.angular.z = 0.0;
+    SetUnknownCovariance(odom_msg.pose.covariance);
+    SetUnknownCovariance(odom_msg.twist.covariance);
+    odometry_publisher_.publish(odom_msg);
+  }
+
+  void RefreshRelocalizationStatus() {
+    if (!publish_relocalization_status_ || !mpSLAM ||
+        !mpSLAM->IsOnlyTrackingEnabled()) {
+      return;
+    }
+
+    int status_code = 0;
+    if (!mpSLAM->TryGetLatestRelocalizationStatus(status_code)) {
+      return;
+    }
+
+    const std::string status_string = RelocalizationStatusToString(
+        static_cast<ORB_SLAM3::Tracking::eRelocalizationStatus>(status_code));
+    std::lock_guard<std::mutex> lock(relocalization_status_mutex_);
+    latest_relocalization_status_ = status_string;
+    has_latest_relocalization_status_ = true;
+  }
+
+  void PublishRelocalizationStatusTimer(const ros::TimerEvent &) {
+    if (!publish_relocalization_status_ || !mpSLAM ||
+        !mpSLAM->IsOnlyTrackingEnabled()) {
+      return;
+    }
+
+    RefreshRelocalizationStatus();
+
+    std::string latest_status;
+    {
+      std::lock_guard<std::mutex> lock(relocalization_status_mutex_);
+      if (!has_latest_relocalization_status_) {
+        return;
+      }
+      latest_status = latest_relocalization_status_;
+    }
+
+    ORB_SLAM3::RelocalizationStatus status_msg;
+    status_msg.timestamp_ns = ros::Time::now().toNSec();
+    status_msg.status = latest_status;
+    relocalization_status_publisher_.publish(status_msg);
+  }
+
   ORB_SLAM3::System *mpSLAM;
   GridMapBuilder grid_map_builder_;
   ImuGravityEstimator gravity_estimator_;
   ros::Publisher pose_publisher_;
+  ros::Publisher odometry_publisher_;
+  const bool publish_relocalization_status_;
+  ros::Publisher relocalization_status_publisher_;
+  ros::Timer relocalization_status_timer_;
+  std::mutex relocalization_status_mutex_;
+  bool has_latest_relocalization_status_ = false;
+  std::string latest_relocalization_status_;
   bool do_rectify = false;
   cv::Mat M1l, M2l, M1r, M2r;
 };
@@ -902,6 +1018,8 @@ void ImageGrabber::GrabStereo(const sensor_msgs::ImageConstPtr &msgLeft,
                               cv_ptrLeft->header.stamp.toSec());
   }
 
+  RefreshRelocalizationStatus();
+
   const bool map_changed = mpSLAM->MapChanged();
   const int tracking_state = mpSLAM->GetTrackingState();
   const bool tracking_ok = tracking_state == ORB_SLAM3::Tracking::OK ||
@@ -910,6 +1028,7 @@ void ImageGrabber::GrabStereo(const sensor_msgs::ImageConstPtr &msgLeft,
   bool projection_changed = false;
   if (tracking_ok) {
     PublishPose(Tcw, cv_ptrLeft->header.stamp);
+    PublishOdometry(Tcw, cv_ptrLeft->header.stamp);
     projection_changed = grid_map_builder_.UpdateProjectionState(
         gravity_estimator_.Estimate(Tcw, cv_ptrLeft->header.stamp));
   }

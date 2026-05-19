@@ -2,74 +2,97 @@
 
 ## Summary
 
-- Active feature: none
+- Active feature: F15
 - Final state: passing
 - Main changes:
-  Implemented the minimal `F12` stable pose interface in
-  `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc` while keeping the current
-  single-node `Stereo` integration style. The stereo node now publishes
-  `/grid_map/pose` as `geometry_msgs/PoseStamped`, derived from
-  `Tcw.inverse()` and emitted only when tracking is valid, with
-  `header.frame_id` intended to remain `map` so the pose topic matches the
-  existing `/grid_map` world-frame contract. `docs/features.md` and
-  `docs/validation.md` were tightened so `F12` is explicitly the minimal
-  grid-map-consumer pose interface and `F15` remains the future generalized
-  ego-motion or odometry feature. `./build_ros.sh` passed, bounded runtime
-  inspection confirmed `/grid_map/pose` was advertised with type
-  `geometry_msgs/PoseStamped`, and the user then completed manual runtime
-  validation confirming the pose stream can be extracted successfully from
-  `/grid_map/pose` in the `map` frame, so `F12` is now `passing`.
+  Implemented the richer live ego-motion interface for the `Stereo` ROS
+  wrapper and verified it at runtime without changing the existing `F12`
+  `/grid_map/pose` contract. `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`
+  now publishes `/odometry` as `nav_msgs/Odometry` from `Tcw.inverse()` on
+  valid tracked stereo frames, with `header.frame_id = "map"` and
+  `child_frame_id = "left_camera"`. The new contract intentionally does not
+  estimate velocity or covariance: `twist` is zero-filled and both covariance
+  arrays use `1e6` diagonal sentinel values.
+  Runtime validation first showed that `/camera/infra1/image_rect_raw`,
+  `/camera/infra2/image_rect_raw`, and `/camera/imu` existed in the ROS graph
+  but were not publishing new messages. The final passing evidence therefore
+  used the documented replay path:
+  `./run_stereo_inertial.sh mapping stereo --log --no-bag` plus
+  `rosbag play /home/ywl/Project/ORB_SLAM3_DBoW3/bags/mapping_stereo_20260517_133550.bag`.
+  In that replay-backed session, `/odometry` was advertised by `/Stereo`,
+  `rostopic type` reported `nav_msgs/Odometry`, live samples showed
+  `header.frame_id: map`, `child_frame_id: left_camera`, changing pose values,
+  zero twist fields, and `1e6` diagonal covariance sentinels, while
+  `/grid_map/pose` remained `geometry_msgs/PoseStamped`.
 
 ## Commands Run
 
 ```text
 git status --short
-sed -n '1,120p' docs/features.md
-sed -n '1,180p' docs/validation.md
-sed -n '1,220p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '1,80p' Examples_old/ROS/ORB_SLAM3/manifest.xml
-git diff -- docs/features.md docs/validation.md Examples_old/ROS/ORB_SLAM3/manifest.xml Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
+sed -n '1,220p' README.md
+sed -n '1,220p' docs/repo-map.md
+sed -n '1,260p' docs/validation.md
+sed -n '1,260p' docs/features.md
+sed -n '1,260p' docs/progress.md
+sed -n '1,260p' docs/session-handoff.md
+sed -n '730,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
+sed -n '960,1035p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
 PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH ./build_ros.sh
-PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH timeout 20s ./run_stereo_inertial.sh mapping stereo --log
-PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH timeout 20s ./run_stereo_inertial.sh mapping stereo --log
-PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH rostopic list | grep '^/grid_map/pose$'
-PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH rostopic type /grid_map/pose
-rg -n "grid_map|pose|Tracking|track|GrabStereo|map" logs/mapping_stereo_20260517_135331.log
-PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH timeout 30s ./run_stereo_inertial.sh mapping stereo --log
+ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra1/image_rect_raw
+ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/infra2/image_rect_raw
+ROS_MASTER_URI=http://localhost:11311 timeout 6s rostopic hz /camera/imu
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/infra1/image_rect_raw
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/infra2/image_rect_raw
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 6s rostopic hz /camera/imu
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && ./run_stereo_inertial.sh mapping stereo --log --no-bag
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic info /odometry
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic type /odometry
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && rostopic type /grid_map/pose
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 25s rostopic echo -n 3 /odometry
+export ROS_MASTER_URI=http://ywl-Lenovo-Legion-R9000X-2021:11311 && timeout 10s rostopic echo -n 1 /grid_map/pose
+rosbag play /home/ywl/Project/ORB_SLAM3_DBoW3/bags/mapping_stereo_20260517_133550.bag
 ```
 
 ## Commands Not Run
 
-- `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH rostopic echo -n 1 /grid_map/pose`
-  Reason: the user completed this live runtime validation manually rather than
-  through this Codex session.
-- `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH rostopic echo -n 1 /grid_map/info`
-  Reason: final runtime frame-contract validation was completed by the user as
-  part of the same manual validation pass.
+- The direct `./run_stereo_inertial.sh mapping stereo --log` live-input path was
+  not used for the final pass decision because the stereo image topics were
+  present but dormant. The final validation used the required fallback replay
+  path instead.
 
 ## Touched Files
 
 - `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`
-- `Examples_old/ROS/ORB_SLAM3/manifest.xml`
 - `docs/features.md`
 - `docs/validation.md`
 - `docs/progress.md`
 - `docs/session-handoff.md`
+
+## Evidence Paths
+
+- `logs/mapping_stereo_20260519_201422.log`
+- `logs/resource_usage_mapping_stereo_20260519_201422.txt`
+- `bags/mapping_stereo_20260517_133550.bag`
 
 ## Blockers and Assumptions
 
 - TODO: This shell required
   `PYTHONPATH=/opt/ros/noetic/lib/python3/dist-packages:/usr/lib/python3/dist-packages:$PYTHONPATH`
   so ROS Python tools would not pick an incompatible conda-first path layout.
-- TODO: Sandboxed ROS runtime validation failed because the sandbox could not
-  open ROS sockets or write `~/.ros`, so live topic inspection needed to run
-  outside the sandbox.
-- TODO: `F13`, `F14`, `F15`, and `F18` were not changed in this session and
-  must remain separately tracked.
+- TODO: The initial topic precheck used `ROS_MASTER_URI=http://localhost:11311`
+  because that is what the current validation doc prescribes, but the running
+  master on this workstation was reachable via
+  `http://ywl-Lenovo-Legion-R9000X-2021:11311`. The final live checks therefore
+  used the host-name URI outside the sandbox.
+- TODO: `F13`, `F14`, and `F18` were not changed in this session and must
+  remain separately tracked.
 
 ## Next Recommended Step
 
 - Keep work-in-progress at one feature.
-- `F12` is complete; the next session should activate exactly one new feature,
-  most likely one of the still-open ROS follow-ups such as `F13`, `F14`,
-  `F15`, or `F18`.
+- `F15` is complete. The next session should select a different single active
+  feature from `docs/features.md`.
+- If `F15` needs follow-up later, keep the scope narrow: preserve
+  `/grid_map/pose` as the minimal interface, preserve `/odometry` as the richer
+  contract, and only expand velocity or covariance semantics after documenting a
+  real source of truth for those fields.
