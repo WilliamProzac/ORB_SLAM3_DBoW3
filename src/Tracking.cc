@@ -3635,6 +3635,7 @@ void Tracking::UpdateLocalKeyFrames() {
 
 bool Tracking::Relocalization() {
   Verbose::PrintMess("Starting relocalization", Verbose::VERBOSITY_NORMAL);
+  SetLatestRelocalizationStatus(RelocalizationRunning);
   // Compute Bag of Words Vector
   mCurrentFrame.ComputeBoW();
 
@@ -3648,6 +3649,7 @@ bool Tracking::Relocalization() {
   if (vpCandidateKFs.empty()) {
     Verbose::PrintMess("There are not candidates", Verbose::VERBOSITY_NORMAL);
     cout << "Relocalization: No candidates found!" << endl;
+    SetLatestRelocalizationStatus(RelocalizationFailed);
     return false;
   }
   cout << "Relocalization: Found " << vpCandidateKFs.size() << " candidates"
@@ -3828,6 +3830,7 @@ bool Tracking::Relocalization() {
   }
 
   if (!bMatch) {
+    SetLatestRelocalizationStatus(RelocalizationFailed);
     return false;
   } else {
     mnLastRelocFrameId = mCurrentFrame.mnId;
@@ -3866,6 +3869,7 @@ bool Tracking::Relocalization() {
     }
 
     cout << "Relocalized!!" << endl;
+    SetLatestRelocalizationStatus(RelocalizationSucceed);
     return true;
   }
 }
@@ -4052,7 +4056,31 @@ void Tracking::ChangeCalibration(const string &strSettingPath) {
   Frame::mbInitialComputations = true;
 }
 
-void Tracking::InformOnlyTracking(const bool &flag) { mbOnlyTracking = flag; }
+void Tracking::InformOnlyTracking(const bool &flag) {
+  mbOnlyTracking = flag;
+  if (flag) {
+    SetLatestRelocalizationStatus(RelocalizationRunning);
+  }
+}
+
+bool Tracking::TryGetLatestRelocalizationStatus(
+    eRelocalizationStatus &status) const {
+  unique_lock<mutex> lock(mMutexRelocalizationStatus);
+  if (!mbHasLatestRelocalizationStatus) {
+    return false;
+  }
+
+  status = mLatestRelocalizationStatus;
+  return true;
+}
+
+bool Tracking::IsOnlyTrackingEnabled() const { return mbOnlyTracking; }
+
+void Tracking::SetLatestRelocalizationStatus(eRelocalizationStatus status) {
+  unique_lock<mutex> lock(mMutexRelocalizationStatus);
+  mLatestRelocalizationStatus = status;
+  mbHasLatestRelocalizationStatus = true;
+}
 
 void Tracking::UpdateFrameIMU(const float s, const IMU::Bias &b,
                               KeyFrame *pCurrentKeyFrame) {

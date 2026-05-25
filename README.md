@@ -19,6 +19,9 @@
 
 ### 4. 重构了 ROS 通信接口层
 * 取消了死板的默认话题代码绑定。适配了真实世界相机和传感器的深度/红外流特征（比如 `/camera/infra1/image_rect_raw`），并在 ROS 处理节点的 `SyncWithImu()` 中加入了优雅的主动 Shutdown 钩子，从源头避免由于 Ctrl+C 引发的宕机或者进程成僵尸。
+* **Stereo ROS wrapper 新增实时位姿输出**：`Stereo` 节点会发布 `/robot_pose`（`geometry_msgs/PoseStamped`），`header.frame_id = "map"`，位姿直接复用 `TrackStereo()` 返回的 `Tcw.inverse()`。
+* **Stereo ROS wrapper 新增里程计输出**：`Stereo` 节点会发布 `/odometry`（`nav_msgs/Odometry`），`header.frame_id = "map"`、`child_frame_id = "left_camera"`。其中 pose 同样来自 `Tcw.inverse()`，而 `twist` 使用连续有效跟踪位姿做差分估计，不再长期填零，并通过较大的 covariance 显式表达低置信度。
+* **定位模式新增重定位状态输出**：当 `Stereo` 节点运行在 localization 模式时，会以约 `10 Hz` 发布 `/relocalization_status`（`ORB_SLAM3/RelocalizationStatus`）。该消息仅包含 `timestamp_ns` 与 `status` 两个字段，状态字符串严格为 `RelocalizationRunning`、`RelocalizationSucceed`、`RelocalizationFailed`。
 
 ### 5. 编译与运行指南 (Build & Run Instructions)
 
@@ -36,6 +39,7 @@ export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:/您的绝对路径/ORB_SLAM3_DBoW3/
 chmod +x build_ros.sh
 ./build_ros.sh
 ```
+该步骤会同时生成并编译 `ORB_SLAM3/RelocalizationStatus.msg`。
 
 #### 运行与测试 (Run)
 本项目推荐直接使用修改后的 `run_stereo_inertial.sh` 脚本进行日常启动，它封装好了底层传参并附带扩展功能。
@@ -65,6 +69,22 @@ chmod +x build_ros.sh
 ```bash
 ./run_stereo_inertial.sh localization rgbd
 ```
+
+#### Stereo ROS 话题补充说明
+
+当使用 `Stereo` 节点时，本仓库当前额外提供以下话题：
+
+* `/robot_pose`
+  * 类型：`geometry_msgs/PoseStamped`
+  * 语义：实时反馈当前左目相机在 `map` 坐标系下的位姿
+* `/odometry`
+  * 类型：`nav_msgs/Odometry`
+  * 坐标系：`map -> left_camera`
+  * 说明：pose 来自 SLAM 跟踪位姿，twist 来自相邻有效位姿差分估计
+* `/relocalization_status`
+  * 类型：`ORB_SLAM3/RelocalizationStatus`
+  * 生效条件：`localization` 模式下的 `Stereo` 节点
+  * 发布频率：约 `10 Hz`
 
 ---
 

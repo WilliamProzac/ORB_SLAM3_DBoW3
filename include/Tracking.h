@@ -137,8 +137,17 @@ public:
     OK_KLT = 5
   };
 
+  enum eRelocalizationStatus {
+    RelocalizationRunning = 0,
+    RelocalizationSucceed = 1,
+    RelocalizationFailed = 2
+  };
+
   eTrackingState mState;
   eTrackingState mLastProcessedState;
+
+  bool TryGetLatestRelocalizationStatus(eRelocalizationStatus &status) const;
+  bool IsOnlyTrackingEnabled() const;
 
   // Input sensor
   int mSensor;
@@ -221,6 +230,7 @@ protected:
   bool PredictStateIMU();
 
   bool Relocalization();
+  void SetLatestRelocalizationStatus(eRelocalizationStatus status);
 
   void UpdateLocalMap();
   void UpdateLocalPoints();
@@ -239,6 +249,11 @@ protected:
   void ResetFrameIMU();
 
   bool mbMapUpdated;
+
+  mutable std::mutex mMutexRelocalizationStatus;
+  bool mbHasLatestRelocalizationStatus = false;
+  eRelocalizationStatus mLatestRelocalizationStatus =
+      RelocalizationFailed;
 
   // Imu preintegration from last frame
   IMU::Preintegrated *mpImuPreintegratedFromLastKF;
