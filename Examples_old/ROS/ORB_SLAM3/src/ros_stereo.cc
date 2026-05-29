@@ -36,6 +36,7 @@
 #include <message_filters/time_synchronizer.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
+#include <tf/transform_broadcaster.h>
 
 #include <opencv2/core/core.hpp>
 
@@ -121,13 +122,14 @@ public:
 
   void PublishOdometry(const Sophus::SE3f &Tcw, const ros::Time &stamp) {
     const Sophus::SE3f Twc = Tcw.inverse();
-    const Eigen::Vector3f translation = Twc.translation();
-    Eigen::Quaternionf orientation(Twc.rotationMatrix());
+    const Sophus::SE3f T0c = GetOdometryPose(Twc);
+    const Eigen::Vector3f translation = T0c.translation();
+    Eigen::Quaternionf orientation(T0c.rotationMatrix());
     orientation.normalize();
 
     nav_msgs::Odometry odom_msg;
     odom_msg.header.stamp = stamp;
-    odom_msg.header.frame_id = "map";
+    odom_msg.header.frame_id = "odom";
     odom_msg.child_frame_id = "left_camera";
     odom_msg.pose.pose.position.x = translation.x();
     odom_msg.pose.pose.position.y = translation.y();
@@ -150,6 +152,7 @@ public:
         twist_estimate.valid ? kLowConfidenceTwistCovariance
                              : kUnknownCovariance);
 
+    PublishTransforms(T0c, stamp);
     odometry_publisher_.publish(odom_msg);
   }
 
@@ -213,6 +216,40 @@ private:
     Eigen::Vector3f linear = Eigen::Vector3f::Zero();
     Eigen::Vector3f angular = Eigen::Vector3f::Zero();
   };
+
+  tf::Transform SophusToTfTransform(const Sophus::SE3f &pose) const {
+    Eigen::Quaternionf orientation(pose.rotationMatrix());
+    orientation.normalize();
+
+    tf::Transform transform;
+    transform.setOrigin(
+        tf::Vector3(pose.translation().x(), pose.translation().y(),
+                    pose.translation().z()));
+    transform.setRotation(tf::Quaternion(
+        orientation.x(), orientation.y(), orientation.z(), orientation.w()));
+    return transform;
+  }
+
+  void PublishTransforms(const Sophus::SE3f &T0c, const ros::Time &stamp) {
+    if (!has_odom_origin_) {
+      return;
+    }
+
+    tf_broadcaster_.sendTransform(tf::StampedTransform(
+        SophusToTfTransform(odom_origin_pose_), stamp, "map", "odom"));
+    tf_broadcaster_.sendTransform(tf::StampedTransform(
+        SophusToTfTransform(T0c), stamp, "odom", "left_camera"));
+  }
+
+  Sophus::SE3f GetOdometryPose(const Sophus::SE3f &Twc) {
+    // Keep a session-stable local origin once the first valid tracking pose arrives.
+    if (!has_odom_origin_) {
+      odom_origin_pose_ = Twc;
+      has_odom_origin_ = true;
+    }
+
+    return odom_origin_pose_.inverse() * Twc;
+  }
 
   void ResetVelocityState() {
     has_previous_valid_pose_ = false;
@@ -278,6 +315,9 @@ private:
 
   bool has_previous_valid_pose_ = false;
   bool suppress_next_twist_ = false;
+  bool has_odom_origin_ = false;
+  tf::TransformBroadcaster tf_broadcaster_;
+  Sophus::SE3f odom_origin_pose_;
   Sophus::SE3f previous_valid_pose_;
   ros::Time previous_valid_stamp_;
 };
