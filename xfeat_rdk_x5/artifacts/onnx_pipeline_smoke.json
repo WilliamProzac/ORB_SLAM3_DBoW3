@@ -1,0 +1,51 @@
+{
+  "checks": {
+    "descriptors_close_after_alignment": true,
+    "keypoint_sets_equal": true,
+    "match_coordinate_pairs_equal": true,
+    "scores_close_after_alignment": true
+  },
+  "end_to_end_onnx_cpu_ms": {
+    "max": 70.70733100408688,
+    "mean": 61.696947798191104,
+    "median": 59.89239049813477,
+    "min": 59.662020998075604,
+    "samples": 10
+  },
+  "input_shape_nchw": [
+    1,
+    1,
+    480,
+    640
+  ],
+  "model": "xfeat_rdk_x5/artifacts/xfeat_backbone_480x640_opset11.onnx",
+  "note": "Timing includes grayscale/InstanceNorm preprocessing, ONNX Runtime core, and sparse CPU postprocessing; matching is excluded.",
+  "parity": [
+    {
+      "descriptor_max_abs_after_coordinate_alignment": 4.2188912630081177e-07,
+      "feature_count": 1024,
+      "keypoint_order_identical": false,
+      "keypoint_set_equal": true,
+      "score_max_abs_after_coordinate_alignment": 1.1622905731201172e-06
+    },
+    {
+      "descriptor_max_abs_after_coordinate_alignment": 7.37607479095459e-07,
+      "feature_count": 1024,
+      "keypoint_order_identical": false,
+      "keypoint_set_equal": true,
+      "score_max_abs_after_coordinate_alignment": 1.6391277313232422e-06
+    }
+  ],
+  "reference_match_count": 63,
+  "split_match_count": 63,
+  "stage_mean_ms": {
+    "descriptor_sample": 1.701368999783881,
+    "heatmap_nms": 26.23505249794107,
+    "onnx_core": 29.11720659903949,
+    "preprocess": 3.3247871993808076,
+    "score_topk": 1.0515368048800156
+  },
+  "status": "passing",
+  "threads": 1,
+  "top_k": 1024
+}

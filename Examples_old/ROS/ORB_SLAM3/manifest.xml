@@ -9,10 +9,10 @@
   <depend package="sensor_msgs"/>
   <depend package="geometry_msgs"/>
   <depend package="nav_msgs"/>
+  <depend package="std_msgs"/>
+  <depend package="std_srvs"/>
   <depend package="message_generation"/>
   <depend package="message_runtime"/>
   <depend package="image_transport"/>
   <depend package="cv_bridge"/>
 </package>
-
-

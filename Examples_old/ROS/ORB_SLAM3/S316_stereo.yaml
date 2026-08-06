@@ -1,0 +1,86 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "Rectified"
+
+# Rectified Camera calibration (OpenCV)
+Camera1.fx: 293.225983
+Camera1.fy: 293.225983
+Camera1.cx: 312.983093
+Camera1.cy: 274.322723
+
+Stereo.b: 0.060087482   # 单位：米 (60.087482 mm)
+
+Camera.width: 640
+Camera.height: 544
+
+# Camera frames per second
+Camera.fps: 11
+
+# Color order of the images (0: BGR, 1: RGB. Ignored for grayscale)
+Camera.RGB: 0
+
+# Close/Far threshold. Baseline times.
+Stereo.ThDepth: 40.0
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 1000
+
+# ORB Extractor: Scale factor between levels in the scale pyramid
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold
+ORBextractor.iniThFAST: 18
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0
+
+# Map Load/Save Parameters for ORB_SLAM3_DBoW3
+#--------------------------------------------------------------------------------------------
+System.LoadAtlasFromFile: ""
+System.SaveAtlasToFile: "stereo_map"
+
+#--------------------------------------------------------------------------------------------
+# Optional pose correction after loop closure / map merge in ORB_SLAM3_DBoW3
+#--------------------------------------------------------------------------------------------
+# 0: keep /robot_pose_map in planning_map aligned with the continuous pose
+#    across map switches, without automatically converging back to raw SLAM
+#    after big map events. Tracking loss still opens an unstable window during
+#    which no convergence toward raw SLAM is started.
+# 1: gradually correct /robot_pose_map toward raw SLAM pose after stable big
+#    map events such as loop closure or map merge. /robot_pose remains a pure
+#    continuous control pose and is not pulled back toward raw SLAM. The
+#    planning-map convergence is suppressed from tracking loss until the
+#    subsequent merge/big-event closes that unstable window.
+PoseCorrection.EnableCorrectedMapPose: 1
+
+# Number of frames used to fade the correction offset back to identity
+PoseCorrection.CorrectionHorizonFrames: 10
+
+# If 1: automatically start a one-shot correction window for /robot_pose_map
+# in planning_map when a big map event (merge/loop) is detected, even if the
+# static enable flag is 0. If 0: correction only starts when
+# `PoseCorrection.EnableCorrectedMapPose` is set.
+PoseCorrection.AutoEnableOnMapEvent: 1

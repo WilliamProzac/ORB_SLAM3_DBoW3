@@ -1,0 +1,61 @@
+{
+  "upstream": "/home/ywl/Project/ORB_SLAM3_DBoW3/Thirdparty/accelerated_features",
+  "checkpoint": "/home/ywl/Project/ORB_SLAM3_DBoW3/Thirdparty/accelerated_features/weights/xfeat.pt",
+  "checkpoint_sha256": "0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b",
+  "parameters": 886848,
+  "fold_max_abs_error": 9.5367431640625e-06,
+  "opset": 11,
+  "models": [
+    {
+      "match_count": 256,
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/models/xfeat_fine_matcher_m256.onnx",
+      "sha256": "66e1e56675f66c92496a952cf868bafbd3a7dece2141cbc4901730f0d61d9c35",
+      "bytes": 3549461,
+      "input_shape": [
+        1,
+        256,
+        128
+      ],
+      "output_shape": [
+        1,
+        256,
+        64
+      ],
+      "onnx_max_abs_error": 8.061528205871582e-06
+    },
+    {
+      "match_count": 384,
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/models/xfeat_fine_matcher_m384.onnx",
+      "sha256": "5402ff62e05498e2bd440d1dae84ac87e0543956faae8209da7b4de9c5e2f2e6",
+      "bytes": 3549461,
+      "input_shape": [
+        1,
+        384,
+        128
+      ],
+      "output_shape": [
+        1,
+        384,
+        64
+      ],
+      "onnx_max_abs_error": 8.761882781982422e-06
+    },
+    {
+      "match_count": 512,
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/models/xfeat_fine_matcher_m512.onnx",
+      "sha256": "14a2761fc5b15f5340996c16dca03a07c199f8c34baa9eba2dc18f56a55cb1cf",
+      "bytes": 3549461,
+      "input_shape": [
+        1,
+        512,
+        128
+      ],
+      "output_shape": [
+        1,
+        512,
+        64
+      ],
+      "onnx_max_abs_error": 9.5367431640625e-06
+    }
+  ]
+}

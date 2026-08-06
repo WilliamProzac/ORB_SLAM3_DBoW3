@@ -538,6 +538,22 @@ bool System::MapChanged() {
     return false;
 }
 
+long unsigned int System::GetCurrentMapId() {
+  Map *pCurrentMap =
+      mpAtlas ? mpAtlas->GetCurrentMap() : static_cast<Map *>(NULL);
+  return pCurrentMap ? pCurrentMap->GetId() : 0;
+}
+
+int System::GetLastBigChangeIdx() {
+  return mpAtlas ? mpAtlas->GetLastBigChangeIdx() : 0;
+}
+
+int System::GetCurrentMapChangeIndex() {
+  Map *pCurrentMap =
+      mpAtlas ? mpAtlas->GetCurrentMap() : static_cast<Map *>(NULL);
+  return pCurrentMap ? pCurrentMap->GetMapChangeIndex() : 0;
+}
+
 void System::Reset() {
   unique_lock<mutex> lock(mMutexReset);
   mbReset = true;

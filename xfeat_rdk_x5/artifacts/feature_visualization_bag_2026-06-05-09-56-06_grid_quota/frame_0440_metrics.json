@@ -1,0 +1,63 @@
+{
+  "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-56-06.bag",
+  "bag_sha256": "058aba6671cd360ce62870776e6114e9074c12c43fe9ca06692c763bb992bbb2",
+  "frame_index": 440,
+  "stamp_ns": 2435541055661,
+  "image_shape_hw": [
+    544,
+    640
+  ],
+  "definition": "Top row shows left-image observations with a valid/strict stereo correspondence. Bottom row is the matching 8x6 cell population.",
+  "parameters": {
+    "orb": "ORB-SLAM3 Frame/ComputeStereoMatches, S316 600 features, 5 levels",
+    "xfeat_mode": "official XFeat* semi_dense_single",
+    "top_k": 600,
+    "fine_size": 384,
+    "grid_columns": 8,
+    "grid_rows": 6,
+    "grid_maximum_per_cell": 8,
+    "minimum_cosine": 0.82,
+    "ratio": 0.9,
+    "fine_confidence": 0.25,
+    "vertical_tolerance_px": 2.0,
+    "maximum_disparity_px": 160.0,
+    "fine_refine_y": false
+  },
+  "coarse_candidates": 150,
+  "left_reliability": {
+    "minimum": 0.3333784341812134,
+    "mean": 0.43579041957855225,
+    "maximum": 0.8093725442886353
+  },
+  "fine_confidence_accepted": 147,
+  "fine_confidence_mean": 0.4553627669811249,
+  "metrics": {
+    "ORB-SLAM3": {
+      "raw_detected_left": 605,
+      "strict_stereo_points": 224,
+      "occupied_grid_cells": 43,
+      "grid_coverage": 0.8958333333333334,
+      "median_disparity_px": 3.512451171875
+    },
+    "XFeat* Coarse": {
+      "raw_detected_left": 600,
+      "strict_stereo_points": 150,
+      "occupied_grid_cells": 22,
+      "grid_coverage": 0.4583333333333333,
+      "median_disparity_px": 0.0
+    },
+    "XFeat* + Fine": {
+      "raw_detected_left": 600,
+      "strict_stereo_points": 147,
+      "occupied_grid_cells": 21,
+      "grid_coverage": 0.4375,
+      "median_disparity_px": 2.8330535888671875
+    }
+  },
+  "outputs": {
+    "visualization": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/feature_visualization_bag_2026-06-05-09-56-06_grid_quota/frame_0440_orb_xfeat_coarse_fine.png",
+    "left_image": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/feature_visualization_bag_2026-06-05-09-56-06_grid_quota/frame_0440_left.png",
+    "right_image": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/feature_visualization_bag_2026-06-05-09-56-06_grid_quota/frame_0440_right.png",
+    "orb_dump": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/feature_visualization_bag_2026-06-05-09-56-06_grid_quota/frame_0440_orb_slam3.csv"
+  }
+}

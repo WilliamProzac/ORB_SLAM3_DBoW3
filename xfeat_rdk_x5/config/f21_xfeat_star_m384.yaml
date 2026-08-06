@@ -1,0 +1,23 @@
+%YAML:1.0
+---
+# Frozen standalone-frontend profile that passed F21 on 2026-08-03.
+# F22 must integrate this profile explicitly; ORB-SLAM3 does not consume it yet.
+Feature.Type: "XFeat"
+XFeat.BackboneModel: "/userdata/xfeat_rdk_x5/xfeat_backbone_544x640_bayes_e.bin"
+XFeat.FineModel: "/userdata/xfeat_rdk_x5/xfeat_fine_matcher_m384_bayes_e.bin"
+XFeat.MaxFeatures: 600
+XFeat.SemiDenseSingle: 1
+XFeat.FineBatchSize: 384
+XFeat.MinCosine: 0.82
+XFeat.Ratio: 0.90
+XFeat.FineConfidence: 0.20
+XFeat.StereoMaxDisparity: 160.0
+XFeat.StereoVerticalTolerance: 2.0
+XFeat.TemporalSearchRadius: 16.0
+XFeat.GridColumns: 8
+XFeat.GridRows: 6
+XFeat.ExtractionGridMaximumPerCell: -1
+XFeat.MatchGridMaximumPerCell: 16
+XFeat.MinimumPatchNCC: 0.50
+XFeat.CpuThreads: 8
+XFeat.BpuCore: 0

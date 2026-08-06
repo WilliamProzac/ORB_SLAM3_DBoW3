@@ -1,0 +1,71 @@
+{
+  "external_normalization_max_abs": [
+    8.612871170043945e-06,
+    1.1444091796875e-05,
+    1.1920928955078125e-07
+  ],
+  "input_contract": {
+    "dtype": "float32",
+    "layout": "NCHW",
+    "name": "image",
+    "preprocessing": "RGB/BGR mean to gray, then per-image InstanceNorm(eps=1e-5) on CPU",
+    "shape": [
+      1,
+      1,
+      544,
+      640
+    ]
+  },
+  "note": "The 8x8 unfold plus first keypoint 1x1 convolution is fused into one 8x8 stride-8 convolution; fine_matcher is outside this graph",
+  "onnx_path": "xfeat_rdk_x5/artifacts/xfeat_backbone_544x640_opset11.onnx",
+  "onnx_sha256": "ec8261d144c6f98e11b622199d6dc11e956a406bdd0c463fbe51746b6c4d76b5",
+  "onnxruntime_latency_ms": {
+    "max": 18.503027997212484,
+    "mean": 13.651705597294495,
+    "min": 11.690260987961665,
+    "samples": 10
+  },
+  "onnxruntime_max_abs": [
+    1.7236918210983276e-05,
+    1.71661376953125e-05,
+    1.9371509552001953e-07
+  ],
+  "operator_counts": {
+    "Add": 3,
+    "AveragePool": 1,
+    "Concat": 2,
+    "Constant": 12,
+    "Conv": 27,
+    "Relu": 23,
+    "Resize": 2,
+    "Shape": 2,
+    "Sigmoid": 1,
+    "Slice": 2
+  },
+  "opset": 11,
+  "outputs": {
+    "dense_descriptors": [
+      1,
+      64,
+      68,
+      80
+    ],
+    "keypoint_logits": [
+      1,
+      65,
+      68,
+      80
+    ],
+    "reliability": [
+      1,
+      1,
+      68,
+      80
+    ]
+  },
+  "parameter_count_exported_core": 657910,
+  "parameter_count_full_module": 1544758,
+  "status": "passing",
+  "upstream_revision": "e92685f57f8318b18725c5c8c0bd28c7fe188d9a",
+  "weights_sha256": "0f5187fd7bedd26c7fe6acc9685444493a165a35ecc087b33c2db3627f3ea10b"
+}

@@ -1,0 +1,60 @@
+{
+  "confidence_threshold": 0.25,
+  "decoded": {
+    "board_vs_float": {
+      "confidence_decision_agreement": 1.0,
+      "confidence_maximum_absolute_error": 0.05185786928994973,
+      "offset_error_maximum_px": 0.08945478033416435,
+      "offset_error_median_px": 0.02449021757788037,
+      "offset_error_p95_px": 0.05418286441827363
+    },
+    "quantized_vs_float": {
+      "confidence_decision_agreement": 1.0,
+      "confidence_maximum_absolute_error": 0.05185786928994973,
+      "offset_error_maximum_px": 0.08945478033416435,
+      "offset_error_median_px": 0.02449021757788037,
+      "offset_error_p95_px": 0.05418286441827363
+    }
+  },
+  "files": {
+    "board": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/board_fine_m512_0000/output_0_fine_logits.f32",
+      "sha256": "8ede02628c995481095bad3d5f130e4108cc63356063f92d20fe50d54070863a"
+    },
+    "float": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m512_bayes_e/infer_float_0000/fine_logits.f32",
+      "sha256": "27a10540db1d8843e901fb1a031aecfcc827fa397e84ea814c38d85948fbbfbf"
+    },
+    "quantized": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m512_bayes_e/infer_quantized_0000/fine_logits.f32",
+      "sha256": "8ede02628c995481095bad3d5f130e4108cc63356063f92d20fe50d54070863a"
+    }
+  },
+  "gates": {
+    "board_decisions": true,
+    "board_matches_quantized": true,
+    "board_offset_p95": true,
+    "quantized_decisions": true,
+    "quantized_offset_p95": true
+  },
+  "logits": {
+    "board_vs_float": {
+      "cosine_similarity": 0.999915361404419,
+      "maximum_absolute_error": 0.214583158493042,
+      "mean_absolute_error": 0.039705655511991234
+    },
+    "board_vs_quantized_exact": true,
+    "quantized_vs_float": {
+      "cosine_similarity": 0.999915361404419,
+      "maximum_absolute_error": 0.214583158493042,
+      "mean_absolute_error": 0.039705655511991234
+    }
+  },
+  "matches": 512,
+  "model": {
+    "bytes": 1116787,
+    "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m512_bayes_e/xfeat_fine_matcher_m512_bayes_e.bin",
+    "sha256": "c4f2f51c52800475dd2abadb96354f39ab1978cd9f7bc3b5e86332d5ed4dc4d6"
+  },
+  "status": "passing"
+}

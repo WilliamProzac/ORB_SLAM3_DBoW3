@@ -1,0 +1,9 @@
+{
+  "dnn_version": "1.23.10_(3.15.54 HBRT)",
+  "model_name": "xfeat_fine_matcher_m256_bayes_e",
+  "load_ms": 118.109,
+  "mean_inference_ms": 7.08535,
+  "outputs": [
+    {"index": 0, "name": "fine_logits", "layout": 2, "valid_shape": "[1,256,64,1]", "aligned_shape": "[1,256,64,1]", "file": "output_0_fine_logits.f32", "count": 16384, "min": -8.32558, "max": 1.84908, "mean": -3.06325}
+  ]
+}

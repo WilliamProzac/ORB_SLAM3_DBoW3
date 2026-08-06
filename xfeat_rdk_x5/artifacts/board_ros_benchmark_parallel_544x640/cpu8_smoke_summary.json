@@ -1,0 +1,1119 @@
+{
+  "comparison": {
+    "image_extraction_xfeat_over_orb": 0.689877809447151,
+    "stereo": {
+      "end_to_end_latency_xfeat_over_orb": 1.3290366021908946,
+      "matches_xfeat_over_orb": 0.9892904953145917,
+      "strict_grid_coverage_xfeat_over_orb": 1.4831466006819238,
+      "strict_inliers_xfeat_over_orb": 0.6983887210473313
+    },
+    "temporal": {
+      "end_to_end_latency_xfeat_over_orb": 0.7480564538573261,
+      "matches_xfeat_over_orb": 0.9157959434542102,
+      "strict_grid_coverage_xfeat_over_orb": 1.4150939124244795,
+      "strict_inliers_xfeat_over_orb": 0.8095533498759305
+    }
+  },
+  "methods": {
+    "orb_cpu": {
+      "bpu_latency_ms": {
+        "count": 8,
+        "max": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "bpu_queue_latency_ms": {
+        "count": 8,
+        "max": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "detected_keypoints": {
+        "count": 8,
+        "max": 962.0,
+        "mean": 940.125,
+        "median": 937.5,
+        "min": 921.0,
+        "p10": 922.4,
+        "p90": 958.5
+      },
+      "image_extraction_latency_ms": {
+        "count": 8,
+        "max": 72.002493,
+        "mean": 70.2864485,
+        "median": 71.0717885,
+        "min": 64.746013,
+        "p10": 68.45165410000001,
+        "p90": 71.8298247
+      },
+      "pairs": {
+        "stereo": {
+          "by_tracking_state": {
+            "failed": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "ok": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "unavailable": {
+              "end_to_end_pair_latency_ms": {
+                "count": 4,
+                "max": 95.559556,
+                "mean": 93.9826665,
+                "median": 94.122439,
+                "min": 92.126232,
+                "p10": 92.6889309,
+                "p90": 95.1645841
+              },
+              "extraction_wall_latency_ms": {
+                "count": 4,
+                "max": 72.231997,
+                "mean": 71.563485,
+                "median": 71.87053399999999,
+                "min": 70.280875,
+                "p10": 70.7118337,
+                "p90": 72.1694971
+              },
+              "geometry_latency_ms": {
+                "count": 4,
+                "max": 2.689763,
+                "mean": 2.1594082500000003,
+                "median": 2.0665,
+                "min": 1.81487,
+                "p10": 1.8824714,
+                "p90": 2.5106717000000005
+              },
+              "match_latency_ms": {
+                "count": 4,
+                "max": 20.846129,
+                "mean": 20.259773250000002,
+                "median": 20.2201995,
+                "min": 19.752565,
+                "p10": 19.8180289,
+                "p90": 20.7331766
+              },
+              "matches": {
+                "count": 4,
+                "max": 567.0,
+                "mean": 560.25,
+                "median": 559.5,
+                "min": 555.0,
+                "p10": 555.6,
+                "p90": 565.5
+              },
+              "pair_count": 4,
+              "ransac_inliers": {
+                "count": 4,
+                "max": 504.0,
+                "mean": 499.0,
+                "median": 499.0,
+                "min": 494.0,
+                "p10": 495.2,
+                "p90": 502.79999999999995
+              },
+              "robust_pair_count": 4,
+              "robust_pair_rate": 1.0,
+              "strict_grid_coverage": {
+                "count": 4,
+                "max": 0.479167,
+                "mean": 0.4635415,
+                "median": 0.458333,
+                "min": 0.458333,
+                "p10": 0.458333,
+                "p90": 0.4729168
+              },
+              "strict_inlier_ratio": {
+                "count": 4,
+                "max": 0.890485,
+                "mean": 0.8862315000000001,
+                "median": 0.8863035,
+                "min": 0.881834,
+                "p10": 0.8831201,
+                "p90": 0.8892853000000001
+              },
+              "strict_inliers": {
+                "count": 4,
+                "max": 500.0,
+                "mean": 496.5,
+                "median": 497.0,
+                "min": 492.0,
+                "p10": 493.2,
+                "p90": 499.40000000000003
+              }
+            }
+          },
+          "end_to_end_pair_latency_ms": {
+            "count": 4,
+            "max": 95.559556,
+            "mean": 93.9826665,
+            "median": 94.122439,
+            "min": 92.126232,
+            "p10": 92.6889309,
+            "p90": 95.1645841
+          },
+          "extraction_wall_latency_ms": {
+            "count": 4,
+            "max": 72.231997,
+            "mean": 71.563485,
+            "median": 71.87053399999999,
+            "min": 70.280875,
+            "p10": 70.7118337,
+            "p90": 72.1694971
+          },
+          "geometry_latency_ms": {
+            "count": 4,
+            "max": 2.689763,
+            "mean": 2.1594082500000003,
+            "median": 2.0665,
+            "min": 1.81487,
+            "p10": 1.8824714,
+            "p90": 2.5106717000000005
+          },
+          "match_latency_ms": {
+            "count": 4,
+            "max": 20.846129,
+            "mean": 20.259773250000002,
+            "median": 20.2201995,
+            "min": 19.752565,
+            "p10": 19.8180289,
+            "p90": 20.7331766
+          },
+          "matches": {
+            "count": 4,
+            "max": 567.0,
+            "mean": 560.25,
+            "median": 559.5,
+            "min": 555.0,
+            "p10": 555.6,
+            "p90": 565.5
+          },
+          "pair_count": 4,
+          "ransac_inliers": {
+            "count": 4,
+            "max": 504.0,
+            "mean": 499.0,
+            "median": 499.0,
+            "min": 494.0,
+            "p10": 495.2,
+            "p90": 502.79999999999995
+          },
+          "robust_pair_count": 4,
+          "robust_pair_rate": 1.0,
+          "strict_grid_coverage": {
+            "count": 4,
+            "max": 0.479167,
+            "mean": 0.4635415,
+            "median": 0.458333,
+            "min": 0.458333,
+            "p10": 0.458333,
+            "p90": 0.4729168
+          },
+          "strict_inlier_ratio": {
+            "count": 4,
+            "max": 0.890485,
+            "mean": 0.8862315000000001,
+            "median": 0.8863035,
+            "min": 0.881834,
+            "p10": 0.8831201,
+            "p90": 0.8892853000000001
+          },
+          "strict_inliers": {
+            "count": 4,
+            "max": 500.0,
+            "mean": 496.5,
+            "median": 497.0,
+            "min": 492.0,
+            "p10": 493.2,
+            "p90": 499.40000000000003
+          }
+        },
+        "temporal": {
+          "by_tracking_state": {
+            "failed": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "ok": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "unavailable": {
+              "end_to_end_pair_latency_ms": {
+                "count": 2,
+                "max": 165.204042,
+                "mean": 162.9972235,
+                "median": 162.9972235,
+                "min": 160.790405,
+                "p10": 161.2317687,
+                "p90": 164.76267829999998
+              },
+              "extraction_wall_latency_ms": {
+                "count": 2,
+                "max": 142.143577,
+                "mean": 141.1598675,
+                "median": 141.1598675,
+                "min": 140.176158,
+                "p10": 140.3728999,
+                "p90": 141.9468351
+              },
+              "geometry_latency_ms": {
+                "count": 2,
+                "max": 0.77564,
+                "mean": 0.7552025,
+                "median": 0.7552025,
+                "min": 0.734765,
+                "p10": 0.7388525,
+                "p90": 0.7715525
+              },
+              "match_latency_ms": {
+                "count": 2,
+                "max": 22.3257,
+                "mean": 21.0821535,
+                "median": 21.0821535,
+                "min": 19.838607,
+                "p10": 20.087316299999998,
+                "p90": 22.076990700000003
+              },
+              "matches": {
+                "count": 2,
+                "max": 814.0,
+                "mean": 813.5,
+                "median": 813.5,
+                "min": 813.0,
+                "p10": 813.1,
+                "p90": 813.9
+              },
+              "pair_count": 2,
+              "ransac_inliers": {
+                "count": 2,
+                "max": 811.0,
+                "mean": 806.0,
+                "median": 806.0,
+                "min": 801.0,
+                "p10": 802.0,
+                "p90": 810.0
+              },
+              "robust_pair_count": 2,
+              "robust_pair_rate": 1.0,
+              "strict_grid_coverage": {
+                "count": 2,
+                "max": 0.5625,
+                "mean": 0.5520835,
+                "median": 0.5520835,
+                "min": 0.541667,
+                "p10": 0.5437503,
+                "p90": 0.5604167
+              },
+              "strict_inlier_ratio": {
+                "count": 2,
+                "max": 0.996314,
+                "mean": 0.990777,
+                "median": 0.990777,
+                "min": 0.98524,
+                "p10": 0.9863474000000001,
+                "p90": 0.9952065999999999
+              },
+              "strict_inliers": {
+                "count": 2,
+                "max": 811.0,
+                "mean": 806.0,
+                "median": 806.0,
+                "min": 801.0,
+                "p10": 802.0,
+                "p90": 810.0
+              }
+            }
+          },
+          "end_to_end_pair_latency_ms": {
+            "count": 2,
+            "max": 165.204042,
+            "mean": 162.9972235,
+            "median": 162.9972235,
+            "min": 160.790405,
+            "p10": 161.2317687,
+            "p90": 164.76267829999998
+          },
+          "extraction_wall_latency_ms": {
+            "count": 2,
+            "max": 142.143577,
+            "mean": 141.1598675,
+            "median": 141.1598675,
+            "min": 140.176158,
+            "p10": 140.3728999,
+            "p90": 141.9468351
+          },
+          "geometry_latency_ms": {
+            "count": 2,
+            "max": 0.77564,
+            "mean": 0.7552025,
+            "median": 0.7552025,
+            "min": 0.734765,
+            "p10": 0.7388525,
+            "p90": 0.7715525
+          },
+          "match_latency_ms": {
+            "count": 2,
+            "max": 22.3257,
+            "mean": 21.0821535,
+            "median": 21.0821535,
+            "min": 19.838607,
+            "p10": 20.087316299999998,
+            "p90": 22.076990700000003
+          },
+          "matches": {
+            "count": 2,
+            "max": 814.0,
+            "mean": 813.5,
+            "median": 813.5,
+            "min": 813.0,
+            "p10": 813.1,
+            "p90": 813.9
+          },
+          "pair_count": 2,
+          "ransac_inliers": {
+            "count": 2,
+            "max": 811.0,
+            "mean": 806.0,
+            "median": 806.0,
+            "min": 801.0,
+            "p10": 802.0,
+            "p90": 810.0
+          },
+          "robust_pair_count": 2,
+          "robust_pair_rate": 1.0,
+          "strict_grid_coverage": {
+            "count": 2,
+            "max": 0.5625,
+            "mean": 0.5520835,
+            "median": 0.5520835,
+            "min": 0.541667,
+            "p10": 0.5437503,
+            "p90": 0.5604167
+          },
+          "strict_inlier_ratio": {
+            "count": 2,
+            "max": 0.996314,
+            "mean": 0.990777,
+            "median": 0.990777,
+            "min": 0.98524,
+            "p10": 0.9863474000000001,
+            "p90": 0.9952065999999999
+          },
+          "strict_inliers": {
+            "count": 2,
+            "max": 811.0,
+            "mean": 806.0,
+            "median": 806.0,
+            "min": 801.0,
+            "p10": 802.0,
+            "p90": 810.0
+          }
+        }
+      },
+      "postprocess_latency_ms": {
+        "count": 8,
+        "max": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      },
+      "preprocess_latency_ms": {
+        "count": 8,
+        "max": 0.0,
+        "mean": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "p10": 0.0,
+        "p90": 0.0
+      }
+    },
+    "xfeat_bpu": {
+      "bpu_latency_ms": {
+        "count": 8,
+        "max": 17.407351,
+        "mean": 16.583865875,
+        "median": 16.479999,
+        "min": 16.039699,
+        "p10": 16.0416821,
+        "p90": 17.311098899999998
+      },
+      "bpu_queue_latency_ms": {
+        "count": 8,
+        "max": 17.319432,
+        "mean": 8.28838075,
+        "median": 8.0333705,
+        "min": 0.000792,
+        "p10": 0.000967,
+        "p90": 16.9865757
+      },
+      "detected_keypoints": {
+        "count": 8,
+        "max": 1024.0,
+        "mean": 1024.0,
+        "median": 1024.0,
+        "min": 1024.0,
+        "p10": 1024.0,
+        "p90": 1024.0
+      },
+      "image_extraction_latency_ms": {
+        "count": 8,
+        "max": 57.411283,
+        "mean": 48.489061125,
+        "median": 49.853046000000006,
+        "min": 36.573114,
+        "p10": 37.8947098,
+        "p90": 56.805801200000005
+      },
+      "pairs": {
+        "stereo": {
+          "by_tracking_state": {
+            "failed": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "ok": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "unavailable": {
+              "end_to_end_pair_latency_ms": {
+                "count": 4,
+                "max": 145.098803,
+                "mean": 124.90640375000001,
+                "median": 122.332403,
+                "min": 109.862006,
+                "p10": 111.3108848,
+                "p90": 140.56112330000002
+              },
+              "extraction_wall_latency_ms": {
+                "count": 4,
+                "max": 58.007297,
+                "mean": 57.315520750000005,
+                "median": 57.250779,
+                "min": 56.753228,
+                "p10": 56.7625031,
+                "p90": 57.9203318
+              },
+              "geometry_latency_ms": {
+                "count": 4,
+                "max": 28.231111,
+                "mean": 21.83594,
+                "median": 21.608477,
+                "min": 15.895695,
+                "p10": 16.317141,
+                "p90": 27.5367094
+              },
+              "match_latency_ms": {
+                "count": 4,
+                "max": 61.175067,
+                "mean": 45.754943,
+                "median": 42.315811,
+                "min": 37.213083,
+                "p10": 37.9512603,
+                "p90": 56.3099313
+              },
+              "matches": {
+                "count": 4,
+                "max": 571.0,
+                "mean": 554.25,
+                "median": 552.5,
+                "min": 541.0,
+                "p10": 544.0,
+                "p90": 565.9
+              },
+              "pair_count": 4,
+              "ransac_inliers": {
+                "count": 4,
+                "max": 383.0,
+                "mean": 373.5,
+                "median": 375.0,
+                "min": 361.0,
+                "p10": 364.6,
+                "p90": 381.20000000000005
+              },
+              "robust_pair_count": 4,
+              "robust_pair_rate": 1.0,
+              "strict_grid_coverage": {
+                "count": 4,
+                "max": 0.708333,
+                "mean": 0.6875,
+                "median": 0.6875,
+                "min": 0.666667,
+                "p10": 0.6729169,
+                "p90": 0.7020831000000001
+              },
+              "strict_inlier_ratio": {
+                "count": 4,
+                "max": 0.651543,
+                "mean": 0.6259462499999999,
+                "median": 0.6319005,
+                "min": 0.588441,
+                "p10": 0.5998938,
+                "p90": 0.6472353
+              },
+              "strict_inliers": {
+                "count": 4,
+                "max": 359.0,
+                "mean": 346.75,
+                "median": 346.0,
+                "min": 336.0,
+                "p10": 336.9,
+                "p90": 357.2
+              }
+            }
+          },
+          "end_to_end_pair_latency_ms": {
+            "count": 4,
+            "max": 145.098803,
+            "mean": 124.90640375000001,
+            "median": 122.332403,
+            "min": 109.862006,
+            "p10": 111.3108848,
+            "p90": 140.56112330000002
+          },
+          "extraction_wall_latency_ms": {
+            "count": 4,
+            "max": 58.007297,
+            "mean": 57.315520750000005,
+            "median": 57.250779,
+            "min": 56.753228,
+            "p10": 56.7625031,
+            "p90": 57.9203318
+          },
+          "geometry_latency_ms": {
+            "count": 4,
+            "max": 28.231111,
+            "mean": 21.83594,
+            "median": 21.608477,
+            "min": 15.895695,
+            "p10": 16.317141,
+            "p90": 27.5367094
+          },
+          "match_latency_ms": {
+            "count": 4,
+            "max": 61.175067,
+            "mean": 45.754943,
+            "median": 42.315811,
+            "min": 37.213083,
+            "p10": 37.9512603,
+            "p90": 56.3099313
+          },
+          "matches": {
+            "count": 4,
+            "max": 571.0,
+            "mean": 554.25,
+            "median": 552.5,
+            "min": 541.0,
+            "p10": 544.0,
+            "p90": 565.9
+          },
+          "pair_count": 4,
+          "ransac_inliers": {
+            "count": 4,
+            "max": 383.0,
+            "mean": 373.5,
+            "median": 375.0,
+            "min": 361.0,
+            "p10": 364.6,
+            "p90": 381.20000000000005
+          },
+          "robust_pair_count": 4,
+          "robust_pair_rate": 1.0,
+          "strict_grid_coverage": {
+            "count": 4,
+            "max": 0.708333,
+            "mean": 0.6875,
+            "median": 0.6875,
+            "min": 0.666667,
+            "p10": 0.6729169,
+            "p90": 0.7020831000000001
+          },
+          "strict_inlier_ratio": {
+            "count": 4,
+            "max": 0.651543,
+            "mean": 0.6259462499999999,
+            "median": 0.6319005,
+            "min": 0.588441,
+            "p10": 0.5998938,
+            "p90": 0.6472353
+          },
+          "strict_inliers": {
+            "count": 4,
+            "max": 359.0,
+            "mean": 346.75,
+            "median": 346.0,
+            "min": 336.0,
+            "p10": 336.9,
+            "p90": 357.2
+          }
+        },
+        "temporal": {
+          "by_tracking_state": {
+            "failed": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "ok": {
+              "end_to_end_pair_latency_ms": {
+                "count": 0
+              },
+              "extraction_wall_latency_ms": {
+                "count": 0
+              },
+              "geometry_latency_ms": {
+                "count": 0
+              },
+              "match_latency_ms": {
+                "count": 0
+              },
+              "matches": {
+                "count": 0
+              },
+              "pair_count": 0,
+              "ransac_inliers": {
+                "count": 0
+              },
+              "robust_pair_count": 0,
+              "robust_pair_rate": 0.0,
+              "strict_grid_coverage": {
+                "count": 0
+              },
+              "strict_inlier_ratio": {
+                "count": 0
+              },
+              "strict_inliers": {
+                "count": 0
+              }
+            },
+            "unavailable": {
+              "end_to_end_pair_latency_ms": {
+                "count": 2,
+                "max": 128.895601,
+                "mean": 121.93112500000001,
+                "median": 121.93112500000001,
+                "min": 114.966649,
+                "p10": 116.3595442,
+                "p90": 127.5027058
+              },
+              "extraction_wall_latency_ms": {
+                "count": 2,
+                "max": 93.984397,
+                "mean": 87.600371,
+                "median": 87.600371,
+                "min": 81.216345,
+                "p10": 82.4931502,
+                "p90": 92.7075918
+              },
+              "geometry_latency_ms": {
+                "count": 2,
+                "max": 3.009311,
+                "mean": 2.883079,
+                "median": 2.883079,
+                "min": 2.756847,
+                "p10": 2.7820934000000004,
+                "p90": 2.9840645999999995
+              },
+              "match_latency_ms": {
+                "count": 2,
+                "max": 31.901893,
+                "mean": 31.447675,
+                "median": 31.447675,
+                "min": 30.993457,
+                "p10": 31.0843006,
+                "p90": 31.8110494
+              },
+              "matches": {
+                "count": 2,
+                "max": 759.0,
+                "mean": 745.0,
+                "median": 745.0,
+                "min": 731.0,
+                "p10": 733.8,
+                "p90": 756.2
+              },
+              "pair_count": 2,
+              "ransac_inliers": {
+                "count": 2,
+                "max": 667.0,
+                "mean": 652.5,
+                "median": 652.5,
+                "min": 638.0,
+                "p10": 640.9000000000001,
+                "p90": 664.1
+              },
+              "robust_pair_count": 2,
+              "robust_pair_rate": 1.0,
+              "strict_grid_coverage": {
+                "count": 2,
+                "max": 0.791667,
+                "mean": 0.78125,
+                "median": 0.78125,
+                "min": 0.770833,
+                "p10": 0.7729164000000001,
+                "p90": 0.7895835999999999
+              },
+              "strict_inlier_ratio": {
+                "count": 2,
+                "max": 0.878788,
+                "mean": 0.8757825,
+                "median": 0.8757825,
+                "min": 0.872777,
+                "p10": 0.8733781,
+                "p90": 0.8781869
+              },
+              "strict_inliers": {
+                "count": 2,
+                "max": 667.0,
+                "mean": 652.5,
+                "median": 652.5,
+                "min": 638.0,
+                "p10": 640.9000000000001,
+                "p90": 664.1
+              }
+            }
+          },
+          "end_to_end_pair_latency_ms": {
+            "count": 2,
+            "max": 128.895601,
+            "mean": 121.93112500000001,
+            "median": 121.93112500000001,
+            "min": 114.966649,
+            "p10": 116.3595442,
+            "p90": 127.5027058
+          },
+          "extraction_wall_latency_ms": {
+            "count": 2,
+            "max": 93.984397,
+            "mean": 87.600371,
+            "median": 87.600371,
+            "min": 81.216345,
+            "p10": 82.4931502,
+            "p90": 92.7075918
+          },
+          "geometry_latency_ms": {
+            "count": 2,
+            "max": 3.009311,
+            "mean": 2.883079,
+            "median": 2.883079,
+            "min": 2.756847,
+            "p10": 2.7820934000000004,
+            "p90": 2.9840645999999995
+          },
+          "match_latency_ms": {
+            "count": 2,
+            "max": 31.901893,
+            "mean": 31.447675,
+            "median": 31.447675,
+            "min": 30.993457,
+            "p10": 31.0843006,
+            "p90": 31.8110494
+          },
+          "matches": {
+            "count": 2,
+            "max": 759.0,
+            "mean": 745.0,
+            "median": 745.0,
+            "min": 731.0,
+            "p10": 733.8,
+            "p90": 756.2
+          },
+          "pair_count": 2,
+          "ransac_inliers": {
+            "count": 2,
+            "max": 667.0,
+            "mean": 652.5,
+            "median": 652.5,
+            "min": 638.0,
+            "p10": 640.9000000000001,
+            "p90": 664.1
+          },
+          "robust_pair_count": 2,
+          "robust_pair_rate": 1.0,
+          "strict_grid_coverage": {
+            "count": 2,
+            "max": 0.791667,
+            "mean": 0.78125,
+            "median": 0.78125,
+            "min": 0.770833,
+            "p10": 0.7729164000000001,
+            "p90": 0.7895835999999999
+          },
+          "strict_inlier_ratio": {
+            "count": 2,
+            "max": 0.878788,
+            "mean": 0.8757825,
+            "median": 0.8757825,
+            "min": 0.872777,
+            "p10": 0.8733781,
+            "p90": 0.8781869
+          },
+          "strict_inliers": {
+            "count": 2,
+            "max": 667.0,
+            "mean": 652.5,
+            "median": 652.5,
+            "min": 638.0,
+            "p10": 640.9000000000001,
+            "p90": 664.1
+          }
+        }
+      },
+      "postprocess_latency_ms": {
+        "count": 8,
+        "max": 22.658873,
+        "mean": 19.3170195,
+        "median": 19.269284,
+        "min": 16.596502,
+        "p10": 16.7200828,
+        "p90": 21.914116399999997
+      },
+      "preprocess_latency_ms": {
+        "count": 8,
+        "max": 4.62251,
+        "mean": 4.2996335,
+        "median": 4.345295500000001,
+        "min": 3.892746,
+        "p10": 3.9228173,
+        "p90": 4.585088
+      }
+    }
+  },
+  "source": {
+    "configuration": {
+      "anchor_stride": 10,
+      "bag_source_frame_count": 644,
+      "execution_order": "alternate XFeat-first and ORB-first by anchor",
+      "fundamental_ransac_threshold_px": 1.5,
+      "image_shape_hw": [
+        544,
+        640
+      ],
+      "orb_max_hamming": 64.0,
+      "ransac_rng_seed": "0x58464541",
+      "robust_pair_definition": "strict_inliers >= 30 and strict_inlier_ratio >= 0.30",
+      "stereo_disparity_range_px": [
+        0.0,
+        160.0
+      ],
+      "stereo_execution": "left/right worker threads; one serialized BPU0",
+      "stereo_vertical_threshold_px": 2.0,
+      "temporal_gap": 1,
+      "top_k": 1024,
+      "xfeat_min_cosine": 0.82
+    },
+    "csv": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/board_ros_benchmark_parallel_544x640/smoke.csv",
+    "first_sampled_frame": 0,
+    "first_sampled_stamp_ns": 2569011476808,
+    "last_sampled_frame": 11,
+    "last_sampled_stamp_ns": 2570181473058,
+    "row_count": 12,
+    "sampled_frame_count": 4,
+    "sha256": "d0269a430f70b2775858d2853c63d8f4a92fd56c9e971e484c36fd46247b24ba"
+  }
+}

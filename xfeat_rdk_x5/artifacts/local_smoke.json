@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "both_images_have_features": true,
+    "descriptor_norm_close_to_one": true,
+    "descriptor_width_is_64": true,
+    "finite_descriptors": true,
+    "finite_keypoints": true,
+    "finite_scores": true,
+    "mutual_matches_found": true
+  },
+  "cuda_available": false,
+  "descriptor_norm_mean": 1.0,
+  "features": [
+    1024,
+    1024
+  ],
+  "image_sha256": {
+    "ref.png": "1292e2ba509b338a05820e7bf62dcda0b26688a4a4307996ee7c295e6627bee2",
+    "tgt.png": "ffd0fe993cd7967f2e0e44495c9f60828f8e2d6a61440ede4a951ee67b865613"
+  },
+  "input_shape_nchw": [
+    1,
+    3,
+    480,
+    640
+  ],
+  "latency_ms": {
+    "max": 59.662230996764265,
+    "mean": 54.361900698859245,
+    "median": 54.645669493766036,
+    "min": 49.89648700575344,
+    "p95": 59.662230996764265,
+    "samples": 10
+  },
+  "mutual_matches_min_cossim_0_82": 63,
+  "numpy": "1.24.4",
+  "opencv": "4.10.0",
+  "platform": "Linux-5.15.0-140-generic-x86_64-with-glibc2.29",
+  "python": "3.8.10",
+  "status": "passing",
+  "threads": 8,
+  "top_k": 1024,
+  "torch": "2.2.2+cpu",
+  "upstream_revision": "e92685f57f8318b18725c5c8c0bd28c7fe188d9a"
+}

@@ -1,0 +1,6 @@
+artifacts/*.onnx
+artifacts/model_output/
+artifacts/board_output_*/
+calibration_data/
+image_input_for_runtime.bin
+__pycache__/

@@ -91,3 +91,38 @@ my_settings.txt
 borrar/*
 
 */ExecMean.txt
+
+# Governance files kept local on master
+/AGENTS.md
+/docs/
+
+# Local ROS recordings and runtime output
+*.bag
+/bags/
+*.log
+/logs/
+/.ros_runtime/
+/FrameTrajectory_KITTI_Format.txt
+/FrameTrajectory_TUM_Format.txt
+/KeyFrameTrajectory_TUM_Format.txt
+
+# Local tool state and generated reports
+/.cache/
+/.codex
+/compare_results/
+/memory_compare/
+/memory_comparison.png
+/memory_usage.png
+/memory_log.txt
+/compile_commands.json
+*.bak
+
+# ROS-generated message bindings
+/Examples_old/ROS/ORB_SLAM3/msg_gen/
+/Examples_old/ROS/ORB_SLAM3/src/ORB_SLAM3/
+
+# Local dependency checkouts and generated/downloaded assets
+/Thirdparty/DBoW2_tmp/
+/Thirdparty/accelerated_features/
+/Thirdparty/DBoW3.zip
+/Vocabulary/*.dbow3

@@ -1,0 +1,176 @@
+{
+  "board_runtime": {
+    "dnn_version": "1.23.10_(3.15.54 HBRT)",
+    "load_ms": 125.45,
+    "mean_inference_ms": 13.4733,
+    "model_name": "xfeat_backbone_480x640_bayes_e",
+    "outputs": [
+      {
+        "aligned_shape": "[1,64,60,80]",
+        "count": 307200,
+        "file": "output_0_dense_descriptors.f32",
+        "index": 0,
+        "layout": 2,
+        "max": 7.69113,
+        "mean": 0.0475443,
+        "min": -6.93576,
+        "name": "dense_descriptors",
+        "valid_shape": "[1,64,60,80]"
+      },
+      {
+        "aligned_shape": "[1,65,60,80]",
+        "count": 312000,
+        "file": "output_1_keypoint_logits.f32",
+        "index": 1,
+        "layout": 2,
+        "max": 8.75809,
+        "mean": -3.4461,
+        "min": -23.6479,
+        "name": "keypoint_logits",
+        "valid_shape": "[1,65,60,80]"
+      },
+      {
+        "aligned_shape": "[1,1,60,80]",
+        "count": 4800,
+        "file": "output_2_reliability.f32",
+        "index": 2,
+        "layout": 2,
+        "max": 0.858679,
+        "mean": 0.2191,
+        "min": 0.000456901,
+        "name": "reliability",
+        "valid_shape": "[1,1,60,80]"
+      }
+    ]
+  },
+  "minimum_observed_cosine": 0.9908685684204102,
+  "minimum_required_cosine": 0.99,
+  "model": {
+    "byte_size": 920712,
+    "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/xfeat_backbone_480x640_bayes_e.bin",
+    "sha256": "0ff4a43f8b9085c56da2173969f9e42989c79cb6c296ce484d0eb7360a693dea"
+  },
+  "outputs": {
+    "dense_descriptors": {
+      "board_vs_float": {
+        "cosine_similarity": 0.9957471489906311,
+        "max_absolute_error": 1.3065476715564728,
+        "mean_absolute_error": 0.13030674690517724,
+        "root_mean_squared_error": 0.17188657943531332
+      },
+      "board_vs_quantized": {
+        "cosine_similarity": 0.9999998807907104,
+        "max_absolute_error": 0.0,
+        "mean_absolute_error": 0.0,
+        "root_mean_squared_error": 0.0
+      },
+      "files": {
+        "board": {
+          "path": "xfeat_rdk_x5/artifacts/board_output_0050/output_0_dense_descriptors.f32",
+          "sha256": "1997b8826102ff2712ea71ec8efb39230855076f79c5577851f189639078acfc"
+        },
+        "float": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_float_0050/_block_fusion_block_fusion.2_Conv_float.bin",
+          "sha256": "677be1256fe014b679873222d102c309d7b6c3047c658106f959b8ce9b11e6ab"
+        },
+        "quantized": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_quantized_0050/dense_descriptors_float.bin",
+          "sha256": "a88e0cd8308ff2a4c201b19000f266fed389405dbd315991d51a0473b51de8ca"
+        }
+      },
+      "quantized_vs_float": {
+        "cosine_similarity": 0.9957471489906311,
+        "max_absolute_error": 1.3065476715564728,
+        "mean_absolute_error": 0.13030674690517724,
+        "root_mean_squared_error": 0.17188657943531332
+      },
+      "shape": [
+        1,
+        64,
+        60,
+        80
+      ]
+    },
+    "keypoint_logits": {
+      "board_vs_float": {
+        "cosine_similarity": 0.9908685684204102,
+        "max_absolute_error": 7.148153305053711,
+        "mean_absolute_error": 0.4370160568068972,
+        "root_mean_squared_error": 0.6091296540343302
+      },
+      "board_vs_quantized": {
+        "cosine_similarity": 1.0,
+        "max_absolute_error": 0.0,
+        "mean_absolute_error": 0.0,
+        "root_mean_squared_error": 0.0
+      },
+      "files": {
+        "board": {
+          "path": "xfeat_rdk_x5/artifacts/board_output_0050/output_1_keypoint_logits.f32",
+          "sha256": "b26957bc265a0b2f21c8593621f0251bcb43dc642396ee6cc5620d4f16859129"
+        },
+        "float": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_float_0050/_keypoint_tail_keypoint_tail.3_Conv_float.bin",
+          "sha256": "9cb112738926ebf80de03531eb50ec247473f9d8ea1f7e7a21bace83396ab622"
+        },
+        "quantized": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_quantized_0050/keypoint_logits_float.bin",
+          "sha256": "e85545124bcc56a4428ec01e5cda4eb8d14f39e181743e0dd16a1d6973c0aa18"
+        }
+      },
+      "quantized_vs_float": {
+        "cosine_similarity": 0.9908685684204102,
+        "max_absolute_error": 7.148153305053711,
+        "mean_absolute_error": 0.4370160568068972,
+        "root_mean_squared_error": 0.6091296540343302
+      },
+      "shape": [
+        1,
+        65,
+        60,
+        80
+      ]
+    },
+    "reliability": {
+      "board_vs_float": {
+        "cosine_similarity": 0.9971757531166077,
+        "max_absolute_error": 0.11432257294654846,
+        "mean_absolute_error": 0.0146325852415733,
+        "root_mean_squared_error": 0.02046540333969892
+      },
+      "board_vs_quantized": {
+        "cosine_similarity": 1.0,
+        "max_absolute_error": 0.0,
+        "mean_absolute_error": 0.0,
+        "root_mean_squared_error": 0.0
+      },
+      "files": {
+        "board": {
+          "path": "xfeat_rdk_x5/artifacts/board_output_0050/output_2_reliability.f32",
+          "sha256": "5ad3e300ac5d31fb2cd4c1067cd13a3694a0e98d5dcf986e1ceaeedc24def460"
+        },
+        "float": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_float_0050/reliability_float.bin",
+          "sha256": "b0d1df588b0c7331e4c4589d44dbfe81e576fe339cd180e006b95f496af727f4"
+        },
+        "quantized": {
+          "path": "xfeat_rdk_x5/artifacts/model_output/xfeat_backbone_480x640_bayes_e/infer_quantized_0050/reliability_float.bin",
+          "sha256": "a5d9638ec702f46a74711c59af9e69eeef4483ede299747eded9e079a40392eb"
+        }
+      },
+      "quantized_vs_float": {
+        "cosine_similarity": 0.9971757531166077,
+        "max_absolute_error": 0.11432257294654846,
+        "mean_absolute_error": 0.0146325852415733,
+        "root_mean_squared_error": 0.02046540333969892
+      },
+      "shape": [
+        1,
+        1,
+        60,
+        80
+      ]
+    }
+  },
+  "status": "passing"
+}

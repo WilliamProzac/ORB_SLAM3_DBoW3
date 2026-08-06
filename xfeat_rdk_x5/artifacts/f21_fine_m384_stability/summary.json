@@ -1,0 +1,35 @@
+{
+  "schema": "rdk-x5-f21-fine-stability-v1",
+  "model": "xfeat_fine_matcher_m384_bayes_e",
+  "bpu_core": 0,
+  "warmup_iterations_per_run": 20,
+  "measured_iterations_per_run": 1000,
+  "task_release_check": "second sequential 1000-iteration run completed",
+  "runs": [
+    {
+      "name": "run_a",
+      "mean_ms": 9.761,
+      "p90_ms": 11.597,
+      "rss_min_kb": 2420,
+      "rss_max_kb": 15408,
+      "rss_samples": 173,
+      "status": "PASS",
+      "output_sha256": "2505c5c9121eca4132bf8a38b7b640af11bff958da82d84c0be8ed5fa0c4de1b",
+      "runner_log_sha256": "bdce6c24e1fd09d74e4dca8be6714555a15b90aa747af3059d74c6b8e72d0d0f"
+    },
+    {
+      "name": "run_b",
+      "mean_ms": 9.675,
+      "p90_ms": 10.817,
+      "rss_min_kb": 1272,
+      "rss_max_kb": 15404,
+      "rss_samples": 171,
+      "status": "PASS",
+      "output_sha256": "2505c5c9121eca4132bf8a38b7b640af11bff958da82d84c0be8ed5fa0c4de1b",
+      "runner_log_sha256": "05828b618593fd4fc2b10142c220b559edf6ffabe402f62bd9b4c4655fa22b31"
+    }
+  ],
+  "deterministic_output": true,
+  "stable_peak_rss": true,
+  "status": "passing"
+}

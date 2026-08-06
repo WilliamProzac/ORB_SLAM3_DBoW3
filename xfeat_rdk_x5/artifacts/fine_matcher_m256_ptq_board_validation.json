@@ -1,0 +1,60 @@
+{
+  "confidence_threshold": 0.25,
+  "decoded": {
+    "board_vs_float": {
+      "confidence_decision_agreement": 1.0,
+      "confidence_maximum_absolute_error": 0.05098220100870654,
+      "offset_error_maximum_px": 0.07961748576117234,
+      "offset_error_median_px": 0.023904449076925603,
+      "offset_error_p95_px": 0.05538408019146286
+    },
+    "quantized_vs_float": {
+      "confidence_decision_agreement": 1.0,
+      "confidence_maximum_absolute_error": 0.05098220100870654,
+      "offset_error_maximum_px": 0.07961748576117234,
+      "offset_error_median_px": 0.023904449076925603,
+      "offset_error_p95_px": 0.05538408019146286
+    }
+  },
+  "files": {
+    "board": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/board_fine_m256_0000/output_0_fine_logits.f32",
+      "sha256": "f49e6ce62166fb8c6e0fe2b776dab4a2b6a39253fe1c1336c3ca678678bafb80"
+    },
+    "float": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m256_bayes_e/infer_float_0000/fine_logits.f32",
+      "sha256": "d52e00ac5e85ab09595bb29525fc16f62302573e8fa9c0007f8de51d6683530d"
+    },
+    "quantized": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m256_bayes_e/infer_quantized_0000/fine_logits.f32",
+      "sha256": "f49e6ce62166fb8c6e0fe2b776dab4a2b6a39253fe1c1336c3ca678678bafb80"
+    }
+  },
+  "gates": {
+    "board_decisions": true,
+    "board_matches_quantized": true,
+    "board_offset_p95": true,
+    "quantized_decisions": true,
+    "quantized_offset_p95": true
+  },
+  "logits": {
+    "board_vs_float": {
+      "cosine_similarity": 0.9999164342880249,
+      "maximum_absolute_error": 0.20627868175506592,
+      "mean_absolute_error": 0.03972075155940935
+    },
+    "board_vs_quantized_exact": true,
+    "quantized_vs_float": {
+      "cosine_similarity": 0.9999164342880249,
+      "maximum_absolute_error": 0.20627868175506592,
+      "mean_absolute_error": 0.03972075155940935
+    }
+  },
+  "matches": 256,
+  "model": {
+    "bytes": 1116787,
+    "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/model_output/xfeat_fine_matcher_m256_bayes_e/xfeat_fine_matcher_m256_bayes_e.bin",
+    "sha256": "211c8425d6770b39ca14d8166b312070080355a0e8b75ca4e733e5df889bd2da"
+  },
+  "status": "passing"
+}

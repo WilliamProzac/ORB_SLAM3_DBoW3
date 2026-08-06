@@ -36,6 +36,8 @@
 #include <message_filters/time_synchronizer.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
+#include <std_msgs/Bool.h>
+#include <std_srvs/SetBool.h>
 #include <tf/transform_broadcaster.h>
 
 #include <opencv2/core/core.hpp>
@@ -52,6 +54,18 @@ constexpr double kMinVelocityDtSec = 1e-3;
 constexpr double kMaxVelocityDtSec = 0.5;
 constexpr double kMaxLinearVelocityMps = 10.0;
 constexpr double kMaxAngularVelocityRadPerSec = 8.0;
+constexpr char kContinuousMapFrame[] = "continuous_map";
+constexpr char kPlanningMapFrame[] = "planning_map";
+constexpr char kSlamMapFrame[] = "map";
+constexpr char kOdomFrame[] = "odom";
+constexpr char kRosCameraFrame[] = "left_camera_link";
+constexpr char kOpticalCameraFrame[] = "left_camera";
+
+struct PoseCorrectionConfig {
+  bool enable_corrected_map_pose = false;
+  int correction_horizon_frames = 30;
+  bool auto_enable_on_map_event = true;
+};
 
 template <typename CovarianceArray>
 void SetDiagonalCovariance(CovarianceArray &covariance, double diagonal_value) {
@@ -78,15 +92,32 @@ std::string RelocalizationStatusToString(
   return "RelocalizationFailed";
 }
 
+Sophus::SE3f CameraLinkToOpticalTransform() {
+  static const Eigen::Matrix3f rotation = [] {
+    Eigen::Matrix3f matrix;
+    matrix << 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f;
+    return matrix;
+  }();
+  return Sophus::SE3f(rotation, Eigen::Vector3f::Zero());
+}
+
 class ImageGrabber {
 public:
-  ImageGrabber(ORB_SLAM3::System *pSLAM, ros::NodeHandle &nh)
+  ImageGrabber(ORB_SLAM3::System *pSLAM, ros::NodeHandle &nh,
+         const PoseCorrectionConfig &pose_correction_config)
       : mpSLAM(pSLAM),
+    pose_correction_config_(pose_correction_config),
         publish_relocalization_status_(pSLAM &&
                                        pSLAM->IsOnlyTrackingEnabled()) {
     robot_pose_publisher_ =
         nh.advertise<geometry_msgs::PoseStamped>("/robot_pose", 1);
+    slam_pose_publisher_ =
+        nh.advertise<geometry_msgs::PoseStamped>("/robot_pose_slam", 1);
+    corrected_map_pose_publisher_ =
+        nh.advertise<geometry_msgs::PoseStamped>("/robot_pose_map", 1);
     odometry_publisher_ = nh.advertise<nav_msgs::Odometry>("/odometry", 1);
+    tracking_status_publisher_ =
+        nh.advertise<std_msgs::Bool>("/robot_pose_tracking_ok", 1);
 
     if (publish_relocalization_status_) {
       relocalization_status_publisher_ =
@@ -96,20 +127,30 @@ public:
           ros::Duration(0.1),
           &ImageGrabber::PublishRelocalizationStatusTimer, this);
     }
+    pose_correction_service_ =
+        nh.advertiseService("/pose_correction/set_enabled",
+                            &ImageGrabber::SetPoseCorrectionEnabled, this);
   }
 
   void GrabStereo(const sensor_msgs::ImageConstPtr &msgLeft,
                   const sensor_msgs::ImageConstPtr &msgRight);
 
-  void PublishPose(const Sophus::SE3f &Tcw, const ros::Time &stamp) {
-    const Sophus::SE3f Twc = Tcw.inverse();
+  void PublishTrackingStatus(bool tracking_ok) {
+    std_msgs::Bool status_msg;
+    status_msg.data = tracking_ok;
+    tracking_status_publisher_.publish(status_msg);
+  }
+
+  void PublishPoseMessage(ros::Publisher &publisher, const Sophus::SE3f &Twc,
+                          const ros::Time &stamp,
+                          const std::string &frame_id) {
     const Eigen::Vector3f translation = Twc.translation();
     Eigen::Quaternionf orientation(Twc.rotationMatrix());
     orientation.normalize();
 
     geometry_msgs::PoseStamped pose_msg;
     pose_msg.header.stamp = stamp;
-    pose_msg.header.frame_id = "map";
+    pose_msg.header.frame_id = frame_id;
     pose_msg.pose.position.x = translation.x();
     pose_msg.pose.position.y = translation.y();
     pose_msg.pose.position.z = translation.z();
@@ -117,20 +158,36 @@ public:
     pose_msg.pose.orientation.y = orientation.y();
     pose_msg.pose.orientation.z = orientation.z();
     pose_msg.pose.orientation.w = orientation.w();
-    robot_pose_publisher_.publish(pose_msg);
+    publisher.publish(pose_msg);
   }
 
-  void PublishOdometry(const Sophus::SE3f &Tcw, const ros::Time &stamp) {
-    const Sophus::SE3f Twc = Tcw.inverse();
-    const Sophus::SE3f T0c = GetOdometryPose(Twc);
-    const Eigen::Vector3f translation = T0c.translation();
-    Eigen::Quaternionf orientation(T0c.rotationMatrix());
+  void PublishPose(const Sophus::SE3f &Twc, const ros::Time &stamp) {
+    PublishPoseMessage(robot_pose_publisher_, Twc, stamp,
+                       kContinuousMapFrame);
+  }
+
+  void PublishSlamPose(const Sophus::SE3f &Twc, const ros::Time &stamp) {
+    PublishPoseMessage(slam_pose_publisher_, Twc, stamp, kSlamMapFrame);
+  }
+
+  void PublishCorrectedMapPose(const Sophus::SE3f &Twc,
+                               const ros::Time &stamp) {
+    PublishPoseMessage(corrected_map_pose_publisher_, Twc, stamp,
+                       kPlanningMapFrame);
+  }
+
+  void PublishOdometry(const Sophus::SE3f &Twc, const ros::Time &stamp,
+                       bool pose_fresh) {
+    const Sophus::SE3f Twb = ConvertOpticalPoseToRosPose(Twc);
+    const Sophus::SE3f T0b = GetOdometryPose(Twb);
+    const Eigen::Vector3f translation = T0b.translation();
+    Eigen::Quaternionf orientation(T0b.rotationMatrix());
     orientation.normalize();
 
     nav_msgs::Odometry odom_msg;
     odom_msg.header.stamp = stamp;
-    odom_msg.header.frame_id = "odom";
-    odom_msg.child_frame_id = "left_camera";
+    odom_msg.header.frame_id = kOdomFrame;
+    odom_msg.child_frame_id = kRosCameraFrame;
     odom_msg.pose.pose.position.x = translation.x();
     odom_msg.pose.pose.position.y = translation.y();
     odom_msg.pose.pose.position.z = translation.z();
@@ -140,7 +197,10 @@ public:
     odom_msg.pose.pose.orientation.w = orientation.w();
     SetDiagonalCovariance(odom_msg.pose.covariance, kUnknownCovariance);
 
-    TwistEstimate twist_estimate = EstimateTwist(Twc, stamp);
+    TwistEstimate twist_estimate;
+    if (pose_fresh) {
+      twist_estimate = EstimateTwist(Twb, stamp);
+    }
     odom_msg.twist.twist.linear.x = twist_estimate.linear.x();
     odom_msg.twist.twist.linear.y = twist_estimate.linear.y();
     odom_msg.twist.twist.linear.z = twist_estimate.linear.z();
@@ -152,7 +212,7 @@ public:
         twist_estimate.valid ? kLowConfidenceTwistCovariance
                              : kUnknownCovariance);
 
-    PublishTransforms(T0c, stamp);
+    PublishTransforms(T0b, stamp);
     odometry_publisher_.publish(odom_msg);
   }
 
@@ -198,9 +258,23 @@ public:
     relocalization_status_publisher_.publish(status_msg);
   }
 
+  bool SetPoseCorrectionEnabled(std_srvs::SetBool::Request &req,
+                                std_srvs::SetBool::Response &res) {
+    pose_correction_config_.enable_corrected_map_pose = req.data;
+    res.success = true;
+    res.message = std::string("Pose correction ") + (req.data ? "enabled" : "disabled");
+    ROS_INFO_STREAM("Pose correction set to " << (req.data ? "ENABLED" : "DISABLED") );
+    return true;
+  }
+
   ORB_SLAM3::System *mpSLAM;
+  PoseCorrectionConfig pose_correction_config_;
+  ros::ServiceServer pose_correction_service_;
   ros::Publisher robot_pose_publisher_;
+  ros::Publisher slam_pose_publisher_;
+  ros::Publisher corrected_map_pose_publisher_;
   ros::Publisher odometry_publisher_;
+  ros::Publisher tracking_status_publisher_;
   const bool publish_relocalization_status_;
   ros::Publisher relocalization_status_publisher_;
   ros::Timer relocalization_status_timer_;
@@ -230,25 +304,144 @@ private:
     return transform;
   }
 
-  void PublishTransforms(const Sophus::SE3f &T0c, const ros::Time &stamp) {
+  Sophus::SE3f ConvertOpticalPoseToRosPose(const Sophus::SE3f &Twc) const {
+    return Twc * CameraLinkToOpticalTransform();
+  }
+
+  bool PoseIsFinite(const Sophus::SE3f &pose) const {
+    return pose.translation().allFinite() && pose.rotationMatrix().allFinite();
+  }
+
+  void EnterUnstableMappingWindow() {
+    if (!pose_correction_blocked_by_tracking_loss_) {
+      ROS_WARN_STREAM(
+          "Suppressing /robot_pose_map convergence until the next ORB-SLAM big "
+          "map event because tracking became unstable");
+    }
+    pose_correction_blocked_by_tracking_loss_ = true;
+    corrected_map_correction_active_ = false;
+  }
+
+  void MaybeLeaveUnstableMappingWindow(bool map_id_changed,
+                                       bool big_change_idx_changed) {
+    if (pose_correction_blocked_by_tracking_loss_ && !map_id_changed &&
+        big_change_idx_changed) {
+      pose_correction_blocked_by_tracking_loss_ = false;
+      ROS_WARN_STREAM(
+          "Resuming /robot_pose_map convergence after ORB-SLAM big map event "
+          "closed the unstable mapping window");
+    }
+  }
+
+  bool ShouldStartPoseCorrectionEvent(bool map_id_changed,
+                                      bool big_change_idx_changed) const {
+    return !pose_correction_blocked_by_tracking_loss_ && !map_id_changed &&
+           big_change_idx_changed &&
+           (pose_correction_config_.enable_corrected_map_pose ||
+            pose_correction_config_.auto_enable_on_map_event);
+  }
+
+  void PublishPlanningMapTransform(const Sophus::SE3f &Tplanning_map,
+                                   const ros::Time &stamp) {
+    tf_broadcaster_.sendTransform(tf::StampedTransform(
+        SophusToTfTransform(Tplanning_map), stamp, kPlanningMapFrame,
+        kSlamMapFrame));
+  }
+
+  Sophus::SE3f ApplyGradualCorrection(const Sophus::SE3f &base_pose,
+                                      const Sophus::SE3f &correction_offset,
+                                      int &correction_step,
+                                      bool &correction_active) const {
+    if (!correction_active) {
+      return base_pose;
+    }
+
+    const int horizon_frames =
+        std::max(1, pose_correction_config_.correction_horizon_frames);
+    const float alpha =
+        horizon_frames == 1
+            ? 1.0f
+            : static_cast<float>(correction_step) /
+                  static_cast<float>(horizon_frames - 1);
+    const Sophus::SE3f identity_pose;
+    const Sophus::SE3f blended_offset =
+        BlendPose(correction_offset, identity_pose, alpha);
+    const Sophus::SE3f output_pose = blended_offset * base_pose;
+
+    correction_step++;
+    if (correction_step >= horizon_frames) {
+      correction_active = false;
+    }
+
+    return output_pose;
+  }
+
+  Sophus::SE3f GetContinuousPose(const Sophus::SE3f &raw_Twc) {
+    const long unsigned int map_id = mpSLAM ? mpSLAM->GetCurrentMapId() : 0;
+    const int big_change_idx = mpSLAM ? mpSLAM->GetLastBigChangeIdx() : 0;
+    const int map_change_idx = mpSLAM ? mpSLAM->GetCurrentMapChangeIndex() : 0;
+    const bool map_id_changed =
+        has_current_map_id_ && map_id != current_map_id_;
+    if (!has_current_map_id_) {
+      current_map_id_ = map_id;
+      has_current_map_id_ = true;
+    }
+    if (!has_last_big_change_idx_) {
+      last_big_change_idx_ = big_change_idx;
+      has_last_big_change_idx_ = true;
+    }
+    if (!has_last_map_change_idx_) {
+      last_map_change_idx_ = map_change_idx;
+      has_last_map_change_idx_ = true;
+    }
+
+    if (!has_continuous_map_transform_) {
+      continuous_T_orb_map_ = Sophus::SE3f();
+      has_continuous_map_transform_ = true;
+    } else if (map_id_changed && has_last_continuous_pose_) {
+      continuous_T_orb_map_ = last_continuous_Twc_ * raw_Twc.inverse();
+      ResetVelocityState();
+      ROS_WARN_STREAM(
+          "Rebased /robot_pose continuous_map after ORB-SLAM map switch"
+          << " map_id " << current_map_id_ << " -> " << map_id
+          << ", big_change " << last_big_change_idx_ << " -> "
+          << big_change_idx << ", map_change " << last_map_change_idx_
+          << " -> " << map_change_idx);
+    }
+
+    current_map_id_ = map_id;
+    last_big_change_idx_ = big_change_idx;
+    last_map_change_idx_ = map_change_idx;
+    const Sophus::SE3f continuous_Twc = continuous_T_orb_map_ * raw_Twc;
+    last_continuous_Twc_ = continuous_Twc;
+    has_last_continuous_pose_ = true;
+    return continuous_Twc;
+  }
+
+  void PublishTransforms(const Sophus::SE3f &T0b, const ros::Time &stamp) {
     if (!has_odom_origin_) {
       return;
     }
 
     tf_broadcaster_.sendTransform(tf::StampedTransform(
-        SophusToTfTransform(odom_origin_pose_), stamp, "map", "odom"));
+        SophusToTfTransform(odom_origin_pose_), stamp, kContinuousMapFrame,
+        kOdomFrame));
     tf_broadcaster_.sendTransform(tf::StampedTransform(
-        SophusToTfTransform(T0c), stamp, "odom", "left_camera"));
+        SophusToTfTransform(T0b), stamp, kOdomFrame, kRosCameraFrame));
+    tf_broadcaster_.sendTransform(
+        tf::StampedTransform(SophusToTfTransform(CameraLinkToOpticalTransform()),
+                             stamp, kRosCameraFrame, kOpticalCameraFrame));
   }
 
-  Sophus::SE3f GetOdometryPose(const Sophus::SE3f &Twc) {
-    // Keep a session-stable local origin once the first valid tracking pose arrives.
+  Sophus::SE3f GetOdometryPose(const Sophus::SE3f &Twb) {
+    // Keep a session-stable local origin once the first valid body-frame pose
+    // arrives.
     if (!has_odom_origin_) {
-      odom_origin_pose_ = Twc;
+      odom_origin_pose_ = Twb;
       has_odom_origin_ = true;
     }
 
-    return odom_origin_pose_.inverse() * Twc;
+    return odom_origin_pose_.inverse() * Twb;
   }
 
   void ResetVelocityState() {
@@ -256,36 +449,36 @@ private:
     suppress_next_twist_ = false;
   }
 
-  void StoreVelocityReference(const Sophus::SE3f &Twc,
+  void StoreVelocityReference(const Sophus::SE3f &Twb,
                               const ros::Time &stamp) {
-    previous_valid_pose_ = Twc;
+    previous_valid_pose_ = Twb;
     previous_valid_stamp_ = stamp;
     has_previous_valid_pose_ = true;
   }
 
-  TwistEstimate EstimateTwist(const Sophus::SE3f &Twc,
+  TwistEstimate EstimateTwist(const Sophus::SE3f &Twb,
                               const ros::Time &stamp) {
     TwistEstimate estimate;
 
     if (!has_previous_valid_pose_) {
-      StoreVelocityReference(Twc, stamp);
+      StoreVelocityReference(Twb, stamp);
       return estimate;
     }
 
     if (suppress_next_twist_) {
       suppress_next_twist_ = false;
-      StoreVelocityReference(Twc, stamp);
+      StoreVelocityReference(Twb, stamp);
       return estimate;
     }
 
     const double dt = (stamp - previous_valid_stamp_).toSec();
     if (!std::isfinite(dt) || dt <= 0.0 || dt < kMinVelocityDtSec ||
         dt > kMaxVelocityDtSec) {
-      StoreVelocityReference(Twc, stamp);
+      StoreVelocityReference(Twb, stamp);
       return estimate;
     }
 
-    const Sophus::SE3f Tprev_current = previous_valid_pose_.inverse() * Twc;
+    const Sophus::SE3f Tprev_current = previous_valid_pose_.inverse() * Twb;
     const Sophus::SO3f Rprev_current = Tprev_current.so3();
     const Sophus::SO3f Rcurrent_prev = Rprev_current.inverse();
     const Eigen::Vector3f linear_velocity =
@@ -300,7 +493,7 @@ private:
         linear_velocity.norm() <= kMaxLinearVelocityMps &&
         angular_velocity.norm() <= kMaxAngularVelocityRadPerSec;
 
-    StoreVelocityReference(Twc, stamp);
+    StoreVelocityReference(Twb, stamp);
 
     if (!twist_is_finite || !twist_is_reasonable) {
       suppress_next_twist_ = true;
@@ -316,10 +509,138 @@ private:
   bool has_previous_valid_pose_ = false;
   bool suppress_next_twist_ = false;
   bool has_odom_origin_ = false;
+  bool has_current_map_id_ = false;
+  bool has_last_big_change_idx_ = false;
+  bool has_last_map_change_idx_ = false;
+  bool has_continuous_map_transform_ = false;
+  bool has_last_continuous_pose_ = false;
+  bool has_last_slam_pose_ = false;
+  long unsigned int current_map_id_ = 0;
+  int last_big_change_idx_ = 0;
+  int last_map_change_idx_ = 0;
   tf::TransformBroadcaster tf_broadcaster_;
+  Sophus::SE3f continuous_T_orb_map_;
+  Sophus::SE3f last_continuous_Twc_;
+  Sophus::SE3f last_slam_Twc_;
   Sophus::SE3f odom_origin_pose_;
   Sophus::SE3f previous_valid_pose_;
   ros::Time previous_valid_stamp_;
+
+  bool has_last_corrected_map_pose_ = false;
+  bool has_corrected_map_transform_ = false;
+  bool has_last_corrected_map_transform_ = false;
+  bool pose_correction_blocked_by_tracking_loss_ = false;
+  bool corrected_map_correction_active_ = false;
+  bool corrected_map_has_current_map_id_ = false;
+  bool corrected_map_has_last_big_change_idx_ = false;
+  bool corrected_map_has_last_map_change_idx_ = false;
+  long unsigned int corrected_map_current_map_id_ = 0;
+  int corrected_map_last_big_change_idx_ = 0;
+  int corrected_map_last_map_change_idx_ = 0;
+  int corrected_map_correction_step_ = 0;
+  Sophus::SE3f corrected_map_T_orb_map_;
+  Sophus::SE3f last_corrected_map_pose_;
+  Sophus::SE3f last_corrected_map_transform_;
+  Sophus::SE3f corrected_map_correction_offset_;
+
+  Sophus::SE3f BlendPose(const Sophus::SE3f &from, const Sophus::SE3f &to,
+                         float alpha) const {
+    alpha = std::max(0.0f, std::min(1.0f, alpha));
+
+    const Eigen::Vector3f translation =
+        (1.0f - alpha) * from.translation() + alpha * to.translation();
+    Eigen::Quaternionf q_from(from.rotationMatrix());
+    Eigen::Quaternionf q_to(to.rotationMatrix());
+    q_from.normalize();
+    q_to.normalize();
+
+    Eigen::Quaternionf q_blend = q_from.slerp(alpha, q_to);
+    q_blend.normalize();
+    return Sophus::SE3f(q_blend.toRotationMatrix(), translation);
+  }
+
+  Sophus::SE3f GetCorrectedMapPose(const Sophus::SE3f &raw_Twc) {
+    const long unsigned int map_id = mpSLAM ? mpSLAM->GetCurrentMapId() : 0;
+    const int big_change_idx = mpSLAM ? mpSLAM->GetLastBigChangeIdx() : 0;
+    const int map_change_idx = mpSLAM ? mpSLAM->GetCurrentMapChangeIndex() : 0;
+    const bool map_id_changed = corrected_map_has_current_map_id_ &&
+                                map_id != corrected_map_current_map_id_;
+    const bool big_change_idx_changed =
+        corrected_map_has_last_big_change_idx_ &&
+        big_change_idx != corrected_map_last_big_change_idx_;
+
+    if (!corrected_map_has_current_map_id_) {
+      corrected_map_current_map_id_ = map_id;
+      corrected_map_has_current_map_id_ = true;
+    }
+    if (!corrected_map_has_last_big_change_idx_) {
+      corrected_map_last_big_change_idx_ = big_change_idx;
+      corrected_map_has_last_big_change_idx_ = true;
+    }
+    if (!corrected_map_has_last_map_change_idx_) {
+      corrected_map_last_map_change_idx_ = map_change_idx;
+      corrected_map_has_last_map_change_idx_ = true;
+    }
+
+    MaybeLeaveUnstableMappingWindow(map_id_changed, big_change_idx_changed);
+
+    if (!has_corrected_map_transform_) {
+      corrected_map_T_orb_map_ = Sophus::SE3f();
+      has_corrected_map_transform_ = true;
+    } else if (map_id_changed && has_last_corrected_map_pose_) {
+      const Sophus::SE3f rebase_reference =
+          has_last_continuous_pose_ ? last_continuous_Twc_
+                                    : last_corrected_map_pose_;
+      corrected_map_T_orb_map_ = rebase_reference * raw_Twc.inverse();
+      corrected_map_correction_active_ = false;
+      ROS_WARN_STREAM(
+          "Rebased /robot_pose_map planning_map after ORB-SLAM map switch"
+          << " map_id " << corrected_map_current_map_id_ << " -> " << map_id
+          << ", big_change " << corrected_map_last_big_change_idx_ << " -> "
+          << big_change_idx << ", map_change "
+          << corrected_map_last_map_change_idx_ << " -> " << map_change_idx);
+    }
+
+    if (ShouldStartPoseCorrectionEvent(map_id_changed, big_change_idx_changed) &&
+        has_last_corrected_map_pose_) {
+      corrected_map_correction_active_ = true;
+      corrected_map_correction_step_ = 0;
+      corrected_map_correction_offset_ =
+          last_corrected_map_pose_ * raw_Twc.inverse();
+      ROS_WARN_STREAM(
+          "Starting gradual /robot_pose_map planning_map correction after "
+          "ORB-SLAM big map event"
+          << " map_id " << corrected_map_current_map_id_ << " -> " << map_id
+          << ", big_change " << corrected_map_last_big_change_idx_ << " -> "
+          << big_change_idx << ", map_change "
+          << corrected_map_last_map_change_idx_ << " -> " << map_change_idx);
+    }
+
+    corrected_map_current_map_id_ = map_id;
+    corrected_map_last_big_change_idx_ = big_change_idx;
+    corrected_map_last_map_change_idx_ = map_change_idx;
+
+    const Sophus::SE3f base_corrected_map_Twc = corrected_map_T_orb_map_ * raw_Twc;
+    Sophus::SE3f corrected_map_transform = corrected_map_T_orb_map_;
+    Sophus::SE3f output_Twc = base_corrected_map_Twc;
+    if (corrected_map_correction_active_) {
+      const bool was_active = corrected_map_correction_active_;
+      output_Twc = ApplyGradualCorrection(
+          raw_Twc, corrected_map_correction_offset_,
+          corrected_map_correction_step_, corrected_map_correction_active_);
+      corrected_map_transform = output_Twc * raw_Twc.inverse();
+      if (was_active && !corrected_map_correction_active_) {
+        corrected_map_T_orb_map_ = Sophus::SE3f();
+        corrected_map_transform = corrected_map_T_orb_map_;
+      }
+    }
+
+    last_corrected_map_pose_ = output_Twc;
+    has_last_corrected_map_pose_ = true;
+    last_corrected_map_transform_ = corrected_map_transform;
+    has_last_corrected_map_transform_ = true;
+    return output_Twc;
+  }
 };
 
 } // namespace
@@ -337,6 +658,28 @@ int main(int argc, char **argv) {
     return 1;
   }
 
+  cv::FileStorage fsSettings(argv[2], cv::FileStorage::READ);
+  if (!fsSettings.isOpened()) {
+    cerr << "ERROR: Wrong path to settings" << endl;
+    ros::shutdown();
+    return -1;
+  }
+
+  PoseCorrectionConfig pose_correction_config;
+  if (!fsSettings["PoseCorrection.EnableCorrectedMapPose"].empty()) {
+    pose_correction_config.enable_corrected_map_pose =
+        static_cast<int>(fsSettings["PoseCorrection.EnableCorrectedMapPose"]) !=
+        0;
+  }
+  if (!fsSettings["PoseCorrection.CorrectionHorizonFrames"].empty()) {
+    pose_correction_config.correction_horizon_frames =
+        static_cast<int>(fsSettings["PoseCorrection.CorrectionHorizonFrames"]);
+  }
+  if (!fsSettings["PoseCorrection.AutoEnableOnMapEvent"].empty()) {
+    pose_correction_config.auto_enable_on_map_event =
+        static_cast<int>(fsSettings["PoseCorrection.AutoEnableOnMapEvent"]) != 0;
+  }
+
   bool bUseViewer = true;
   if (argc >= 5) {
     stringstream ss(argv[4]);
@@ -349,19 +692,23 @@ int main(int argc, char **argv) {
                          bUseViewer);
 
   ros::NodeHandle nh;
-  ImageGrabber igb(&SLAM, nh);
+  ros::NodeHandle pnh("~");
+  ImageGrabber igb(&SLAM, nh, pose_correction_config);
+
+  std::string left_image_topic = "/camera/infra1/image_rect_raw";
+  std::string right_image_topic = "/camera/infra2/image_rect_raw";
+  pnh.param<std::string>("left_image_topic", left_image_topic,
+                         left_image_topic);
+  pnh.param<std::string>("right_image_topic", right_image_topic,
+                         right_image_topic);
+  ROS_INFO_STREAM("Stereo subscribing left image topic: " << left_image_topic);
+  ROS_INFO_STREAM("Stereo subscribing right image topic: " << right_image_topic);
 
   stringstream ss(argv[3]);
   ss >> boolalpha >> igb.do_rectify;
 
   if (igb.do_rectify) {
     // Load settings related to stereo calibration
-    cv::FileStorage fsSettings(argv[2], cv::FileStorage::READ);
-    if (!fsSettings.isOpened()) {
-      cerr << "ERROR: Wrong path to settings" << endl;
-      return -1;
-    }
-
     cv::Mat K_l, K_r, P_l, P_r, R_l, R_r, D_l, D_r;
     fsSettings["LEFT.K"] >> K_l;
     fsSettings["RIGHT.K"] >> K_r;
@@ -396,10 +743,10 @@ int main(int argc, char **argv) {
         cv::Size(cols_r, rows_r), CV_32F, igb.M1r, igb.M2r);
   }
 
-  message_filters::Subscriber<sensor_msgs::Image> left_sub(
-      nh, "/camera/infra1/image_rect_raw", 1);
+  message_filters::Subscriber<sensor_msgs::Image> left_sub(nh,
+                                                           left_image_topic, 1);
   message_filters::Subscriber<sensor_msgs::Image> right_sub(
-      nh, "/camera/infra2/image_rect_raw", 1);
+      nh, right_image_topic, 1);
   typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image,
                                                           sensor_msgs::Image>
       sync_pol;
@@ -457,12 +804,43 @@ void ImageGrabber::GrabStereo(const sensor_msgs::ImageConstPtr &msgLeft,
   const int tracking_state = mpSLAM->GetTrackingState();
   const bool tracking_ok = tracking_state == ORB_SLAM3::Tracking::OK ||
                            tracking_state == ORB_SLAM3::Tracking::OK_KLT;
+  const bool pose_ok = tracking_ok && PoseIsFinite(Tcw);
+  PublishTrackingStatus(pose_ok);
 
-  if (!tracking_ok) {
+  if (!pose_ok) {
+    EnterUnstableMappingWindow();
     ResetVelocityState();
+    if (has_last_continuous_pose_) {
+      PublishPose(last_continuous_Twc_, cv_ptrLeft->header.stamp);
+      PublishOdometry(last_continuous_Twc_, cv_ptrLeft->header.stamp, false);
+    }
+    if (has_last_slam_pose_) {
+      PublishSlamPose(last_slam_Twc_, cv_ptrLeft->header.stamp);
+    }
+    if (has_last_corrected_map_pose_) {
+      PublishCorrectedMapPose(last_corrected_map_pose_,
+                              cv_ptrLeft->header.stamp);
+      if (has_last_corrected_map_transform_) {
+        PublishPlanningMapTransform(last_corrected_map_transform_,
+                                    cv_ptrLeft->header.stamp);
+      }
+    }
     return;
   }
 
-  PublishPose(Tcw, cv_ptrLeft->header.stamp);
-  PublishOdometry(Tcw, cv_ptrLeft->header.stamp);
+  const Sophus::SE3f raw_Twc = Tcw.inverse();
+  last_slam_Twc_ = raw_Twc;
+  has_last_slam_pose_ = true;
+  PublishSlamPose(raw_Twc, cv_ptrLeft->header.stamp);
+
+  const Sophus::SE3f corrected_map_Twc = GetCorrectedMapPose(raw_Twc);
+  PublishCorrectedMapPose(corrected_map_Twc, cv_ptrLeft->header.stamp);
+  if (has_last_corrected_map_transform_) {
+    PublishPlanningMapTransform(last_corrected_map_transform_,
+                                cv_ptrLeft->header.stamp);
+  }
+
+  const Sophus::SE3f continuous_Twc = GetContinuousPose(raw_Twc);
+  PublishPose(continuous_Twc, cv_ptrLeft->header.stamp);
+  PublishOdometry(continuous_Twc, cv_ptrLeft->header.stamp, true);
 }

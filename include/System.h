@@ -136,6 +136,15 @@ public:
   // since last call to this function
   bool MapChanged();
 
+  // Current active Atlas map id, useful for ROS-facing continuity wrappers.
+  long unsigned int GetCurrentMapId();
+
+  // Current Atlas big-change counter without consuming MapChanged() state.
+  int GetLastBigChangeIdx();
+
+  // Current Atlas map-change counter without consuming any notification state.
+  int GetCurrentMapChangeIndex();
+
   // Reset the system (clear Atlas or the active map)
   void Reset();
   void ResetActiveMap();

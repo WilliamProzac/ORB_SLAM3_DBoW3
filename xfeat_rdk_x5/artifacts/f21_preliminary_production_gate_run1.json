@@ -1,0 +1,244 @@
+{
+  "frontend_pass": false,
+  "gates": {
+    "five_orb_runs": {
+      "actual": 1.0,
+      "limit": 1.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "five_xfeat_runs": {
+      "actual": 1.0,
+      "limit": 1.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "mean_frontend_latency": {
+      "actual": 55.049835869999995,
+      "limit": 63.8655694649265,
+      "operator": "<=",
+      "pass": true
+    },
+    "mean_strict_inliers": {
+      "actual": 375.4,
+      "limit": 204.7319738988581,
+      "operator": ">=",
+      "pass": true
+    },
+    "median_vertical_error": {
+      "actual": 0.0,
+      "limit": 0.5,
+      "operator": "<=",
+      "pass": true
+    },
+    "minimum_strict_inliers": {
+      "actual": 330.0,
+      "limit": 30.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "p90_frontend_latency": {
+      "actual": 59.366735899999995,
+      "limit": 81.76384339999998,
+      "operator": "<",
+      "pass": true
+    },
+    "strict_grid_coverage": {
+      "actual": 0.5795833599999995,
+      "limit": 0.7551318662316483,
+      "operator": ">=",
+      "pass": false
+    },
+    "strict_inlier_ratio": {
+      "actual": 0.9997606699999999,
+      "limit": 0.3269440929853177,
+      "operator": ">=",
+      "pass": true
+    }
+  },
+  "inputs": {
+    "orb": [
+      {
+        "bytes": 57653,
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/f21_orb_production_run1.csv",
+        "sha256": "dd4f0a7e70a4bfdebb9cf946086b5277a741dc2f9121c0ad826abfbf341961f1"
+      }
+    ],
+    "xfeat": [
+      {
+        "bytes": 166820,
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/f21_semidense_m384_board_full.csv",
+        "sha256": "8b3b6d419082f266ceb5f9951fcecc1c991c2581cc30938b99fcdd74c62eed70"
+      }
+    ]
+  },
+  "orb": {
+    "depth_grid_coverage": {
+      "maximum": 0.9375,
+      "mean": 0.7551318662316483,
+      "median": 0.75,
+      "minimum": 0.541667,
+      "p90": 0.833333
+    },
+    "discarded_invalid_rows": 1,
+    "feature_extract_ms": {
+      "maximum": 71.446096,
+      "mean": 57.725277109298496,
+      "median": 58.214174,
+      "minimum": 44.930295,
+      "p90": 63.4915438
+    },
+    "frames": 613,
+    "frontend_ms": {
+      "maximum": 90.563337,
+      "mean": 70.96174384991834,
+      "median": 71.025634,
+      "minimum": 55.223709,
+      "p90": 81.76384339999998
+    },
+    "keypoints": {
+      "maximum": 610.0,
+      "mean": 603.8482871125611,
+      "median": 604.0,
+      "minimum": 600.0,
+      "p90": 606.0
+    },
+    "stereo_match_ms": {
+      "maximum": 27.866062,
+      "mean": 13.236466740619907,
+      "median": 12.202337,
+      "minimum": 5.994856,
+      "p90": 20.40805040000001
+    },
+    "track_total_ms": {
+      "maximum": 112.929839,
+      "mean": 88.15379157585645,
+      "median": 88.067451,
+      "minimum": 65.706584,
+      "p90": 100.8276928
+    },
+    "tracked_inliers": {
+      "maximum": 277.0,
+      "mean": 118.76835236541599,
+      "median": 114.0,
+      "minimum": 0.0,
+      "p90": 204.0
+    },
+    "tracking": {
+      "failure_frames": 30,
+      "failure_segments": 1,
+      "longest_failure_seconds": 2.970016168,
+      "total_failure_seconds": 2.970016168
+    },
+    "valid_depth_ratio": {
+      "maximum": 0.547264,
+      "mean": 0.35694409298531765,
+      "median": 0.344884,
+      "minimum": 0.239669,
+      "p90": 0.469218
+    },
+    "valid_depths": {
+      "maximum": 330.0,
+      "mean": 215.5073409461664,
+      "median": 208.0,
+      "minimum": 145.0,
+      "p90": 283.80000000000007
+    }
+  },
+  "promotion_to_f22": false,
+  "schema": "rdk-x5-f21-gate-v1",
+  "tracking_comparison": {
+    "reason": "standalone XFeat frontend rows do not contain SLAM tracking state",
+    "status": "not_evaluated"
+  },
+  "warmup_frames_per_run": 30,
+  "xfeat": {
+    "extraction_wall_ms": {
+      "maximum": 55.396213,
+      "mean": 40.21764053999999,
+      "median": 39.446444,
+      "minimum": 36.315824,
+      "p90": 42.0943114
+    },
+    "fine_total_ms": {
+      "maximum": 20.801637,
+      "mean": 12.236903130000004,
+      "median": 11.3561715,
+      "minimum": 10.75686,
+      "p90": 13.9617173
+    },
+    "frames": 100,
+    "frontend_ms": {
+      "maximum": 71.564482,
+      "mean": 55.049835869999995,
+      "median": 54.091944,
+      "minimum": 50.233013,
+      "p90": 59.366735899999995
+    },
+    "match_ms": {
+      "maximum": 7.566906,
+      "mean": 2.1773990000000008,
+      "median": 1.8727055,
+      "minimum": 1.344623,
+      "p90": 3.2548155000000003
+    },
+    "median_vertical_error_px": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "p90": 0.0
+    },
+    "patch_ncc_median": {
+      "maximum": 0.926554,
+      "mean": 0.7647255900000003,
+      "median": 0.8128645,
+      "minimum": 0.476953,
+      "p90": 0.8722978
+    },
+    "photometric_grid_coverage": {
+      "maximum": 0.729167,
+      "mean": 0.5441666700000003,
+      "median": 0.541667,
+      "minimum": 0.354167,
+      "p90": 0.625
+    },
+    "photometric_inlier_ratio": {
+      "maximum": 0.899471,
+      "mean": 0.7435822899999998,
+      "median": 0.7902385000000001,
+      "minimum": 0.470899,
+      "p90": 0.8536578
+    },
+    "photometric_inliers": {
+      "maximum": 340.0,
+      "mean": 279.73,
+      "median": 300.0,
+      "minimum": 176.0,
+      "p90": 325.0
+    },
+    "strict_grid_coverage": {
+      "maximum": 0.75,
+      "mean": 0.5795833599999995,
+      "median": 0.583333,
+      "minimum": 0.395833,
+      "p90": 0.6666669999999999
+    },
+    "strict_inlier_ratio": {
+      "maximum": 1.0,
+      "mean": 0.9997606699999999,
+      "median": 1.0,
+      "minimum": 0.997151,
+      "p90": 1.0
+    },
+    "strict_inliers": {
+      "maximum": 383.0,
+      "mean": 375.4,
+      "median": 379.0,
+      "minimum": 330.0,
+      "p90": 382.0
+    }
+  },
+  "xfeat_latency_definition": "end_to_end_pair_ms",
+  "xfeat_method": "xfeat_star_fine"
+}

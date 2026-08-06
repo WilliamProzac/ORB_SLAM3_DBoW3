@@ -1,0 +1,195 @@
+{
+  "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+  "parameters": {
+    "bag": "2026-06-05-09-59-04.bag",
+    "upstream": "/home/ywl/Project/ORB_SLAM3_DBoW3/Thirdparty/accelerated_features",
+    "top_k": 1024,
+    "fine_size": 512,
+    "min_cosine": 0.7,
+    "ratio": 1.0,
+    "fine_confidence": 0.15,
+    "refine_y": false,
+    "vertical": 2.0,
+    "max_disparity": 160.0,
+    "anchor_stride": 10,
+    "max_anchors": 4,
+    "output": "xfeat_rdk_x5/artifacts/fine_matcher_host_smoke_1024.json",
+    "calibration_dir": null
+  },
+  "pairs": 4,
+  "coarse": {
+    "matches": {
+      "count": 4,
+      "mean": 512.0,
+      "median": 512.0,
+      "p10": 512.0,
+      "p90": 512.0,
+      "min": 512.0,
+      "max": 512.0
+    },
+    "ransac_inliers": {
+      "count": 4,
+      "mean": 426.5,
+      "median": 436.0,
+      "p10": 406.7,
+      "p90": 438.7,
+      "min": 395.0,
+      "max": 439.0
+    },
+    "strict_inliers": {
+      "count": 4,
+      "mean": 426.5,
+      "median": 436.0,
+      "p10": 406.7,
+      "p90": 438.7,
+      "min": 395.0,
+      "max": 439.0
+    },
+    "strict_inlier_ratio": {
+      "count": 4,
+      "mean": 0.8330078125,
+      "median": 0.8515625,
+      "p10": 0.7943359375,
+      "p90": 0.8568359375,
+      "min": 0.771484375,
+      "max": 0.857421875
+    },
+    "strict_grid_coverage": {
+      "count": 4,
+      "mean": 0.6979166666666667,
+      "median": 0.7083333333333334,
+      "p10": 0.65,
+      "p90": 0.7375,
+      "min": 0.625,
+      "max": 0.75
+    },
+    "median_vertical_error_px": {
+      "count": 4,
+      "mean": 0.0,
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "coarse_match_ms": {
+      "count": 4,
+      "mean": 10.337564504879992,
+      "median": 10.239645504043438,
+      "p10": 9.873029409209266,
+      "p90": 10.880434801219963,
+      "min": 9.806034009670839,
+      "max": 11.064933001762256
+    },
+    "fine_match_ms": {
+      "count": 4,
+      "mean": 0.0,
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "geometry_ms": {
+      "count": 4,
+      "mean": 0.8108504916890524,
+      "median": 0.781643990194425,
+      "p10": 0.6292815902270377,
+      "p90": 1.0157845943467692,
+      "min": 0.5827329878229648,
+      "max": 1.097380998544395
+    }
+  },
+  "fine": {
+    "matches": {
+      "count": 4,
+      "mean": 512.0,
+      "median": 512.0,
+      "p10": 512.0,
+      "p90": 512.0,
+      "min": 512.0,
+      "max": 512.0
+    },
+    "ransac_inliers": {
+      "count": 4,
+      "mean": 426.5,
+      "median": 436.0,
+      "p10": 406.7,
+      "p90": 438.7,
+      "min": 395.0,
+      "max": 439.0
+    },
+    "strict_inliers": {
+      "count": 4,
+      "mean": 426.5,
+      "median": 436.0,
+      "p10": 406.7,
+      "p90": 438.7,
+      "min": 395.0,
+      "max": 439.0
+    },
+    "strict_inlier_ratio": {
+      "count": 4,
+      "mean": 0.8330078125,
+      "median": 0.8515625,
+      "p10": 0.7943359375,
+      "p90": 0.8568359375,
+      "min": 0.771484375,
+      "max": 0.857421875
+    },
+    "strict_grid_coverage": {
+      "count": 4,
+      "mean": 0.6979166666666667,
+      "median": 0.7083333333333334,
+      "p10": 0.65,
+      "p90": 0.7375,
+      "min": 0.625,
+      "max": 0.75
+    },
+    "median_vertical_error_px": {
+      "count": 4,
+      "mean": 0.0,
+      "median": 0.0,
+      "p10": 0.0,
+      "p90": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "coarse_match_ms": {
+      "count": 4,
+      "mean": 10.337564504879992,
+      "median": 10.239645504043438,
+      "p10": 9.873029409209266,
+      "p90": 10.880434801219963,
+      "min": 9.806034009670839,
+      "max": 11.064933001762256
+    },
+    "fine_match_ms": {
+      "count": 4,
+      "mean": 4.467853752430528,
+      "median": 4.29692750913091,
+      "p10": 4.235860408516601,
+      "p90": 4.836588090984151,
+      "min": 4.22192900441587,
+      "max": 5.055630987044424
+    },
+    "geometry_ms": {
+      "count": 4,
+      "mean": 0.7975650005391799,
+      "median": 0.7162824913393706,
+      "p10": 0.6126337975729257,
+      "p90": 1.0475222108652815,
+      "min": 0.5974670057184994,
+      "max": 1.160228013759479
+    }
+  },
+  "fine_confidence_mean": {
+    "count": 4,
+    "mean": 0.4476889818906784,
+    "median": 0.4477836489677429,
+    "p10": 0.44660991728305816,
+    "p90": 0.448692312836647,
+    "min": 0.4462146759033203,
+    "max": 0.44897395372390747
+  }
+}

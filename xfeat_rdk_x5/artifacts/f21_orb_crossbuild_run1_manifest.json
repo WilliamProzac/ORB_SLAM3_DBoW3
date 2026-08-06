@@ -1,0 +1,53 @@
+{
+  "schema": "rdk-x5-f21-orb-crossbuild-v1",
+  "date": "2026-08-03",
+  "archive": {
+    "path": "/home/ywl/temp/ros1_arm64_ubuntu22.04.tar",
+    "bytes": 4304815616,
+    "sha256": "66a8b417b8f74dcce80029b6eabff9b143176abef716d58707775126b61c6354"
+  },
+  "images": {
+    "base": {
+      "tag": "ros1_arm64_ubuntu22.04:v3",
+      "id": "sha256:14bffa666b0dd32ab5fcef944fbce2b6fea9136d4ae0e1fa93795b1fc30165e1",
+      "architecture": "arm64"
+    },
+    "build": {
+      "tag": "rdk-orb-slam3-arm64-build:v3",
+      "id": "sha256:5d3f319b83872dc4433442ee8e6bc25b860fe33e738b2a96656702e485f14a91",
+      "added_package": "libepoxy-dev"
+    }
+  },
+  "toolchain": {
+    "ubuntu": "22.04.4",
+    "ros": "noetic",
+    "gcc": "11.4.0",
+    "cmake": "3.22.1",
+    "execution": "linux/arm64 under QEMU user-mode",
+    "march_native_resolution": "armv8-a generic"
+  },
+  "build": {
+    "workspace": "/home/ywl/Project/RDK_X5_orb_slam",
+    "script": "tools/build_rdk_arm64_docker.sh",
+    "jobs_4": "failed: Optimizer.cc cc1plus killed at 9 GiB cgroup limit",
+    "jobs_1": "passed: robot_interfaces and orb_slam3_ros",
+    "ros_stereo_sha256": "7119835542db693641e41615814e9c56157ceb07bf9b015c07b73e058d11a057",
+    "liborb_slam3_ros_sha256": "cada30957c1c0ca2a5525d333841d5e7cca0e8ff4581539f79bcad2f6395957e"
+  },
+  "board_validation": {
+    "host": "root@192.168.1.10",
+    "cpu": "8x Cortex-A55",
+    "staging": "/userdata/orb_slam/f21_crossbuild_staging_20260803",
+    "ldd_missing": 0,
+    "startup": "passed through vocabulary load and full ROS initialization",
+    "production_csv_rows": 644,
+    "production_csv_sha256": "dd4f0a7e70a4bfdebb9cf946086b5277a741dc2f9121c0ad826abfbf341961f1"
+  },
+  "comparison": "f21_preliminary_production_gate_run1.json",
+  "limitations": [
+    "Only one ORB and one XFeat run are included; the formal gate requires five alternating runs.",
+    "One map-reset callback exposed an invalid default Frame statistics row; the summarizer records and excludes it.",
+    "XFeat remains a standalone frontend, so its tracking-loss and trajectory metrics are not available.",
+    "The QEMU build is armv8-a generic; use an explicit Cortex-A55 target before the final performance claim."
+  ]
+}

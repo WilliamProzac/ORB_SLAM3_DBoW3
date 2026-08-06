@@ -19,8 +19,11 @@
 
 ### 4. 重构了 ROS 通信接口层
 * 取消了死板的默认话题代码绑定。适配了真实世界相机和传感器的深度/红外流特征（比如 `/camera/infra1/image_rect_raw`），并在 ROS 处理节点的 `SyncWithImu()` 中加入了优雅的主动 Shutdown 钩子，从源头避免由于 Ctrl+C 引发的宕机或者进程成僵尸。
-* **Stereo ROS wrapper 新增实时位姿输出**：`Stereo` 节点会发布 `/robot_pose`（`geometry_msgs/PoseStamped`），`header.frame_id = "map"`，位姿直接复用 `TrackStereo()` 返回的 `Tcw.inverse()`。
-* **Stereo ROS wrapper 新增里程计输出**：`Stereo` 节点会发布 `/odometry`（`nav_msgs/Odometry`），`header.frame_id = "map"`、`child_frame_id = "left_camera"`。其中 pose 同样来自 `Tcw.inverse()`，而 `twist` 使用连续有效跟踪位姿做差分估计，不再长期填零，并通过较大的 covariance 显式表达低置信度。
+* **Stereo ROS wrapper 新增连续位姿输出**：`Stereo` 节点会发布 `/robot_pose`（`geometry_msgs/PoseStamped`），`header.frame_id = "continuous_map"`。该话题对外保持连续坐标系：跟踪正常时发布当前连续位姿；跟踪失败时在已有有效位姿的基础上按图像回调频率继续发布上一帧有效位姿，避免跳回原点；普通新地图切换时仅做连续性保护，不触发任何向 raw SLAM 回收敛的渐进纠偏。也就是说，`/robot_pose` 的职责现在是纯连续控制位姿，而不是逐步贴回 `/robot_pose_slam`。
+* **Stereo ROS wrapper 新增 SLAM 原始/优化位姿输出**：`Stereo` 节点会发布 `/robot_pose_slam`（`geometry_msgs/PoseStamped`），`header.frame_id = "map"`。该话题保留 ORB-SLAM3 当前 Atlas map 下的原始位姿语义，用于观察 loop closure、map merge 后的 SLAM 优化结果以及回到起点时的闭环误差；它可能随 SLAM 全局优化发生跳变，不作为控制连续位姿使用。
+* **Stereo ROS wrapper 新增规划地图位姿输出**：`Stereo` 节点会额外发布 `/robot_pose_map`（`geometry_msgs/PoseStamped`），`header.frame_id = "planning_map"`。该话题面向后续栅格地图生成和导航规划：普通新地图切换时，`planning_map -> map` 会先重绑定到上一帧连续位姿附近，避免 `/robot_pose_map` 跟随 raw SLAM map 瞬跳；如果建图进入 tracking fail 后的不平稳阶段，则暂停向 raw SLAM 回收敛；当后续 merge 或其他 big map event 发生并关闭该不平稳窗口后，再在有限帧内把 `planning_map` 语义下的机器人位姿平滑拉回当前 raw SLAM map。运行时可通过 `/pose_correction/set_enabled` 服务切换这种回收敛行为。
+* **Stereo ROS wrapper 新增里程计输出**：`Stereo` 节点会发布 `/odometry`（`nav_msgs/Odometry`），`header.frame_id = "odom"`、`child_frame_id = "left_camera_link"`，并广播 `continuous_map -> odom -> left_camera_link -> left_camera`。其中 pose 使用连续位姿并重置到本次会话的首个有效 body-frame 位姿附近，`twist` 使用连续有效跟踪位姿做差分估计；跟踪失败并复用上一帧位姿时，twist 通过较大的 covariance 显式表达未知/低置信度。
+* **Stereo ROS wrapper 新增跟踪状态输出**：`Stereo` 节点会发布 `/robot_pose_tracking_ok`（`std_msgs/Bool`），用于区分 `/robot_pose` 当前是新鲜跟踪位姿还是失败期间复用的上一帧有效位姿。
 * **定位模式新增重定位状态输出**：当 `Stereo` 节点运行在 localization 模式时，会以约 `10 Hz` 发布 `/relocalization_status`（`ORB_SLAM3/RelocalizationStatus`）。该消息仅包含 `timestamp_ns` 与 `status` 两个字段，状态字符串严格为 `RelocalizationRunning`、`RelocalizationSucceed`、`RelocalizationFailed`。
 
 ### 5. 编译与运行指南 (Build & Run Instructions)
@@ -76,15 +79,30 @@ chmod +x build_ros.sh
 
 * `/robot_pose`
   * 类型：`geometry_msgs/PoseStamped`
-  * 语义：实时反馈当前左目相机在 `map` 坐标系下的位姿
+  * 坐标系：`continuous_map`
+  * 语义：实时反馈当前左目相机的外部连续位姿；跟踪失败时在已有有效位姿后继续发布上一帧有效位姿，避免输出频率中断或回到原点；普通新地图切换时只做连续性保护；该话题不再向 raw SLAM 渐进靠拢，专门保留给控制侧使用
+* `/robot_pose_slam`
+  * 类型：`geometry_msgs/PoseStamped`
+  * 坐标系：`map`
+  * 语义：发布 ORB-SLAM3 当前 Atlas map 下的原始/优化左目相机位姿，用于分析闭环、merge 和回到起点后的 SLAM 误差；该话题不保证连续，可能随 SLAM 优化跳变
+* `/robot_pose_map`
+  * 类型：`geometry_msgs/PoseStamped`
+  * 坐标系：`planning_map`
+  * 语义：发布面向规划的平滑地图位姿；普通新地图切换时，会先让 `planning_map -> map` 重绑定到上一帧连续位姿附近，避免 `/robot_pose_map` 瞬跳；tracking fail 到后续 merge/big-event 之间视为建图不平稳窗口，在此期间不向 raw SLAM 回收敛；仅在该窗口关闭后，才在有限帧内逐步把 `planning_map` 下的位姿拉回当前 raw SLAM map 语义。后续栅格地图若跟随该话题做导航，应一并使用 `planning_map` 作为参考 frame
 * `/odometry`
   * 类型：`nav_msgs/Odometry`
-  * 坐标系：`map -> left_camera`
-  * 说明：pose 来自 SLAM 跟踪位姿，twist 来自相邻有效位姿差分估计
+  * 坐标系：`odom -> left_camera_link`
+  * 说明：pose 来自外部连续位姿并重置到会话局部原点，twist 来自相邻有效位姿差分估计
+* `/robot_pose_tracking_ok`
+  * 类型：`std_msgs/Bool`
+  * 语义：`true` 表示当前 `/robot_pose` 来自本帧有效跟踪，`false` 表示当前发布的是上一帧有效位姿或尚未获得有效位姿
 * `/relocalization_status`
   * 类型：`ORB_SLAM3/RelocalizationStatus`
   * 生效条件：`localization` 模式下的 `Stereo` 节点
   * 发布频率：约 `10 Hz`
+* `/pose_correction/set_enabled`
+  * 类型：`std_srvs/SetBool`
+  * 语义：运行时切换 `/robot_pose_map` 的 corrected 输出开关；默认值来自 `PoseCorrection.EnableCorrectedMapPose`
 
 ---
 

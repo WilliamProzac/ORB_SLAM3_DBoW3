@@ -41,7 +41,7 @@ Camera.width: 848
 Camera.height: 480
 
 # Camera frames per second 
-Camera.fps: 30
+Camera.fps: 15
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
@@ -114,3 +114,26 @@ Viewer.ViewpointF: 500.0
 #--------------------------------------------------------------------------------------------
 System.LoadAtlasFromFile: "stereo_map"
 System.SaveAtlasToFile: ""
+
+#--------------------------------------------------------------------------------------------
+# Optional pose correction after loop closure / map merge
+#--------------------------------------------------------------------------------------------
+# 0: keep /robot_pose_map in planning_map aligned with the continuous pose
+#    across map switches, without automatically converging back to raw SLAM
+#    after big map events. Tracking loss still opens an unstable window during
+#    which no convergence toward raw SLAM is started.
+# 1: gradually correct /robot_pose_map toward raw SLAM pose after stable big
+#    map events such as loop closure or map merge. /robot_pose remains a pure
+#    continuous control pose and is not pulled back toward raw SLAM. The
+#    planning-map convergence is suppressed from tracking loss until the
+#    subsequent merge/big-event closes that unstable window.
+PoseCorrection.EnableCorrectedMapPose: 1
+
+# Number of frames used to fade the correction offset back to identity
+PoseCorrection.CorrectionHorizonFrames: 10
+
+# If 1: automatically start a one-shot correction window for /robot_pose_map
+# in planning_map when a big map event (merge/loop) is detected, even if the
+# static enable flag is 0. If 0: correction only starts when
+# `PoseCorrection.EnableCorrectedMapPose` is set.
+PoseCorrection.AutoEnableOnMapEvent: 1

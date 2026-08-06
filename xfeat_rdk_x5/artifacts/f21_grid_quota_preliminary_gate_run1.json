@@ -1,0 +1,244 @@
+{
+  "frontend_pass": true,
+  "gates": {
+    "five_orb_runs": {
+      "actual": 1.0,
+      "limit": 1.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "five_xfeat_runs": {
+      "actual": 1.0,
+      "limit": 1.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "mean_frontend_latency": {
+      "actual": 54.87642025000001,
+      "limit": 63.8655694649265,
+      "operator": "<=",
+      "pass": true
+    },
+    "mean_strict_inliers": {
+      "actual": 300.35,
+      "limit": 204.7319738988581,
+      "operator": ">=",
+      "pass": true
+    },
+    "median_vertical_error": {
+      "actual": 0.0,
+      "limit": 0.5,
+      "operator": "<=",
+      "pass": true
+    },
+    "minimum_strict_inliers": {
+      "actual": 246.0,
+      "limit": 30.0,
+      "operator": ">=",
+      "pass": true
+    },
+    "p90_frontend_latency": {
+      "actual": 61.76942460000001,
+      "limit": 81.76384339999998,
+      "operator": "<",
+      "pass": true
+    },
+    "strict_grid_coverage": {
+      "actual": 0.9870834100000002,
+      "limit": 0.7551318662316483,
+      "operator": ">=",
+      "pass": true
+    },
+    "strict_inlier_ratio": {
+      "actual": 0.9972637499999997,
+      "limit": 0.3269440929853177,
+      "operator": ">=",
+      "pass": true
+    }
+  },
+  "inputs": {
+    "orb": [
+      {
+        "bytes": 57653,
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/f21_orb_production_run1.csv",
+        "sha256": "dd4f0a7e70a4bfdebb9cf946086b5277a741dc2f9121c0ad826abfbf341961f1"
+      }
+    ],
+    "xfeat": [
+      {
+        "bytes": 166912,
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/f21_grid_quota_m384_board_full_20260803.csv",
+        "sha256": "eb59d7d63ed450a5742c9904b7e5727b0d28e7f8f655def3e93aec68c18850c2"
+      }
+    ]
+  },
+  "orb": {
+    "depth_grid_coverage": {
+      "maximum": 0.9375,
+      "mean": 0.7551318662316483,
+      "median": 0.75,
+      "minimum": 0.541667,
+      "p90": 0.833333
+    },
+    "discarded_invalid_rows": 1,
+    "feature_extract_ms": {
+      "maximum": 71.446096,
+      "mean": 57.725277109298496,
+      "median": 58.214174,
+      "minimum": 44.930295,
+      "p90": 63.4915438
+    },
+    "frames": 613,
+    "frontend_ms": {
+      "maximum": 90.563337,
+      "mean": 70.96174384991834,
+      "median": 71.025634,
+      "minimum": 55.223709,
+      "p90": 81.76384339999998
+    },
+    "keypoints": {
+      "maximum": 610.0,
+      "mean": 603.8482871125611,
+      "median": 604.0,
+      "minimum": 600.0,
+      "p90": 606.0
+    },
+    "stereo_match_ms": {
+      "maximum": 27.866062,
+      "mean": 13.236466740619907,
+      "median": 12.202337,
+      "minimum": 5.994856,
+      "p90": 20.40805040000001
+    },
+    "track_total_ms": {
+      "maximum": 112.929839,
+      "mean": 88.15379157585645,
+      "median": 88.067451,
+      "minimum": 65.706584,
+      "p90": 100.8276928
+    },
+    "tracked_inliers": {
+      "maximum": 277.0,
+      "mean": 118.76835236541599,
+      "median": 114.0,
+      "minimum": 0.0,
+      "p90": 204.0
+    },
+    "tracking": {
+      "failure_frames": 30,
+      "failure_segments": 1,
+      "longest_failure_seconds": 2.970016168,
+      "total_failure_seconds": 2.970016168
+    },
+    "valid_depth_ratio": {
+      "maximum": 0.547264,
+      "mean": 0.35694409298531765,
+      "median": 0.344884,
+      "minimum": 0.239669,
+      "p90": 0.469218
+    },
+    "valid_depths": {
+      "maximum": 330.0,
+      "mean": 215.5073409461664,
+      "median": 208.0,
+      "minimum": 145.0,
+      "p90": 283.80000000000007
+    }
+  },
+  "promotion_to_f22": false,
+  "schema": "rdk-x5-f21-gate-v1",
+  "tracking_comparison": {
+    "reason": "standalone XFeat frontend rows do not contain SLAM tracking state",
+    "status": "not_evaluated"
+  },
+  "warmup_frames_per_run": 30,
+  "xfeat": {
+    "extraction_wall_ms": {
+      "maximum": 50.634223,
+      "mean": 40.75199991000001,
+      "median": 39.486125,
+      "minimum": 36.67344,
+      "p90": 48.7155489
+    },
+    "fine_total_ms": {
+      "maximum": 20.008739,
+      "mean": 11.904286959999993,
+      "median": 11.021265,
+      "minimum": 10.42387,
+      "p90": 13.8746218
+    },
+    "frames": 100,
+    "frontend_ms": {
+      "maximum": 66.264799,
+      "mean": 54.87642025000001,
+      "median": 53.7567835,
+      "minimum": 49.665058,
+      "p90": 61.76942460000001
+    },
+    "match_ms": {
+      "maximum": 5.658164,
+      "mean": 1.8348619499999999,
+      "median": 1.5905205,
+      "minimum": 1.245166,
+      "p90": 2.8699400000000006
+    },
+    "median_vertical_error_px": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "p90": 0.0
+    },
+    "patch_ncc_median": {
+      "maximum": 0.80725,
+      "mean": 0.6614494399999998,
+      "median": 0.676198,
+      "minimum": 0.477535,
+      "p90": 0.7656809
+    },
+    "photometric_grid_coverage": {
+      "maximum": 1.0,
+      "mean": 0.8922916999999999,
+      "median": 0.895833,
+      "minimum": 0.75,
+      "p90": 0.9583330000000001
+    },
+    "photometric_inlier_ratio": {
+      "maximum": 0.784195,
+      "mean": 0.62479693,
+      "median": 0.638841,
+      "minimum": 0.456693,
+      "p90": 0.7178969
+    },
+    "photometric_inliers": {
+      "maximum": 258.0,
+      "mean": 188.99,
+      "median": 192.0,
+      "minimum": 116.0,
+      "p90": 222.0
+    },
+    "strict_grid_coverage": {
+      "maximum": 1.0,
+      "mean": 0.9870834100000002,
+      "median": 1.0,
+      "minimum": 0.916667,
+      "p90": 1.0
+    },
+    "strict_inlier_ratio": {
+      "maximum": 1.0,
+      "mean": 0.9972637499999997,
+      "median": 1.0,
+      "minimum": 0.982877,
+      "p90": 1.0
+    },
+    "strict_inliers": {
+      "maximum": 339.0,
+      "mean": 300.35,
+      "median": 304.0,
+      "minimum": 246.0,
+      "p90": 318.1
+    }
+  },
+  "xfeat_latency_definition": "end_to_end_pair_ms",
+  "xfeat_method": "xfeat_star_fine"
+}

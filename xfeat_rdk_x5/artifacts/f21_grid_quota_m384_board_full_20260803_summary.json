@@ -1,0 +1,758 @@
+{
+  "comparison": {
+    "orb_cpu": {
+      "mean_coverage": 0.38429483076923077,
+      "mean_frontend_ms": 88.58368779999999,
+      "mean_patch_ncc_median": 0.9148013538461539,
+      "mean_photometric_inliers": 286.2769230769231,
+      "mean_strict_inliers": 300.2153846153846,
+      "p90_frontend_ms": 100.36871350000001
+    },
+    "xfeat_star_coarse": {
+      "mean_coverage": 0.990544976923077,
+      "mean_frontend_ms": 42.81255586923077,
+      "mean_patch_ncc_median": 0.5442344769230769,
+      "mean_photometric_inliers": 168.85384615384615,
+      "mean_strict_inliers": 320.2307692307692,
+      "p90_frontend_ms": 50.055852200000004
+    },
+    "xfeat_star_fine": {
+      "mean_coverage": 0.9855770230769231,
+      "mean_frontend_ms": 54.52532884615384,
+      "mean_patch_ncc_median": 0.6593534538461538,
+      "mean_photometric_inliers": 186.03076923076924,
+      "mean_strict_inliers": 298.53076923076924,
+      "p90_frontend_ms": 61.26611270000001
+    }
+  },
+  "methods": {
+    "orb_cpu": {
+      "stereo": {
+        "end_to_end_pair_ms": {
+          "count": 130,
+          "max": 114.813854,
+          "mean": 88.58368779999999,
+          "median": 87.85605749999999,
+          "min": 71.357003,
+          "p90": 100.36871350000001
+        },
+        "extraction_wall_ms": {
+          "count": 130,
+          "max": 77.477251,
+          "mean": 68.29882286923076,
+          "median": 67.2401325,
+          "min": 60.768719,
+          "p90": 74.481743
+        },
+        "fine_bpu_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_postprocess_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_total_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "geometry_ms": {
+          "count": 130,
+          "max": 30.124525,
+          "mean": 4.7380830846153845,
+          "median": 3.3116235,
+          "min": 1.061082,
+          "p90": 9.9946744
+        },
+        "match_ms": {
+          "count": 130,
+          "max": 28.242777,
+          "mean": 15.546781846153845,
+          "median": 15.5898665,
+          "min": 7.842038,
+          "p90": 20.4675846
+        },
+        "matches": {
+          "count": 130,
+          "max": 427.0,
+          "mean": 354.5,
+          "median": 363.5,
+          "min": 240.0,
+          "p90": 409.1
+        },
+        "patch_ncc_median": {
+          "count": 130,
+          "max": 0.954952,
+          "mean": 0.9148013538461539,
+          "median": 0.9225455,
+          "min": 0.822029,
+          "p90": 0.9383356
+        },
+        "patch_ncc_p10": {
+          "count": 130,
+          "max": 0.716952,
+          "mean": 0.49724110000000005,
+          "median": 0.5417875000000001,
+          "min": -0.065878,
+          "p90": 0.6263370000000001
+        },
+        "photometric_grid_coverage": {
+          "count": 130,
+          "max": 0.541667,
+          "mean": 0.3830127769230769,
+          "median": 0.375,
+          "min": 0.1875,
+          "p90": 0.479167
+        },
+        "photometric_inlier_ratio": {
+          "count": 130,
+          "max": 0.910256,
+          "mean": 0.8008644923076923,
+          "median": 0.825236,
+          "min": 0.529412,
+          "p90": 0.8814138
+        },
+        "photometric_inliers": {
+          "count": 130,
+          "max": 374.0,
+          "mean": 286.2769230769231,
+          "median": 301.0,
+          "min": 144.0,
+          "p90": 350.0
+        },
+        "photometric_ms": {
+          "count": 130,
+          "max": 14.510326,
+          "mean": 7.251537515384616,
+          "median": 7.0976005,
+          "min": 3.789914,
+          "p90": 9.137903900000003
+        },
+        "ransac_inliers": {
+          "count": 130,
+          "max": 392.0,
+          "mean": 303.2307692307692,
+          "median": 318.0,
+          "min": 158.0,
+          "p90": 369.0
+        },
+        "row_count": 130,
+        "strict_grid_coverage": {
+          "count": 130,
+          "max": 0.541667,
+          "mean": 0.38429483076923077,
+          "median": 0.375,
+          "min": 0.1875,
+          "p90": 0.479167
+        },
+        "strict_inlier_ratio": {
+          "count": 130,
+          "max": 0.936,
+          "mean": 0.8401504769230769,
+          "median": 0.867255,
+          "min": 0.558824,
+          "p90": 0.9107335000000001
+        },
+        "strict_inliers": {
+          "count": 130,
+          "max": 388.0,
+          "mean": 300.2153846153846,
+          "median": 315.0,
+          "min": 152.0,
+          "p90": 365.0
+        }
+      },
+      "temporal": {
+        "end_to_end_pair_ms": {
+          "count": 65,
+          "max": 165.141536,
+          "mean": 145.12168869230769,
+          "median": 141.979463,
+          "min": 131.171428,
+          "p90": 157.68080799999998
+        },
+        "extraction_wall_ms": {
+          "count": 65,
+          "max": 150.086669,
+          "mean": 132.60586253846154,
+          "median": 130.851011,
+          "min": 121.894353,
+          "p90": 142.51836600000001
+        },
+        "fine_bpu_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_postprocess_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_total_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "geometry_ms": {
+          "count": 65,
+          "max": 13.132659,
+          "mean": 2.7557023846153847,
+          "median": 2.639207,
+          "min": 0.552999,
+          "p90": 4.6178644
+        },
+        "match_ms": {
+          "count": 65,
+          "max": 11.880785,
+          "mean": 9.76012376923077,
+          "median": 10.034828,
+          "min": 5.849122,
+          "p90": 10.8649112
+        },
+        "matches": {
+          "count": 65,
+          "max": 546.0,
+          "mean": 422.61538461538464,
+          "median": 422.0,
+          "min": 215.0,
+          "p90": 525.6
+        },
+        "patch_ncc_median": {
+          "count": 0
+        },
+        "patch_ncc_p10": {
+          "count": 0
+        },
+        "photometric_grid_coverage": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_inlier_ratio": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_inliers": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "ransac_inliers": {
+          "count": 65,
+          "max": 540.0,
+          "mean": 375.81538461538463,
+          "median": 368.0,
+          "min": 142.0,
+          "p90": 520.0
+        },
+        "row_count": 65,
+        "strict_grid_coverage": {
+          "count": 65,
+          "max": 0.583333,
+          "mean": 0.3900641076923077,
+          "median": 0.375,
+          "min": 0.145833,
+          "p90": 0.5124998000000001
+        },
+        "strict_inlier_ratio": {
+          "count": 65,
+          "max": 0.998102,
+          "mean": 0.8781889692307692,
+          "median": 0.868778,
+          "min": 0.660465,
+          "p90": 0.9923164
+        },
+        "strict_inliers": {
+          "count": 65,
+          "max": 540.0,
+          "mean": 375.81538461538463,
+          "median": 368.0,
+          "min": 142.0,
+          "p90": 520.0
+        }
+      }
+    },
+    "xfeat_guided": {
+      "temporal": {
+        "end_to_end_pair_ms": {
+          "count": 65,
+          "max": 178.314151,
+          "mean": 70.91477855384615,
+          "median": 68.267796,
+          "min": 47.978266,
+          "p90": 91.66198600000001
+        },
+        "extraction_wall_ms": {
+          "count": 65,
+          "max": 87.310412,
+          "mean": 57.941500184615386,
+          "median": 55.727179,
+          "min": 42.535769,
+          "p90": 77.6929168
+        },
+        "fine_bpu_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_postprocess_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_total_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "geometry_ms": {
+          "count": 65,
+          "max": 114.020604,
+          "mean": 9.716233276923077,
+          "median": 3.569373,
+          "min": 0.500833,
+          "p90": 15.271550600000003
+        },
+        "match_ms": {
+          "count": 65,
+          "max": 3.661581,
+          "mean": 3.2570450923076923,
+          "median": 3.271332,
+          "min": 2.550832,
+          "p90": 3.5481732
+        },
+        "matches": {
+          "count": 65,
+          "max": 380.0,
+          "mean": 325.7846153846154,
+          "median": 325.0,
+          "min": 220.0,
+          "p90": 369.6
+        },
+        "patch_ncc_median": {
+          "count": 0
+        },
+        "patch_ncc_p10": {
+          "count": 0
+        },
+        "photometric_grid_coverage": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_inlier_ratio": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_inliers": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "photometric_ms": {
+          "count": 65,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "ransac_inliers": {
+          "count": 65,
+          "max": 379.0,
+          "mean": 270.8,
+          "median": 270.0,
+          "min": 112.0,
+          "p90": 366.20000000000005
+        },
+        "row_count": 65,
+        "strict_grid_coverage": {
+          "count": 65,
+          "max": 1.0,
+          "mean": 0.9092948923076923,
+          "median": 0.916667,
+          "min": 0.6875,
+          "p90": 1.0
+        },
+        "strict_inlier_ratio": {
+          "count": 65,
+          "max": 0.997368,
+          "mean": 0.8206527692307692,
+          "median": 0.821958,
+          "min": 0.421053,
+          "p90": 0.9865416
+        },
+        "strict_inliers": {
+          "count": 65,
+          "max": 379.0,
+          "mean": 270.8,
+          "median": 270.0,
+          "min": 112.0,
+          "p90": 366.20000000000005
+        }
+      }
+    },
+    "xfeat_star_coarse": {
+      "stereo": {
+        "end_to_end_pair_ms": {
+          "count": 130,
+          "max": 52.570139,
+          "mean": 42.81255586923077,
+          "median": 41.4427695,
+          "min": 38.611272,
+          "p90": 50.055852200000004
+        },
+        "extraction_wall_ms": {
+          "count": 130,
+          "max": 50.634223,
+          "mean": 40.49888562307692,
+          "median": 39.474604,
+          "min": 36.67344,
+          "p90": 48.1334702
+        },
+        "fine_bpu_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_postprocess_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "fine_total_ms": {
+          "count": 130,
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "p90": 0.0
+        },
+        "geometry_ms": {
+          "count": 130,
+          "max": 1.83429,
+          "mean": 0.4396571307692308,
+          "median": 0.34868699999999997,
+          "min": 0.227792,
+          "p90": 0.6356249000000002
+        },
+        "match_ms": {
+          "count": 130,
+          "max": 5.661455,
+          "mean": 1.8740131153846153,
+          "median": 1.611645,
+          "min": 1.245166,
+          "p90": 2.9236775000000006
+        },
+        "matches": {
+          "count": 130,
+          "max": 352.0,
+          "mean": 320.25384615384615,
+          "median": 321.5,
+          "min": 271.0,
+          "p90": 335.1
+        },
+        "patch_ncc_median": {
+          "count": 130,
+          "max": 0.764042,
+          "mean": 0.5442344769230769,
+          "median": 0.538462,
+          "min": 0.293098,
+          "p90": 0.6497456
+        },
+        "patch_ncc_p10": {
+          "count": 130,
+          "max": 0.142679,
+          "mean": -0.11493490769230769,
+          "median": -0.11644550000000001,
+          "min": -0.413182,
+          "p90": 0.008657900000000024
+        },
+        "photometric_grid_coverage": {
+          "count": 130,
+          "max": 0.979167,
+          "mean": 0.8496794692307692,
+          "median": 0.875,
+          "min": 0.666667,
+          "p90": 0.9375
+        },
+        "photometric_inlier_ratio": {
+          "count": 130,
+          "max": 0.709581,
+          "mean": 0.5260123615384615,
+          "median": 0.522199,
+          "min": 0.321981,
+          "p90": 0.6054844
+        },
+        "photometric_inliers": {
+          "count": 130,
+          "max": 237.0,
+          "mean": 168.85384615384615,
+          "median": 169.0,
+          "min": 100.0,
+          "p90": 201.0
+        },
+        "photometric_ms": {
+          "count": 130,
+          "max": 26.496111,
+          "mean": 9.522172846153847,
+          "median": 6.505288,
+          "min": 4.375248,
+          "p90": 20.031197600000013
+        },
+        "ransac_inliers": {
+          "count": 130,
+          "max": 352.0,
+          "mean": 320.2307692307692,
+          "median": 321.5,
+          "min": 271.0,
+          "p90": 335.1
+        },
+        "row_count": 130,
+        "strict_grid_coverage": {
+          "count": 130,
+          "max": 1.0,
+          "mean": 0.990544976923077,
+          "median": 1.0,
+          "min": 0.9375,
+          "p90": 1.0
+        },
+        "strict_inlier_ratio": {
+          "count": 130,
+          "max": 1.0,
+          "mean": 0.9999307000000001,
+          "median": 1.0,
+          "min": 0.990991,
+          "p90": 1.0
+        },
+        "strict_inliers": {
+          "count": 130,
+          "max": 352.0,
+          "mean": 320.2307692307692,
+          "median": 321.5,
+          "min": 271.0,
+          "p90": 335.1
+        }
+      }
+    },
+    "xfeat_star_fine": {
+      "stereo": {
+        "end_to_end_pair_ms": {
+          "count": 130,
+          "max": 66.264799,
+          "mean": 54.52532884615384,
+          "median": 53.469325999999995,
+          "min": 49.485599,
+          "p90": 61.26611270000001
+        },
+        "extraction_wall_ms": {
+          "count": 130,
+          "max": 50.634223,
+          "mean": 40.49888562307692,
+          "median": 39.474604,
+          "min": 36.67344,
+          "p90": 48.1334702
+        },
+        "fine_bpu_ms": {
+          "count": 130,
+          "max": 16.530033,
+          "mean": 10.12582153076923,
+          "median": 9.4150575,
+          "min": 9.246745,
+          "p90": 11.9949565
+        },
+        "fine_postprocess_ms": {
+          "count": 130,
+          "max": 5.169039,
+          "mean": 1.3145076615384617,
+          "median": 1.0764155,
+          "min": 0.902333,
+          "p90": 1.6045407000000063
+        },
+        "fine_total_ms": {
+          "count": 130,
+          "max": 20.008739,
+          "mean": 11.782399523076922,
+          "median": 11.006119,
+          "min": 10.42387,
+          "p90": 13.7730462
+        },
+        "geometry_ms": {
+          "count": 130,
+          "max": 1.147666,
+          "mean": 0.37003058461538463,
+          "median": 0.30287450000000005,
+          "min": 0.222333,
+          "p90": 0.608875
+        },
+        "match_ms": {
+          "count": 130,
+          "max": 5.661455,
+          "mean": 1.8740131153846153,
+          "median": 1.611645,
+          "min": 1.245166,
+          "p90": 2.9236775000000006
+        },
+        "matches": {
+          "count": 130,
+          "max": 341.0,
+          "mean": 299.4230769230769,
+          "median": 301.0,
+          "min": 246.0,
+          "p90": 318.0
+        },
+        "patch_ncc_median": {
+          "count": 130,
+          "max": 0.80725,
+          "mean": 0.6593534538461538,
+          "median": 0.6615485,
+          "min": 0.477535,
+          "p90": 0.7502388999999999
+        },
+        "patch_ncc_p10": {
+          "count": 130,
+          "max": 0.236566,
+          "mean": 0.0035875461538461537,
+          "median": -0.0034625,
+          "min": -0.237107,
+          "p90": 0.15972430000000004
+        },
+        "photometric_grid_coverage": {
+          "count": 130,
+          "max": 1.0,
+          "mean": 0.872596176923077,
+          "median": 0.875,
+          "min": 0.6875,
+          "p90": 0.9583330000000001
+        },
+        "photometric_inlier_ratio": {
+          "count": 130,
+          "max": 0.784195,
+          "mean": 0.6189842538461539,
+          "median": 0.6176455000000001,
+          "min": 0.456693,
+          "p90": 0.7097201000000001
+        },
+        "photometric_inliers": {
+          "count": 130,
+          "max": 258.0,
+          "mean": 186.03076923076924,
+          "median": 183.0,
+          "min": 116.0,
+          "p90": 218.0
+        },
+        "photometric_ms": {
+          "count": 130,
+          "max": 22.849404,
+          "mean": 10.474432915384616,
+          "median": 10.282661000000001,
+          "min": 4.207915,
+          "p90": 16.66494910000001
+        },
+        "ransac_inliers": {
+          "count": 130,
+          "max": 341.0,
+          "mean": 299.4230769230769,
+          "median": 301.0,
+          "min": 246.0,
+          "p90": 318.0
+        },
+        "row_count": 130,
+        "strict_grid_coverage": {
+          "count": 130,
+          "max": 1.0,
+          "mean": 0.9855770230769231,
+          "median": 0.9895835,
+          "min": 0.916667,
+          "p90": 1.0
+        },
+        "strict_inlier_ratio": {
+          "count": 130,
+          "max": 1.0,
+          "mean": 0.9970215846153847,
+          "median": 0.9968300000000001,
+          "min": 0.982877,
+          "p90": 1.0
+        },
+        "strict_inliers": {
+          "count": 130,
+          "max": 339.0,
+          "mean": 298.53076923076924,
+          "median": 300.0,
+          "min": 246.0,
+          "p90": 316.1
+        }
+      }
+    }
+  },
+  "source": {
+    "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/xfeat_rdk_x5/artifacts/f21_grid_quota_m384_board_full_20260803.csv",
+    "rows": 520,
+    "sha256": "eb59d7d63ed450a5742c9904b7e5727b0d28e7f8f655def3e93aec68c18850c2"
+  }
+}

@@ -1,0 +1,30 @@
+# Candidate OpenExplorer PTQ configuration for RDK X5 (Bayes-e).
+# Replace the calibration directory and validate against the exact installed
+# OpenExplorer version before running; this template has not yet been compiled.
+model_parameters:
+  onnx_model: './artifacts/xfeat_backbone_480x640_opset11.onnx'
+  march: 'bayes-e'
+  layer_out_dump: false
+  working_dir: './artifacts/model_output'
+  output_model_file_prefix: 'xfeat_backbone_480x640_bayes_e'
+
+input_parameters:
+  input_name: 'image'
+  input_shape: '1x1x480x640'
+  input_type_rt: 'featuremap'
+  input_layout_rt: 'NCHW'
+  input_type_train: 'featuremap'
+  input_layout_train: 'NCHW'
+  norm_type: 'no_preprocess'
+
+calibration_parameters:
+  # About 100 representative float32 tensors, each already grayscale and
+  # InstanceNorm-normalized, saved with numpy.ndarray.tofile().
+  cal_data_dir: './calibration_data'
+  calibration_type: 'default'
+  preprocess_on: false
+
+compiler_parameters:
+  compile_mode: 'latency'
+  debug: false
+  optimize_level: 'O3'

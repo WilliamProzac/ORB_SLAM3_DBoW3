@@ -1,0 +1,2419 @@
+{
+  "count": 100,
+  "entries": [
+    {
+      "bag_time_ns": 1780624744900582639,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 0,
+      "mean": 1.5549800025382865e-07,
+      "output": "0000.f32",
+      "sha256": "0e0eb661756c05956ffe5c19bafb52a09918eaad8158a4a4317652298d0dea43",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2569011476808,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624745510545056,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 6,
+      "mean": -2.461321173541364e-07,
+      "output": "0001.f32",
+      "sha256": "9860a6e952e061bd9b1f32a3868df3d46106e61b473e2ee0ce301b09512cb1cc",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2569641461516,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624746124560598,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 12,
+      "mean": 5.939427296652866e-07,
+      "output": "0002.f32",
+      "sha256": "d4df613277ffb9352fee1fc2ddf8442ad0b72c124c25b1eca202a6593534a8c3",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2570271470767,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624746840108806,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 19,
+      "mean": 3.569266482372768e-07,
+      "output": "0003.f32",
+      "sha256": "738fccc73739227d30ba1ac784ee0056209a5ec73cdb4d330ae5676fb5eb7b48",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2570991474350,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624747453200182,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 25,
+      "mean": -1.7180161648866488e-07,
+      "output": "0004.f32",
+      "sha256": "4c7d78cdcb14aed5f4e785b5fefa7322694356c5b04539a66b72e544f425e6f9",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2571531472601,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624748171555890,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 32,
+      "mean": 7.71354251583034e-08,
+      "output": "0005.f32",
+      "sha256": "194e5f4fc941bf4036308f2b9366d9eab334d4159512acdc78d08d91c4615a0c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2572251464934,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624748784881807,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 38,
+      "mean": -4.067140366714739e-07,
+      "output": "0006.f32",
+      "sha256": "a952e8b15bdf7ce6f7e7b3f3450c1bd017ec3e94edf4df915e9a0a11f8cebb6b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2572881471310,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624749499719141,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 45,
+      "mean": 1.865274725787458e-07,
+      "output": "0007.f32",
+      "sha256": "d8a19140293ffb4644a86584274ca5db80f88b7361a9dca370dca9f189427c3d",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2573601474310,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624750113614308,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 51,
+      "mean": -6.065648960884573e-08,
+      "output": "0008.f32",
+      "sha256": "2a083b57a6053784f30bbfdc156146fde5162f61268487e68cb4de9d6910d2a9",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2574231483935,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624750826505058,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 58,
+      "mean": -2.117717912142325e-07,
+      "output": "0009.f32",
+      "sha256": "82adacbce15344b52f06a53fa7b689a0bc51d870f5ca945e354330f284eaed2b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2574951491436,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624751441308142,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 64,
+      "mean": 1.95643480083163e-07,
+      "output": "0010.f32",
+      "sha256": "65bd58bf0b8bebc40e96bbcd7cab17b3c762dcec089a6859b116b4a0d429730b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2575581484394,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624752156411392,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 71,
+      "mean": 3.08541707738641e-08,
+      "output": "0011.f32",
+      "sha256": "a9e7576d5638d52cdc8110dd0915ebeb26fb8b7f11d5a66bb01c2715cc4565d3",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2576301492853,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624752769458893,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 77,
+      "mean": -5.055876499682199e-07,
+      "output": "0012.f32",
+      "sha256": "2d8075637303bf003771a96e6d20a9b33f3f26399e956ec6dbc3a8c232f0c31b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2576931498687,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624753483334935,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 84,
+      "mean": 7.292803871905562e-08,
+      "output": "0013.f32",
+      "sha256": "9612a9f1dfcbc613178db6b96ce8c3364c7805de58f6669844d9f4c3e2c6270c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2577651488229,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624754096607060,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 90,
+      "mean": 8.82849974459532e-07,
+      "output": "0014.f32",
+      "sha256": "ba14221e894e789512ca409c9154d4a494d0bef3e53f1f9814e85929b3fc0571",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2578191503937,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624754809918394,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 97,
+      "mean": 3.884820500843489e-07,
+      "output": "0015.f32",
+      "sha256": "7dfeed3e13325d0aeb2889093c7a4edb7479eb68b5c3017f473f93fbf96d5cc0",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2578911500312,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624755424850977,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 103,
+      "mean": -3.2502060776096187e-07,
+      "output": "0016.f32",
+      "sha256": "8eb5611236547064dd907b214d1d438a0dcc10ab809d33d0dc0957f2dad07b56",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2579541509229,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624756143430144,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 110,
+      "mean": 2.4017165856093925e-07,
+      "output": "0017.f32",
+      "sha256": "9c91ab171502c3b3e44147f75b3e4ef67d044b1812f462f1404a42649b4ec3c5",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2580261503230,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624756758704269,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 116,
+      "mean": -4.3721760789594555e-07,
+      "output": "0018.f32",
+      "sha256": "ec8cd1ac31f8730afe99426ea9c26563e9b7ae20f07fb39eb61e42dd4a1dcfbf",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2580891500647,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624757478645353,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 123,
+      "mean": -1.532190054831517e-07,
+      "output": "0019.f32",
+      "sha256": "7692cf03ea4476f5730688a58198bd3ac50651f93d8aca0cdc38ac7d966d64bb",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2581611511897,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624758096248770,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 129,
+      "mean": -1.910854763309544e-07,
+      "output": "0020.f32",
+      "sha256": "2101ecfb9b1fffa9135defcf2bc6a7d240f89ae823caf0e0dc91f1fe4457089a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2582241514022,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624758814531020,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 136,
+      "mean": -5.303060390815517e-08,
+      "output": "0021.f32",
+      "sha256": "fbc280dbcd838810ea06cebcae21ba1b8d3be47656b11fadbcc8b63b981c8a0c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2582961519564,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624759433164854,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 142,
+      "mean": 6.766880034092537e-08,
+      "output": "0022.f32",
+      "sha256": "3bb81e13ab5d27fb8f6fa3c0a66baa2f54eee724a9961fcf2785c726417c0a8e",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2583591521481,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624760152228396,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 149,
+      "mean": 2.1562856389323315e-08,
+      "output": "0023.f32",
+      "sha256": "d5c8ac89c3bd9a6f0a24cf2b25054191c402fc1c50c39db4c1fdee9b06a2c6c0",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2584311525690,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624760769230938,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 155,
+      "mean": -2.103693441668497e-09,
+      "output": "0024.f32",
+      "sha256": "2e58d6cc0d6c86f608f5a92c10ae64d0882e66ca94861e81e4ee0ab81c9a3866",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2584851512107,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624761490433105,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 162,
+      "mean": -1.4068449161186436e-07,
+      "output": "0025.f32",
+      "sha256": "fd2ba396ed092475276d5b0fa9af1124b390782e1067a9799d83df3bfb4f1719",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2585571526107,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624762101503439,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 168,
+      "mean": -8.87057325371643e-08,
+      "output": "0026.f32",
+      "sha256": "97c6d05775245ad2b9ecdb8d68c0dadb4ecf67f1d5d7dced5ea059b2f2d81d63",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2586201531316,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624762817336481,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 175,
+      "mean": 3.9584497812938935e-07,
+      "output": "0027.f32",
+      "sha256": "1ad386633517526d4a645b5dc032e412e6c1df71c0c628b75ca863d89e8d65dc",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2586921520733,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999995231628418
+    },
+    {
+      "bag_time_ns": 1780624763433518981,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 181,
+      "mean": 1.1149574419277997e-07,
+      "output": "0028.f32",
+      "sha256": "5aa9e5dec66d92a6910c04e0ab0a5dd3bc8e92ae62bcb545601c252961bf08a7",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2587551526650,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624764150162273,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 188,
+      "mean": 2.88205995957469e-07,
+      "output": "0029.f32",
+      "sha256": "9e1a99e0fcf8d0ce6e308c0cc008bc543d112f9dd77961b7966513beee25d9c9",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2588271529692,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624764762213565,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 194,
+      "mean": 2.4122351760524907e-07,
+      "output": "0030.f32",
+      "sha256": "e9f5bc9b3153085b9f3984e19981e3329619c27cffdcac0d97bf66735f5e6f3f",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2588901542734,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624765479403815,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 201,
+      "mean": -3.2887740530895826e-07,
+      "output": "0031.f32",
+      "sha256": "eb1f20d3ab9c7ac8bb4f6338b7675282b17828711f84427e83a0592ae1f2dbea",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2589621546568,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.999999463558197
+    },
+    {
+      "bag_time_ns": 1780624766097950941,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 207,
+      "mean": -4.985753321307129e-07,
+      "output": "0032.f32",
+      "sha256": "f38934a8af1062e1ee68e21b6ccfcf18b0456e4b44caf56953693860d6d3e3bc",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2590251544526,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624766812195274,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 214,
+      "mean": -3.604328071560303e-07,
+      "output": "0033.f32",
+      "sha256": "55c1091c918bb70c9a6684287692e8bcf3b5a621520847b2f0bb23da4876ca1e",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2590971531402,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624767431903900,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 220,
+      "mean": -2.1457671550706436e-07,
+      "output": "0034.f32",
+      "sha256": "deb1e18f46463a3d5ef4836e8e2d83d4c8bc504db8e0221c6b214c9e49042741",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2591511565568,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624768147217650,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 227,
+      "mean": -2.5945550419237406e-07,
+      "output": "0035.f32",
+      "sha256": "7e16bf6d4a23d4733e262e4437695ca9c8606a7ebb687f60dd431edc2f8f959a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2592231553735,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624768760332984,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 233,
+      "mean": -6.619621899517369e-07,
+      "output": "0036.f32",
+      "sha256": "701316bce68d8951cd8c4fb93c2d7520385e3dd2356440060d10c2e42091f3b6",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2592861536569,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624769477494817,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 240,
+      "mean": -5.890341370218266e-08,
+      "output": "0037.f32",
+      "sha256": "c295be4da2e52bb83a2ee0b5055d73b27b59463719ff3dba97930d4e37f3784c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2593581543194,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624770092710318,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 246,
+      "mean": 6.030587940131227e-08,
+      "output": "0038.f32",
+      "sha256": "1ac8b6e6a881df6c51762231ffd1eb2b1fc43156f7ef9e2e010e6c7a095d5e99",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2594211553695,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624770809453026,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 253,
+      "mean": -3.877808012475725e-07,
+      "output": "0039.f32",
+      "sha256": "caf2ad3ac6f08620fa7e0433fd28fb2f61ce597e10290d9e549299e8f8d3b01d",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2594931541945,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624771421732526,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 259,
+      "mean": 3.5412170973359025e-07,
+      "output": "0040.f32",
+      "sha256": "e3c2621a69114a6b6aa18f2c71a44bc39b408358e670973acc9562e0c3131a14",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2595561567487,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624772138040027,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 266,
+      "mean": 4.452817492506256e-08,
+      "output": "0041.f32",
+      "sha256": "cb82dbe850009bfbbb37823e513000b776899475147713de4fdf8f5ed7284943",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2596281555821,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624772752844819,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 272,
+      "mean": -1.5251777085723006e-07,
+      "output": "0042.f32",
+      "sha256": "58026c22494c891864e9b4f089507e72bcfb9aaa0809610fee41a81b6926f280",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2596911630654,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624773469451569,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 279,
+      "mean": 1.2061175880262454e-07,
+      "output": "0043.f32",
+      "sha256": "cfad7b2023678330cd05bf012b8c3725da8174cd959f46b8a97c922dd46ad851",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2597631566030,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624774083717194,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 285,
+      "mean": 1.360388353077724e-07,
+      "output": "0044.f32",
+      "sha256": "ebebac66e9366912f18dbfed8028c07453f49b22b648fce5624d8a4b03bf7d40",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2598171564822,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624774804162236,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 292,
+      "mean": -1.1219697881870161e-07,
+      "output": "0045.f32",
+      "sha256": "713d3107eeaeb292d0de8b13b3a2e193be001677395d0644919876bb680c05bd",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2598891559822,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624775415816445,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 298,
+      "mean": 4.712273096174613e-07,
+      "output": "0046.f32",
+      "sha256": "5e85e0dec8dd3bae850718f9620fbf3ef2cdb3a3122de64822b5dae473db0d2f",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2599521560072,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000004768371582
+    },
+    {
+      "bag_time_ns": 1780624776132936237,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 305,
+      "mean": 3.5306987911098986e-07,
+      "output": "0047.f32",
+      "sha256": "8a3e7453052e7c0b42f4ece225bfec1381f4f9b9671cb536dcdad11d7637f836",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2600241562156,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624776745376487,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 311,
+      "mean": -1.8302132787084702e-07,
+      "output": "0048.f32",
+      "sha256": "c4f15c731d1b3929188a8b31ef51ae26051112ed82ead13f31b164cdf9c5a121",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2600871572490,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000003576278687
+    },
+    {
+      "bag_time_ns": 1780624777460098696,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 318,
+      "mean": 2.193100243630397e-07,
+      "output": "0049.f32",
+      "sha256": "993eb663c190d7255ca719ac6ffcf75f9839ed48a54f5abe225540b91085a1cc",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2601591570198,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624778084534946,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 324,
+      "mean": -7.180606758083741e-07,
+      "output": "0050.f32",
+      "sha256": "be0a87aefc8d6f887b94b815addad6fc46c1eddfd7127a1795ea18c7530debe5",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2602221565532,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624778792059322,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 331,
+      "mean": -3.8532650137312885e-07,
+      "output": "0051.f32",
+      "sha256": "6fbd297552b48233a34fcc394ebdf552f0db4f3fab4f92060c7e4ffa54d903d1",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2602941576366,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624779407060697,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 337,
+      "mean": 1.1219697881870161e-07,
+      "output": "0052.f32",
+      "sha256": "6be7f48bbc0636b148e6cbe46dde360532290ebcbd54937f9457564f751fb922",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2603571571533,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624780126523906,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 344,
+      "mean": 1.2131297921769146e-07,
+      "output": "0053.f32",
+      "sha256": "81fbf7bf9ab15b6f93d2a5f6ce406f30ca55dba3e0a4e4f76497540f54b5fd18",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2604291576741,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624780741674364,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 350,
+      "mean": -2.717270604080113e-07,
+      "output": "0054.f32",
+      "sha256": "2276a75f1d561f4d2473711c4655ff0bec02b8b310ae92784280053de5103fbb",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2604831605908,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624781461140781,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 357,
+      "mean": -2.107199463807774e-07,
+      "output": "0055.f32",
+      "sha256": "8dbd5a05bf53e1c791cb48abe02142c120dec71b549699679b9afbe2cee1f7b2",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2605551598950,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624782076647615,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 363,
+      "mean": -1.2271544846953475e-07,
+      "output": "0056.f32",
+      "sha256": "ac7efedc755e97299110ba2397c50f95703a86de4827577ee3e716088990b3d8",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2606181599242,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624782792978657,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 370,
+      "mean": 3.3098109497586847e-07,
+      "output": "0057.f32",
+      "sha256": "8e52bb7087e1f9d891a151a128afa84830d664dfcbec6202a3738beafcc5c08b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2606901590826,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624783410087074,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 376,
+      "mean": 3.316823153909354e-07,
+      "output": "0058.f32",
+      "sha256": "3e623b3a3a931331163b07baecaaeed82d40c00e89f47d306f3915f3a8c725d1",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2607531610368,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624784126647783,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 383,
+      "mean": 3.3098109497586847e-07,
+      "output": "0059.f32",
+      "sha256": "e28ca526880508e3ad8f90a64c53bcde02e31f4b08a51786476e1329eb71fe6f",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2608251584743,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624784739638491,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 389,
+      "mean": 3.569266482372768e-07,
+      "output": "0060.f32",
+      "sha256": "2d267f600ef204e34bcf6c2cbe0a27a21b1bdeb5f5af63a78014c0580aa838c2",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2608881600618,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624785455580117,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 396,
+      "mean": -4.0390912658949674e-07,
+      "output": "0061.f32",
+      "sha256": "0f4857f264030cfe4120994e94a756c6bf797b08e15481b39a2ee160b1c38594",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2609601596369,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624786069768617,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 402,
+      "mean": 1.3744130455961567e-07,
+      "output": "0062.f32",
+      "sha256": "28dfb581eab151e026ba00de4e05df20f6ab64b041a9367c4e2a43cf5cda2f4a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2610231601077,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624786783281659,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 409,
+      "mean": 1.164043652579494e-07,
+      "output": "0063.f32",
+      "sha256": "de1c0b87268bbe7fb2f1259a588d106759b5d133171a9d3b3d1776ae50d5a317",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2610951597453,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624787399136242,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 415,
+      "mean": 2.615591938592843e-07,
+      "output": "0064.f32",
+      "sha256": "c65136acd49e05d6caa00781ac69b1487fd2c04f4609e145b5c1257c0026b810",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2611491603411,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624788119161034,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 422,
+      "mean": 1.8792994183058909e-07,
+      "output": "0065.f32",
+      "sha256": "10f73345bc5ffa5ce0032ec7e7382e11026a81fd78d456be2bfda90c0be83015",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2612211614037,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624788727920535,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 428,
+      "mean": 1.991496390019165e-07,
+      "output": "0066.f32",
+      "sha256": "7aa99efcb89d8a84ee5d9f4bc038bc9d22372dcd12ed051d71e78f14efdd7657",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2612841629370,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624789445240410,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 435,
+      "mean": -1.4024622352337701e-08,
+      "output": "0067.f32",
+      "sha256": "90f80d4b8f38e47bf5bd3d702a06c089ce74ccc236d0e8b7e9778f547679055d",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2613561610787,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624790059097327,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 441,
+      "mean": -2.468333661909128e-07,
+      "output": "0068.f32",
+      "sha256": "575449aacb0458f8f0edefb79bf58901c0fa1bccddf9138d44293ba31a21abbb",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2614191603579,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624790777433411,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 448,
+      "mean": -9.045881199654104e-08,
+      "output": "0069.f32",
+      "sha256": "e0a65c614da4911e733edd46f031af87156876fc1f6c461be7b7c1df843eeef8",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2614911631621,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624791392168203,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 454,
+      "mean": 1.0378220594020604e-07,
+      "output": "0070.f32",
+      "sha256": "d8caf5bc98a577169e613a1538db809f2cb90a3308f33c9d826f62c535e58567",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2615541617580,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624792110103661,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 461,
+      "mean": 7.713542231613246e-07,
+      "output": "0071.f32",
+      "sha256": "3166e6ae8d31852782bdd4f4969731390bc995c7260caf509ecfc896dd61aaeb",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2616261654247,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624792730912412,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 467,
+      "mean": -5.82021826289747e-08,
+      "output": "0072.f32",
+      "sha256": "e8d64efe23bfce9046e07e65c5a0505b676eca0c7fcf9fef75edd83744b13642",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2616891632247,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624793444029120,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 474,
+      "mean": 6.942187980030212e-08,
+      "output": "0073.f32",
+      "sha256": "37ad5f138c115c9e39a1f169589ecf57124c2f9b9a6472cd5ad2a07ed655954e",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2617611613873,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624794060661704,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 480,
+      "mean": -1.290265316811201e-07,
+      "output": "0074.f32",
+      "sha256": "95967bd8c249e7c17ec5af46f2fd255b1da078a18382daa4fdb34262098ed369",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2618151625790,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000003576278687
+    },
+    {
+      "bag_time_ns": 1780624794776422413,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 487,
+      "mean": 3.13450300382101e-07,
+      "output": "0075.f32",
+      "sha256": "3d84659031605c687de80e7e4721b1a4cf5e58278d9ac5c629dd49b1dfa1411c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2618871621707,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624795386277080,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 493,
+      "mean": 8.134281159755119e-08,
+      "output": "0076.f32",
+      "sha256": "a262e1d4eadbcd3a9c8fba2741bedc1fa1923b0362b23c61a87456241213dd7a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2619501637582,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624796101533788,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 500,
+      "mean": 7.033348197182931e-07,
+      "output": "0077.f32",
+      "sha256": "364a65551cb9f14ce8993dbe521efb41c257b6eaaf3716659dacac2124998727",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2620221624874,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624796713042164,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 506,
+      "mean": -6.872065227980784e-08,
+      "output": "0078.f32",
+      "sha256": "d627741fac6cff8b18ab5a8ba8e997d67a27e4988e748f311f395e9715e5343d",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2620851631874,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999997019767761
+    },
+    {
+      "bag_time_ns": 1780624797432554372,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 513,
+      "mean": 6.626633819450944e-08,
+      "output": "0079.f32",
+      "sha256": "9eb9f09fc51ee9cef6c33f688a9e3dbf671867eee34e45464800bd645c8531e7",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2621571620333,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624798048247373,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 519,
+      "mean": 1.7110039607359795e-07,
+      "output": "0080.f32",
+      "sha256": "2680b8eeac111670f3d2ab4ff6b7bbf2c0d63ef7d8a8e07c730c64478a6d7d1f",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2622201630208,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624798763971331,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 526,
+      "mean": 3.5464762504489045e-07,
+      "output": "0081.f32",
+      "sha256": "84556f4796208d4c19e9731dbb5dd0fe2c06483ed85b8f0a4a56c6f542e141d0",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2622921669083,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624799377486456,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 532,
+      "mean": 1.325326763890189e-07,
+      "output": "0082.f32",
+      "sha256": "27e54e0263161fc529b265aef3d41d3dbaa3ee1a8b5490c675f1c64f9f318866",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2623551635167,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624800093518415,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 539,
+      "mean": -7.415518865627746e-08,
+      "output": "0083.f32",
+      "sha256": "5c5171387d872019a6ac6d9261ce421051871fc32c01875a931289ccb5c04aad",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2624181639501,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624800705146332,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 545,
+      "mean": -2.7413753045379963e-08,
+      "output": "0084.f32",
+      "sha256": "419c5033df92836763dae9f29ad8cd08d89e2cab13d4b7c4394e7ed134d0447c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2624811636001,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624801424736457,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 552,
+      "mean": -7.170088167640642e-08,
+      "output": "0085.f32",
+      "sha256": "3d47e4c51a73de48cba38f51e6087de0f1b0d472a3d5c85cdbb58aa3a4e46b45",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2625531656460,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624802041893999,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 558,
+      "mean": -6.626633819450944e-08,
+      "output": "0086.f32",
+      "sha256": "e69b33a5480e2dea88abcc09921d1c1f83e0bd472d83120fd8aca8ca1787515a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2626161646085,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624802762818583,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 565,
+      "mean": -3.765611040762451e-07,
+      "output": "0087.f32",
+      "sha256": "3f73e7641783bb6f8ffecf0682831c104e9769370728f9c5e03dd372a98d8740",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2626881658669,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624803374783083,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 571,
+      "mean": -1.1955989975831471e-07,
+      "output": "0088.f32",
+      "sha256": "ddcd1ff46cc6b2d4616523f2891f7d6de7024ddc5ab8e5955f5288b67240310e",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2627511643836,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624804090602125,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 578,
+      "mean": -5.708021149075648e-07,
+      "output": "0089.f32",
+      "sha256": "b883541604bc68331b5b2182c341a98977a43f093a0c85cdf8ee22101e049012",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2628231652586,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624804704487542,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 584,
+      "mean": 2.2299148838555993e-07,
+      "output": "0090.f32",
+      "sha256": "b9443c3857f0304fa8fadf3b5bd4e1fcf0e076eb8aaf6978d8b396c14f797264",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2628861706711,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624805426637584,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 591,
+      "mean": 5.890341370218266e-08,
+      "output": "0091.f32",
+      "sha256": "0f5c392750ca5f82cda061ea677d7f3a4afc0ede2e286bbd56062dc7d7dd279c",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2629581652920,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.000000238418579
+    },
+    {
+      "bag_time_ns": 1780624806041847501,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 597,
+      "mean": 6.311079800980224e-07,
+      "output": "0092.f32",
+      "sha256": "5fc9a7000195067a8f9573c6b9659a2cfa7673609ca1b7ba5603c7a3b6fdd831",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2630121659212,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998211860657
+    },
+    {
+      "bag_time_ns": 1780624806759098793,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 604,
+      "mean": -1.5988069890227052e-07,
+      "output": "0093.f32",
+      "sha256": "e54da179cc3c2cfe5c4b1a5ed8ae6db52c39fe81fe2f744b5b1786f5b52a3221",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2630841660129,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624807370939044,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 610,
+      "mean": 8.274527374396712e-08,
+      "output": "0094.f32",
+      "sha256": "fbb916332f0df7e3883653c9b596bd250f5ba691cb0af4657de4bc2f952a076a",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2631471649421,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000003576278687
+    },
+    {
+      "bag_time_ns": 1780624808089002836,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 617,
+      "mean": 3.2537124639020476e-07,
+      "output": "0095.f32",
+      "sha256": "4c8bb92d57f6b8fb48f2145698cbf3d408c5aa76497b54235ca63746c7329303",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2632191665130,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624808703773044,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 623,
+      "mean": -1.2061175880262454e-07,
+      "output": "0096.f32",
+      "sha256": "4eadeb1a2b3faf12e4dc1b3e9ccccc09863740ebb0c654f24dd673a99ea2d82b",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2632821655546,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 0.9999998807907104
+    },
+    {
+      "bag_time_ns": 1780624809420543420,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 630,
+      "mean": 1.1275795941401157e-06,
+      "output": "0097.f32",
+      "sha256": "9cb7f01b314b56da624c958a2222b122bc2bbe81d990c87bd683df529711a613",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2633541655214,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    },
+    {
+      "bag_time_ns": 1780624810032765378,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 636,
+      "mean": -7.152557373046875e-07,
+      "output": "0098.f32",
+      "sha256": "badb1979ba4e18529c69c533e5207fedc289d5f50334d6e80c615727ad4e0abd",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2634171664547,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0000001192092896
+    },
+    {
+      "bag_time_ns": 1780624810746631045,
+      "byte_size": 1392640,
+      "dtype": "float32",
+      "frame_index": 643,
+      "mean": 4.0811650592331716e-07,
+      "output": "0099.f32",
+      "sha256": "d7d5add0a10af7599dbbe9063c6dc293610de4b6adc8e48987199619f8d4abcc",
+      "shape": [
+        1,
+        1,
+        544,
+        640
+      ],
+      "source": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-06-05-09-59-04.bag",
+      "source_encoding": "mono8",
+      "source_shape": [
+        544,
+        640
+      ],
+      "stamp_ns": 2634891687131,
+      "topic": "/camera/infra1/image_raw",
+      "variance": 1.0
+    }
+  ],
+  "input_contract": {
+    "dtype": "float32",
+    "layout": "NCHW",
+    "normalization": "per-image mean/variance, epsilon=1e-5",
+    "shape": [
+      1,
+      1,
+      544,
+      640
+    ]
+  },
+  "recommended_minimum": 100,
+  "source_type": "rosbag",
+  "sufficient_for_representative_ptq": true
+}
