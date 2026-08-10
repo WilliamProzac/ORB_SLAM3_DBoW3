@@ -29,6 +29,8 @@
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/string.hpp>
+#include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <openssl/md5.h>
 #include <pangolin/pangolin.h>
@@ -1452,6 +1454,11 @@ bool System::TryGetLatestRelocalizationStatus(int &status_code) {
   return true;
 }
 
+void System::SetStereoDepthProvider(
+    std::shared_ptr<StereoDepthProvider> provider) {
+  mpTracker->SetStereoDepthProvider(std::move(provider));
+}
+
 double System::GetTimeFromIMUInit() {
   double aux = mpLocalMapper->GetCurrKFTime() - mpLocalMapper->mFirstTs;
   if ((aux > 0.) && mpAtlas->isImuInitialized())
@@ -1485,6 +1492,69 @@ void System::ChangeDataset() {
 }
 
 float System::GetImageScale() { return mpTracker->GetImageScale(); }
+
+FrontendStats System::GetLastFrontendStats(double track_total_ms) const {
+  FrontendStats stats;
+  if (!mpTracker) return stats;
+  const Frame &frame = mpTracker->mCurrentFrame;
+  if (frame.N <= 0 || frame.mvKeysUn.empty()) return stats;
+  stats.valid = true;
+  stats.frame_id = frame.mnId;
+  stats.timestamp = frame.mTimeStamp;
+  stats.track_total_ms = track_total_ms;
+  stats.keypoints = frame.N;
+  stats.valid_depths = static_cast<int>(std::count_if(
+      frame.mvDepth.begin(), frame.mvDepth.end(),
+      [](float depth) { return std::isfinite(depth) && depth > 0.0F; }));
+  stats.valid_depth_ratio = static_cast<float>(stats.valid_depths) /
+                            static_cast<float>(stats.keypoints);
+
+  constexpr int coverage_columns = 8;
+  constexpr int coverage_rows = 6;
+  bool occupied[coverage_columns * coverage_rows] = {};
+  const size_t depth_count = std::min(frame.mvDepth.size(), frame.mvKeysUn.size());
+  const float image_width = std::max(Frame::mnMaxX - Frame::mnMinX, 1.0F);
+  const float image_height = std::max(Frame::mnMaxY - Frame::mnMinY, 1.0F);
+  for (size_t index = 0; index < depth_count; ++index) {
+    if (!std::isfinite(frame.mvDepth[index]) || frame.mvDepth[index] <= 0.0F)
+      continue;
+    const cv::Point2f &point = frame.mvKeysUn[index].pt;
+    const int column = std::max(
+        0, std::min(coverage_columns - 1,
+                    static_cast<int>((point.x - Frame::mnMinX) *
+                                     coverage_columns / image_width)));
+    const int row = std::max(
+        0, std::min(coverage_rows - 1,
+                    static_cast<int>((point.y - Frame::mnMinY) * coverage_rows /
+                                     image_height)));
+    occupied[row * coverage_columns + column] = true;
+  }
+  stats.depth_grid_coverage = static_cast<float>(std::count(
+      occupied, occupied + coverage_columns * coverage_rows, true)) /
+      static_cast<float>(coverage_columns * coverage_rows);
+
+  const size_t association_count =
+      std::min(frame.mvpMapPoints.size(), frame.mvbOutlier.size());
+  for (size_t index = 0; index < association_count; ++index) {
+    if (frame.mvpMapPoints[index] && !frame.mvbOutlier[index])
+      ++stats.tracked_inliers;
+  }
+  stats.tracking_state = static_cast<int>(mpTracker->mState);
+  const StereoDepthRefinementStats &hybrid =
+      frame.mStereoDepthRefinementStats;
+  stats.hybrid_candidates = hybrid.candidates;
+  stats.hybrid_fine_matches = hybrid.fine_matches;
+  stats.hybrid_accepted = hybrid.accepted;
+  stats.hybrid_added = hybrid.added;
+  stats.hybrid_replaced = hybrid.replaced;
+  stats.hybrid_rejected = hybrid.rejected;
+  stats.hybrid_ms = hybrid.total_ms;
+#ifdef REGISTER_TIMES
+  stats.feature_extract_ms = frame.mTimeORB_Ext;
+  stats.stereo_match_ms = frame.mTimeStereoMatch;
+#endif
+  return stats;
+}
 
 #ifdef REGISTER_TIMES
 void System::InsertRectTime(double &time) {

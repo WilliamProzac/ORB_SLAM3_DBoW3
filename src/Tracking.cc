@@ -1364,6 +1364,11 @@ void Tracking::SetLoopClosing(LoopClosing *pLoopClosing) {
 
 void Tracking::SetViewer(Viewer *pViewer) { mpViewer = pViewer; }
 
+void Tracking::SetStereoDepthProvider(
+    std::shared_ptr<StereoDepthProvider> provider) {
+  mpStereoDepthProvider = std::move(provider);
+}
+
 void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
   if (pKF && !pKF->isBad()) {
     mpReferenceKF = pKF;
@@ -1423,7 +1428,8 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
   if (mSensor == System::STEREO && !mpCamera2)
     mCurrentFrame = Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
-                          mbf, mThDepth, mpCamera);
+                          mbf, mThDepth, mpCamera,
+                          mpStereoDepthProvider.get());
   else if (mSensor == System::STEREO && mpCamera2)
     mCurrentFrame = Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
@@ -1431,7 +1437,9 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
   else if (mSensor == System::IMU_STEREO && !mpCamera2)
     mCurrentFrame = Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
-                          mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
+                          mbf, mThDepth, mpCamera,
+                          mpStereoDepthProvider.get(), &mLastFrame,
+                          *mpImuCalib);
   else if (mSensor == System::IMU_STEREO && mpCamera2)
     mCurrentFrame =
         Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,

@@ -1,0 +1,460 @@
+
+ORB-SLAM3 Copyright (C) 2017-2020 Carlos Campos, Richard Elvira, Juan J. Gómez, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+ORB-SLAM2 Copyright (C) 2014-2016 Raúl Mur-Artal, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions. See LICENSE.txt.
+
+Input sensor was set to: Stereo
+Loading settings from /userdata/orb_slam/f22_hybrid_20260810/S316_ORB.yaml
+	-Loaded camera 1
+	-Loaded camera 2
+	-Loaded image info
+	-Loaded ORB settings
+Camera.newHeight optional parameter does not exist...
+Camera.newWidth optional parameter does not exist...
+	-Loaded viewer settings
+	-Loaded Atlas settings
+	-Loaded misc parameters
+----------------------------------
+SLAM settings: 
+	-Camera 1 parameters (Pinhole): [ 293.226 293.226 312.983 274.323 ]
+	-Camera 2 parameters (Pinhole: [ 293.226 293.226 312.983 274.323 ]
+Viewer.imageViewScale optional parameter does not exist...
+System.LoadAtlasFromFile optional parameter does not exist...
+System.SaveAtlasToFile optional parameter does not exist...
+System.thFarPoints optional parameter does not exist...
+	-Original image size: [ 640 , 544 ]
+	-Current image size: [ 640 , 544 ]
+	-Sequence FPS: 11
+	-Stereo baseline: 0.0600875
+	-Stereo depth threshold : 40
+	-Features per image: 600
+	-ORB scale factor: 1.2
+	-ORB number of scales: 5
+	-Initial FAST threshold: 20
+	-Min FAST threshold: 7
+
+
+Loading ORB Vocabulary. This could take a while...
+Vocabulary loaded!
+
+Initialization of Atlas from scratch 
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+Seq. Name: 
+There are 1 cameras in the atlas
+Camera 0 is pinhole
+[0m[INFO] [1786344688.726554388]: ORB-SLAM3 Mapping Service initialized at /slam/mapping[0m
+[0m[INFO] [1786344688.728567649]: Available commands:[0m
+[0m[INFO] [1786344688.728610649]:   data = 0: Switch to localization mode (stop mapping)[0m
+[0m[INFO] [1786344688.728648316]:   data = 1: Switch to mapping mode (resume mapping)[0m
+[0m[INFO] [1786344688.728704442]:   data = 2: Save map and switch to localization mode[0m
+First KF:0; Map init KF:0
+New Map created with 180 points
+KeyFrame 0: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 1: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 2: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 3: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=609)
+KeyFrame 4: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 5: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+[STEREO_GATE_DIAG] frame_id=44 stamp_s=1785981018.817852 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=2 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.026095 pose_step_deg=1.554123 reproj_inlier_n=59 reproj_px_mean=0.928744 reproj_px_p90=1.592365 reproj_chi2_mean=0.662170 reproj_chi2_p90=1.399608 reproj_outlier_n=2 reproj_outlier_px_mean=6.877508 behind_camera=0
+KeyFrame 6: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=49 stamp_s=1785981019.267849 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=4 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.041033 pose_step_deg=2.112493 reproj_inlier_n=59 reproj_px_mean=1.206146 reproj_px_p90=2.069420 reproj_chi2_mean=1.074010 reproj_chi2_p90=2.251100 reproj_outlier_n=4 reproj_outlier_px_mean=4.748885 behind_camera=0
+KeyFrame 7: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=59 stamp_s=1785981020.167853 state_before=2 map_id=0 assoc_before_pose=64 outliers_before_pose=0 assoc_after_pose=64 outliers_after_pose=7 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.030003 pose_step_deg=0.597118 reproj_inlier_n=57 reproj_px_mean=1.265990 reproj_px_p90=2.295527 reproj_chi2_mean=1.268497 reproj_chi2_p90=3.057554 reproj_outlier_n=7 reproj_outlier_px_mean=4.627972 behind_camera=0
+KeyFrame 8: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=65 stamp_s=1785981020.707854 state_before=2 map_id=0 assoc_before_pose=58 outliers_before_pose=0 assoc_after_pose=58 outliers_after_pose=1 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.030907 pose_step_deg=0.354963 reproj_inlier_n=57 reproj_px_mean=1.282022 reproj_px_p90=2.552445 reproj_chi2_mean=1.170005 reproj_chi2_p90=2.755107 reproj_outlier_n=1 reproj_outlier_px_mean=3.975611 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=66 stamp_s=1785981020.797857 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=2 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.035127 pose_step_deg=0.841533 reproj_inlier_n=59 reproj_px_mean=1.356226 reproj_px_p90=2.354902 reproj_chi2_mean=1.516718 reproj_chi2_p90=3.522687 reproj_outlier_n=2 reproj_outlier_px_mean=6.477141 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=68 stamp_s=1785981020.977854 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=1 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.055000 pose_step_deg=1.050184 reproj_inlier_n=60 reproj_px_mean=1.457461 reproj_px_p90=2.497990 reproj_chi2_mean=1.726136 reproj_chi2_p90=4.245800 reproj_outlier_n=1 reproj_outlier_px_mean=10.213714 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=70 stamp_s=1785981021.157859 state_before=2 map_id=0 assoc_before_pose=60 outliers_before_pose=0 assoc_after_pose=60 outliers_after_pose=2 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.050194 pose_step_deg=0.649489 reproj_inlier_n=58 reproj_px_mean=1.396154 reproj_px_p90=2.992066 reproj_chi2_mean=1.426877 reproj_chi2_p90=4.490696 reproj_outlier_n=2 reproj_outlier_px_mean=7.713728 behind_camera=0
+KeyFrame 9: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=80 stamp_s=1785981022.057861 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=5 map_inliers=56 stereo_gate=30 gate_decision=accept pose_step_m=0.049294 pose_step_deg=1.886385 reproj_inlier_n=56 reproj_px_mean=1.618426 reproj_px_p90=3.138228 reproj_chi2_mean=1.816359 reproj_chi2_p90=4.326469 reproj_outlier_n=5 reproj_outlier_px_mean=5.019964 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=81 stamp_s=1785981022.147862 state_before=2 map_id=0 assoc_before_pose=48 outliers_before_pose=0 assoc_after_pose=48 outliers_after_pose=1 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.037197 pose_step_deg=0.374154 reproj_inlier_n=47 reproj_px_mean=1.358489 reproj_px_p90=2.601735 reproj_chi2_mean=1.539912 reproj_chi2_p90=4.181598 reproj_outlier_n=1 reproj_outlier_px_mean=4.879382 behind_camera=0
+KeyFrame 10: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 11: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 12: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 13: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 14: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 15: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 16: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 17: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 18: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+[STEREO_GATE_DIAG] frame_id=141 stamp_s=1785981028.177891 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=2 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.009770 pose_step_deg=1.486579 reproj_inlier_n=59 reproj_px_mean=1.195552 reproj_px_p90=2.455770 reproj_chi2_mean=1.352794 reproj_chi2_p90=2.934407 reproj_outlier_n=2 reproj_outlier_px_mean=5.205658 behind_camera=0
+KeyFrame 19: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=146 stamp_s=1785981028.627889 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=2 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.009054 pose_step_deg=1.386505 reproj_inlier_n=57 reproj_px_mean=1.190789 reproj_px_p90=1.848985 reproj_chi2_mean=1.049931 reproj_chi2_p90=1.923428 reproj_outlier_n=2 reproj_outlier_px_mean=4.866620 behind_camera=0
+KeyFrame 20: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=153 stamp_s=1785981029.257891 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=5 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.009362 pose_step_deg=1.367447 reproj_inlier_n=54 reproj_px_mean=1.164330 reproj_px_p90=2.321551 reproj_chi2_mean=1.156466 reproj_chi2_p90=2.599726 reproj_outlier_n=5 reproj_outlier_px_mean=5.873539 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=154 stamp_s=1785981029.347891 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=2 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.014176 pose_step_deg=1.638387 reproj_inlier_n=55 reproj_px_mean=1.377944 reproj_px_p90=3.277167 reproj_chi2_mean=1.304466 reproj_chi2_p90=3.726500 reproj_outlier_n=2 reproj_outlier_px_mean=7.419553 behind_camera=0
+KeyFrame 21: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=156 stamp_s=1785981029.527894 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=1 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.029695 pose_step_deg=1.823733 reproj_inlier_n=60 reproj_px_mean=1.268781 reproj_px_p90=2.592413 reproj_chi2_mean=1.351787 reproj_chi2_p90=4.667087 reproj_outlier_n=1 reproj_outlier_px_mean=3.850959 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=157 stamp_s=1785981029.617896 state_before=2 map_id=0 assoc_before_pose=58 outliers_before_pose=0 assoc_after_pose=58 outliers_after_pose=3 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.030799 pose_step_deg=1.339320 reproj_inlier_n=55 reproj_px_mean=1.286470 reproj_px_p90=2.288222 reproj_chi2_mean=1.275005 reproj_chi2_p90=3.284582 reproj_outlier_n=3 reproj_outlier_px_mean=4.270929 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=158 stamp_s=1785981029.707893 state_before=2 map_id=0 assoc_before_pose=52 outliers_before_pose=0 assoc_after_pose=52 outliers_after_pose=6 map_inliers=46 stereo_gate=30 gate_decision=accept pose_step_m=0.043295 pose_step_deg=1.263394 reproj_inlier_n=46 reproj_px_mean=1.250471 reproj_px_p90=2.576299 reproj_chi2_mean=1.165262 reproj_chi2_p90=3.200866 reproj_outlier_n=6 reproj_outlier_px_mean=5.439131 behind_camera=0
+KeyFrame 22: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=161 stamp_s=1785981029.977897 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=1 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.036371 pose_step_deg=0.559610 reproj_inlier_n=60 reproj_px_mean=1.362517 reproj_px_p90=2.683593 reproj_chi2_mean=1.503768 reproj_chi2_p90=4.487422 reproj_outlier_n=1 reproj_outlier_px_mean=4.706173 behind_camera=0
+KeyFrame 23: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 24: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 25: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 26: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 27: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 28: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 29: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 30: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 31: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 32: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 33: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 34: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=610)
+KeyFrame 35: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 36: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 37: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 38: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 39: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 40: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 41: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 42: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 43: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 44: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 45: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 46: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 47: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 48: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 49: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 50: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 51: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 52: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 53: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 54: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 55: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=258 stamp_s=1785981038.707931 state_before=2 map_id=0 assoc_before_pose=67 outliers_before_pose=0 assoc_after_pose=67 outliers_after_pose=10 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.009828 pose_step_deg=1.683824 reproj_inlier_n=57 reproj_px_mean=1.410485 reproj_px_p90=2.182984 reproj_chi2_mean=1.518793 reproj_chi2_p90=3.441214 reproj_outlier_n=10 reproj_outlier_px_mean=5.674224 behind_camera=0
+KeyFrame 56: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=268 stamp_s=1785981039.607940 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=2 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.010246 pose_step_deg=1.683223 reproj_inlier_n=54 reproj_px_mean=1.085597 reproj_px_p90=2.121191 reproj_chi2_mean=1.019203 reproj_chi2_p90=3.317155 reproj_outlier_n=2 reproj_outlier_px_mean=4.767796 behind_camera=0
+KeyFrame 57: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+[STEREO_GATE_DIAG] frame_id=273 stamp_s=1785981040.057938 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=7 map_inliers=56 stereo_gate=30 gate_decision=accept pose_step_m=0.026935 pose_step_deg=2.920905 reproj_inlier_n=56 reproj_px_mean=1.109220 reproj_px_p90=2.219497 reproj_chi2_mean=1.064525 reproj_chi2_p90=3.233861 reproj_outlier_n=7 reproj_outlier_px_mean=5.927262 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=274 stamp_s=1785981040.147937 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=4 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.028957 pose_step_deg=1.862641 reproj_inlier_n=59 reproj_px_mean=1.045616 reproj_px_p90=2.038328 reproj_chi2_mean=0.861309 reproj_chi2_p90=2.002012 reproj_outlier_n=4 reproj_outlier_px_mean=5.993598 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=275 stamp_s=1785981040.237939 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=4 map_inliers=51 stereo_gate=30 gate_decision=accept pose_step_m=0.036852 pose_step_deg=1.630582 reproj_inlier_n=51 reproj_px_mean=1.068906 reproj_px_p90=2.061460 reproj_chi2_mean=1.182577 reproj_chi2_p90=3.582739 reproj_outlier_n=4 reproj_outlier_px_mean=7.556451 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=276 stamp_s=1785981040.327939 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=2 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.033694 pose_step_deg=1.015227 reproj_inlier_n=53 reproj_px_mean=1.265321 reproj_px_p90=2.236016 reproj_chi2_mean=1.216893 reproj_chi2_p90=2.884191 reproj_outlier_n=2 reproj_outlier_px_mean=13.688308 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=277 stamp_s=1785981040.417938 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=8 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.042957 pose_step_deg=1.376835 reproj_inlier_n=49 reproj_px_mean=1.243158 reproj_px_p90=2.287093 reproj_chi2_mean=1.190469 reproj_chi2_p90=3.032773 reproj_outlier_n=8 reproj_outlier_px_mean=4.861214 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=278 stamp_s=1785981040.507941 state_before=2 map_id=0 assoc_before_pose=54 outliers_before_pose=0 assoc_after_pose=54 outliers_after_pose=5 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.037612 pose_step_deg=1.005970 reproj_inlier_n=49 reproj_px_mean=1.085446 reproj_px_p90=1.893387 reproj_chi2_mean=1.138226 reproj_chi2_p90=2.497121 reproj_outlier_n=5 reproj_outlier_px_mean=6.162913 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=279 stamp_s=1785981040.597939 state_before=2 map_id=0 assoc_before_pose=52 outliers_before_pose=0 assoc_after_pose=52 outliers_after_pose=2 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.028012 pose_step_deg=0.456120 reproj_inlier_n=50 reproj_px_mean=1.112638 reproj_px_p90=2.171654 reproj_chi2_mean=1.162925 reproj_chi2_p90=3.002616 reproj_outlier_n=2 reproj_outlier_px_mean=4.365104 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=280 stamp_s=1785981040.687940 state_before=2 map_id=0 assoc_before_pose=43 outliers_before_pose=0 assoc_after_pose=43 outliers_after_pose=3 map_inliers=40 stereo_gate=30 gate_decision=accept pose_step_m=0.042420 pose_step_deg=0.401050 reproj_inlier_n=40 reproj_px_mean=1.386219 reproj_px_p90=2.141244 reproj_chi2_mean=1.578610 reproj_chi2_p90=3.728453 reproj_outlier_n=3 reproj_outlier_px_mean=6.729117 behind_camera=0
+KeyFrame 58: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=283 stamp_s=1785981040.957942 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=3 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.041441 pose_step_deg=0.636324 reproj_inlier_n=58 reproj_px_mean=1.252900 reproj_px_p90=1.955305 reproj_chi2_mean=1.228225 reproj_chi2_p90=3.567760 reproj_outlier_n=3 reproj_outlier_px_mean=4.628341 behind_camera=0
+KeyFrame 59: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 60: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=297 stamp_s=1785981042.217952 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=8 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.040212 pose_step_deg=1.368548 reproj_inlier_n=54 reproj_px_mean=1.652513 reproj_px_p90=3.441219 reproj_chi2_mean=1.796390 reproj_chi2_p90=4.673571 reproj_outlier_n=8 reproj_outlier_px_mean=5.674828 behind_camera=0
+KeyFrame 61: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=305 stamp_s=1785981042.937950 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=6 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.050146 pose_step_deg=0.446426 reproj_inlier_n=59 reproj_px_mean=1.426563 reproj_px_p90=2.811281 reproj_chi2_mean=1.572239 reproj_chi2_p90=4.048847 reproj_outlier_n=6 reproj_outlier_px_mean=5.698727 behind_camera=0
+KeyFrame 62: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 63: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 64: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 65: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 66: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 67: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 68: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 69: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 70: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 71: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=374 stamp_s=1785981049.147981 state_before=2 map_id=0 assoc_before_pose=68 outliers_before_pose=0 assoc_after_pose=68 outliers_after_pose=10 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.017677 pose_step_deg=1.683510 reproj_inlier_n=58 reproj_px_mean=1.418957 reproj_px_p90=2.934094 reproj_chi2_mean=1.211271 reproj_chi2_p90=2.837368 reproj_outlier_n=10 reproj_outlier_px_mean=5.699609 behind_camera=0
+KeyFrame 72: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=378 stamp_s=1785981049.507980 state_before=2 map_id=0 assoc_before_pose=64 outliers_before_pose=0 assoc_after_pose=64 outliers_after_pose=9 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.013043 pose_step_deg=1.578021 reproj_inlier_n=55 reproj_px_mean=1.262187 reproj_px_p90=2.380909 reproj_chi2_mean=1.163460 reproj_chi2_p90=3.620133 reproj_outlier_n=9 reproj_outlier_px_mean=5.117083 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=379 stamp_s=1785981049.597982 state_before=2 map_id=0 assoc_before_pose=67 outliers_before_pose=0 assoc_after_pose=67 outliers_after_pose=10 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.011913 pose_step_deg=1.788393 reproj_inlier_n=57 reproj_px_mean=1.253139 reproj_px_p90=2.016188 reproj_chi2_mean=1.007012 reproj_chi2_p90=2.193786 reproj_outlier_n=10 reproj_outlier_px_mean=5.375531 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=380 stamp_s=1785981049.687981 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=10 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.012507 pose_step_deg=1.607128 reproj_inlier_n=53 reproj_px_mean=1.266434 reproj_px_p90=2.256547 reproj_chi2_mean=1.099716 reproj_chi2_p90=3.024913 reproj_outlier_n=10 reproj_outlier_px_mean=5.510108 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=381 stamp_s=1785981049.777982 state_before=2 map_id=0 assoc_before_pose=68 outliers_before_pose=0 assoc_after_pose=68 outliers_after_pose=12 map_inliers=56 stereo_gate=30 gate_decision=accept pose_step_m=0.011212 pose_step_deg=1.301946 reproj_inlier_n=56 reproj_px_mean=1.262133 reproj_px_p90=2.420245 reproj_chi2_mean=1.143811 reproj_chi2_p90=2.861764 reproj_outlier_n=12 reproj_outlier_px_mean=7.538726 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=382 stamp_s=1785981049.867983 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=3 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.009709 pose_step_deg=1.462924 reproj_inlier_n=53 reproj_px_mean=1.238738 reproj_px_p90=2.429783 reproj_chi2_mean=1.118563 reproj_chi2_p90=3.398863 reproj_outlier_n=3 reproj_outlier_px_mean=7.801733 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=383 stamp_s=1785981049.957982 state_before=2 map_id=0 assoc_before_pose=43 outliers_before_pose=0 assoc_after_pose=43 outliers_after_pose=8 map_inliers=35 stereo_gate=30 gate_decision=accept pose_step_m=0.013578 pose_step_deg=1.977189 reproj_inlier_n=35 reproj_px_mean=1.227686 reproj_px_p90=2.259107 reproj_chi2_mean=1.039641 reproj_chi2_p90=3.433307 reproj_outlier_n=8 reproj_outlier_px_mean=8.240871 behind_camera=0
+KeyFrame 73: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=387 stamp_s=1785981050.317986 state_before=2 map_id=0 assoc_before_pose=49 outliers_before_pose=0 assoc_after_pose=49 outliers_after_pose=5 map_inliers=44 stereo_gate=30 gate_decision=accept pose_step_m=0.013882 pose_step_deg=1.979552 reproj_inlier_n=44 reproj_px_mean=1.072758 reproj_px_p90=2.692586 reproj_chi2_mean=1.102743 reproj_chi2_p90=3.034716 reproj_outlier_n=5 reproj_outlier_px_mean=8.230452 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=388 stamp_s=1785981050.407985 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=8 map_inliers=51 stereo_gate=30 gate_decision=accept pose_step_m=0.015705 pose_step_deg=1.884461 reproj_inlier_n=51 reproj_px_mean=1.239904 reproj_px_p90=2.485341 reproj_chi2_mean=1.327100 reproj_chi2_p90=3.737286 reproj_outlier_n=8 reproj_outlier_px_mean=6.508449 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=389 stamp_s=1785981050.497987 state_before=2 map_id=0 assoc_before_pose=47 outliers_before_pose=0 assoc_after_pose=47 outliers_after_pose=4 map_inliers=43 stereo_gate=30 gate_decision=accept pose_step_m=0.011776 pose_step_deg=1.941239 reproj_inlier_n=43 reproj_px_mean=1.293308 reproj_px_p90=2.974236 reproj_chi2_mean=1.342926 reproj_chi2_p90=3.980215 reproj_outlier_n=4 reproj_outlier_px_mean=5.067441 behind_camera=0
+KeyFrame 74: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 75: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 76: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=402 stamp_s=1785981051.667993 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=4 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.016426 pose_step_deg=2.264050 reproj_inlier_n=59 reproj_px_mean=1.000323 reproj_px_p90=1.654060 reproj_chi2_mean=0.821361 reproj_chi2_p90=2.127198 reproj_outlier_n=4 reproj_outlier_px_mean=5.679052 behind_camera=0
+KeyFrame 77: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=407 stamp_s=1785981052.117990 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=5 map_inliers=52 stereo_gate=30 gate_decision=accept pose_step_m=0.009658 pose_step_deg=1.321464 reproj_inlier_n=52 reproj_px_mean=1.157063 reproj_px_p90=2.740571 reproj_chi2_mean=1.042095 reproj_chi2_p90=2.199286 reproj_outlier_n=5 reproj_outlier_px_mean=5.631637 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=408 stamp_s=1785981052.207992 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=3 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.013723 pose_step_deg=1.772613 reproj_inlier_n=50 reproj_px_mean=0.984338 reproj_px_p90=1.979717 reproj_chi2_mean=0.829782 reproj_chi2_p90=2.169088 reproj_outlier_n=3 reproj_outlier_px_mean=4.960436 behind_camera=0
+KeyFrame 78: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=411 stamp_s=1785981052.477992 state_before=2 map_id=0 assoc_before_pose=54 outliers_before_pose=0 assoc_after_pose=54 outliers_after_pose=2 map_inliers=52 stereo_gate=30 gate_decision=accept pose_step_m=0.034626 pose_step_deg=2.576394 reproj_inlier_n=52 reproj_px_mean=1.259269 reproj_px_p90=2.532650 reproj_chi2_mean=1.377867 reproj_chi2_p90=3.449143 reproj_outlier_n=2 reproj_outlier_px_mean=4.440187 behind_camera=0
+KeyFrame 79: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=413 stamp_s=1785981052.657994 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=3 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.034529 pose_step_deg=1.800302 reproj_inlier_n=59 reproj_px_mean=1.117636 reproj_px_p90=2.096837 reproj_chi2_mean=1.032899 reproj_chi2_p90=2.188974 reproj_outlier_n=3 reproj_outlier_px_mean=4.253774 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=414 stamp_s=1785981052.747995 state_before=2 map_id=0 assoc_before_pose=48 outliers_before_pose=0 assoc_after_pose=48 outliers_after_pose=0 map_inliers=48 stereo_gate=30 gate_decision=accept pose_step_m=0.031475 pose_step_deg=1.440532 reproj_inlier_n=48 reproj_px_mean=1.261043 reproj_px_p90=2.450156 reproj_chi2_mean=1.191612 reproj_chi2_p90=3.294063 reproj_outlier_n=0 reproj_outlier_px_mean=nan behind_camera=0
+KeyFrame 80: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=419 stamp_s=1785981053.197996 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=1 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.029055 pose_step_deg=0.208829 reproj_inlier_n=54 reproj_px_mean=1.055028 reproj_px_p90=2.188912 reproj_chi2_mean=1.048336 reproj_chi2_p90=3.207101 reproj_outlier_n=1 reproj_outlier_px_mean=5.006087 behind_camera=0
+KeyFrame 81: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=426 stamp_s=1785981053.828001 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=2 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.030483 pose_step_deg=0.638199 reproj_inlier_n=59 reproj_px_mean=1.423457 reproj_px_p90=2.398963 reproj_chi2_mean=1.550501 reproj_chi2_p90=3.611876 reproj_outlier_n=2 reproj_outlier_px_mean=4.200233 behind_camera=0
+KeyFrame 82: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=431 stamp_s=1785981054.277999 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=3 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.040002 pose_step_deg=0.819192 reproj_inlier_n=54 reproj_px_mean=1.254382 reproj_px_p90=2.431150 reproj_chi2_mean=1.282294 reproj_chi2_p90=3.513803 reproj_outlier_n=3 reproj_outlier_px_mean=4.820736 behind_camera=0
+KeyFrame 83: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 84: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=442 stamp_s=1785981055.268008 state_before=2 map_id=0 assoc_before_pose=67 outliers_before_pose=0 assoc_after_pose=67 outliers_after_pose=8 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.033051 pose_step_deg=1.486843 reproj_inlier_n=59 reproj_px_mean=1.032670 reproj_px_p90=1.615437 reproj_chi2_mean=0.852429 reproj_chi2_p90=2.145019 reproj_outlier_n=8 reproj_outlier_px_mean=4.328130 behind_camera=0
+KeyFrame 85: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=448 stamp_s=1785981055.808010 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=5 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.027819 pose_step_deg=0.706132 reproj_inlier_n=60 reproj_px_mean=1.181410 reproj_px_p90=2.375109 reproj_chi2_mean=1.148723 reproj_chi2_p90=2.840589 reproj_outlier_n=5 reproj_outlier_px_mean=4.673621 behind_camera=0
+KeyFrame 86: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=454 stamp_s=1785981056.348011 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=9 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.035543 pose_step_deg=1.441857 reproj_inlier_n=50 reproj_px_mean=1.474998 reproj_px_p90=3.128122 reproj_chi2_mean=1.538067 reproj_chi2_p90=3.445810 reproj_outlier_n=9 reproj_outlier_px_mean=4.780354 behind_camera=0
+KeyFrame 87: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 88: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 89: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 90: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 91: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 92: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 93: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 94: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 95: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 96: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 97: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 98: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 99: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 100: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 101: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 102: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 103: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 104: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 105: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 106: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 107: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 108: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 109: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 110: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 111: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=595 stamp_s=1785981069.038070 state_before=2 map_id=0 assoc_before_pose=47 outliers_before_pose=0 assoc_after_pose=47 outliers_after_pose=0 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.029121 pose_step_deg=2.376088 reproj_inlier_n=47 reproj_px_mean=1.452982 reproj_px_p90=2.367815 reproj_chi2_mean=1.748531 reproj_chi2_p90=3.478676 reproj_outlier_n=0 reproj_outlier_px_mean=nan behind_camera=0
+KeyFrame 112: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=601 stamp_s=1785981069.578073 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=6 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.024588 pose_step_deg=1.191006 reproj_inlier_n=49 reproj_px_mean=1.182213 reproj_px_p90=1.848882 reproj_chi2_mean=1.212164 reproj_chi2_p90=3.067797 reproj_outlier_n=6 reproj_outlier_px_mean=5.821266 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=602 stamp_s=1785981069.668072 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=7 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.050200 pose_step_deg=0.811075 reproj_inlier_n=58 reproj_px_mean=1.392549 reproj_px_p90=2.361624 reproj_chi2_mean=1.732025 reproj_chi2_p90=4.101581 reproj_outlier_n=7 reproj_outlier_px_mean=5.454955 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=603 stamp_s=1785981069.758072 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=5 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.036167 pose_step_deg=0.807922 reproj_inlier_n=50 reproj_px_mean=1.402034 reproj_px_p90=2.215624 reproj_chi2_mean=1.539833 reproj_chi2_p90=3.424483 reproj_outlier_n=5 reproj_outlier_px_mean=5.951491 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=604 stamp_s=1785981069.848070 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=5 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.031880 pose_step_deg=0.613508 reproj_inlier_n=58 reproj_px_mean=1.522685 reproj_px_p90=2.540824 reproj_chi2_mean=1.725539 reproj_chi2_p90=3.310703 reproj_outlier_n=5 reproj_outlier_px_mean=4.234481 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=605 stamp_s=1785981069.938071 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=3 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.042049 pose_step_deg=0.998912 reproj_inlier_n=50 reproj_px_mean=1.463400 reproj_px_p90=2.823830 reproj_chi2_mean=1.916935 reproj_chi2_p90=4.889265 reproj_outlier_n=3 reproj_outlier_px_mean=3.952711 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=606 stamp_s=1785981070.028073 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=4 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.053747 pose_step_deg=2.708412 reproj_inlier_n=53 reproj_px_mean=1.371763 reproj_px_p90=2.766507 reproj_chi2_mean=1.420147 reproj_chi2_p90=3.378678 reproj_outlier_n=4 reproj_outlier_px_mean=3.934205 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=608 stamp_s=1785981070.208075 state_before=2 map_id=0 assoc_before_pose=64 outliers_before_pose=0 assoc_after_pose=64 outliers_after_pose=5 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.012270 pose_step_deg=1.095536 reproj_inlier_n=59 reproj_px_mean=1.611643 reproj_px_p90=2.710847 reproj_chi2_mean=1.845426 reproj_chi2_p90=3.367018 reproj_outlier_n=5 reproj_outlier_px_mean=4.972672 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=609 stamp_s=1785981070.298076 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=9 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.042227 pose_step_deg=2.284180 reproj_inlier_n=53 reproj_px_mean=1.444574 reproj_px_p90=2.822100 reproj_chi2_mean=1.676410 reproj_chi2_p90=5.364136 reproj_outlier_n=9 reproj_outlier_px_mean=5.167828 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=610 stamp_s=1785981070.388071 state_before=2 map_id=0 assoc_before_pose=58 outliers_before_pose=0 assoc_after_pose=58 outliers_after_pose=9 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.038265 pose_step_deg=0.463367 reproj_inlier_n=49 reproj_px_mean=1.602073 reproj_px_p90=3.197617 reproj_chi2_mean=1.892637 reproj_chi2_p90=4.872643 reproj_outlier_n=9 reproj_outlier_px_mean=5.901808 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=611 stamp_s=1785981070.478073 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=11 map_inliers=51 stereo_gate=30 gate_decision=accept pose_step_m=0.024593 pose_step_deg=1.426371 reproj_inlier_n=51 reproj_px_mean=1.516252 reproj_px_p90=2.574307 reproj_chi2_mean=1.567169 reproj_chi2_p90=4.167638 reproj_outlier_n=11 reproj_outlier_px_mean=6.707179 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=612 stamp_s=1785981070.568074 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=8 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.047764 pose_step_deg=0.872600 reproj_inlier_n=57 reproj_px_mean=1.596903 reproj_px_p90=2.814956 reproj_chi2_mean=1.966435 reproj_chi2_p90=4.691897 reproj_outlier_n=8 reproj_outlier_px_mean=5.958272 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=613 stamp_s=1785981070.658074 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=8 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.029245 pose_step_deg=1.251458 reproj_inlier_n=57 reproj_px_mean=1.786283 reproj_px_p90=3.138824 reproj_chi2_mean=2.184510 reproj_chi2_p90=4.597736 reproj_outlier_n=8 reproj_outlier_px_mean=3.871961 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=614 stamp_s=1785981070.748080 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=8 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.037110 pose_step_deg=0.856447 reproj_inlier_n=54 reproj_px_mean=1.719212 reproj_px_p90=3.182288 reproj_chi2_mean=2.017411 reproj_chi2_p90=4.032369 reproj_outlier_n=8 reproj_outlier_px_mean=4.681229 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=615 stamp_s=1785981070.838077 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=3 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.040318 pose_step_deg=1.924101 reproj_inlier_n=50 reproj_px_mean=1.611392 reproj_px_p90=3.103405 reproj_chi2_mean=1.706264 reproj_chi2_p90=3.942919 reproj_outlier_n=3 reproj_outlier_px_mean=3.838268 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=616 stamp_s=1785981070.928077 state_before=2 map_id=0 assoc_before_pose=50 outliers_before_pose=0 assoc_after_pose=50 outliers_after_pose=4 map_inliers=46 stereo_gate=30 gate_decision=accept pose_step_m=0.036066 pose_step_deg=1.879884 reproj_inlier_n=46 reproj_px_mean=1.750239 reproj_px_p90=2.766507 reproj_chi2_mean=1.966779 reproj_chi2_p90=4.013765 reproj_outlier_n=4 reproj_outlier_px_mean=6.513755 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=617 stamp_s=1785981071.018075 state_before=2 map_id=0 assoc_before_pose=40 outliers_before_pose=0 assoc_after_pose=40 outliers_after_pose=4 map_inliers=36 stereo_gate=30 gate_decision=accept pose_step_m=0.045888 pose_step_deg=1.403719 reproj_inlier_n=36 reproj_px_mean=1.782902 reproj_px_p90=3.205693 reproj_chi2_mean=2.185264 reproj_chi2_p90=5.483189 reproj_outlier_n=4 reproj_outlier_px_mean=5.056516 behind_camera=0
+KeyFrame 113: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=625 stamp_s=1785981071.738078 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=5 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.034357 pose_step_deg=0.744465 reproj_inlier_n=60 reproj_px_mean=1.232197 reproj_px_p90=2.376413 reproj_chi2_mean=1.098101 reproj_chi2_p90=2.668173 reproj_outlier_n=5 reproj_outlier_px_mean=3.712016 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=629 stamp_s=1785981072.098083 state_before=2 map_id=0 assoc_before_pose=63 outliers_before_pose=0 assoc_after_pose=63 outliers_after_pose=5 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.040914 pose_step_deg=0.812660 reproj_inlier_n=58 reproj_px_mean=1.483792 reproj_px_p90=2.688787 reproj_chi2_mean=1.605874 reproj_chi2_p90=4.035989 reproj_outlier_n=5 reproj_outlier_px_mean=4.824366 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=630 stamp_s=1785981072.188082 state_before=2 map_id=0 assoc_before_pose=58 outliers_before_pose=0 assoc_after_pose=58 outliers_after_pose=8 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.037758 pose_step_deg=1.413768 reproj_inlier_n=50 reproj_px_mean=1.509441 reproj_px_p90=2.635057 reproj_chi2_mean=1.455104 reproj_chi2_p90=2.661292 reproj_outlier_n=8 reproj_outlier_px_mean=5.742034 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=631 stamp_s=1785981072.278083 state_before=2 map_id=0 assoc_before_pose=47 outliers_before_pose=0 assoc_after_pose=47 outliers_after_pose=4 map_inliers=43 stereo_gate=30 gate_decision=accept pose_step_m=0.047978 pose_step_deg=1.392207 reproj_inlier_n=43 reproj_px_mean=1.358757 reproj_px_p90=2.519428 reproj_chi2_mean=1.523997 reproj_chi2_p90=4.094745 reproj_outlier_n=4 reproj_outlier_px_mean=4.762461 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=632 stamp_s=1785981072.368079 state_before=2 map_id=0 assoc_before_pose=45 outliers_before_pose=0 assoc_after_pose=45 outliers_after_pose=6 map_inliers=39 stereo_gate=30 gate_decision=accept pose_step_m=0.037558 pose_step_deg=1.660905 reproj_inlier_n=39 reproj_px_mean=1.503339 reproj_px_p90=2.856989 reproj_chi2_mean=1.640888 reproj_chi2_p90=3.804147 reproj_outlier_n=6 reproj_outlier_px_mean=5.804455 behind_camera=0
+KeyFrame 114: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=636 stamp_s=1785981072.728085 state_before=2 map_id=0 assoc_before_pose=48 outliers_before_pose=0 assoc_after_pose=48 outliers_after_pose=2 map_inliers=46 stereo_gate=30 gate_decision=accept pose_step_m=0.037435 pose_step_deg=1.156868 reproj_inlier_n=46 reproj_px_mean=1.471834 reproj_px_p90=2.759199 reproj_chi2_mean=1.302811 reproj_chi2_p90=2.822353 reproj_outlier_n=2 reproj_outlier_px_mean=4.836315 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=637 stamp_s=1785981072.818086 state_before=2 map_id=0 assoc_before_pose=47 outliers_before_pose=0 assoc_after_pose=47 outliers_after_pose=2 map_inliers=45 stereo_gate=30 gate_decision=accept pose_step_m=0.026802 pose_step_deg=0.611454 reproj_inlier_n=45 reproj_px_mean=1.412369 reproj_px_p90=2.931903 reproj_chi2_mean=1.330248 reproj_chi2_p90=3.659252 reproj_outlier_n=2 reproj_outlier_px_mean=6.639718 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=638 stamp_s=1785981072.908087 state_before=2 map_id=0 assoc_before_pose=51 outliers_before_pose=0 assoc_after_pose=51 outliers_after_pose=4 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.029426 pose_step_deg=1.337880 reproj_inlier_n=47 reproj_px_mean=1.377626 reproj_px_p90=2.474992 reproj_chi2_mean=1.268192 reproj_chi2_p90=3.041087 reproj_outlier_n=4 reproj_outlier_px_mean=4.859425 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=639 stamp_s=1785981072.998087 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=3 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.029771 pose_step_deg=1.567504 reproj_inlier_n=53 reproj_px_mean=1.456944 reproj_px_p90=2.359729 reproj_chi2_mean=1.286174 reproj_chi2_p90=2.597077 reproj_outlier_n=3 reproj_outlier_px_mean=5.480286 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=640 stamp_s=1785981073.088087 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=2 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.042555 pose_step_deg=1.120140 reproj_inlier_n=54 reproj_px_mean=1.535554 reproj_px_p90=3.144013 reproj_chi2_mean=1.450114 reproj_chi2_p90=3.965024 reproj_outlier_n=2 reproj_outlier_px_mean=4.028957 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=641 stamp_s=1785981073.178086 state_before=2 map_id=0 assoc_before_pose=50 outliers_before_pose=0 assoc_after_pose=50 outliers_after_pose=3 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.029341 pose_step_deg=0.856182 reproj_inlier_n=47 reproj_px_mean=1.573089 reproj_px_p90=2.768744 reproj_chi2_mean=1.499297 reproj_chi2_p90=3.549955 reproj_outlier_n=3 reproj_outlier_px_mean=4.216304 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=642 stamp_s=1785981073.268088 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=5 map_inliers=52 stereo_gate=30 gate_decision=accept pose_step_m=0.025363 pose_step_deg=1.774908 reproj_inlier_n=52 reproj_px_mean=1.454569 reproj_px_p90=2.607542 reproj_chi2_mean=1.360300 reproj_chi2_p90=2.532181 reproj_outlier_n=5 reproj_outlier_px_mean=4.995831 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=643 stamp_s=1785981073.358088 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=8 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.033560 pose_step_deg=1.301203 reproj_inlier_n=49 reproj_px_mean=1.363711 reproj_px_p90=2.613393 reproj_chi2_mean=1.428930 reproj_chi2_p90=3.310837 reproj_outlier_n=8 reproj_outlier_px_mean=4.844501 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=644 stamp_s=1785981073.448090 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=12 map_inliers=41 stereo_gate=30 gate_decision=accept pose_step_m=0.035927 pose_step_deg=0.541862 reproj_inlier_n=41 reproj_px_mean=1.345197 reproj_px_p90=2.541709 reproj_chi2_mean=1.209955 reproj_chi2_p90=2.706972 reproj_outlier_n=12 reproj_outlier_px_mean=5.933846 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=645 stamp_s=1785981073.538089 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=5 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.023752 pose_step_deg=0.436838 reproj_inlier_n=54 reproj_px_mean=1.673180 reproj_px_p90=2.807866 reproj_chi2_mean=1.766242 reproj_chi2_p90=4.385019 reproj_outlier_n=5 reproj_outlier_px_mean=4.276154 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=646 stamp_s=1785981073.628090 state_before=2 map_id=0 assoc_before_pose=54 outliers_before_pose=0 assoc_after_pose=54 outliers_after_pose=7 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.024920 pose_step_deg=0.578166 reproj_inlier_n=47 reproj_px_mean=1.589599 reproj_px_p90=2.990502 reproj_chi2_mean=1.618058 reproj_chi2_p90=4.806254 reproj_outlier_n=7 reproj_outlier_px_mean=5.005981 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=647 stamp_s=1785981073.718089 state_before=2 map_id=0 assoc_before_pose=51 outliers_before_pose=0 assoc_after_pose=51 outliers_after_pose=9 map_inliers=42 stereo_gate=30 gate_decision=accept pose_step_m=0.046938 pose_step_deg=0.627532 reproj_inlier_n=42 reproj_px_mean=1.578827 reproj_px_p90=2.652211 reproj_chi2_mean=1.648322 reproj_chi2_p90=4.064525 reproj_outlier_n=9 reproj_outlier_px_mean=5.477446 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=648 stamp_s=1785981073.808089 state_before=2 map_id=0 assoc_before_pose=55 outliers_before_pose=0 assoc_after_pose=55 outliers_after_pose=9 map_inliers=46 stereo_gate=30 gate_decision=accept pose_step_m=0.038230 pose_step_deg=0.624985 reproj_inlier_n=46 reproj_px_mean=1.637519 reproj_px_p90=3.408780 reproj_chi2_mean=1.683627 reproj_chi2_p90=3.998866 reproj_outlier_n=9 reproj_outlier_px_mean=5.723767 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=649 stamp_s=1785981073.898090 state_before=2 map_id=0 assoc_before_pose=46 outliers_before_pose=0 assoc_after_pose=46 outliers_after_pose=4 map_inliers=42 stereo_gate=30 gate_decision=accept pose_step_m=0.027012 pose_step_deg=0.558246 reproj_inlier_n=42 reproj_px_mean=1.643461 reproj_px_p90=2.797930 reproj_chi2_mean=1.603300 reproj_chi2_p90=3.775277 reproj_outlier_n=4 reproj_outlier_px_mean=5.724773 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=650 stamp_s=1785981073.988089 state_before=2 map_id=0 assoc_before_pose=49 outliers_before_pose=0 assoc_after_pose=49 outliers_after_pose=10 map_inliers=39 stereo_gate=30 gate_decision=accept pose_step_m=0.037618 pose_step_deg=0.936317 reproj_inlier_n=39 reproj_px_mean=1.419440 reproj_px_p90=2.693574 reproj_chi2_mean=1.418042 reproj_chi2_p90=3.568061 reproj_outlier_n=10 reproj_outlier_px_mean=5.321171 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=651 stamp_s=1785981074.078090 state_before=2 map_id=0 assoc_before_pose=35 outliers_before_pose=0 assoc_after_pose=35 outliers_after_pose=6 map_inliers=29 stereo_gate=30 gate_decision=reject pose_step_m=0.033573 pose_step_deg=1.884027 reproj_inlier_n=29 reproj_px_mean=1.250316 reproj_px_p90=2.404192 reproj_chi2_mean=1.109581 reproj_chi2_p90=2.278353 reproj_outlier_n=6 reproj_outlier_px_mean=7.267331 behind_camera=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 64: BoW matches=1
+Fail to track local map!
+Relocalization: Found 2 candidates
+Relocalization candidate KF 12: BoW matches=1
+Relocalization candidate KF 18: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=2
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 18: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=2
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 106: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 106: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 49: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 67: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 49: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 106: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 77: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 83: BoW matches=0
+Fail to track local map!
+Relocalization: Found 2 candidates
+Relocalization candidate KF 67: BoW matches=0
+Relocalization candidate KF 101: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 111: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 114: BoW matches=4
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 104: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 2 candidates
+Relocalization candidate KF 83: BoW matches=0
+Relocalization candidate KF 67: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 65: BoW matches=0
+Fail to track local map!
+Relocalization: Found 2 candidates
+Relocalization candidate KF 1: BoW matches=0
+Relocalization candidate KF 96: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 67: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 18: BoW matches=1
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 30: BoW matches=0
+Fail to track local map!
+Relocalization: Found 1 candidates
+Relocalization candidate KF 101: BoW matches=0
+Fail to track local map!
+Relocalization: Found 2 candidates
+Relocalization candidate KF 12: BoW matches=0
+Relocalization candidate KF 43: BoW matches=0
+Fail to track local map!
+Creation of new map with id: 1
+Stored map with ID: 0
+Creation of new map with last KF id: 115
+First KF:115; Map init KF:115
+New Map created with 221 points
+[33m[WARN] [1786344829.981707098]: Rebased /robot_pose continuity after ORB-SLAM map switch map_id 0 -> 1[0m
+KeyFrame 115: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 116: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 117: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 118: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 119: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 120: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 121: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[33m[WARN] [1786344833.480586978]: Shutdown request received.[0m
+[33m[WARN] [1786344833.480709479]: Reason given for shutdown: [user request][0m
+Shutdown
+Shutdown: Waiting for threads...
+Shutdown: All threads finished.
+Shutdown: Waiting 100ms... done.
+Shutdown: Checking save file... no save file configured.
+
+ TIME STATS in ms (mean$\pm$std)
+OpenCV version: 4.5.4
+---------------------------
+Tracking
+
+ORB Extraction: 79.651$\pm$8.4679
+Stereo Matching: 8.6175$\pm$1.2641
+Pose Prediction: 3.9012$\pm$1.9599
+LM Track: 6.0297$\pm$1.9807
+New KF decision: 0.26413$\pm$0.35634
+Total Tracking: nan$\pm$nan
+
+
+
+Local Mapping
+
+KF Insertion: 10.899$\pm$1.0617
+MP Culling: 0.42652$\pm$0.063706
+MP Creation: 23.802$\pm$8.6565
+LBA: 146.38$\pm$98.593
+KF Culling: 3.2478$\pm$2.1082
+Total Local Mapping: 179.96$\pm$109.81
+---------------------------
+
+LBA complexity (mean$\pm$std)
+LBA Edges: 1861.5$\pm$909.3
+LBA KF optimized: 12.169$\pm$6.6068
+LBA KF fixed: 22.636$\pm$13.974
+LBA MP: nan$\pm$nan
+
+LBA executions: 118
+LBA aborts: 4
+---------------------------
+
+Map complexity
+KFs in map: 7
+MPs in map: 377
+---------------------------
+
+Place Recognition (mean$\pm$std)
+Database Query: 0.51696$\pm$0.2358
+SE3 estimation: 3.2064$\pm$3.7456
+Total Place Recognition: 3.5261$\pm$3.952
+
+
+Loop Closing (mean$\pm$std)
+Loop Fusion: nan$\pm$nan
+Essential Graph: nan$\pm$nan
+Total Loop Closing: nan$\pm$nan
+
+Num exec: 0
+Number of KFs: nan$\pm$nan
+
+Map Merging (mean$\pm$std)
+Merge Maps: nan$\pm$nan
+Welding BA: nan$\pm$nan
+Optimization Ess.: nan$\pm$nan
+Total Map Merging: nan$\pm$nan
+
+Num exec: 0
+Number of KFs: nan$\pm$nan
+Number of MPs: nan$\pm$nan
+
+Full GBA (mean$\pm$std)
+GBA: nan$\pm$nan
+Map Update: nan$\pm$nan
+Total Full GBA: nan$\pm$nan
+
+Num exec: 0
+Num abort: 0
+Number of KFs: nan$\pm$nan
+Number of MPs: nan$\pm$nan

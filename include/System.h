@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string>
 #include <thread>
+#include <memory>
 #include <unistd.h>
 
 #include "Atlas.h"
@@ -43,6 +44,30 @@
 using namespace std;
 
 namespace ORB_SLAM3 {
+
+class StereoDepthProvider;
+
+struct FrontendStats {
+  bool valid = false;
+  unsigned long frame_id = 0;
+  double timestamp = 0.0;
+  double feature_extract_ms = 0.0;
+  double stereo_match_ms = 0.0;
+  double hybrid_ms = 0.0;
+  double track_total_ms = 0.0;
+  int keypoints = 0;
+  int valid_depths = 0;
+  float valid_depth_ratio = 0.0F;
+  float depth_grid_coverage = 0.0F;
+  int tracked_inliers = 0;
+  int tracking_state = 0;
+  int hybrid_candidates = 0;
+  int hybrid_fine_matches = 0;
+  int hybrid_accepted = 0;
+  int hybrid_added = 0;
+  int hybrid_replaced = 0;
+  int hybrid_rejected = 0;
+};
 
 class Verbose {
 public:
@@ -194,6 +219,7 @@ public:
   std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
   bool IsOnlyTrackingEnabled();
   bool TryGetLatestRelocalizationStatus(int &status_code);
+  void SetStereoDepthProvider(std::shared_ptr<StereoDepthProvider> provider);
 
   // For debugging
   double GetTimeFromIMUInit();
@@ -203,6 +229,8 @@ public:
   void ChangeDataset();
 
   float GetImageScale();
+
+  FrontendStats GetLastFrontendStats(double track_total_ms = 0.0) const;
 
 #ifdef REGISTER_TIMES
   void InsertRectTime(double &time);

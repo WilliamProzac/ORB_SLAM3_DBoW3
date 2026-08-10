@@ -436,3 +436,87 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
   runs returned identical output hashes and stable peak RSS. Authoritative
   evidence: `docs/f21-gate-report.md` and
   `xfeat_rdk_x5/artifacts/f21_gate_final.json`.
+
+## F25 RDK X5 stereo gate diagnostic (2026-08-06)
+
+- Cross-build command: `RDK_BUILD_JOBS=4 ./tools/build_rdk_arm64_docker.sh`
+  from `/home/ywl/Project/RDK_X5_orb_slam`. The ARM64 node/library hashes were
+  `d6df0d5e...f71ccb` and `3f4de91f...e085c54f`. They were copied to the
+  independent board directory
+  `/userdata/orb_slam/f25_stereo_gate25_sparse_20260806`; the existing staging
+  and devel artifacts were not replaced.
+- Runtime controls: live S316 camera threads on CPUs 0-1, ORB-SLAM3 on CPUs
+  2-7, Pangolin viewer disabled, host bag playback at 1.0x, and image topics
+  remapped under a unique `/baggate25_sparse_*` prefix so the node could not
+  subscribe to the live camera image topics.
+- `2026-06-05-09-59-04.bag`: 643 callbacks, all tracking state 2, one Atlas
+  map with 135 keyframes and 2822 saved map points. Frame 523 reached exactly
+  25 local-map inliers and was accepted; its pose step was 0.062627 m and
+  1.613700 deg, with inlier reprojection mean/P90 1.264135/2.374674 px and
+  chi-square mean/P90 1.390776/2.646152. The former threshold-30 run entered
+  state 3 at frame 528 and created a new map after 30 lost frames.
+- `2026-06-05-09-56-06.bag`: 883 callbacks, 30 state-3 frames, then a new map.
+  Failure began at frame 432 when `TrackReferenceKeyFrame` found only 9 BoW
+  matches. The preceding frame had 50 local-map inliers, and no 25-29-inlier
+  diagnostic occurred before failure, so changing the 30-inlier local-map gate
+  could not have caused or prevented this loss. The threshold-30 CPU-isolated
+  run had remained state 2 throughout, exposing asynchronous LocalMapping/map
+  state repeatability as a remaining runtime variable.
+- Mean callback time changed from 84.002 to 84.565 ms on `09-59-04` and from
+  96.592 to 97.366 ms on `09-56-06` versus the threshold-30 CPU-isolated runs.
+  The sparse diagnostic overhead is therefore below 1%, but repeat runs are
+  still required before promoting 25 as a production threshold.
+- Host evidence and SHA-256:
+  `/tmp/orb_slam3_095606_rate1_camera_cpuiso_gate25_sparse.csv`
+  (`1dff179a...91650bf`),
+  `/tmp/orb_slam3_095606_gate25_sparse_diag.log`
+  (`a2ce0700...65d6a9e`),
+  `/tmp/orb_slam3_095904_rate1_camera_cpuiso_gate25_sparse.csv`
+  (`d9f51beb...ebb8d50`), and
+  `/tmp/orb_slam3_095904_gate25_sparse_diag.log`
+  (`cecd50cd...7b74e5d`).
+
+## F22 RDK X5 Hybrid stereo replay (2026-08-10)
+
+- Host core build: `./build.sh` passed after adding the provider seam and
+  frontend statistics. Standalone `-std=c++17 -Wall -Wextra` compilation also
+  passed for `xfeat_frontend.cpp` and `xfeat_hybrid_depth_provider.cpp`.
+- RDK cross-build: `RDK_BUILD_JOBS=1
+  /home/ywl/Project/RDK_X5_orb_slam/tools/build_rdk_arm64_docker.sh` passed.
+  The first `-j4` attempt was rejected as evidence because `cc1plus` was killed
+  while compiling `Optimizer.cc`; the retained single-job retry completed both
+  catkin packages. Node/library hashes are `5a507a46...1eaf9b` and
+  `56987b52...7766f9`; board `ldd` reported no missing dependency.
+- Board smoke: an 8-second slice of `09-46-39` produced 89/89 state-2 and
+  pose-valid callbacks. XFeat Fine added 14-17 depths per sampled frame and
+  initialized both BPU models without error.
+- Full replay command: `./xfeat_rdk_x5/run_f22_hybrid_ab.sh`, using unique ROS
+  topic prefixes, viewer disabled, CPU affinity 2-7, and 0.5x playback. The
+  slower rate is required because the validation Hybrid intentionally computes
+  both complete ORB and XFeat frontends; it prevents queue drops from becoming
+  a confounder. Source image-pair counts are 996, 811 and 715, while recorded
+  ORB/Hybrid callbacks are `994/994`, `803/810`, and `704/713`.
+- Common-timestamp verification covers 2,496 frames. ORB keypoint mismatch is
+  zero, valid-depth regression count is zero, and mean Hybrid depth deltas are
+  `+18.39/+17.12/+16.13`. Mean tracked-inlier deltas are
+  `+18.79/+13.88/+17.82`.
+- Tracking-loss frames/segments are ORB versus Hybrid `0/0` and `0/0` for
+  `09-46-39`, `34/1` and `34/1` for `09-48-14`, and `34/1` and `0/0` for
+  `09-50-14`. Map counts are `1/1`, `2/2`, and `2/1`. No runtime error marker
+  was found in any log.
+- Trajectory evidence: first-bag maximum consecutive translation/rotation is
+  ORB `0.064 m/2.91 deg` and Hybrid `0.069 m/3.40 deg`. Both second-bag runs
+  reset maps. On the third bag ORB reaches `2.945 m/95.25 deg` across its reset,
+  while Hybrid remains at `0.100 m/3.14 deg` and stays in one map.
+- Reprojection evidence uses the existing sparse near-gate diagnostic and is
+  conditional on its trigger. Mean of per-row reprojection mean/P90 is
+  ORB/Hybrid `1.24/2.30` versus `1.45/2.76` px, `1.32/2.45` versus
+  `1.27/2.40` px, and `1.35/2.53` versus `1.24/2.34` px for the three bags.
+- Timing: Hybrid itself averages `53.42/53.26/53.34 ms`; total callback mean is
+  `161.85/162.41/155.92 ms`, versus ORB `106.46/107.11/100.72 ms`. F22 passes
+  the specified loss/observation gate, but this dual-frontend bridge is not an
+  11 Hz real-time production mode.
+- Machine-readable evidence:
+  `xfeat_rdk_x5/artifacts/f22_hybrid_ab/summary.json` plus the six paired CSV
+  and log files. The original unindexed `2026-08-06-09-50-14.bag` was not
+  modified; the tested indexed copy is `/tmp/f22_2026-08-06-09-50-14.bag`.

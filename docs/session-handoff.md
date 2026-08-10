@@ -2,15 +2,13 @@
 
 ## Summary
 
-- Active feature: F21
-- Final state: active; the full hard-grid M384 board replay and a 65-pair
-  common stereo-depth/Fine/PnP evaluation are complete. The hard 8x6 balancing
-  policy is rejected, so F22 remains gated.
-- Main result: hard balancing raised spatial coverage but reduced mean
-  NCC-qualified stereo correspondences to 186.03 and common-PnP inliers to
-  99.38, with one 24-inlier failure. No-hard-grid XFeat+Fine reached 213.0 PnP
-  inliers and 65/65 success versus the ORB control's 200.25 and 65/65. Fine
-  Matcher remains viable; quota selection must be softened before retesting.
+- Active feature: F25
+- Final state: passing as a temporary diagnostic experiment; the gate is not
+  promoted as a production default.
+- Main result: the 25-inlier gate kept `09-59-04` in one map, including a
+  geometrically plausible frame at exactly 25 local-map inliers. `09-56-06`
+  still split because reference-keyframe matching failed before the local-map
+  gate, demonstrating a separate asynchronous map-state repeatability issue.
 
 ## Commands Run
 
@@ -687,3 +685,90 @@ sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
   correction service remain applicable.
 - Publication target: branch
   `agent/ros-pose-continuity-xfeat-rdk-evaluation` based on `master`.
+
+## Addendum 2026-08-06 — F25 stereo local-map gate diagnostic
+
+- Active feature/final state: F25 `passing` as a temporary diagnostic. The
+  tested threshold remains isolated and is not a production recommendation.
+- Changed the RDK cross-build source at
+  `/home/ywl/Project/RDK_X5_orb_slam/src/orb_slam3_ros-master/orb_slam3/src/Tracking.cc`:
+  the pure-stereo local-map gate is 25, inertial gates are unchanged, and
+  pose-step/reprojection diagnostics run only near the gate or on a large pose
+  step. No source under this repository's `src/` or `include/` was changed.
+- The user ran `RDK_BUILD_JOBS=4 ./tools/build_rdk_arm64_docker.sh`; both catkin
+  packages passed. The ARM64 node/library hashes are `d6df0d5e...f71ccb` and
+  `3f4de91f...e085c54f`. Deployment used the independent board directory
+  `/userdata/orb_slam/f25_stereo_gate25_sparse_20260806` and did not replace
+  the previous staging or `/userdata/orb_slam/devel` artifacts.
+- Runtime controls: camera PID 39105 and all its threads were temporarily
+  pinned to CPUs 0-1; ORB-SLAM3 was pinned to CPUs 2-7; Pangolin was disabled;
+  bags were played at 1.0x from host `192.168.1.3`; left/right images were
+  remapped beneath isolated `/baggate25_sparse_*` topics. Camera affinity was
+  restored to CPUs 0-7 and no test `ros_stereo` process remained afterward.
+- `09-59-04` passed in one map: 643 state-2 callbacks, 135 KFs and 2822 MPs.
+  Frame 523 was accepted at exactly 25 local-map inliers with 0.062627 m,
+  1.613700 deg, and 1.264135/2.374674 px reprojection mean/P90. Atlas:
+  `ORB_SLAM3_Map_1786001967.955328.osa` on the board.
+- `09-56-06` produced 853 state-2 plus 30 state-3 callbacks and split into
+  74-KF and 61-KF maps. Frame 432 failed before the local-map gate because the
+  reference KF produced only 9 BoW matches; frame 431 still had 50 local-map
+  inliers. Atlas: `ORB_SLAM3_Map_1786001728.921163.osa` on the board.
+- Evidence copied to the host:
+  `/tmp/orb_slam3_095606_rate1_camera_cpuiso_gate25_sparse.csv`,
+  `/tmp/orb_slam3_095606_gate25_sparse_diag.log`,
+  `/tmp/orb_slam3_095904_rate1_camera_cpuiso_gate25_sparse.csv`, and
+  `/tmp/orb_slam3_095904_gate25_sparse_diag.log`. Exact SHA-256 values are in
+  `docs/validation.md`.
+- Commands not run: no production deployment, install-space build, IMU mode,
+  or viewer-enabled replay was performed. The local RDK diagnostic source is
+  still at 25 for follow-up experiments; restore it to 30 before using that
+  workspace for a production build.
+- Remaining uncertainty: one replay per final sparse-logging configuration is
+  insufficient to separate threshold effects from asynchronous LocalMapping
+  scheduling. The next meaningful step is an alternating repeated A/B test of
+  threshold 30 and 25 from separately staged, otherwise identical libraries.
+
+## Addendum 2026-08-10 — F22 Hybrid XFeat stereo depth passing
+
+- Active feature/final state: F22 `passing`. F23 remains `not_started` and is
+  now unblocked. The RDK target used was `root@192.168.1.10`.
+- Implemented a provider seam that refines only stereo depth on existing ORB
+  keypoints. ORB binary descriptors and all temporal/MapPoint/BoW/loop paths
+  remain unchanged. The provider uses the frozen F21 600-point backbone and
+  M384 Fine model, patch NCC acceptance, add-only default behavior and guarded
+  replacement.
+- Verification passed: host `./build.sh`; standalone frontend/provider syntax
+  compilation; shell/Python checks; ARM64 catkin cross-build at `-j1`; board
+  `ldd`, hashes and model-init smoke; and six complete board runs over the
+  three user-provided lawn bags at controlled 0.5x playback.
+- The third bag was unindexed. Its original at the repository root was left
+  byte-for-byte untouched; `rosbag reindex` was run only on
+  `/tmp/f22_2026-08-06-09-50-14.bag`.
+- On all 2,496 paired timestamps, ORB keypoint counts were identical and no
+  frame lost valid stereo depth. Hybrid added 16.13-18.39 mean depths and
+  13.88-18.79 mean tracked inliers. Loss frames were equal on the first two
+  bags and improved from 34 to zero on the third.
+- Cross-build artifacts are isolated at
+  `/userdata/orb_slam/f22_hybrid_20260810`; node/library SHA-256 values are
+  `5a507a46...1eaf9b` and `56987b52...7766f9`. Existing devel, F21 and F25
+  staging artifacts were not replaced.
+- Evidence is under `xfeat_rdk_x5/artifacts/f22_hybrid_ab/`; the authoritative
+  aggregate is `summary.json`. No F22 `ros_stereo` process remained after the
+  run. The existing host ROS master was reused and left running.
+- Touched current-repository files: `include/StereoDepthProvider.h`,
+  `include/{Frame,System,Tracking}.h`, `src/{Frame,System,Tracking}.cc`, the
+  Hybrid provider, deploy/replay/summary helpers under `xfeat_rdk_x5/`, F22
+  artifacts, and the four project progress/validation documents. The RDK
+  build workspace additionally changed its package `CMakeLists.txt`,
+  `src/ros_stereo.cc`, `config/Stereo/S316.yaml`, mirrored core headers/sources,
+  and `tools/build_rdk_arm64_docker.sh`; a minimal board-derived BPU link
+  sysroot is under `tools/rdk_bpu_sysroot/` there.
+- Remaining limitation: Hybrid callback mean is 155.92-162.41 ms, about 53 ms
+  slower than ORB, so it cannot sustain the 11 Hz S316 stream. This is expected
+  for a bridge that runs both extractors. The next step is F23 descriptor-aware
+  tracking, beginning with an explicit feature/descriptor abstraction and
+  initialization path before touching relocalization or vocabulary handling.
+- Not run: 1.0x/11 Hz Hybrid replay, EuRoC MH_01/MH_03/MH_05 ATE/RPE, XFeat
+  temporal descriptor integration, XFeat vocabulary, relocalization, loop
+  closing, or Atlas model-tag compatibility. Those belong to F23/F24 and must
+  not be inferred from the passing F22 depth-only bridge.

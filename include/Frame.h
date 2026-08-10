@@ -31,6 +31,7 @@
 
 #include "ImuTypes.h"
 #include "ORBVocabulary.h"
+#include "StereoDepthProvider.h"
 
 #include "Converter.h"
 #include "Settings.h"
@@ -64,6 +65,7 @@ public:
         ORBextractor *extractorLeft, ORBextractor *extractorRight,
         ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf,
         const float &thDepth, GeometricCamera *pCamera,
+        StereoDepthProvider *stereoDepthProvider = nullptr,
         Frame *pPrevF = static_cast<Frame *>(NULL),
         const IMU::Calib &ImuCalib = IMU::Calib());
 
@@ -243,6 +245,9 @@ public:
   // "Monocular" keypoints have a negative value.
   std::vector<float> mvuRight;
   std::vector<float> mvDepth;
+
+  // Hybrid front-end evidence. ORB-only frames keep the zero defaults.
+  StereoDepthRefinementStats mStereoDepthRefinementStats;
 
   // Bag of Words Vector structures.
   DBoW3::BowVector mBowVec;

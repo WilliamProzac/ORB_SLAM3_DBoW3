@@ -492,3 +492,67 @@
 - Evidence and visualization:
   `xfeat_rdk_x5/artifacts/feature_count_sweep/frame561_analysis/analysis.json`
   and `topk600_vs_512_pnp.png` in the same directory.
+
+### 2026-08-06 — F25 temporary stereo gate 25 board replay
+
+- Built a separate RDK X5 diagnostic library that changes only the pure-stereo
+  local-map acceptance gate from 30 to 25. It records pose-step and reprojection
+  statistics only near the gate or on a large pose step; inertial gates and the
+  production board deployment remain unchanged.
+- Replayed both S316 bags at 1.0x with live-camera/SLAM CPU isolation and unique
+  topic prefixes. `09-59-04` completed as one 135-KF/2822-MP map with no lost
+  frame. Its critical frame 523 had exactly 25 map inliers, a 0.063 m/1.61 deg
+  step, and 1.26/2.37 px reprojection mean/P90, so this run supplies positive
+  evidence for the lower gate.
+- `09-56-06` lost tracking for 30 callbacks and created a second map. The first
+  failure was only 9 reference-keyframe BoW matches at frame 432, after frame
+  431 had 50 local-map inliers. No 25-29 gate decision occurred before the
+  failure, while the earlier threshold-30 run passed the same bag. This is a
+  separate reference-KF/map-state nondeterminism and is not fixed by the gate.
+- Sparse logging added only 0.56 ms mean callback time on `09-59-04` and 0.77
+  ms on `09-56-06` relative to the CPU-isolated threshold-30 runs. F25 is
+  `passing` as a diagnostic experiment, but 25 is not promoted as a production
+  default without repeated alternating trials.
+- Evidence is in `/tmp/orb_slam3_095606_*gate25_sparse*` and
+  `/tmp/orb_slam3_095904_*gate25_sparse*`; Atlas saves remain on the board as
+  `ORB_SLAM3_Map_1786001728.921163.osa` and
+  `ORB_SLAM3_Map_1786001967.955328.osa`.
+
+### 2026-08-10 — F22 Hybrid XFeat stereo-depth integration
+
+- Added a generic `StereoDepthProvider` seam to the pinhole stereo `Frame`
+  path. The F22 provider runs the frozen 600-point XFeat* backbone and M384
+  Fine Matcher, associates refined disparities to existing ORB keypoints, and
+  accepts them only after a 9x9 patch-NCC check. It can add missing ORB depth;
+  replacement requires a 0.05 NCC margin, and it never deletes ORB depth.
+- ORB remains authoritative for temporal tracking, MapPoint descriptors, BoW,
+  relocalization and loop closing. `Feature.Type` explicitly selects `ORB` or
+  `Hybrid`; unsupported values fail at startup. Per-frame Hybrid counters,
+  latency and Tcw pose were added to the ROS CSV evidence.
+- Restored the RDK pure-stereo local-map gate from the temporary F25 value 25
+  to the production value 30. The Cortex-A55 cross-build passed at `-j1`
+  after a four-job OOM and produced node/library SHA-256 values
+  `5a507a46...1eaf9b` and `56987b52...7766f9`. They were staged independently
+  at `/userdata/orb_slam/f22_hybrid_20260810`.
+- Replayed the three 2026-08-06 lawn bags at 0.5x on isolated topic prefixes.
+  The unindexed `09-50-14` original was preserved; only
+  `/tmp/f22_2026-08-06-09-50-14.bag` was reindexed. ORB/Hybrid callbacks were
+  `994/994`, `803/810`, and `704/713`; comparisons use the 992/802/702 common
+  timestamps.
+- Every common frame retained the identical ORB keypoint count and Hybrid had
+  zero valid-depth regression. Mean added depth was `18.39/17.12/16.13`, and
+  mean tracked-inlier delta was `+18.79/+13.88/+17.82`. ORB/Hybrid loss frames
+  were `0/0`, `34/34`, and `34/0`; map creation counts were `1/1`, `2/2`, and
+  `2/1`. The third ORB run had a 2.94 m/95.25 deg map-reset discontinuity while
+  Hybrid stayed within 0.10 m/3.14 deg maximum consecutive pose steps.
+- Conditional near-gate reprojection mean/P90 means were
+  `1.24/2.30` versus `1.45/2.76` px on the first ORB/Hybrid pair,
+  `1.32/2.45` versus `1.27/2.40` px on the second, and `1.35/2.53` versus
+  `1.24/2.34` px on the third. No runtime error marker occurred.
+- Hybrid costs about 53.3 ms per frame and raises mean callback time from
+  `100.72-107.11 ms` to `155.92-162.41 ms`. F22 therefore passes its tracking
+  and observation gates at controlled playback, but cannot meet the S316
+  11 Hz period while also computing the full ORB stereo frontend. F23 must
+  remove duplicate extraction rather than promote this Hybrid mode unchanged.
+- Evidence: `xfeat_rdk_x5/artifacts/f22_hybrid_ab/summary.json` and the six
+  paired CSV/log files in the same directory.

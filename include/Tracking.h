@@ -41,6 +41,7 @@
 #include "GeometricCamera.h"
 
 #include <mutex>
+#include <memory>
 #include <unordered_set>
 using namespace std;
 
@@ -85,6 +86,7 @@ public:
   void SetLocalMapper(LocalMapping *pLocalMapper);
   void SetLoopClosing(LoopClosing *pLoopClosing);
   void SetViewer(Viewer *pViewer);
+  void SetStereoDepthProvider(std::shared_ptr<StereoDepthProvider> provider);
   void SetReferenceKeyFrame(KeyFrame *pKF);
   void SetStepByStep(bool bSet);
   bool GetStepByStep();
@@ -292,6 +294,9 @@ protected:
   // ORB
   ORBextractor *mpORBextractorLeft, *mpORBextractorRight;
   ORBextractor *mpIniORBextractor;
+
+  // Installed before the first stereo frame when Hybrid mode is selected.
+  std::shared_ptr<StereoDepthProvider> mpStereoDepthProvider;
 
   // BoW
   ORBVocabulary *mpORBVocabulary;

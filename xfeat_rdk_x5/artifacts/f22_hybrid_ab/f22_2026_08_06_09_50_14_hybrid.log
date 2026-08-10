@@ -1,0 +1,326 @@
+
+ORB-SLAM3 Copyright (C) 2017-2020 Carlos Campos, Richard Elvira, Juan J. Gómez, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+ORB-SLAM2 Copyright (C) 2014-2016 Raúl Mur-Artal, José M.M. Montiel and Juan D. Tardós, University of Zaragoza.
+This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions. See LICENSE.txt.
+
+Input sensor was set to: Stereo
+Loading settings from /userdata/orb_slam/f22_hybrid_20260810/S316_Hybrid.yaml
+	-Loaded camera 1
+	-Loaded camera 2
+	-Loaded image info
+	-Loaded ORB settings
+Camera.newHeight optional parameter does not exist...
+Camera.newWidth optional parameter does not exist...
+	-Loaded viewer settings
+	-Loaded Atlas settings
+	-Loaded misc parameters
+----------------------------------
+SLAM settings: 
+	-Camera 1 parameters (Pinhole): [ 293.226 293.226 312.983 274.323 ]
+	-Camera 2 parameters (Pinhole: [ 293.226 293.226 312.983 274.323 ]
+	-Original image size: [ 640 , 544 ]
+	-Current image size: [ 640 , 544 ]
+	-Sequence FPS: 11
+	-Stereo baseline: 0.0600875
+	-Stereo depth threshold : 40
+	-Features per image: 600
+	-ORB scale factor: 1.2
+	-ORB number of scales: 5
+	-Initial FAST threshold: 20
+	-Min FAST threshold: 7
+
+
+Loading ORB Vocabulary. This could take a while...
+Viewer.imageViewScale optional parameter does not exist...
+System.LoadAtlasFromFile optional parameter does not exist...
+System.SaveAtlasToFile optional parameter does not exist...
+System.thFarPoints optional parameter does not exist...
+Vocabulary loaded!
+
+Initialization of Atlas from scratch 
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+Seq. Name: 
+There are 1 cameras in the atlas
+Camera 0 is pinhole
+[BPU_PLAT]BPU Platform Version(1.3.6)! soc info(x5)
+[HBRT] set log level as 0. version = 3.15.54.0
+[DNN] Runtime version = 1.23.10_(3.15.54 HBRT)
+[A][DNN][packed_model.cpp:247][Model](2026-08-10,14:53:59.877.773) [HorizonRT] The model builder version = 1.23.8
+[W][DNN]packed_model.cpp:114][Model](2026-08-10,14:53:59.977.603) File /userdata/xfeat_rdk_x5/xfeat_backbone_544x640_bayes_e.bin has loaded, Discard the latest. 
+[A][DNN][packed_model.cpp:247][Model](2026-08-10,14:53:59.997.323) [HorizonRT] The model builder version = 1.23.8
+[0m[INFO] [1786344840.006474590]: Feature.Type=Hybrid: XFeat Fine depth refinement enabled[0m
+[0m[INFO] [1786344840.035264650]: ORB-SLAM3 Mapping Service initialized at /slam/mapping[0m
+[0m[INFO] [1786344840.035332317]: Available commands:[0m
+[0m[INFO] [1786344840.035376776]:   data = 0: Switch to localization mode (stop mapping)[0m
+[0m[INFO] [1786344840.035419609]:   data = 1: Switch to mapping mode (resume mapping)[0m
+[0m[INFO] [1786344840.035463359]:   data = 2: Save map and switch to localization mode[0m
+First KF:0; Map init KF:0
+New Map created with 194 points
+KeyFrame 0: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 1: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 2: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 3: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=609)
+KeyFrame 4: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 5: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 6: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 7: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 8: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 9: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 10: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 11: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 12: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 13: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 14: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 15: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 16: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 17: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 18: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 19: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 20: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 21: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 22: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 23: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 24: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 25: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=157 stamp_s=1785981028.987889 state_before=2 map_id=0 assoc_before_pose=64 outliers_before_pose=0 assoc_after_pose=64 outliers_after_pose=9 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.012575 pose_step_deg=1.694540 reproj_inlier_n=55 reproj_px_mean=1.149075 reproj_px_p90=2.050109 reproj_chi2_mean=0.954270 reproj_chi2_p90=1.971034 reproj_outlier_n=9 reproj_outlier_px_mean=4.606344 behind_camera=0
+KeyFrame 26: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=601)
+KeyFrame 27: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 28: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 29: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 30: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 31: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 32: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 33: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 34: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 35: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 36: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 37: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 38: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 39: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 40: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 41: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 42: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 43: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=610)
+KeyFrame 44: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 45: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=609)
+KeyFrame 46: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 47: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 48: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 49: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 50: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 51: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 52: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 53: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 54: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 55: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 56: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 57: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 58: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 59: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 60: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=601)
+KeyFrame 61: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 62: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 63: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 64: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 65: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 66: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 67: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 68: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 69: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 70: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 71: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 72: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=280 stamp_s=1785981040.057938 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=4 map_inliers=49 stereo_gate=30 gate_decision=accept pose_step_m=0.024727 pose_step_deg=2.929433 reproj_inlier_n=49 reproj_px_mean=1.347091 reproj_px_p90=2.249988 reproj_chi2_mean=1.455037 reproj_chi2_p90=3.659362 reproj_outlier_n=4 reproj_outlier_px_mean=5.090641 behind_camera=0
+KeyFrame 73: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+[STEREO_GATE_DIAG] frame_id=285 stamp_s=1785981040.507941 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=5 map_inliers=57 stereo_gate=30 gate_decision=accept pose_step_m=0.034289 pose_step_deg=1.001472 reproj_inlier_n=57 reproj_px_mean=1.313542 reproj_px_p90=2.421188 reproj_chi2_mean=1.377027 reproj_chi2_p90=3.497973 reproj_outlier_n=5 reproj_outlier_px_mean=6.566012 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=287 stamp_s=1785981040.687940 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=8 map_inliers=48 stereo_gate=30 gate_decision=accept pose_step_m=0.040292 pose_step_deg=0.412463 reproj_inlier_n=48 reproj_px_mean=1.141047 reproj_px_p90=2.025836 reproj_chi2_mean=1.119103 reproj_chi2_p90=2.832354 reproj_outlier_n=8 reproj_outlier_px_mean=4.733037 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=288 stamp_s=1785981040.777943 state_before=2 map_id=0 assoc_before_pose=57 outliers_before_pose=0 assoc_after_pose=57 outliers_after_pose=7 map_inliers=50 stereo_gate=30 gate_decision=accept pose_step_m=0.037556 pose_step_deg=1.199223 reproj_inlier_n=50 reproj_px_mean=1.356403 reproj_px_p90=2.243537 reproj_chi2_mean=1.341646 reproj_chi2_p90=2.752697 reproj_outlier_n=7 reproj_outlier_px_mean=6.249985 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=289 stamp_s=1785981040.867944 state_before=2 map_id=0 assoc_before_pose=54 outliers_before_pose=0 assoc_after_pose=54 outliers_after_pose=8 map_inliers=46 stereo_gate=30 gate_decision=accept pose_step_m=0.025826 pose_step_deg=1.299837 reproj_inlier_n=46 reproj_px_mean=1.192629 reproj_px_p90=2.418675 reproj_chi2_mean=1.258137 reproj_chi2_p90=3.349406 reproj_outlier_n=8 reproj_outlier_px_mean=5.035423 behind_camera=0
+KeyFrame 74: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 75: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 76: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 77: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+[STEREO_GATE_DIAG] frame_id=304 stamp_s=1785981042.217952 state_before=2 map_id=0 assoc_before_pose=67 outliers_before_pose=0 assoc_after_pose=67 outliers_after_pose=7 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.035116 pose_step_deg=1.301374 reproj_inlier_n=60 reproj_px_mean=1.182725 reproj_px_p90=2.120311 reproj_chi2_mean=1.137583 reproj_chi2_p90=2.585436 reproj_outlier_n=7 reproj_outlier_px_mean=6.104102 behind_camera=0
+KeyFrame 78: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 79: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 80: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 81: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 82: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 83: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=340 stamp_s=1785981045.457962 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=4 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.030380 pose_step_deg=0.367997 reproj_inlier_n=58 reproj_px_mean=1.459028 reproj_px_p90=3.086322 reproj_chi2_mean=1.414791 reproj_chi2_p90=3.580185 reproj_outlier_n=4 reproj_outlier_px_mean=4.832488 behind_camera=0
+KeyFrame 84: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+[STEREO_GATE_DIAG] frame_id=348 stamp_s=1785981046.177968 state_before=2 map_id=0 assoc_before_pose=66 outliers_before_pose=0 assoc_after_pose=66 outliers_after_pose=7 map_inliers=59 stereo_gate=30 gate_decision=accept pose_step_m=0.042729 pose_step_deg=0.498141 reproj_inlier_n=59 reproj_px_mean=1.536790 reproj_px_p90=2.822709 reproj_chi2_mean=1.646357 reproj_chi2_p90=3.793165 reproj_outlier_n=7 reproj_outlier_px_mean=6.322360 behind_camera=0
+KeyFrame 85: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+[STEREO_GATE_DIAG] frame_id=353 stamp_s=1785981046.627969 state_before=2 map_id=0 assoc_before_pose=68 outliers_before_pose=0 assoc_after_pose=68 outliers_after_pose=10 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.037599 pose_step_deg=0.833652 reproj_inlier_n=58 reproj_px_mean=1.120317 reproj_px_p90=1.944711 reproj_chi2_mean=1.026629 reproj_chi2_p90=2.201817 reproj_outlier_n=10 reproj_outlier_px_mean=5.686558 behind_camera=0
+KeyFrame 86: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 87: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 88: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 89: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=609)
+[STEREO_GATE_DIAG] frame_id=384 stamp_s=1785981049.417979 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=12 map_inliers=53 stereo_gate=30 gate_decision=accept pose_step_m=0.011025 pose_step_deg=1.523892 reproj_inlier_n=53 reproj_px_mean=1.294718 reproj_px_p90=2.775500 reproj_chi2_mean=1.287558 reproj_chi2_p90=3.487860 reproj_outlier_n=12 reproj_outlier_px_mean=7.296776 behind_camera=0
+KeyFrame 90: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=609)
+[STEREO_GATE_DIAG] frame_id=390 stamp_s=1785981049.957982 state_before=2 map_id=0 assoc_before_pose=64 outliers_before_pose=0 assoc_after_pose=64 outliers_after_pose=8 map_inliers=56 stereo_gate=30 gate_decision=accept pose_step_m=0.013581 pose_step_deg=1.978591 reproj_inlier_n=56 reproj_px_mean=1.085973 reproj_px_p90=2.181698 reproj_chi2_mean=0.789238 reproj_chi2_p90=2.436298 reproj_outlier_n=8 reproj_outlier_px_mean=6.110099 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=391 stamp_s=1785981050.047982 state_before=2 map_id=0 assoc_before_pose=60 outliers_before_pose=0 assoc_after_pose=60 outliers_after_pose=13 map_inliers=47 stereo_gate=30 gate_decision=accept pose_step_m=0.014895 pose_step_deg=1.954019 reproj_inlier_n=47 reproj_px_mean=1.322142 reproj_px_p90=2.651879 reproj_chi2_mean=1.503559 reproj_chi2_p90=4.403267 reproj_outlier_n=13 reproj_outlier_px_mean=5.654648 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=392 stamp_s=1785981050.137984 state_before=2 map_id=0 assoc_before_pose=48 outliers_before_pose=0 assoc_after_pose=48 outliers_after_pose=7 map_inliers=41 stereo_gate=30 gate_decision=accept pose_step_m=0.010738 pose_step_deg=1.412850 reproj_inlier_n=41 reproj_px_mean=1.257720 reproj_px_p90=2.171561 reproj_chi2_mean=1.068594 reproj_chi2_p90=2.367752 reproj_outlier_n=7 reproj_outlier_px_mean=5.243497 behind_camera=0
+KeyFrame 91: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=395 stamp_s=1785981050.407985 state_before=2 map_id=0 assoc_before_pose=61 outliers_before_pose=0 assoc_after_pose=61 outliers_after_pose=6 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.014989 pose_step_deg=1.946556 reproj_inlier_n=55 reproj_px_mean=1.136907 reproj_px_p90=2.369381 reproj_chi2_mean=0.954757 reproj_chi2_p90=2.392963 reproj_outlier_n=6 reproj_outlier_px_mean=6.984612 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=396 stamp_s=1785981050.497987 state_before=2 map_id=0 assoc_before_pose=59 outliers_before_pose=0 assoc_after_pose=59 outliers_after_pose=5 map_inliers=54 stereo_gate=30 gate_decision=accept pose_step_m=0.013576 pose_step_deg=1.831857 reproj_inlier_n=54 reproj_px_mean=1.109151 reproj_px_p90=1.976602 reproj_chi2_mean=1.155513 reproj_chi2_p90=3.126562 reproj_outlier_n=5 reproj_outlier_px_mean=7.123121 behind_camera=0
+KeyFrame 92: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 93: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 94: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 95: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=414 stamp_s=1785981052.117990 state_before=2 map_id=0 assoc_before_pose=65 outliers_before_pose=0 assoc_after_pose=65 outliers_after_pose=5 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.010498 pose_step_deg=1.319180 reproj_inlier_n=60 reproj_px_mean=1.134931 reproj_px_p90=2.319668 reproj_chi2_mean=1.084882 reproj_chi2_p90=2.527708 reproj_outlier_n=5 reproj_outlier_px_mean=4.502801 behind_camera=0
+KeyFrame 96: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=418 stamp_s=1785981052.477992 state_before=2 map_id=0 assoc_before_pose=60 outliers_before_pose=0 assoc_after_pose=60 outliers_after_pose=2 map_inliers=58 stereo_gate=30 gate_decision=accept pose_step_m=0.034066 pose_step_deg=2.600650 reproj_inlier_n=58 reproj_px_mean=1.192091 reproj_px_p90=2.485776 reproj_chi2_mean=1.348875 reproj_chi2_p90=3.400953 reproj_outlier_n=2 reproj_outlier_px_mean=4.902151 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=419 stamp_s=1785981052.567991 state_before=2 map_id=0 assoc_before_pose=44 outliers_before_pose=0 assoc_after_pose=44 outliers_after_pose=4 map_inliers=40 stereo_gate=30 gate_decision=accept pose_step_m=0.037746 pose_step_deg=2.711682 reproj_inlier_n=40 reproj_px_mean=1.230962 reproj_px_p90=2.161106 reproj_chi2_mean=1.186466 reproj_chi2_p90=2.745539 reproj_outlier_n=4 reproj_outlier_px_mean=5.027849 behind_camera=0
+KeyFrame 97: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=422 stamp_s=1785981052.837994 state_before=2 map_id=0 assoc_before_pose=53 outliers_before_pose=0 assoc_after_pose=53 outliers_after_pose=5 map_inliers=48 stereo_gate=30 gate_decision=accept pose_step_m=0.038375 pose_step_deg=1.515666 reproj_inlier_n=48 reproj_px_mean=1.381843 reproj_px_p90=2.423636 reproj_chi2_mean=1.204726 reproj_chi2_p90=2.228781 reproj_outlier_n=5 reproj_outlier_px_mean=5.457141 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=423 stamp_s=1785981052.927995 state_before=2 map_id=0 assoc_before_pose=44 outliers_before_pose=0 assoc_after_pose=44 outliers_after_pose=1 map_inliers=43 stereo_gate=30 gate_decision=accept pose_step_m=0.032202 pose_step_deg=0.823680 reproj_inlier_n=43 reproj_px_mean=1.156757 reproj_px_p90=2.661161 reproj_chi2_mean=1.071408 reproj_chi2_p90=3.608465 reproj_outlier_n=1 reproj_outlier_px_mean=5.362359 behind_camera=0
+[STEREO_GATE_DIAG] frame_id=424 stamp_s=1785981053.017995 state_before=2 map_id=0 assoc_before_pose=40 outliers_before_pose=0 assoc_after_pose=40 outliers_after_pose=0 map_inliers=40 stereo_gate=30 gate_decision=accept pose_step_m=0.029103 pose_step_deg=0.229816 reproj_inlier_n=40 reproj_px_mean=1.178503 reproj_px_p90=2.441225 reproj_chi2_mean=1.156517 reproj_chi2_p90=2.723670 reproj_outlier_n=0 reproj_outlier_px_mean=nan behind_camera=0
+KeyFrame 98: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 99: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 100: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 101: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 102: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 103: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 104: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 105: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 106: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 107: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 108: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 109: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 110: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 111: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 112: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=608)
+KeyFrame 113: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 114: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 115: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 116: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 117: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 118: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 119: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 120: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 121: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 122: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 123: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 124: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 125: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 126: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 127: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 128: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 129: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 130: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=602)
+KeyFrame 131: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+KeyFrame 132: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=603)
+KeyFrame 133: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 134: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 135: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=607)
+KeyFrame 136: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=606)
+[STEREO_GATE_DIAG] frame_id=601 stamp_s=1785981069.128070 state_before=2 map_id=0 assoc_before_pose=62 outliers_before_pose=0 assoc_after_pose=62 outliers_after_pose=7 map_inliers=55 stereo_gate=30 gate_decision=accept pose_step_m=0.029309 pose_step_deg=1.952088 reproj_inlier_n=55 reproj_px_mean=1.155046 reproj_px_p90=2.404988 reproj_chi2_mean=1.378363 reproj_chi2_p90=4.669273 reproj_outlier_n=7 reproj_outlier_px_mean=4.061857 behind_camera=0
+KeyFrame 137: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 138: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 139: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 140: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=604)
+KeyFrame 141: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 142: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 143: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 144: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 145: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=663 stamp_s=1785981074.708093 state_before=2 map_id=0 assoc_before_pose=67 outliers_before_pose=0 assoc_after_pose=67 outliers_after_pose=7 map_inliers=60 stereo_gate=30 gate_decision=accept pose_step_m=0.030949 pose_step_deg=0.921810 reproj_inlier_n=60 reproj_px_mean=1.122104 reproj_px_p90=1.901272 reproj_chi2_mean=0.864763 reproj_chi2_p90=2.237736 reproj_outlier_n=7 reproj_outlier_px_mean=5.689485 behind_camera=0
+KeyFrame 146: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[STEREO_GATE_DIAG] frame_id=670 stamp_s=1785981075.338096 state_before=2 map_id=0 assoc_before_pose=56 outliers_before_pose=0 assoc_after_pose=56 outliers_after_pose=4 map_inliers=52 stereo_gate=30 gate_decision=accept pose_step_m=0.040374 pose_step_deg=1.616642 reproj_inlier_n=52 reproj_px_mean=1.354768 reproj_px_p90=2.183041 reproj_chi2_mean=1.085878 reproj_chi2_p90=2.532179 reproj_outlier_n=4 reproj_outlier_px_mean=3.516604 behind_camera=0
+KeyFrame 147: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 148: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 149: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 150: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 151: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 152: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 153: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 154: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 155: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 156: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 157: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 158: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+KeyFrame 159: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=605)
+[33m[WARN] [1786344986.609577904]: Shutdown request received.[0m
+[33m[WARN] [1786344986.609722946]: Reason given for shutdown: [user request][0m
+Shutdown
+Shutdown: Waiting for threads...
+Shutdown: All threads finished.
+Shutdown: Waiting 100ms... done.
+Shutdown: Checking save file... no save file configured.
+
+ TIME STATS in ms (mean$\pm$std)
+OpenCV version: 4.5.4
+---------------------------
+Tracking
+
+ORB Extraction: 79.899$\pm$8.5278
+Stereo Matching: 61.896$\pm$1.4743
+Pose Prediction: 3.9317$\pm$1.3627
+LM Track: 7.4595$\pm$1.6733
+New KF decision: 0.33085$\pm$0.40209
+Total Tracking: nan$\pm$nan
+
+
+
+Local Mapping
+
+KF Insertion: 11.72$\pm$1.3959
+MP Culling: 0.44153$\pm$0.062374
+MP Creation: 26.474$\pm$7.1479
+LBA: 190.06$\pm$107.83
+KF Culling: 5.1137$\pm$3.1203
+Total Local Mapping: 231.44$\pm$116.85
+---------------------------
+
+LBA complexity (mean$\pm$std)
+LBA Edges: 2484.1$\pm$1124.5
+LBA KF optimized: 14.696$\pm$7.8946
+LBA KF fixed: 29.753$\pm$17.267
+LBA MP: nan$\pm$nan
+
+LBA executions: 158
+LBA aborts: 26
+---------------------------
+
+Map complexity
+KFs in map: 160
+MPs in map: 3440
+---------------------------
+
+Place Recognition (mean$\pm$std)
+Database Query: 0.60363$\pm$0.29526
+SE3 estimation: 4.1058$\pm$4.3694
+Total Place Recognition: 4.7704$\pm$4.7004
+
+
+Loop Closing (mean$\pm$std)
+Loop Fusion: nan$\pm$nan
+Essential Graph: nan$\pm$nan
+Total Loop Closing: nan$\pm$nan
+
+Num exec: 0
+Number of KFs: nan$\pm$nan
+
+Map Merging (mean$\pm$std)
+Merge Maps: nan$\pm$nan
+Welding BA: nan$\pm$nan
+Optimization Ess.: nan$\pm$nan
+Total Map Merging: nan$\pm$nan
+
+Num exec: 0
+Number of KFs: nan$\pm$nan
+Number of MPs: nan$\pm$nan
+
+Full GBA (mean$\pm$std)
+GBA: nan$\pm$nan
+Map Update: nan$\pm$nan
+Total Full GBA: nan$\pm$nan
+
+Num exec: 0
+Num abort: 0
+Number of KFs: nan$\pm$nan
+Number of MPs: nan$\pm$nan
