@@ -30,6 +30,7 @@
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/string.hpp>
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <iomanip>
 #include <openssl/md5.h>
@@ -38,6 +39,15 @@
 using namespace std;
 
 namespace ORB_SLAM3 {
+
+namespace {
+double MillisecondsSince(const std::chrono::steady_clock::time_point &start) {
+  return std::chrono::duration_cast<
+             std::chrono::duration<double, std::milli>>(
+             std::chrono::steady_clock::now() - start)
+      .count();
+}
+} // namespace
 
 Verbose::eLevel Verbose::th = Verbose::VERBOSITY_NORMAL;
 
@@ -382,14 +392,23 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap,
                                const double &timestamp,
                                const vector<IMU::Point> &vImuMeas,
                                string filename) {
+  RgbdTimingRecord timing;
+  timing.image_timestamp = timestamp;
+  const std::chrono::steady_clock::time_point system_start =
+      std::chrono::steady_clock::now();
   if (mSensor != RGBD && mSensor != IMU_RGBD) {
     cerr << "ERROR: you called TrackRGBD but input sensor was not set to RGBD."
          << endl;
     exit(-1);
   }
 
+  const std::chrono::steady_clock::time_point clone_start =
+      std::chrono::steady_clock::now();
   cv::Mat imToFeed = im.clone();
   cv::Mat imDepthToFeed = depthmap.clone();
+  timing.system_clone_ms = MillisecondsSince(clone_start);
+  const std::chrono::steady_clock::time_point resize_start =
+      std::chrono::steady_clock::now();
   if (settings_ && settings_->needToResize()) {
     cv::Mat resizedIm;
     cv::resize(im, resizedIm, settings_->newImSize());
@@ -397,10 +416,16 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap,
 
     cv::resize(depthmap, imDepthToFeed, settings_->newImSize());
   }
+  timing.system_resize_ms = MillisecondsSince(resize_start);
 
   // Check mode change
   {
+    const std::chrono::steady_clock::time_point mutex_start =
+        std::chrono::steady_clock::now();
     unique_lock<mutex> lock(mMutexMode);
+    timing.mode_mutex_wait_ms = MillisecondsSince(mutex_start);
+    const std::chrono::steady_clock::time_point work_start =
+        std::chrono::steady_clock::now();
     if (mbActivateLocalizationMode) {
       mpLocalMapper->RequestStop();
 
@@ -417,11 +442,17 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap,
       mpLocalMapper->Release();
       mbDeactivateLocalizationMode = false;
     }
+    timing.mode_change_ms = MillisecondsSince(work_start);
   }
 
   // Check reset
   {
+    const std::chrono::steady_clock::time_point mutex_start =
+        std::chrono::steady_clock::now();
     unique_lock<mutex> lock(mMutexReset);
+    timing.reset_mutex_wait_ms = MillisecondsSince(mutex_start);
+    const std::chrono::steady_clock::time_point work_start =
+        std::chrono::steady_clock::now();
     if (mbReset) {
       mpTracker->Reset();
       mbReset = false;
@@ -430,19 +461,33 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap,
       mpTracker->ResetActiveMap();
       mbResetActiveMap = false;
     }
+    timing.reset_ms = MillisecondsSince(work_start);
   }
 
   if (mSensor == System::IMU_RGBD)
     for (size_t i_imu = 0; i_imu < vImuMeas.size(); i_imu++)
       mpTracker->GrabImuData(vImuMeas[i_imu]);
 
-  Sophus::SE3f Tcw =
-      mpTracker->GrabImageRGBD(imToFeed, imDepthToFeed, timestamp, filename);
+  const std::chrono::steady_clock::time_point grab_start =
+      std::chrono::steady_clock::now();
+  Sophus::SE3f Tcw = mpTracker->GrabImageRGBD(
+      imToFeed, imDepthToFeed, timestamp, filename, &timing);
+  timing.grab_rgbd_ms = MillisecondsSince(grab_start);
 
-  unique_lock<mutex> lock2(mMutexState);
-  mTrackingState = mpTracker->mState;
-  mTrackedMapPoints = mpTracker->mCurrentFrame.mvpMapPoints;
-  mTrackedKeyPointsUn = mpTracker->mCurrentFrame.mvKeysUn;
+  const std::chrono::steady_clock::time_point state_start =
+      std::chrono::steady_clock::now();
+  {
+    unique_lock<mutex> lock2(mMutexState);
+    mTrackingState = mpTracker->mState;
+    mTrackedMapPoints = mpTracker->mCurrentFrame.mvpMapPoints;
+    mTrackedKeyPointsUn = mpTracker->mCurrentFrame.mvKeysUn;
+  }
+  timing.state_copy_ms = MillisecondsSince(state_start);
+  timing.system_total_ms = MillisecondsSince(system_start);
+  {
+    unique_lock<mutex> timing_lock(mMutexRgbdTiming);
+    mLastRgbdTiming = timing;
+  }
   return Tcw;
 }
 
@@ -1568,6 +1613,16 @@ FrontendStats System::GetLastFrontendStats(double track_total_ms) const {
   }
 #endif
   return stats;
+}
+
+RgbdTimingRecord System::GetLastRgbdTiming() const {
+  unique_lock<mutex> lock(mMutexRgbdTiming);
+  return mLastRgbdTiming;
+}
+
+bool System::WriteDetailedTimingCsv(const string &output_directory) const {
+  return mpLocalMapper &&
+         mpLocalMapper->WriteDetailedTimingCsv(output_directory);
 }
 
 #ifdef REGISTER_TIMES

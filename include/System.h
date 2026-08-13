@@ -38,6 +38,7 @@
 #include "LoopClosing.h"
 #include "MapDrawer.h"
 #include "ORBVocabulary.h"
+#include "RgbdTiming.h"
 #include "Settings.h"
 #include "Tracking.h"
 #include "Viewer.h"
@@ -235,6 +236,8 @@ public:
   float GetImageScale();
 
   FrontendStats GetLastFrontendStats(double track_total_ms = 0.0) const;
+  RgbdTimingRecord GetLastRgbdTiming() const;
+  bool WriteDetailedTimingCsv(const string &output_directory) const;
 
 #ifdef REGISTER_TIMES
   void InsertRectTime(double &time);
@@ -307,6 +310,9 @@ private:
   std::vector<MapPoint *> mTrackedMapPoints;
   std::vector<cv::KeyPoint> mTrackedKeyPointsUn;
   std::mutex mMutexState;
+
+  RgbdTimingRecord mLastRgbdTiming;
+  mutable std::mutex mMutexRgbdTiming;
 
   //
   string mStrLoadAtlasFromFile;

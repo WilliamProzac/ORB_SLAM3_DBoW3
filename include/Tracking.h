@@ -24,6 +24,7 @@
 
 #include "Atlas.h"
 #include "Frame.h"
+#include "RgbdTiming.h"
 #include "FrameDrawer.h"
 #include "ImuTypes.h"
 #include "KeyFrameDatabase.h"
@@ -77,7 +78,8 @@ public:
                                const cv::Mat &imRectRight,
                                const double &timestamp, string filename);
   Sophus::SE3f GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
-                             const double &timestamp, string filename);
+                             const double &timestamp, string filename,
+                             RgbdTimingRecord *timing = nullptr);
   Sophus::SE3f GrabImageMonocular(const cv::Mat &im, const double &timestamp,
                                   string filename);
 
@@ -391,6 +393,8 @@ protected:
   double mTime_PosePred;
   double mTime_LocalMapTrack;
   double mTime_NewKF_Dec;
+
+  RgbdTimingRecord *mpCurrentRgbdTiming = nullptr;
 
   GeometricCamera *mpCamera, *mpCamera2;
 

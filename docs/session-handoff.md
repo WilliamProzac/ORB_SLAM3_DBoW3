@@ -1,5 +1,31 @@
 # Session Handoff
 
+## 2026-08-13 F26 RGB-D timing debug branch
+
+- Active feature and final state: F26, passing for isolated source and ARM64
+  cross-build. Runtime CSV population remains TODO.
+- Core branch/worktree: `debug/rgbd-track-timing` at
+  `/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_track_timing/core`.
+- ROS companion workspace: parent `rgbd_track_timing/`, also on a local
+  `debug/rgbd-track-timing` branch because the original RDK workspace had an
+  empty `.git` directory.
+- Commands: `git diff --check`; initial four-job Docker cross-build (failed by
+  OOM at `Optimizer.cc`); single-job incremental cross-build (passed).
+- Evidence: aarch64 `ros_rgbd` SHA-256
+  `8a5d230d0756acee8a18a5ddddd5b18597e936da751e628d8e66c76a1c87c09c`;
+  core library SHA-256
+  `31e050f8f53e3d37afa959930434f3545affaf52ea224845aab290f5da61836b`.
+- Touched core files: `include/RgbdTiming.h`, `include/{Frame,Tracking,System,
+  LocalMapping}.h`, `src/{Frame,Tracking,System,LocalMapping}.cc`, and F26
+  docs. Touched ROS files: `src/ros_rgbd.cc`, `launch/s316_rgbd.launch`, the
+  Docker build wrapper and `DEBUG_BRANCH.md`.
+- Unverified assumptions/TODO: board deployment was not performed; neither
+  bag was replayed with this build; confirm both CSV files are populated on a
+  clean shutdown and correlate the known failing bag interval at 1.0x/0.5x.
+- Next step: stage the two ARM64 artifacts separately on the RDK-X5, replay the
+  accepted RGB-D bags, copy back `rgbd_frame_timing.csv` and
+  `local_mapping_timing.csv`, then compare P50/P90/P99 and deadline misses.
+
 ## Summary
 
 - Active feature: F25

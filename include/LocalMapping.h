@@ -27,9 +27,12 @@
 #include "KeyFrameDatabase.h"
 #include "LoopClosing.h"
 #include "Settings.h"
+#include "RgbdTiming.h"
 #include "Tracking.h"
 
 #include <mutex>
+#include <chrono>
+#include <unordered_map>
 using namespace std;
 
 namespace ORB_SLAM3 {
@@ -80,6 +83,7 @@ public:
   bool IsInitializing();
   double GetCurrKFTime();
   KeyFrame *GetCurrKF();
+  bool WriteDetailedTimingCsv(const string &output_directory) const;
 
   std::mutex mMutexImuInit;
 
@@ -167,6 +171,11 @@ protected:
   std::list<MapPoint *> mlpRecentAddedMapPoints;
 
   std::mutex mMutexNewKFs;
+
+  std::unordered_map<KeyFrame *, std::chrono::steady_clock::time_point>
+      mKeyFrameEnqueueTimes;
+  LocalMappingTimingRecord mCurrentTiming;
+  std::vector<LocalMappingTimingRecord> mvDetailedTimings;
 
   bool mbAbortBA;
 

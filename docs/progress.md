@@ -2,22 +2,18 @@
 
 ## Current Active Feature
 
-- Feature ID: F21
-- Current state: active
-- Owner/session: XFeat* semi-dense, fixed-size Fine Matcher, and production
-  ORB-SLAM3 baseline on 2026-08-03
-- Blockers: the first production ORB run and the full hard-grid M384 board
-  replay are complete. Hard balancing fixes nominal grid coverage, but lowers
-  mean NCC-qualified stereo correspondences from 289.42 to 186.03 and reaches
-  only 49.6% of the common-PnP ORB control's mean inliers, including one
-  24-inlier fragile pair. Advancement to F22 is blocked on a softened quota,
-  five alternating production runs, the map-reset statistics fix, and full
-  tracking/trajectory evidence.
+- Feature ID: F26
+- Current state: passing
+- Owner/session: isolated RGB-D `TrackRGBD` and LocalMapping timing build on
+  2026-08-13
+- Blockers: none for source/build completion. Board replay and CSV analysis are
+  TODO and are not claimed by the successful cross-build.
 
 ## Command Log
 
 | Date | Command | Result | Evidence |
 |---|---|---|---|
+| 2026-08-13 | `RDK_BUILD_JOBS=1 RDK_WORKSPACE=.../rgbd_track_timing RDK_CORE_SOURCE=.../rgbd_track_timing/core ./tools/build_rdk_arm64_docker.sh` | passed | Both catkin packages succeeded; aarch64 `ros_rgbd` SHA-256 `8a5d230d...7c09c`, core library `31e050f8...1836b`. |
 | 2026-06-05 | `sed -n '1,240p' docs/features.md`, `sed -n '1,260p' docs/progress.md`, `sed -n '1,260p' docs/session-handoff.md`, `sed -n '1,260p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`, `sed -n '260,620p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`, and `sed -n '620,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc` | passed | reviewed the current pose-correction implementation before narrowing the trigger semantics to big map events only |
 | 2026-06-05 | `./build_ros.sh` | passed | rosbuild rebuilt and linked `Stereo` successfully after restricting gradual pose correction to big map events and fixing the one-shot auto-enable path |
 | 2026-06-06 | `git status --short`, `sed -n '1,220p' README.md`, `sed -n '1,260p' docs/features.md`, `sed -n '1,220p' docs/validation.md`, `nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '300,700p'`, `nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '700,860p'`, `sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml`, and `sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml` | passed | completed the governance-mandated initialization read and isolated the current F13/F14 pose-correction surface before adding the tracking-loss unstable window |

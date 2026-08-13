@@ -27,10 +27,22 @@
 #include "Optimizer.h"
 
 #include <chrono>
+#include <fstream>
+#include <iomanip>
 #include <mutex>
 using namespace std;
 
 namespace ORB_SLAM3 {
+
+namespace {
+double LocalMappingMillisecondsSince(
+    const std::chrono::steady_clock::time_point &start) {
+  return std::chrono::duration_cast<
+             std::chrono::duration<double, std::milli>>(
+             std::chrono::steady_clock::now() - start)
+      .count();
+}
+} // namespace
 
 LocalMapping::LocalMapping(System *pSys, Atlas *pAtlas, const float bMonocular,
                            bool bInertial, const string &_strSeqName)
@@ -54,6 +66,7 @@ LocalMapping::LocalMapping(System *pSys, Atlas *pAtlas, const float bMonocular,
   nLBA_exec = 0;
   nLBA_abort = 0;
 #endif
+  mvDetailedTimings.reserve(4096);
 }
 
 void LocalMapping::SetLoopCloser(LoopClosing *pLoopCloser) {
@@ -277,6 +290,20 @@ void LocalMapping::Run() {
               time_EndLocalMap - time_StartProcessKF)
               .count();
       vdLMTotal_ms.push_back(timeLocalMap);
+
+      mCurrentTiming.process_keyframe_ms = timeProcessKF;
+      mCurrentTiming.map_point_culling_ms = timeMPCulling;
+      mCurrentTiming.map_point_creation_ms = timeMPCreation;
+      mCurrentTiming.local_ba_ms = timeLBA_ms;
+      mCurrentTiming.keyframe_culling_ms = timeKFCulling_ms;
+      mCurrentTiming.total_ms = timeLocalMap;
+      mCurrentTiming.lba_executed = b_doneLBA ? 1 : 0;
+      mCurrentTiming.lba_aborted = (b_doneLBA && mbAbortBA) ? 1 : 0;
+      mCurrentTiming.lba_edges = num_edges_BA;
+      mCurrentTiming.lba_optimized_keyframes = num_OptKF_BA;
+      mCurrentTiming.lba_fixed_keyframes = num_FixedKF_BA;
+      mCurrentTiming.lba_map_points = num_MPs_BA;
+      mvDetailedTimings.push_back(mCurrentTiming);
 #endif
     } else if (Stop() && !mbBadImu) {
       // Safe area to stop
@@ -304,6 +331,7 @@ void LocalMapping::Run() {
 void LocalMapping::InsertKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexNewKFs);
   mlNewKeyFrames.push_back(pKF);
+  mKeyFrameEnqueueTimes[pKF] = std::chrono::steady_clock::now();
   mbAbortBA = true;
 }
 
@@ -313,14 +341,29 @@ bool LocalMapping::CheckNewKeyFrames() {
 }
 
 void LocalMapping::ProcessNewKeyFrame() {
+  mCurrentTiming = LocalMappingTimingRecord();
   {
     unique_lock<mutex> lock(mMutexNewKFs);
+    mCurrentTiming.queue_depth_before_pop =
+        static_cast<int>(mlNewKeyFrames.size());
     mpCurrentKeyFrame = mlNewKeyFrames.front();
     mlNewKeyFrames.pop_front();
+    const auto enqueue_it = mKeyFrameEnqueueTimes.find(mpCurrentKeyFrame);
+    if (enqueue_it != mKeyFrameEnqueueTimes.end()) {
+      mCurrentTiming.queue_wait_ms =
+          LocalMappingMillisecondsSince(enqueue_it->second);
+      mKeyFrameEnqueueTimes.erase(enqueue_it);
+    }
   }
 
+  mCurrentTiming.keyframe_id = mpCurrentKeyFrame->mnId;
+  mCurrentTiming.image_timestamp = mpCurrentKeyFrame->mTimeStamp;
+
   // Compute Bags of Words structures
+  const std::chrono::steady_clock::time_point bow_start =
+      std::chrono::steady_clock::now();
   mpCurrentKeyFrame->ComputeBoW();
+  mCurrentTiming.bow_ms = LocalMappingMillisecondsSince(bow_start);
 
   // Associate MapPoints to the new keyframe and update normal and descriptor
   const vector<MapPoint *> vpMapPointMatches =
@@ -865,6 +908,7 @@ void LocalMapping::Release() {
        lit != lend; lit++)
     delete *lit;
   mlNewKeyFrames.clear();
+  mKeyFrameEnqueueTimes.clear();
 
   cout << "Local Mapping RELEASE" << endl;
 }
@@ -1086,6 +1130,7 @@ void LocalMapping::ResetIfRequested() {
 
       cout << "LM: Reseting Atlas in Local Mapping..." << endl;
       mlNewKeyFrames.clear();
+      mKeyFrameEnqueueTimes.clear();
       mlpRecentAddedMapPoints.clear();
       mbResetRequested = false;
       mbResetRequestedActiveMap = false;
@@ -1105,6 +1150,7 @@ void LocalMapping::ResetIfRequested() {
       executed_reset = true;
       cout << "LM: Reseting current map in Local Mapping..." << endl;
       mlNewKeyFrames.clear();
+      mKeyFrameEnqueueTimes.clear();
       mlpRecentAddedMapPoints.clear();
 
       // Inertial parameters
@@ -1383,6 +1429,7 @@ void LocalMapping::InitializeIMU(float priorG, float priorA, bool bFIBA) {
     delete *lit;
   }
   mlNewKeyFrames.clear();
+  mKeyFrameEnqueueTimes.clear();
 
   mpTracker->mState = Tracking::OK;
   bInitializing = false;
@@ -1451,6 +1498,7 @@ void LocalMapping::ScaleRefinement() {
     delete *lit;
   }
   mlNewKeyFrames.clear();
+  mKeyFrameEnqueueTimes.clear();
 
   double t_inertial_only =
       std::chrono::duration_cast<std::chrono::duration<double>>(t1 - t0)
@@ -1473,5 +1521,36 @@ double LocalMapping::GetCurrKFTime() {
 }
 
 KeyFrame *LocalMapping::GetCurrKF() { return mpCurrentKeyFrame; }
+
+bool LocalMapping::WriteDetailedTimingCsv(
+    const string &output_directory) const {
+  const string separator =
+      (!output_directory.empty() && output_directory.back() == '/') ? "" : "/";
+  const string filename = output_directory + separator +
+                          "local_mapping_timing.csv";
+  ofstream output(filename.c_str());
+  if (!output.is_open())
+    return false;
+
+  output << "keyframe_id,image_timestamp,queue_depth_before_pop,queue_wait_ms,"
+            "bow_ms,process_keyframe_ms,map_point_culling_ms,"
+            "map_point_creation_ms,local_ba_ms,keyframe_culling_ms,total_ms,"
+            "lba_executed,lba_aborted,lba_edges,lba_optimized_keyframes,"
+            "lba_fixed_keyframes,lba_map_points\n";
+  output << fixed << setprecision(6);
+  for (const LocalMappingTimingRecord &record : mvDetailedTimings) {
+    output << record.keyframe_id << ',' << record.image_timestamp << ','
+           << record.queue_depth_before_pop << ',' << record.queue_wait_ms
+           << ',' << record.bow_ms << ',' << record.process_keyframe_ms << ','
+           << record.map_point_culling_ms << ','
+           << record.map_point_creation_ms << ',' << record.local_ba_ms << ','
+           << record.keyframe_culling_ms << ',' << record.total_ms << ','
+           << record.lba_executed << ',' << record.lba_aborted << ','
+           << record.lba_edges << ',' << record.lba_optimized_keyframes << ','
+           << record.lba_fixed_keyframes << ',' << record.lba_map_points
+           << '\n';
+  }
+  return output.good();
+}
 
 } // namespace ORB_SLAM3

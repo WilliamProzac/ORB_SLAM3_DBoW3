@@ -326,8 +326,9 @@ public:
   int mnDataset;
 
 #ifdef REGISTER_TIMES
-  double mTimeORB_Ext;
-  double mTimeStereoMatch;
+  double mTimeORB_Ext = 0.0;
+  double mTimeStereoMatch = 0.0;
+  double mTimeRgbdDepthAssoc = 0.0;
 #endif
 
 private:

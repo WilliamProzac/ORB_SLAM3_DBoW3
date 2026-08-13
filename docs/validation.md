@@ -184,9 +184,21 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
 - No top-level unit-test entrypoint was found.
 - No repository CI workflow file was found.
 - No checked-in automated replay wrapper was found for the modified ROS flow.
+- This branch snapshot did not contain `docs/repo-map.md`; repository routing
+  therefore followed `AGENTS.md` and direct source/build-script inspection.
 - `run_stereo_inertial.sh` couples runtime launch with `pidstat` and bag
   recording, so runtime validation currently depends on those external tools
   being available.
+
+## F26 RGB-D detailed timing validation (2026-08-13)
+
+- The four-job build was killed at `Optimizer.cc` by the 9 GiB container
+  memory limit. The single-job incremental retry completed successfully.
+- Static checks cover `git diff --check`, both CSV schemas, and shutdown-only
+  file writes. The output binaries are aarch64.
+- TODO: deploy this isolated build and replay both accepted RGB-D bags at 1.0x
+  and 0.5x. Verify CSV row counts, frame IDs, state transitions, sequence gaps
+  and LocalMapping keyframe correlation before prioritizing optimizations.
 
 ## XFeat / RDK X5 Validation
 

@@ -51,6 +51,7 @@ Frame::Frame(): mpcpi(NULL), mpImuPreintegrated(NULL), mpPrevFrame(NULL), mpImuP
 #ifdef REGISTER_TIMES
     mTimeStereoMatch = 0;
     mTimeORB_Ext = 0;
+    mTimeRgbdDepthAssoc = 0;
 #endif
 }
 
@@ -103,6 +104,7 @@ Frame::Frame(const Frame &frame)
 #ifdef REGISTER_TIMES
     mTimeStereoMatch = frame.mTimeStereoMatch;
     mTimeORB_Ext = frame.mTimeORB_Ext;
+    mTimeRgbdDepthAssoc = frame.mTimeRgbdDepthAssoc;
 #endif
 }
 
@@ -278,7 +280,17 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
 
     UndistortKeyPoints();
 
+#ifdef REGISTER_TIMES
+    const std::chrono::steady_clock::time_point time_StartDepthAssoc =
+        std::chrono::steady_clock::now();
+#endif
     ComputeStereoFromRGBD(imDepth);
+#ifdef REGISTER_TIMES
+    mTimeRgbdDepthAssoc =
+        std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
+            std::chrono::steady_clock::now() - time_StartDepthAssoc)
+            .count();
+#endif
 
     mvpMapPoints = vector<MapPoint*>(N,static_cast<MapPoint*>(NULL));
 

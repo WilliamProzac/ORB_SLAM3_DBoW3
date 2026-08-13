@@ -40,6 +40,32 @@ using namespace std;
 
 namespace ORB_SLAM3 {
 
+namespace {
+class ScopedTimingAccumulator {
+public:
+  explicit ScopedTimingAccumulator(double *destination)
+      : destination_(destination), start_(std::chrono::steady_clock::now()) {}
+  ~ScopedTimingAccumulator() {
+    if (destination_) {
+      *destination_ +=
+          std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
+              std::chrono::steady_clock::now() - start_)
+              .count();
+    }
+  }
+private:
+  double *destination_;
+  std::chrono::steady_clock::time_point start_;
+};
+
+double ElapsedMilliseconds(const std::chrono::steady_clock::time_point &start) {
+  return std::chrono::duration_cast<
+             std::chrono::duration<double, std::milli>>(
+             std::chrono::steady_clock::now() - start)
+      .count();
+}
+} // namespace
+
 Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
                    MapDrawer *pMapDrawer, Atlas *pAtlas,
                    KeyFrameDatabase *pKFDB, const string &strSettingPath,
@@ -1470,7 +1496,17 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
 }
 
 Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
-                                     const double &timestamp, string filename) {
+                                     const double &timestamp, string filename,
+                                     RgbdTimingRecord *timing) {
+  mpCurrentRgbdTiming = timing;
+  if (timing) {
+    timing->image_timestamp = timestamp;
+    timing->state_before = static_cast<int>(mState);
+    timing->local_mapping_queue_before = mpLocalMapper->KeyframesInQueue();
+  }
+
+  const std::chrono::steady_clock::time_point gray_start =
+      std::chrono::steady_clock::now();
   mImGray = imRGB;
   cv::Mat imDepth = imD;
 
@@ -1485,10 +1521,18 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
     else
       cvtColor(mImGray, mImGray, cv::COLOR_BGRA2GRAY);
   }
+  if (timing)
+    timing->gray_convert_ms = ElapsedMilliseconds(gray_start);
 
+  const std::chrono::steady_clock::time_point depth_start =
+      std::chrono::steady_clock::now();
   if ((fabs(mDepthMapFactor - 1.0f) > 1e-5) || imDepth.type() != CV_32F)
     imDepth.convertTo(imDepth, CV_32F, mDepthMapFactor);
+  if (timing)
+    timing->depth_convert_ms = ElapsedMilliseconds(depth_start);
 
+  const std::chrono::steady_clock::time_point frame_start =
+      std::chrono::steady_clock::now();
   if (mSensor == System::RGBD)
     mCurrentFrame =
         Frame(mImGray, imDepth, timestamp, mpORBextractorLeft, mpORBVocabulary,
@@ -1497,6 +1541,18 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
     mCurrentFrame =
         Frame(mImGray, imDepth, timestamp, mpORBextractorLeft, mpORBVocabulary,
               mK, mDistCoef, mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
+  if (timing) {
+    timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
+    timing->frame_id = mCurrentFrame.mnId;
+    timing->keypoints = mCurrentFrame.N;
+    timing->valid_depths = static_cast<int>(std::count_if(
+        mCurrentFrame.mvDepth.begin(), mCurrentFrame.mvDepth.end(),
+        [](float depth) { return depth > 0.0f; }));
+#ifdef REGISTER_TIMES
+    timing->orb_extract_ms = mCurrentFrame.mTimeORB_Ext;
+    timing->rgbd_depth_assoc_ms = mCurrentFrame.mTimeRgbdDepthAssoc;
+#endif
+  }
 
   mCurrentFrame.mNameFile = filename;
   mCurrentFrame.mnDataset = mnNumDataset;
@@ -1505,7 +1561,16 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   vdORBExtract_ms.push_back(mCurrentFrame.mTimeORB_Ext);
 #endif
 
+  const std::chrono::steady_clock::time_point track_start =
+      std::chrono::steady_clock::now();
   Track();
+  if (timing) {
+    timing->track_internal_ms = ElapsedMilliseconds(track_start);
+    timing->state_after = static_cast<int>(mState);
+    timing->tracked_inliers = mnMatchesInliers;
+    timing->local_mapping_queue_after = mpLocalMapper->KeyframesInQueue();
+  }
+  mpCurrentRgbdTiming = nullptr;
 
   return mCurrentFrame.GetPose();
 }
@@ -1895,7 +1960,12 @@ void Tracking::Track() {
   mbCreatedMap = false;
 
   // Get Map Mutex -> Map cannot be changed
+  const std::chrono::steady_clock::time_point map_lock_start =
+      std::chrono::steady_clock::now();
   unique_lock<mutex> lock(pCurrentMap->mMutexMapUpdate);
+  if (mpCurrentRgbdTiming)
+    mpCurrentRgbdTiming->map_mutex_wait_ms =
+        ElapsedMilliseconds(map_lock_start);
 
   mbMapUpdated = false;
 
@@ -2342,6 +2412,8 @@ void Tracking::Track() {
 }
 
 void Tracking::StereoInitialization() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->initialization_ms : nullptr);
   // In pure localization mode, skip initialization entirely so that the
   // Relocalization() path is triggered on the very first frame.  Without
   // this guard the system forcibly assigns the first frame as the world
@@ -2745,6 +2817,8 @@ void Tracking::CheckReplacedInLastFrame() {
 }
 
 bool Tracking::TrackReferenceKeyFrame() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->reference_kf_ms : nullptr);
   const bool uses_float_descriptors =
       mCurrentFrame.mDescriptors.type() == CV_32FC1;
   if (!uses_float_descriptors) {
@@ -2918,6 +2992,8 @@ void Tracking::UpdateLastFrame() {
 }
 
 bool Tracking::TrackWithMotionModel() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->motion_model_ms : nullptr);
   const bool uses_float_descriptors =
       mCurrentFrame.mDescriptors.type() == CV_32FC1 &&
       mLastFrame.mDescriptors.type() == CV_32FC1;
@@ -3095,6 +3171,8 @@ bool Tracking::TrackWithMotionModel() {
 }
 
 bool Tracking::TrackLocalMap() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_map_ms : nullptr);
 
   // We have an estimation of the camera pose and some map points tracked in the
   // frame. We retrieve the local map and try to find matches to points in the
@@ -3240,6 +3318,8 @@ bool Tracking::TrackLocalMap() {
 }
 
 bool Tracking::NeedNewKeyFrame() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->need_new_kf_ms : nullptr);
   if ((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
        mSensor == System::IMU_RGBD) &&
       !mpAtlas->GetCurrentMap()->isImuInitialized()) {
@@ -3400,6 +3480,8 @@ bool Tracking::NeedNewKeyFrame() {
 }
 
 void Tracking::CreateNewKeyFrame() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->create_new_kf_ms : nullptr);
   if (mpLocalMapper->IsInitializing() && !mpAtlas->isImuInitialized())
     return;
 
@@ -3515,6 +3597,8 @@ void Tracking::CreateNewKeyFrame() {
   }
 
   mpLocalMapper->InsertKeyFrame(pKF);
+  if (mpCurrentRgbdTiming)
+    mpCurrentRgbdTiming->inserted_keyframe = 1;
 
   mpLocalMapper->SetNotStop(false);
 
@@ -3778,6 +3862,8 @@ void Tracking::UpdateLocalKeyFrames() {
 }
 
 bool Tracking::Relocalization() {
+  ScopedTimingAccumulator detailed_timing(
+      mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->relocalization_ms : nullptr);
   Verbose::PrintMess("Starting relocalization", Verbose::VERBOSITY_NORMAL);
   SetLatestRelocalizationStatus(RelocalizationRunning);
   // Compute Bag of Words Vector
