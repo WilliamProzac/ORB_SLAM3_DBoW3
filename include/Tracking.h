@@ -87,6 +87,7 @@ public:
   void SetLoopClosing(LoopClosing *pLoopClosing);
   void SetViewer(Viewer *pViewer);
   void SetStereoDepthProvider(std::shared_ptr<StereoDepthProvider> provider);
+  void SetStereoFeatureProvider(std::shared_ptr<StereoFeatureProvider> provider);
   void SetReferenceKeyFrame(KeyFrame *pKF);
   void SetStepByStep(bool bSet);
   bool GetStepByStep();
@@ -297,6 +298,9 @@ protected:
 
   // Installed before the first stereo frame when Hybrid mode is selected.
   std::shared_ptr<StereoDepthProvider> mpStereoDepthProvider;
+
+  // Installed before the first stereo frame when XFeat mode is selected.
+  std::shared_ptr<StereoFeatureProvider> mpStereoFeatureProvider;
 
   // BoW
   ORBVocabulary *mpORBVocabulary;

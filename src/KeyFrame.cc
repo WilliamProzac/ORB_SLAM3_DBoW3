@@ -114,6 +114,11 @@ KeyFrame::KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB)
 }
 
 void KeyFrame::ComputeBoW() {
+  // F23 intentionally keeps float descriptors out of the ORB vocabulary.
+  // XFeat retrieval, relocalization and loop closing are introduced in F24.
+  if (mDescriptors.type() == CV_32FC1) {
+    return;
+  }
   if (mBowVec.empty() || mFeatVec.empty()) {
     cout << "KeyFrame " << mnId
          << ": Computing BoW (BowVec empty=" << mBowVec.empty()

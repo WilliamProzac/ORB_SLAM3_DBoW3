@@ -46,6 +46,7 @@ using namespace std;
 namespace ORB_SLAM3 {
 
 class StereoDepthProvider;
+class StereoFeatureProvider;
 
 struct FrontendStats {
   bool valid = false;
@@ -208,8 +209,10 @@ public:
   // http://www.cvlibs.net/datasets/kitti/eval_odometry.php
   void SaveTrajectoryKITTI(const string &filename);
 
-  // TODO: Save/Load functions
-  // SaveMap(const string &filename);
+  // Save the current Atlas under a caller-provided base filename. This wrapper
+  // is used by the RDK ROS mapping service.
+  bool SaveMap(const string &filename);
+  // TODO: Load function
   // LoadMap(const string &filename);
 
   // Information from most recent processed frame
@@ -220,6 +223,7 @@ public:
   bool IsOnlyTrackingEnabled();
   bool TryGetLatestRelocalizationStatus(int &status_code);
   void SetStereoDepthProvider(std::shared_ptr<StereoDepthProvider> provider);
+  void SetStereoFeatureProvider(std::shared_ptr<StereoFeatureProvider> provider);
 
   // For debugging
   double GetTimeFromIMUInit();

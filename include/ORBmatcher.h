@@ -79,6 +79,11 @@ public:
   // a certain level) Used in Relocalisation and Loop Detection
   int SearchByBoW(KeyFrame *pKF, Frame &F,
                   std::vector<MapPoint *> &vpMapPointMatches);
+  // Vocabulary-free reference-keyframe matching used by F23 float
+  // descriptors. Relocalization and loop retrieval remain F24 work.
+  int SearchByDescriptor(KeyFrame *pKF, Frame &F,
+                         std::vector<MapPoint *> &vpMapPointMatches,
+                         std::vector<ReferenceFeatureMatch> *coarseMatches = nullptr);
   int SearchByBoW(KeyFrame *pKF1, KeyFrame *pKF2,
                   std::vector<MapPoint *> &vpMatches12);
 

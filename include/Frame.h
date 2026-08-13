@@ -32,6 +32,7 @@
 #include "ImuTypes.h"
 #include "ORBVocabulary.h"
 #include "StereoDepthProvider.h"
+#include "StereoFeatureProvider.h"
 
 #include "Converter.h"
 #include "Settings.h"
@@ -67,7 +68,8 @@ public:
         const float &thDepth, GeometricCamera *pCamera,
         StereoDepthProvider *stereoDepthProvider = nullptr,
         Frame *pPrevF = static_cast<Frame *>(NULL),
-        const IMU::Calib &ImuCalib = IMU::Calib());
+        const IMU::Calib &ImuCalib = IMU::Calib(),
+        StereoFeatureProvider *stereoFeatureProvider = nullptr);
 
   // Constructor for RGB-D cameras.
   Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeStamp,
@@ -131,6 +133,11 @@ public:
                                    const float &r, const int minLevel = -1,
                                    const int maxLevel = -1,
                                    const bool bRight = false) const;
+
+  // Apply subpixel temporal refinements and rebuild the search grid. For
+  // pinhole stereo, shift mvuRight by the same x delta to preserve disparity.
+  void ApplyKeypointRefinements(
+      const std::vector<std::pair<int, cv::Point2f>> &refinements);
 
   // Search a match for each keypoint in the left image to a keypoint in the
   // right image. If there is a match, depth is computed and the right
@@ -248,6 +255,10 @@ public:
 
   // Hybrid front-end evidence. ORB-only frames keep the zero defaults.
   StereoDepthRefinementStats mStereoDepthRefinementStats;
+
+  // Full front-end replacement evidence. ORB and Hybrid frames keep the zero
+  // defaults; XFeat frames carry extraction and Fine stereo timing here.
+  StereoFeatureExtractionStats mStereoFeatureExtractionStats;
 
   // Bag of Words Vector structures.
   DBoW3::BowVector mBowVec;

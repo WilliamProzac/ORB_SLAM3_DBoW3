@@ -20,8 +20,10 @@
  */
 
 #include "ORBmatcher.h"
+#include "FeatureDescriptor.h"
 
 #include <limits.h>
+#include <limits>
 
 #include <opencv2/core/core.hpp>
 
@@ -47,6 +49,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
   int nmatches = 0, left = 0, right = 0;
 
   const bool bFactor = th != 1.0;
+  const bool uses_float_descriptors = F.mDescriptors.type() == CV_32FC1;
 
   for (size_t iMP = 0; iMP < vpMapPoints.size(); iMP++) {
     MapPoint *pMP = vpMapPoints[iMP];
@@ -71,7 +74,10 @@ int ORBmatcher::SearchByProjection(Frame &F,
       const vector<size_t> vIndices =
           F.GetFeaturesInArea(pMP->mTrackProjX, pMP->mTrackProjY,
                               r * F.mvScaleFactors[nPredictedLevel],
-                              nPredictedLevel - 1, nPredictedLevel);
+                              uses_float_descriptors ? -1
+                                                     : nPredictedLevel - 1,
+                              uses_float_descriptors ? -1
+                                                     : nPredictedLevel);
 
       if (!vIndices.empty()) {
         const cv::Mat MPdescriptor = pMP->GetDescriptor();
@@ -151,7 +157,12 @@ int ORBmatcher::SearchByProjection(Frame &F,
         const vector<size_t> vIndices =
             F.GetFeaturesInArea(pMP->mTrackProjXR, pMP->mTrackProjYR,
                                 r * F.mvScaleFactors[nPredictedLevel],
-                                nPredictedLevel - 1, nPredictedLevel, true);
+                                uses_float_descriptors
+                                    ? -1
+                                    : nPredictedLevel - 1,
+                                uses_float_descriptors ? -1
+                                                       : nPredictedLevel,
+                                true);
 
         if (vIndices.empty())
           continue;
@@ -406,6 +417,81 @@ int ORBmatcher::SearchByBoW(KeyFrame *pKF, Frame &F,
   return nmatches;
 }
 
+int ORBmatcher::SearchByDescriptor(
+    KeyFrame *pKF, Frame &F, vector<MapPoint *> &vpMapPointMatches,
+    vector<ReferenceFeatureMatch> *coarseMatches) {
+  const vector<MapPoint *> vpMapPointsKF = pKF->GetMapPointMatches();
+  vpMapPointMatches.assign(F.N, static_cast<MapPoint *>(NULL));
+  if (pKF->mDescriptors.empty() || F.mDescriptors.empty() ||
+      pKF->mDescriptors.type() != F.mDescriptors.type() ||
+      pKF->mDescriptors.cols != F.mDescriptors.cols) {
+    return 0;
+  }
+
+  vector<int> matched_kf_index(F.N, -1);
+  vector<int> matched_distance(F.N, std::numeric_limits<int>::max());
+  int matches = 0;
+  const int keyframe_count = std::min(
+      static_cast<int>(vpMapPointsKF.size()), pKF->mDescriptors.rows);
+  for (int keyframe_index = 0; keyframe_index < keyframe_count;
+       ++keyframe_index) {
+    MapPoint *map_point = vpMapPointsKF[keyframe_index];
+    if (!map_point || map_point->isBad()) {
+      continue;
+    }
+
+    const cv::Mat reference = pKF->mDescriptors.row(keyframe_index);
+    int best_index = -1;
+    int best_distance = std::numeric_limits<int>::max();
+    int second_distance = std::numeric_limits<int>::max();
+    for (int frame_index = 0; frame_index < F.mDescriptors.rows;
+         ++frame_index) {
+      const int distance =
+          DescriptorDistance(reference, F.mDescriptors.row(frame_index));
+      if (distance < best_distance) {
+        second_distance = best_distance;
+        best_distance = distance;
+        best_index = frame_index;
+      } else if (distance < second_distance) {
+        second_distance = distance;
+      }
+    }
+
+    if (best_index < 0 || best_distance > TH_LOW ||
+        best_distance >= mfNNratio * static_cast<float>(second_distance)) {
+      continue;
+    }
+    if (best_distance >= matched_distance[best_index]) {
+      continue;
+    }
+
+    if (matched_kf_index[best_index] >= 0) {
+      --matches;
+    }
+    matched_kf_index[best_index] = keyframe_index;
+    matched_distance[best_index] = best_distance;
+    vpMapPointMatches[best_index] = map_point;
+    ++matches;
+  }
+  if (coarseMatches) {
+    coarseMatches->clear();
+    coarseMatches->reserve(static_cast<size_t>(matches));
+    for (int frame_index = 0; frame_index < F.N; ++frame_index) {
+      if (matched_kf_index[frame_index] < 0) {
+        continue;
+      }
+      ReferenceFeatureMatch match;
+      match.reference_index = matched_kf_index[frame_index];
+      match.current_index = frame_index;
+      match.descriptor_distance = matched_distance[frame_index];
+      match.refined_current_point = F.mvKeysUn[frame_index].pt;
+      match.confidence = 1.0F;
+      coarseMatches->push_back(match);
+    }
+  }
+  return matches;
+}
+
 int ORBmatcher::SearchByProjection(KeyFrame *pKF, Sophus::Sim3f &Scw,
                                    const vector<MapPoint *> &vpPoints,
                                    vector<MapPoint *> &vpMatched, int th,
@@ -491,7 +577,8 @@ int ORBmatcher::SearchByProjection(KeyFrame *pKF, Sophus::Sim3f &Scw,
 
       const int &kpLevel = pKF->mvKeysUn[idx].octave;
 
-      if (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel)
+      if (pKF->mDescriptors.type() != CV_32FC1 &&
+          (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel))
         continue;
 
       const cv::Mat &dKF = pKF->mDescriptors.row(idx);
@@ -605,7 +692,8 @@ int ORBmatcher::SearchByProjection(KeyFrame *pKF, Sophus::Sim3<float> &Scw,
 
       const int &kpLevel = pKF->mvKeysUn[idx].octave;
 
-      if (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel)
+      if (pKF->mDescriptors.type() != CV_32FC1 &&
+          (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel))
         continue;
 
       const cv::Mat &dKF = pKF->mDescriptors.row(idx);
@@ -1204,7 +1292,8 @@ int ORBmatcher::Fuse(KeyFrame *pKF, const vector<MapPoint *> &vpMapPoints,
 
       const int &kpLevel = kp.octave;
 
-      if (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel)
+      if (pKF->mDescriptors.type() != CV_32FC1 &&
+          (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel))
         continue;
 
       if (pKF->mvuRight[idx] >= 0) {
@@ -1349,7 +1438,8 @@ int ORBmatcher::Fuse(KeyFrame *pKF, Sophus::Sim3f &Scw,
       const size_t idx = *vit;
       const int &kpLevel = pKF->mvKeysUn[idx].octave;
 
-      if (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel)
+      if (pKF->mDescriptors.type() != CV_32FC1 &&
+          (kpLevel < nPredictedLevel - 1 || kpLevel > nPredictedLevel))
         continue;
 
       const cv::Mat &dKF = pKF->mDescriptors.row(idx);
@@ -1958,22 +2048,8 @@ void ORBmatcher::ComputeThreeMaxima(vector<int> *histo, const int L, int &ind1,
   }
 }
 
-// Bit set count operation from
-// http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
 int ORBmatcher::DescriptorDistance(const cv::Mat &a, const cv::Mat &b) {
-  const int *pa = a.ptr<int32_t>();
-  const int *pb = b.ptr<int32_t>();
-
-  int dist = 0;
-
-  for (int i = 0; i < 8; i++, pa++, pb++) {
-    unsigned int v = *pa ^ *pb;
-    v = v - ((v >> 1) & 0x55555555);
-    v = (v & 0x33333333) + ((v >> 2) & 0x33333333);
-    dist += (((v + (v >> 4)) & 0xF0F0F0F) * 0x1010101) >> 24;
-  }
-
-  return dist;
+  return FeatureDescriptorDistance(a, b);
 }
 
 } // namespace ORB_SLAM3

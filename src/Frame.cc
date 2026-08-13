@@ -27,7 +27,10 @@
 #include "GeometricCamera.h"
 #include "StereoDepthProvider.h"
 
+#include <cmath>
+#include <stdexcept>
 #include <thread>
+#include <utility>
 #include <include/CameraModels/Pinhole.h>
 #include <include/CameraModels/KannalaBrandt8.h>
 
@@ -64,6 +67,7 @@ Frame::Frame(const Frame &frame)
      mvDepth(frame.mvDepth), mBowVec(frame.mBowVec), mFeatVec(frame.mFeatVec),
      mDescriptors(frame.mDescriptors.clone()), mDescriptorsRight(frame.mDescriptorsRight.clone()),
      mStereoDepthRefinementStats(frame.mStereoDepthRefinementStats),
+     mStereoFeatureExtractionStats(frame.mStereoFeatureExtractionStats),
      mvpMapPoints(frame.mvpMapPoints), mvbOutlier(frame.mvbOutlier), mImuCalib(frame.mImuCalib), mnCloseMPs(frame.mnCloseMPs),
      mpImuPreintegrated(frame.mpImuPreintegrated), mpImuPreintegratedFrame(frame.mpImuPreintegratedFrame), mImuBias(frame.mImuBias),
      mnId(frame.mnId), mpReferenceKF(frame.mpReferenceKF), mnScaleLevels(frame.mnScaleLevels),
@@ -103,7 +107,7 @@ Frame::Frame(const Frame &frame)
 }
 
 
-Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor* extractorLeft, ORBextractor* extractorRight, ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, GeometricCamera* pCamera, StereoDepthProvider* stereoDepthProvider, Frame* pPrevF, const IMU::Calib &ImuCalib)
+Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor* extractorLeft, ORBextractor* extractorRight, ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, GeometricCamera* pCamera, StereoDepthProvider* stereoDepthProvider, Frame* pPrevF, const IMU::Calib &ImuCalib, StereoFeatureProvider* stereoFeatureProvider)
     :mpcpi(NULL), mpORBvocabulary(voc),mpORBextractorLeft(extractorLeft),mpORBextractorRight(extractorRight), mTimeStamp(timeStamp), mK(K.clone()), mK_(Converter::toMatrix3f(K)), mDistCoef(distCoef.clone()), mbf(bf), mThDepth(thDepth),
      mImuCalib(ImuCalib), mpImuPreintegrated(NULL), mpPrevFrame(pPrevF),mpImuPreintegratedFrame(NULL), mpReferenceKF(static_cast<KeyFrame*>(NULL)), mbIsSet(false), mbImuPreintegrated(false),
      mpCamera(pCamera) ,mpCamera2(nullptr), mbHasPose(false), mbHasVelocity(false)
@@ -120,14 +124,41 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
     mvLevelSigma2 = mpORBextractorLeft->GetScaleSigmaSquares();
     mvInvLevelSigma2 = mpORBextractorLeft->GetInverseScaleSigmaSquares();
 
-    // ORB extraction
+    // Feature extraction
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_StartExtORB = std::chrono::steady_clock::now();
 #endif
-    thread threadLeft(&Frame::ExtractORB,this,0,imLeft,0,0);
-    thread threadRight(&Frame::ExtractORB,this,1,imRight,0,0);
-    threadLeft.join();
-    threadRight.join();
+    if(stereoFeatureProvider)
+    {
+        StereoFeatureOutput output = stereoFeatureProvider->Extract(imLeft, imRight, mbf);
+        if(output.left_keypoints.empty() || output.left_descriptors.empty())
+            throw std::runtime_error("stereo feature provider returned no left features");
+        if(output.left_descriptors.type() != CV_32FC1 ||
+           output.left_descriptors.rows != static_cast<int>(output.left_keypoints.size()))
+            throw std::runtime_error("F23 requires one CV_32F descriptor per left keypoint");
+        if(output.right_descriptors.type() != CV_32FC1 ||
+           output.right_descriptors.rows != static_cast<int>(output.right_keypoints.size()) ||
+           output.right_descriptors.cols != output.left_descriptors.cols)
+            throw std::runtime_error("F23 right descriptors do not match the left descriptor layout");
+        if(output.right_coordinates.size() != output.left_keypoints.size() ||
+           output.depths.size() != output.left_keypoints.size())
+            throw std::runtime_error("F23 stereo arrays do not match the left keypoint count");
+
+        mvKeys = std::move(output.left_keypoints);
+        mvKeysRight = std::move(output.right_keypoints);
+        mDescriptors = std::move(output.left_descriptors);
+        mDescriptorsRight = std::move(output.right_descriptors);
+        mvuRight = std::move(output.right_coordinates);
+        mvDepth = std::move(output.depths);
+        mStereoFeatureExtractionStats = output.stats;
+    }
+    else
+    {
+        thread threadLeft(&Frame::ExtractORB,this,0,imLeft,0,0);
+        thread threadRight(&Frame::ExtractORB,this,1,imRight,0,0);
+        threadLeft.join();
+        threadRight.join();
+    }
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_EndExtORB = std::chrono::steady_clock::now();
 
@@ -143,11 +174,14 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_StartStereoMatches = std::chrono::steady_clock::now();
 #endif
-    ComputeStereoMatches();
-    if(stereoDepthProvider)
+    if(!stereoFeatureProvider)
     {
-        mStereoDepthRefinementStats = stereoDepthProvider->Refine(
-            imLeft, imRight, mvKeys, mbf, mvuRight, mvDepth);
+        ComputeStereoMatches();
+        if(stereoDepthProvider)
+        {
+            mStereoDepthRefinementStats = stereoDepthProvider->Refine(
+                imLeft, imRight, mvKeys, mbf, mvuRight, mvDepth);
+        }
     }
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_EndStereoMatches = std::chrono::steady_clock::now();
@@ -401,8 +435,10 @@ void Frame::AssignFeaturesToGrid()
 
     for(unsigned int i=0; i<FRAME_GRID_COLS;i++)
         for (unsigned int j=0; j<FRAME_GRID_ROWS;j++){
+            mGrid[i][j].clear();
             mGrid[i][j].reserve(nReserve);
             if(Nleft != -1){
+                mGridRight[i][j].clear();
                 mGridRight[i][j].reserve(nReserve);
             }
         }
@@ -423,6 +459,34 @@ void Frame::AssignFeaturesToGrid()
                 mGridRight[nGridPosX][nGridPosY].push_back(i - Nleft);
         }
     }
+}
+
+void Frame::ApplyKeypointRefinements(
+    const std::vector<std::pair<int, cv::Point2f>> &refinements)
+{
+    for(const std::pair<int, cv::Point2f> &refinement : refinements)
+    {
+        const int index = refinement.first;
+        if(index < 0 || index >= N)
+            throw std::out_of_range("refined keypoint index is outside the frame");
+        const cv::Point2f previous = mvKeysUn[index].pt;
+        const cv::Point2f refined = refinement.second;
+        if(!std::isfinite(refined.x) || !std::isfinite(refined.y))
+            throw std::invalid_argument("refined keypoint is not finite");
+
+        mvKeysUn[index].pt = refined;
+        if(Nleft == -1 || index < Nleft)
+        {
+            mvKeys[index].pt = refined;
+            if(index < static_cast<int>(mvuRight.size()) && mvuRight[index] >= 0.0F)
+                mvuRight[index] += refined.x - previous.x;
+        }
+        else
+        {
+            mvKeysRight[index - Nleft].pt = refined;
+        }
+    }
+    AssignFeaturesToGrid();
 }
 
 void Frame::ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1)
@@ -747,6 +811,10 @@ bool Frame::PosInGrid(const cv::KeyPoint &kp, int &posX, int &posY)
 
 void Frame::ComputeBoW()
 {
+    // F23 intentionally has no XFeat vocabulary. Float descriptors use the
+    // direct reference-keyframe matcher; retrieval/relocalization is F24.
+    if(mDescriptors.type() == CV_32FC1)
+        return;
     if(mBowVec.empty())
     {
         vector<cv::Mat> vCurrentDesc = Converter::toDescriptorVector(mDescriptors);

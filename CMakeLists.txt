@@ -70,6 +70,7 @@ src/Map.cc
 src/MapDrawer.cc
 src/Optimizer.cc
 src/Frame.cc
+src/FeatureDescriptor.cc
 src/KeyFrameDatabase.cc
 src/Sim3Solver.cc
 src/Viewer.cc
@@ -100,6 +101,7 @@ include/Map.h
 include/MapDrawer.h
 include/Optimizer.h
 include/Frame.h
+include/FeatureDescriptor.h
 include/KeyFrameDatabase.h
 include/Sim3Solver.h
 include/Viewer.h
@@ -115,6 +117,7 @@ include/TwoViewReconstruction.h
 include/SerializationUtils.h
 include/Config.h
 include/Settings.h
+include/StereoFeatureProvider.h
 include/Timestamp.h
 include/Random.h)
 

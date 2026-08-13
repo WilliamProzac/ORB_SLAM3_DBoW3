@@ -1459,6 +1459,11 @@ void System::SetStereoDepthProvider(
   mpTracker->SetStereoDepthProvider(std::move(provider));
 }
 
+void System::SetStereoFeatureProvider(
+    std::shared_ptr<StereoFeatureProvider> provider) {
+  mpTracker->SetStereoFeatureProvider(std::move(provider));
+}
+
 double System::GetTimeFromIMUInit() {
   double aux = mpLocalMapper->GetCurrKFTime() - mpLocalMapper->mFirstTs;
   if ((aux > 0.) && mpAtlas->isImuInitialized())
@@ -1549,9 +1554,18 @@ FrontendStats System::GetLastFrontendStats(double track_total_ms) const {
   stats.hybrid_replaced = hybrid.replaced;
   stats.hybrid_rejected = hybrid.rejected;
   stats.hybrid_ms = hybrid.total_ms;
+  if (frame.mDescriptors.type() == CV_32FC1) {
+    stats.feature_extract_ms =
+        frame.mStereoFeatureExtractionStats.feature_extract_ms;
+    stats.stereo_match_ms =
+        frame.mStereoFeatureExtractionStats.stereo_match_ms +
+        frame.mStereoFeatureExtractionStats.fine_match_ms;
+  }
 #ifdef REGISTER_TIMES
-  stats.feature_extract_ms = frame.mTimeORB_Ext;
-  stats.stereo_match_ms = frame.mTimeStereoMatch;
+  else {
+    stats.feature_extract_ms = frame.mTimeORB_Ext;
+    stats.stereo_match_ms = frame.mTimeStereoMatch;
+  }
 #endif
   return stats;
 }
@@ -1725,6 +1739,17 @@ string System::CalculateCheckSum(string filename, int type) {
   }
 
   return checksum;
+}
+
+bool System::SaveMap(const string &filename) {
+  mStrSaveAtlasToFile = filename;
+  if (mStrSaveAtlasToFile.empty()) {
+    return false;
+  }
+  Verbose::PrintMess("Atlas saving to file " + mStrSaveAtlasToFile,
+                     Verbose::VERBOSITY_NORMAL);
+  SaveAtlas(FileType::BINARY_FILE);
+  return true;
 }
 
 } // namespace ORB_SLAM3

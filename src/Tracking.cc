@@ -1369,6 +1369,11 @@ void Tracking::SetStereoDepthProvider(
   mpStereoDepthProvider = std::move(provider);
 }
 
+void Tracking::SetStereoFeatureProvider(
+    std::shared_ptr<StereoFeatureProvider> provider) {
+  mpStereoFeatureProvider = std::move(provider);
+}
+
 void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
   if (pKF && !pKF->isBad()) {
     mpReferenceKF = pKF;
@@ -1429,7 +1434,8 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
     mCurrentFrame = Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
                           mbf, mThDepth, mpCamera,
-                          mpStereoDepthProvider.get());
+                          mpStereoDepthProvider.get(), nullptr, IMU::Calib(),
+                          mpStereoFeatureProvider.get());
   else if (mSensor == System::STEREO && mpCamera2)
     mCurrentFrame = Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
@@ -1439,7 +1445,7 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft,
                           mpORBextractorRight, mpORBVocabulary, mK, mDistCoef,
                           mbf, mThDepth, mpCamera,
                           mpStereoDepthProvider.get(), &mLastFrame,
-                          *mpImuCalib);
+                          *mpImuCalib, mpStereoFeatureProvider.get());
   else if (mSensor == System::IMU_STEREO && mpCamera2)
     mCurrentFrame =
         Frame(mImGray, imGrayRight, timestamp, mpORBextractorLeft,
@@ -1987,8 +1993,17 @@ void Tracking::Track() {
               bOK = false;
             }
           } else {
-            // Relocalization
-            bOK = Relocalization();
+            // F23 float descriptors have no vocabulary until F24. During the
+            // short RECENTLY_LOST window, recover against the existing
+            // reference keyframe with direct descriptor matching and Fine
+            // refinement instead of entering the ORB BoW relocalizer, which
+            // cannot produce candidates for an empty float-descriptor BoW.
+            if (mCurrentFrame.mDescriptors.type() == CV_32FC1 &&
+                mpStereoFeatureProvider) {
+              bOK = TrackReferenceKeyFrame();
+            } else {
+              bOK = Relocalization();
+            }
             // std::cout << "mCurrentFrame.mTimeStamp:" <<
             // to_string(mCurrentFrame.mTimeStamp) << std::endl; std::cout <<
             // "mTimeStampLost:" << to_string(mTimeStampLost) << std::endl;
@@ -2730,12 +2745,14 @@ void Tracking::CheckReplacedInLastFrame() {
 }
 
 bool Tracking::TrackReferenceKeyFrame() {
-  // Compute Bag of Words vector
-  mCurrentFrame.ComputeBoW();
+  const bool uses_float_descriptors =
+      mCurrentFrame.mDescriptors.type() == CV_32FC1;
+  if (!uses_float_descriptors) {
+    mCurrentFrame.ComputeBoW();
+  }
 
-  // We perform first an ORB matching with the reference keyframe
-  // If enough matches are found we setup a PnP solver
-  ORBmatcher matcher(0.7, true);
+  ORBmatcher matcher(uses_float_descriptors ? 0.9F : 0.7F,
+                     !uses_float_descriptors);
   vector<MapPoint *> vpMapPointMatches;
 
   // Debug: Check reference KF
@@ -2744,8 +2761,45 @@ bool Tracking::TrackReferenceKeyFrame() {
     return false;
   }
 
-  int nmatches =
-      matcher.SearchByBoW(mpReferenceKF, mCurrentFrame, vpMapPointMatches);
+  vector<ReferenceFeatureMatch> coarse_reference_matches;
+  int nmatches = uses_float_descriptors
+      ? matcher.SearchByDescriptor(mpReferenceKF, mCurrentFrame,
+                                   vpMapPointMatches,
+                                   &coarse_reference_matches)
+      : matcher.SearchByBoW(mpReferenceKF, mCurrentFrame,
+                            vpMapPointMatches);
+
+  if (uses_float_descriptors && mpStereoFeatureProvider && nmatches > 0) {
+    const vector<ReferenceFeatureMatch> refined_matches =
+        mpStereoFeatureProvider->RefineReferenceMatches(
+            mpReferenceKF->mvKeysUn, mpReferenceKF->mDescriptors,
+            mCurrentFrame.mvKeysUn, mCurrentFrame.mDescriptors,
+            coarse_reference_matches, mImGray.cols, mImGray.rows);
+    const vector<MapPoint *> reference_map_points =
+        mpReferenceKF->GetMapPointMatches();
+    vpMapPointMatches.assign(mCurrentFrame.N,
+                             static_cast<MapPoint *>(NULL));
+    vector<pair<int, cv::Point2f>> keypoint_refinements;
+    keypoint_refinements.reserve(refined_matches.size());
+    nmatches = 0;
+    for (const ReferenceFeatureMatch &match : refined_matches) {
+      if (match.reference_index < 0 ||
+          match.reference_index >= static_cast<int>(reference_map_points.size()) ||
+          match.current_index < 0 || match.current_index >= mCurrentFrame.N) {
+        continue;
+      }
+      MapPoint *map_point = reference_map_points[match.reference_index];
+      if (!map_point || map_point->isBad() ||
+          vpMapPointMatches[match.current_index]) {
+        continue;
+      }
+      vpMapPointMatches[match.current_index] = map_point;
+      keypoint_refinements.emplace_back(match.current_index,
+                                        match.refined_current_point);
+      ++nmatches;
+    }
+    mCurrentFrame.ApplyKeypointRefinements(keypoint_refinements);
+  }
 
   if (nmatches < 10) {
     cout << "TRACK_REF_KF: Less than 10 matches!! (got " << nmatches
@@ -2864,7 +2918,10 @@ void Tracking::UpdateLastFrame() {
 }
 
 bool Tracking::TrackWithMotionModel() {
-  ORBmatcher matcher(0.9, true);
+  const bool uses_float_descriptors =
+      mCurrentFrame.mDescriptors.type() == CV_32FC1 &&
+      mLastFrame.mDescriptors.type() == CV_32FC1;
+  ORBmatcher matcher(0.9, !uses_float_descriptors);
 
   // Update last frame pose according to its reference keyframe
   // Create "visual odometry" points if in Localization Mode
@@ -2895,9 +2952,86 @@ bool Tracking::TrackWithMotionModel() {
   else
     th = 15;
 
-  int nmatches = matcher.SearchByProjection(
-      mCurrentFrame, mLastFrame, th,
-      mSensor == System::MONOCULAR || mSensor == System::IMU_MONOCULAR);
+  int nmatches = 0;
+  if (uses_float_descriptors && mpStereoFeatureProvider) {
+    const auto temporal_start = std::chrono::steady_clock::now();
+    vector<cv::DMatch> descriptor_matches;
+    cv::BFMatcher descriptor_matcher(cv::NORM_L2, true);
+    descriptor_matcher.match(mLastFrame.mDescriptors,
+                             mCurrentFrame.mDescriptors,
+                             descriptor_matches);
+
+    vector<ReferenceFeatureMatch> coarse_matches;
+    coarse_matches.reserve(descriptor_matches.size());
+    // The frozen temporal matcher uses cosine >= 0.82. FeatureDescriptor maps
+    // that boundary to round(256 * (1 - 0.82)) = 46.
+    const int kXFeatTemporalMaximumDistance = 46;
+    for (const cv::DMatch &descriptor_match : descriptor_matches) {
+      if (descriptor_match.queryIdx < 0 ||
+          descriptor_match.queryIdx >= mLastFrame.N ||
+          descriptor_match.trainIdx < 0 ||
+          descriptor_match.trainIdx >= mCurrentFrame.N) {
+        continue;
+      }
+      MapPoint *map_point =
+          mLastFrame.mvpMapPoints[descriptor_match.queryIdx];
+      if (!map_point || map_point->isBad() ||
+          mLastFrame.mvbOutlier[descriptor_match.queryIdx]) {
+        continue;
+      }
+      const int descriptor_distance = ORBmatcher::DescriptorDistance(
+          mLastFrame.mDescriptors.row(descriptor_match.queryIdx),
+          mCurrentFrame.mDescriptors.row(descriptor_match.trainIdx));
+      if (descriptor_distance > kXFeatTemporalMaximumDistance) {
+        continue;
+      }
+
+      ReferenceFeatureMatch match;
+      match.reference_index = descriptor_match.queryIdx;
+      match.current_index = descriptor_match.trainIdx;
+      match.descriptor_distance = descriptor_distance;
+      match.refined_current_point =
+          mCurrentFrame.mvKeysUn[descriptor_match.trainIdx].pt;
+      coarse_matches.push_back(match);
+    }
+
+    if (!coarse_matches.empty()) {
+      const vector<ReferenceFeatureMatch> refined_matches =
+          mpStereoFeatureProvider->RefineReferenceMatches(
+              mLastFrame.mvKeysUn, mLastFrame.mDescriptors,
+              mCurrentFrame.mvKeysUn, mCurrentFrame.mDescriptors,
+              coarse_matches, mImGray.cols, mImGray.rows);
+      vector<pair<int, cv::Point2f>> keypoint_refinements;
+      keypoint_refinements.reserve(refined_matches.size());
+      for (const ReferenceFeatureMatch &match : refined_matches) {
+        if (match.reference_index < 0 ||
+            match.reference_index >= mLastFrame.N ||
+            match.current_index < 0 ||
+            match.current_index >= mCurrentFrame.N ||
+            mCurrentFrame.mvpMapPoints[match.current_index]) {
+          continue;
+        }
+        MapPoint *map_point = mLastFrame.mvpMapPoints[match.reference_index];
+        if (!map_point || map_point->isBad()) {
+          continue;
+        }
+        mCurrentFrame.mvpMapPoints[match.current_index] = map_point;
+        keypoint_refinements.emplace_back(match.current_index,
+                                          match.refined_current_point);
+        ++nmatches;
+      }
+      mCurrentFrame.ApplyKeypointRefinements(keypoint_refinements);
+    }
+    const auto temporal_end = std::chrono::steady_clock::now();
+    mCurrentFrame.mStereoFeatureExtractionStats.fine_match_ms +=
+        std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
+            temporal_end - temporal_start)
+            .count();
+  } else {
+    nmatches = matcher.SearchByProjection(
+        mCurrentFrame, mLastFrame, th,
+        mSensor == System::MONOCULAR || mSensor == System::IMU_MONOCULAR);
+  }
 
   // If few matches, uses a wider window search
   if (nmatches < 20) {
@@ -3430,7 +3564,9 @@ void Tracking::SearchLocalPoints() {
   }
 
   if (nToMatch > 0) {
-    ORBmatcher matcher(0.8);
+    const bool uses_float_descriptors =
+        mCurrentFrame.mDescriptors.type() == CV_32FC1;
+    ORBmatcher matcher(uses_float_descriptors ? 0.9F : 0.8F);
     int th = 1;
     if (mSensor == System::RGBD || mSensor == System::IMU_RGBD)
       th = 3;
