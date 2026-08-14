@@ -196,9 +196,30 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
   memory limit. The single-job incremental retry completed successfully.
 - Static checks cover `git diff --check`, both CSV schemas, and shutdown-only
   file writes. The output binaries are aarch64.
-- TODO: deploy this isolated build and replay both accepted RGB-D bags at 1.0x
-  and 0.5x. Verify CSV row counts, frame IDs, state transitions, sequence gaps
-  and LocalMapping keyframe correlation before prioritizing optimizations.
+- The original board-replay TODO was completed on 2026-08-14; see the runtime
+  validation below.
+
+## F26 board runtime validation (2026-08-14)
+
+- The first `13-56-52 @ 1.0x` replay exposed a validation gap: new ORB/depth
+  fields and the LocalMapping row append were guarded by the disabled legacy
+  `REGISTER_TIMES` macro. The run was retained but excluded from timing
+  comparison.
+- The new RGB-D and LocalMapping measurements were made independent of the
+  legacy macro. A single-job ARM64 rebuild passed in 1 h 22 min. Corrected
+  core SHA-256: `6df2983c49023752c301b714da2a8f46f9b1c1d76d20b25244fb62541efe0d9b`.
+- Corrected board runs all exited cleanly and populated both CSVs:
+  `13-54-55 @ 1.0x` 477 frame / 93 LocalMapping rows;
+  `13-56-52 @ 1.0x` 597 / 123; and
+  `13-56-52 @ 0.5x` 624 / 134.
+- At 1.0x, 36.5%--55.1% of callbacks exceeded the 90 ms input period and
+  13/490 or 27/624 synchronized pairs were dropped. At 0.5x no pair was
+  dropped and tracking stayed OK for all 624 frames.
+- Mean ORB extraction was 49.5--52.5 ms; depth association was 0.13 ms. Local
+  BA abort ratio was 74.7% and 59.6% at 1.0x versus 33.3% at 0.5x.
+- Evidence:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`
+  and its `rgbd_timing_test_results_20260814/` subdirectory.
 
 ## XFeat / RDK X5 Validation
 

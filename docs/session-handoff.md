@@ -1,5 +1,33 @@
 # Session Handoff
 
+## 2026-08-14 F26 board deployment and runtime timing
+
+- Active feature and final state: F26, passing including board runtime CSV
+  verification and three controlled bag replays.
+- The first replay found the new fields accidentally dependent on disabled
+  legacy `REGISTER_TIMES`. The corrected implementation always records only
+  the new RGB-D/LocalMapping fields and does not enable the wider legacy
+  statistics machinery.
+- Corrected ARM64 build passed with `RDK_BUILD_JOBS=1` in 1 h 22 min. Node
+  SHA-256 remains `8a5d230d...7c09c`; core SHA-256 is
+  `6df2983c...efe0d9b`.
+- Board deployment: `/userdata/orb_slam/rgbd_timing_20260814`; old production
+  `/userdata/orb_slam/rgbd_20260812` was not modified. The incomplete debug
+  core is backed up as `liborb_slam3_ros.r1_incomplete.so`.
+- Valid runtime rows (frame/LocalMapping): `13-54-55 @ 1.0x` 477/93;
+  `13-56-52 @ 1.0x` 597/123; `13-56-52 @ 0.5x` 624/134. All play/node exit
+  codes were 0 and all shutdowns flushed CSVs cleanly.
+- Main evidence: foreground callback mean 89.5--91.2 ms against a 90 ms
+  period; ORB mean 49.5--52.5 ms; depth association 0.13 ms; Local BA abort
+  ratio 60%--75% at 1.0x versus 33% at 0.5x.
+- `13-54-55 @ 1.0x` lost tracking for 35 frames after a critical dropped pair
+  and a keyframe/LBA-abort burst. `13-56-52 @ 1.0x` stayed OK despite 27 drops,
+  proving drops are a risk multiplier rather than a sufficient cause.
+- Report and raw evidence:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`.
+- Next recommended step: test 8 Hz and 9 Hz five times each, then optimize ORB
+  extraction before changing depth or ROS publishing.
+
 ## 2026-08-13 F26 RGB-D timing debug branch
 
 - Active feature and final state: F26, passing for isolated source and ARM64

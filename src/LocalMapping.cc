@@ -84,6 +84,8 @@ void LocalMapping::Run() {
 
     // Check if there are keyframes in the queue
     if (CheckNewKeyFrames() && !mbBadImu) {
+      const std::chrono::steady_clock::time_point detailed_process_start =
+          std::chrono::steady_clock::now();
 #ifdef REGISTER_TIMES
       double timeLBA_ms = 0;
       double timeKFCulling_ms = 0;
@@ -93,6 +95,8 @@ void LocalMapping::Run() {
 #endif
       // BoW conversion and insertion in Map
       ProcessNewKeyFrame();
+      mCurrentTiming.process_keyframe_ms =
+          LocalMappingMillisecondsSince(detailed_process_start);
 #ifdef REGISTER_TIMES
       std::chrono::steady_clock::time_point time_EndProcessKF =
           std::chrono::steady_clock::now();
@@ -105,7 +109,11 @@ void LocalMapping::Run() {
 #endif
 
       // Check recent MapPoints
+      const std::chrono::steady_clock::time_point detailed_mp_culling_start =
+          std::chrono::steady_clock::now();
       MapPointCulling();
+      mCurrentTiming.map_point_culling_ms =
+          LocalMappingMillisecondsSince(detailed_mp_culling_start);
 #ifdef REGISTER_TIMES
       std::chrono::steady_clock::time_point time_EndMPCulling =
           std::chrono::steady_clock::now();
@@ -118,6 +126,8 @@ void LocalMapping::Run() {
 #endif
 
       // Triangulate new MapPoints
+      const std::chrono::steady_clock::time_point detailed_mp_creation_start =
+          std::chrono::steady_clock::now();
       CreateNewMapPoints();
 
       mbAbortBA = false;
@@ -126,6 +136,8 @@ void LocalMapping::Run() {
         // Find more matches in neighbor keyframes and fuse point duplications
         SearchInNeighbors();
       }
+      mCurrentTiming.map_point_creation_ms =
+          LocalMappingMillisecondsSince(detailed_mp_creation_start);
 
 #ifdef REGISTER_TIMES
       std::chrono::steady_clock::time_point time_EndMPCreation =
@@ -146,6 +158,8 @@ void LocalMapping::Run() {
 
       if (!CheckNewKeyFrames() && !stopRequested()) {
         if (mpAtlas->KeyFramesInMap() > 2) {
+          const std::chrono::steady_clock::time_point detailed_lba_start =
+              std::chrono::steady_clock::now();
 
           if (mbInertial && mpCurrentKeyFrame->GetMap()->isImuInitialized()) {
             float dist =
@@ -184,6 +198,8 @@ void LocalMapping::Run() {
                 num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA);
             b_doneLBA = true;
           }
+          mCurrentTiming.local_ba_ms =
+              LocalMappingMillisecondsSince(detailed_lba_start);
         }
 #ifdef REGISTER_TIMES
         std::chrono::steady_clock::time_point time_EndLBA =
@@ -217,7 +233,11 @@ void LocalMapping::Run() {
         }
 
         // Check redundant local Keyframes
+        const std::chrono::steady_clock::time_point detailed_kf_culling_start =
+            std::chrono::steady_clock::now();
         KeyFrameCulling();
+        mCurrentTiming.keyframe_culling_ms =
+            LocalMappingMillisecondsSince(detailed_kf_culling_start);
 
 #ifdef REGISTER_TIMES
         std::chrono::steady_clock::time_point time_EndKFCulling =
@@ -290,13 +310,9 @@ void LocalMapping::Run() {
               time_EndLocalMap - time_StartProcessKF)
               .count();
       vdLMTotal_ms.push_back(timeLocalMap);
-
-      mCurrentTiming.process_keyframe_ms = timeProcessKF;
-      mCurrentTiming.map_point_culling_ms = timeMPCulling;
-      mCurrentTiming.map_point_creation_ms = timeMPCreation;
-      mCurrentTiming.local_ba_ms = timeLBA_ms;
-      mCurrentTiming.keyframe_culling_ms = timeKFCulling_ms;
-      mCurrentTiming.total_ms = timeLocalMap;
+#endif
+      mCurrentTiming.total_ms =
+          LocalMappingMillisecondsSince(detailed_process_start);
       mCurrentTiming.lba_executed = b_doneLBA ? 1 : 0;
       mCurrentTiming.lba_aborted = (b_doneLBA && mbAbortBA) ? 1 : 0;
       mCurrentTiming.lba_edges = num_edges_BA;
@@ -304,7 +320,6 @@ void LocalMapping::Run() {
       mCurrentTiming.lba_fixed_keyframes = num_FixedKF_BA;
       mCurrentTiming.lba_map_points = num_MPs_BA;
       mvDetailedTimings.push_back(mCurrentTiming);
-#endif
     } else if (Stop() && !mbBadImu) {
       // Safe area to stop
       while (isStopped() && !CheckFinish()) {

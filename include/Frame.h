@@ -325,10 +325,15 @@ public:
 
   int mnDataset;
 
+  // Always enabled on the RGB-D timing debug branch. Keep these independent
+  // from the legacy REGISTER_TIMES switch so detailed CSVs remain complete
+  // without enabling the broader ORB-SLAM3 statistics machinery.
+  double mTimeRgbdOrbExtract = 0.0;
+  double mTimeRgbdDepthAssoc = 0.0;
+
 #ifdef REGISTER_TIMES
   double mTimeORB_Ext = 0.0;
   double mTimeStereoMatch = 0.0;
-  double mTimeRgbdDepthAssoc = 0.0;
 #endif
 
 private:

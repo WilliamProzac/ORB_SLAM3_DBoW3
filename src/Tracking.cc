@@ -1548,10 +1548,8 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
     timing->valid_depths = static_cast<int>(std::count_if(
         mCurrentFrame.mvDepth.begin(), mCurrentFrame.mvDepth.end(),
         [](float depth) { return depth > 0.0f; }));
-#ifdef REGISTER_TIMES
-    timing->orb_extract_ms = mCurrentFrame.mTimeORB_Ext;
+    timing->orb_extract_ms = mCurrentFrame.mTimeRgbdOrbExtract;
     timing->rgbd_depth_assoc_ms = mCurrentFrame.mTimeRgbdDepthAssoc;
-#endif
   }
 
   mCurrentFrame.mNameFile = filename;

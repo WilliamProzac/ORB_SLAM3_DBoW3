@@ -4,15 +4,17 @@
 
 - Feature ID: F26
 - Current state: passing
-- Owner/session: isolated RGB-D `TrackRGBD` and LocalMapping timing build on
-  2026-08-13
-- Blockers: none for source/build completion. Board replay and CSV analysis are
-  TODO and are not claimed by the successful cross-build.
+- Owner/session: isolated RGB-D `TrackRGBD` and LocalMapping timing build and
+  RDK-X5 bag replay on 2026-08-13--14
+- Blockers: none for F26. Repeated optimization trials remain follow-up work,
+  not part of the instrumentation feature.
 
 ## Command Log
 
 | Date | Command | Result | Evidence |
 |---|---|---|---|
+| 2026-08-14 | deploy corrected core and run `13-54-55 @ 1.0x`, `13-56-52 @ 1.0x`, and `13-56-52 @ 0.5x` with `run_board_rgbd_timing_test.sh` | passed | All runs exited 0 and populated both timing CSVs. Report: `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`. |
+| 2026-08-14 | `RDK_BUILD_JOBS=1 ... ./tools/build_rdk_arm64_docker.sh` after decoupling new timing from `REGISTER_TIMES` | passed | Both catkin packages succeeded in 1 h 22 min; corrected core SHA-256 `6df2983c...efe0d9b`. |
 | 2026-08-13 | `RDK_BUILD_JOBS=1 RDK_WORKSPACE=.../rgbd_track_timing RDK_CORE_SOURCE=.../rgbd_track_timing/core ./tools/build_rdk_arm64_docker.sh` | passed | Both catkin packages succeeded; aarch64 `ros_rgbd` SHA-256 `8a5d230d...7c09c`, core library `31e050f8...1836b`. |
 | 2026-06-05 | `sed -n '1,240p' docs/features.md`, `sed -n '1,260p' docs/progress.md`, `sed -n '1,260p' docs/session-handoff.md`, `sed -n '1,260p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`, `sed -n '260,620p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`, and `sed -n '620,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc` | passed | reviewed the current pose-correction implementation before narrowing the trigger semantics to big map events only |
 | 2026-06-05 | `./build_ros.sh` | passed | rosbuild rebuilt and linked `Stereo` successfully after restricting gradual pose correction to big map events and fixing the one-shot auto-enable path |
