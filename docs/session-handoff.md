@@ -1,5 +1,54 @@
 # Session Handoff
 
+## 2026-08-17 F27 RDK-X5 RGB-D ORB optimization
+
+- Active feature/final state: F27 passing. Production S316 uses
+  `ORBextractor.parallelWorkers: 3`; fine ORB timing, output hashes, legacy
+  allocation paths and direct isolated-ROI blur default OFF.
+- Implemented reusable per-level workspace, order-preserving OctTree moves and
+  an extractor-owned persistent worker pool without `cv::setNumThreads()` or
+  `cv::parallel_for_`. Added per-level debug counters, deterministic hashes,
+  blur/output/FAST validators and result-analysis tooling.
+- ARM64 build passed on OpenCV 4.5.4. Production `ros_rgbd` SHA-256 is
+  `a41fd835...cc7b`; core SHA-256 is `51c3e4d7...a2860`.
+- Legacy/optimized, serial/workers 2/3/4 and three worker-3 repetitions had
+  zero mismatches over all 1114 real frames. The 50-case blur test passed full
+  image and three-pixel boundary comparisons.
+- Final production verification ran each accepted bag five times at 1.0x. All
+  runs processed 490/490 or 624/624 frames, had zero sequence gaps, remained
+  in tracking state 2 and created one map. Pooled ORB mean/P95 was
+  28.915/34.707 and 27.650/33.530 ms; callback P95 was 85.256/80.427 ms.
+- Board deployment:
+  `/userdata/orb_slam/rgbd_orb_optimization_20260817/production_w3`.
+  Local report/raw evidence:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_optimization_20260817/`.
+- Extra non-gating A/B note: one final hot-board production-off repetition had
+  one input gap after the formal ten-run gate. The ten required final runs all
+  passed; retain frequency/temperature telemetry for future regressions.
+- Commands not run: no `Runtime.OpenCVThreads` experiment was needed because
+  Gaussian P99 stayed below 12 ms. The direct isolated-ROI path passed all
+  hashes but remains disabled because it saved less than 0.7 ms.
+
+## 2026-08-14 F26 ORB six-stage timing extension
+
+- Active feature/final state: F26 remains passing; its RGB-D ORB total is now
+  split into pyramid, FAST/OctTree, orientation, blur, descriptor and result
+  assembly without changing feature extraction order.
+- ARM64 cross-build passed with two jobs. `ros_rgbd` SHA-256 is
+  `35332603...c4494`; core SHA-256 is `3a45dc2f...40f81a`.
+- The new build was deployed separately at
+  `/userdata/orb_slam/rgbd_orb_stage_timing_20260814`; prior debug and
+  production deployments were not overwritten.
+- `13-54-55 @ 1.0x` exited cleanly with 470 frame and 108 LocalMapping rows,
+  no lost frames, and one map. FAST/OctTree was the largest ORB stage at
+  26.856 ms mean (51.63%), followed by descriptor at 9.475 ms (18.21%) and
+  blur at 7.590 ms (14.59%).
+- Local evidence and analysis:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_stage_timing_20260814/`.
+- Unverified assumption/TODO: this was one instrumentation smoke replay, not a
+  repeated before/after optimization gate. CPU frequency/throttle telemetry
+  and a production build with timing disabled remain separate follow-ups.
+
 ## 2026-08-14 F26 board deployment and runtime timing
 
 - Active feature and final state: F26, passing including board runtime CSV

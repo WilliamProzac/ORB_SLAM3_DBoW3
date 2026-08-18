@@ -635,17 +635,21 @@ void Tracking::newParameterLoader(Settings *settings) {
   int fIniThFAST = settings->initThFAST();
   int fMinThFAST = settings->minThFAST();
   float fScaleFactor = settings->scaleFactor();
+  int orbParallelWorkers = settings->orbParallelWorkers();
 
   mpORBextractorLeft = new ORBextractor(nFeatures, fScaleFactor, nLevels,
-                                        fIniThFAST, fMinThFAST);
+                                        fIniThFAST, fMinThFAST,
+                                        orbParallelWorkers);
 
   if (mSensor == System::STEREO || mSensor == System::IMU_STEREO)
     mpORBextractorRight = new ORBextractor(nFeatures, fScaleFactor, nLevels,
-                                           fIniThFAST, fMinThFAST);
+                                           fIniThFAST, fMinThFAST,
+                                           orbParallelWorkers);
 
   if (mSensor == System::MONOCULAR || mSensor == System::IMU_MONOCULAR)
     mpIniORBextractor = new ORBextractor(5 * nFeatures, fScaleFactor, nLevels,
-                                         fIniThFAST, fMinThFAST);
+                                         fIniThFAST, fMinThFAST,
+                                         orbParallelWorkers);
 
   // IMU parameters
   Sophus::SE3f Tbc = settings->Tbc();
@@ -1192,6 +1196,7 @@ bool Tracking::ParseCamParamFile(cv::FileStorage &fSettings) {
 bool Tracking::ParseORBParamFile(cv::FileStorage &fSettings) {
   bool b_miss_params = false;
   int nFeatures, nLevels, fIniThFAST, fMinThFAST;
+  int orbParallelWorkers = 1;
   float fScaleFactor;
 
   cv::FileNode node = fSettings["ORBextractor.nFeatures"];
@@ -1244,20 +1249,39 @@ bool Tracking::ParseORBParamFile(cv::FileStorage &fSettings) {
     b_miss_params = true;
   }
 
+  node = fSettings["ORBextractor.parallelWorkers"];
+  if (!node.empty()) {
+    if (node.isInt()) {
+      orbParallelWorkers = node.operator int();
+      if (orbParallelWorkers < 1 || orbParallelWorkers > 4) {
+        std::cerr << "*ORBextractor.parallelWorkers must be in [1, 4]*"
+                  << std::endl;
+        b_miss_params = true;
+      }
+    } else {
+      std::cerr << "*ORBextractor.parallelWorkers is not an integer*"
+                << std::endl;
+      b_miss_params = true;
+    }
+  }
+
   if (b_miss_params) {
     return false;
   }
 
   mpORBextractorLeft = new ORBextractor(nFeatures, fScaleFactor, nLevels,
-                                        fIniThFAST, fMinThFAST);
+                                        fIniThFAST, fMinThFAST,
+                                        orbParallelWorkers);
 
   if (mSensor == System::STEREO || mSensor == System::IMU_STEREO)
     mpORBextractorRight = new ORBextractor(nFeatures, fScaleFactor, nLevels,
-                                           fIniThFAST, fMinThFAST);
+                                           fIniThFAST, fMinThFAST,
+                                           orbParallelWorkers);
 
   if (mSensor == System::MONOCULAR || mSensor == System::IMU_MONOCULAR)
     mpIniORBextractor = new ORBextractor(5 * nFeatures, fScaleFactor, nLevels,
-                                         fIniThFAST, fMinThFAST);
+                                         fIniThFAST, fMinThFAST,
+                                         orbParallelWorkers);
 
   cout << endl << "ORB Extractor Parameters: " << endl;
   cout << "- Number of Features: " << nFeatures << endl;
@@ -1265,6 +1289,7 @@ bool Tracking::ParseORBParamFile(cv::FileStorage &fSettings) {
   cout << "- Scale Factor: " << fScaleFactor << endl;
   cout << "- Initial Fast Threshold: " << fIniThFAST << endl;
   cout << "- Minimum Fast Threshold: " << fMinThFAST << endl;
+  cout << "- Parallel Workers: " << orbParallelWorkers << endl;
 
   return true;
 }
@@ -1549,6 +1574,37 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
         mCurrentFrame.mvDepth.begin(), mCurrentFrame.mvDepth.end(),
         [](float depth) { return depth > 0.0f; }));
     timing->orb_extract_ms = mCurrentFrame.mTimeRgbdOrbExtract;
+    timing->orb_pyramid_ms = mCurrentFrame.mTimeRgbdOrbPyramid;
+    timing->orb_keypoints_octree_ms =
+        mCurrentFrame.mTimeRgbdOrbKeypointsOctree;
+    timing->orb_orientation_ms = mCurrentFrame.mTimeRgbdOrbOrientation;
+    timing->orb_blur_ms = mCurrentFrame.mTimeRgbdOrbBlur;
+    timing->orb_descriptor_ms = mCurrentFrame.mTimeRgbdOrbDescriptor;
+    timing->orb_result_assembly_ms =
+        mCurrentFrame.mTimeRgbdOrbResultAssembly;
+    timing->orb_fast_initial_ms = mCurrentFrame.mTimeRgbdOrbFastInitial;
+    timing->orb_fast_fallback_ms = mCurrentFrame.mTimeRgbdOrbFastFallback;
+    timing->orb_octree_ms = mCurrentFrame.mTimeRgbdOrbOctree;
+    timing->orb_copy_ms = mCurrentFrame.mTimeRgbdOrbCopy;
+    timing->orb_gaussian_ms = mCurrentFrame.mTimeRgbdOrbGaussian;
+    timing->orb_output_hash = mCurrentFrame.mRgbdOrbOutputHash;
+    timing->orb_mono_index = mCurrentFrame.mRgbdOrbMonoIndex;
+    timing->orb_level_count = mCurrentFrame.mRgbdOrbLevelCount;
+    timing->orb_level_fast_initial_ms =
+        mCurrentFrame.mRgbdOrbLevelFastInitial;
+    timing->orb_level_fast_fallback_ms =
+        mCurrentFrame.mRgbdOrbLevelFastFallback;
+    timing->orb_level_octree_ms = mCurrentFrame.mRgbdOrbLevelOctree;
+    timing->orb_level_orientation_ms =
+        mCurrentFrame.mRgbdOrbLevelOrientation;
+    timing->orb_level_copy_ms = mCurrentFrame.mRgbdOrbLevelCopy;
+    timing->orb_level_gaussian_ms = mCurrentFrame.mRgbdOrbLevelGaussian;
+    timing->orb_level_descriptor_ms = mCurrentFrame.mRgbdOrbLevelDescriptor;
+    timing->orb_level_candidates = mCurrentFrame.mRgbdOrbLevelCandidates;
+    timing->orb_level_fallback_cells =
+        mCurrentFrame.mRgbdOrbLevelFallbackCells;
+    timing->orb_level_octree_splits =
+        mCurrentFrame.mRgbdOrbLevelOctreeSplits;
     timing->rgbd_depth_assoc_ms = mCurrentFrame.mTimeRgbdDepthAssoc;
   }
 

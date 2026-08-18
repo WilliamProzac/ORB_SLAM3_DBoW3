@@ -30,6 +30,7 @@
 #include <opencv2/core/persistence.hpp>
 
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -489,6 +490,14 @@ void Settings::readORB(cv::FileStorage &fSettings) {
   nLevels_ = readParameter<int>(fSettings, "ORBextractor.nLevels", found);
   initThFAST_ = readParameter<int>(fSettings, "ORBextractor.iniThFAST", found);
   minThFAST_ = readParameter<int>(fSettings, "ORBextractor.minThFAST", found);
+  orbParallelWorkers_ =
+      readParameter<int>(fSettings, "ORBextractor.parallelWorkers", found,
+                         false);
+  if (!found)
+    orbParallelWorkers_ = 1;
+  if (orbParallelWorkers_ < 1 || orbParallelWorkers_ > 4)
+    throw std::runtime_error(
+        "ORBextractor.parallelWorkers must be an integer in [1, 4]");
 }
 
 void Settings::readViewer(cv::FileStorage &fSettings) {
@@ -692,6 +701,8 @@ ostream &operator<<(std::ostream &output, const Settings &settings) {
   output << "\t-ORB number of scales: " << settings.nLevels_ << endl;
   output << "\t-Initial FAST threshold: " << settings.initThFAST_ << endl;
   output << "\t-Min FAST threshold: " << settings.minThFAST_ << endl;
+  output << "\t-ORB parallel workers: " << settings.orbParallelWorkers_
+         << endl;
 
   return output;
 }

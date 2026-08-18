@@ -221,6 +221,63 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
   `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`
   and its `rgbd_timing_test_results_20260814/` subdirectory.
 
+### F26 ORB six-stage extension (2026-08-14)
+
+- A two-job ARM64 Docker cross-build completed successfully. Node SHA-256 is
+  `35332603c704cb12a5054df701d1ecab83c32e99d4cb55e245dd0f90608c4494`;
+  core SHA-256 is
+  `3a45dc2f83cc7c79f728ff5ad5ddae64acae6a407314a85a3e4935a35040f81a`.
+- A separate board deployment replayed `13-54-55` at 1.0x. rosbag and SLAM
+  both exited 0, shutdown was clean, and the CSV contained 470 frame rows and
+  108 LocalMapping rows. There were no lost/recently-lost frames.
+- On 469 steady OK frames, ORB mean/P95 was 52.017/58.820 ms. Mean component
+  costs were FAST/OctTree 26.856 ms, descriptor 9.475 ms, blur 7.590 ms,
+  pyramid 4.347 ms, orientation 2.842 ms and assembly 0.793 ms. The unscoped
+  difference was 0.114 ms mean, confirming measurement closure.
+- Evidence:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_stage_timing_20260814/`.
+
+## F27 RDK-X5 RGB-D ORB extraction optimization
+
+- Build the modified core and ROS wrapper through the existing ARM64 Docker
+  workflow used by F26; confirm `ros_rgbd` and the linked core are aarch64.
+- Compare the legacy clone blur with the reusable standalone-copy path and the
+  ROI `BORDER_ISOLATED` candidate on synthetic and real pyramid images. Full
+  output and the three-pixel boundary band must be byte-identical before the
+  direct ROI path may be enabled.
+- Replay `2026-08-13-13-54-55.bag` and
+  `2026-08-13-13-56-52.bag` at 0.5x. Baseline and optimized rows must have
+  identical ORB hashes for all 490 and 624 input frames, including keypoint
+  order and fields, descriptor bytes, lapping placement and `monoIndex`.
+- Screen `ORBextractor.parallelWorkers=2/3/4` with at least two 1.0x runs per
+  bag. Select the lowest callback P95; if results are within 1 ms, select the
+  smaller worker count.
+- Final verification is five 1.0x runs per bag with CPU affinity unrestricted.
+  Every run must process all expected frames, remain in one map without
+  `RECENTLY_LOST`, `LOST`, reset or `Fail to track local map`, keep ORB
+  mean/P95 at or below 38/43 ms, and keep callback P95 below 90 ms.
+- Before each board run execute `/home/metoak/mo_init.sh`. Save hashes,
+  telemetry and reports under the parent project's
+  `board_rgbd_orb_optimization_20260817/` directory.
+
+Verified 2026-08-17:
+
+- ARM64 core/ROS builds and the three validation executables passed. Board
+  FAST process-CPU/wall ratio was 0.984735, validating level parallelism.
+- Legacy versus optimized, workers 2/3/4 versus serial, and three worker-3
+  repetitions had zero hash mismatches over both bags' 1114 frames.
+- The OpenCV 4.5.4 blur test passed 50 synthetic/ROI cases over all five
+  pyramid sizes, including the entire three-pixel boundary band. The optional
+  direct isolated-ROI path also matched all 1114 real-frame hashes, but stays
+  disabled by default because its measured benefit was below 0.7 ms.
+- Worker 3 production completed five 1.0x runs per bag: every run processed
+  490/490 or 624/624 frames with zero gaps, state 2 throughout and one map.
+  Pooled ORB mean/P95 was 28.915/34.707 ms and 27.650/33.530 ms; callback P95
+  was 85.256 and 80.427 ms. Core SHA-256:
+  `51c3e4d720e5e8c22e63405b44c2b39a782e55464347016ff2bf1db9987a2860`.
+- Evidence and raw logs:
+  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_optimization_20260817/`.
+
 ## XFeat / RDK X5 Validation
 
 - `F15` official local path:

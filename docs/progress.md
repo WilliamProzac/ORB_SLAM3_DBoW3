@@ -2,17 +2,19 @@
 
 ## Current Active Feature
 
-- Feature ID: F26
+- Feature ID: F27
 - Current state: passing
-- Owner/session: isolated RGB-D `TrackRGBD` and LocalMapping timing build and
-  RDK-X5 bag replay on 2026-08-13--14
-- Blockers: none for F26. Repeated optimization trials remain follow-up work,
-  not part of the instrumentation feature.
+- Owner/session: RDK-X5 RGB-D ORB workspace/move/level-parallel optimization
+  and 11 Hz repeated bag validation on 2026-08-17
+- Blockers: none. The safer copy-to-standalone blur remains production default;
+  direct isolated-ROI blur is a validated but disabled experiment.
 
 ## Command Log
 
 | Date | Command | Result | Evidence |
 |---|---|---|---|
+| 2026-08-17 | build/deploy F27, run blur/FAST/output validation, screen workers 2/3/4, compare legacy/optimized hashes and execute five production runs per bag | passed | All 1114 legacy/optimized/parallel hashes matched. Worker 3 production completed all ten 1.0x runs without gaps, tracking loss or second map; ORB pooled mean/P95 28.915/34.707 and 27.650/33.530 ms, callback P95 85.256 and 80.427 ms. Evidence: `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_optimization_20260817/REPORT.md`. |
+| 2026-08-14 | add six ORB extraction substage timers, cross-build with `RDK_BUILD_JOBS=2`, deploy separately and replay `13-54-55 @ 1.0x` | passed | Build succeeded; board play/node exited 0; 470 frame rows closed the six-stage sum within 0.114 ms mean. Evidence: `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_stage_timing_20260814/`. |
 | 2026-08-14 | deploy corrected core and run `13-54-55 @ 1.0x`, `13-56-52 @ 1.0x`, and `13-56-52 @ 0.5x` with `run_board_rgbd_timing_test.sh` | passed | All runs exited 0 and populated both timing CSVs. Report: `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`. |
 | 2026-08-14 | `RDK_BUILD_JOBS=1 ... ./tools/build_rdk_arm64_docker.sh` after decoupling new timing from `REGISTER_TIMES` | passed | Both catkin packages succeeded in 1 h 22 min; corrected core SHA-256 `6df2983c...efe0d9b`. |
 | 2026-08-13 | `RDK_BUILD_JOBS=1 RDK_WORKSPACE=.../rgbd_track_timing RDK_CORE_SOURCE=.../rgbd_track_timing/core ./tools/build_rdk_arm64_docker.sh` | passed | Both catkin packages succeeded; aarch64 `ros_rgbd` SHA-256 `8a5d230d...7c09c`, core library `31e050f8...1836b`. |

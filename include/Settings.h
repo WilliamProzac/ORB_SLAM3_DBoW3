@@ -105,6 +105,7 @@ public:
   float initThFAST() { return initThFAST_; }
   float minThFAST() { return minThFAST_; }
   float scaleFactor() { return scaleFactor_; }
+  int orbParallelWorkers() { return orbParallelWorkers_; }
 
   float keyFrameSize() { return keyFrameSize_; }
   float keyFrameLineWidth() { return keyFrameLineWidth_; }
@@ -212,6 +213,7 @@ private:
   float scaleFactor_;
   int nLevels_;
   int initThFAST_, minThFAST_;
+  int orbParallelWorkers_ = 1;
 
   /*
    * Viewer stuff

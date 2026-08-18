@@ -56,6 +56,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <chrono>
+#include <cstring>
+#include <stdexcept>
+#include <utility>
 #include <vector>
 #include <iostream>
 
@@ -67,6 +71,70 @@ using namespace std;
 
 namespace ORB_SLAM3
 {
+
+    namespace
+    {
+#ifdef ORB_SLAM3_ORB_FINE_TIMING
+        double ElapsedMilliseconds(
+            const std::chrono::steady_clock::time_point &start)
+        {
+            return std::chrono::duration_cast<
+                       std::chrono::duration<double, std::milli>>(
+                       std::chrono::steady_clock::now() - start)
+                .count();
+        }
+#define ORB_TIME_START(name) \
+        const auto name = std::chrono::steady_clock::now()
+#define ORB_TIME_SET(field, name) \
+        (field) = ElapsedMilliseconds(name)
+#define ORB_TIME_ADD(field, name) \
+        (field) += ElapsedMilliseconds(name)
+#else
+#define ORB_TIME_START(name) ((void)0)
+#define ORB_TIME_SET(field, name) ((void)0)
+#define ORB_TIME_ADD(field, name) ((void)0)
+#endif
+
+#ifdef ORB_SLAM3_ORB_OUTPUT_HASH
+        void HashBytes(std::uint64_t &hash, const void *data, std::size_t size)
+        {
+            const unsigned char *bytes =
+                static_cast<const unsigned char *>(data);
+            for (std::size_t i = 0; i < size; ++i)
+            {
+                hash ^= bytes[i];
+                hash *= 1099511628211ULL;
+            }
+        }
+
+        std::uint64_t HashOrbOutput(const std::vector<cv::KeyPoint> &keypoints,
+                                    const cv::Mat &descriptors,
+                                    int monoIndex)
+        {
+            std::uint64_t hash = 1469598103934665603ULL;
+            HashBytes(hash, &monoIndex, sizeof(monoIndex));
+            const std::uint64_t keypointCount = keypoints.size();
+            HashBytes(hash, &keypointCount, sizeof(keypointCount));
+            for (const cv::KeyPoint &keypoint : keypoints)
+            {
+                HashBytes(hash, &keypoint.pt.x, sizeof(keypoint.pt.x));
+                HashBytes(hash, &keypoint.pt.y, sizeof(keypoint.pt.y));
+                HashBytes(hash, &keypoint.size, sizeof(keypoint.size));
+                HashBytes(hash, &keypoint.angle, sizeof(keypoint.angle));
+                HashBytes(hash, &keypoint.response, sizeof(keypoint.response));
+                HashBytes(hash, &keypoint.octave, sizeof(keypoint.octave));
+                HashBytes(hash, &keypoint.class_id, sizeof(keypoint.class_id));
+            }
+            HashBytes(hash, &descriptors.rows, sizeof(descriptors.rows));
+            HashBytes(hash, &descriptors.cols, sizeof(descriptors.cols));
+            const int descriptorType = descriptors.type();
+            HashBytes(hash, &descriptorType, sizeof(descriptorType));
+            for (int row = 0; row < descriptors.rows; ++row)
+                HashBytes(hash, descriptors.ptr(row), descriptors.cols);
+            return hash;
+        }
+#endif
+    }
 
     const int PATCH_SIZE = 31;
     const int HALF_PATCH_SIZE = 15;
@@ -407,10 +475,19 @@ namespace ORB_SLAM3
             };
 
     ORBextractor::ORBextractor(int _nfeatures, float _scaleFactor, int _nlevels,
-                               int _iniThFAST, int _minThFAST):
+                               int _iniThFAST, int _minThFAST,
+                               int _parallelWorkers):
             nfeatures(_nfeatures), scaleFactor(_scaleFactor), nlevels(_nlevels),
-            iniThFAST(_iniThFAST), minThFAST(_minThFAST)
+            iniThFAST(_iniThFAST), minThFAST(_minThFAST),
+            mParallelWorkers(_parallelWorkers)
     {
+        if (mParallelWorkers < 1 || mParallelWorkers > 4)
+            throw std::invalid_argument(
+                "ORBextractor.parallelWorkers must be in [1, 4]");
+        if (nlevels < 1 || nlevels > static_cast<int>(kMaxTimedLevels))
+            throw std::invalid_argument(
+                "ORBextractor.nLevels exceeds the supported timing workspace");
+
         mvScaleFactor.resize(nlevels);
         mvLevelSigma2.resize(nlevels);
         mvScaleFactor[0]=1.0f;
@@ -430,6 +507,12 @@ namespace ORB_SLAM3
         }
 
         mvImagePyramid.resize(nlevels);
+        mPyramidStorage.resize(nlevels);
+        mBlurredPyramid.resize(nlevels);
+        mLevelDescriptors.resize(nlevels);
+        mAllKeypoints.resize(nlevels);
+        mCellKeypoints.resize(nlevels);
+        mCandidateKeypoints.resize(nlevels);
 
         mnFeaturesPerLevel.resize(nlevels);
         float factor = 1.0f / scaleFactor;
@@ -466,6 +549,106 @@ namespace ORB_SLAM3
             umax[v] = v0;
             ++v0;
         }
+
+        mWorkerThreads.reserve(mParallelWorkers - 1);
+        for (int i = 1; i < mParallelWorkers; ++i)
+            mWorkerThreads.emplace_back(&ORBextractor::WorkerLoop, this);
+    }
+
+    ORBextractor::~ORBextractor()
+    {
+        {
+            std::lock_guard<std::mutex> lock(mWorkerMutex);
+            mStopWorkers = true;
+            ++mTaskGeneration;
+        }
+        mWorkerCv.notify_all();
+        for (std::thread &worker : mWorkerThreads)
+            if (worker.joinable())
+                worker.join();
+    }
+
+    void ORBextractor::ExecuteAvailableTasks()
+    {
+        while (true)
+        {
+            const int taskIndex = mNextTask.fetch_add(1);
+            if (taskIndex >= mTaskCount)
+                return;
+            try
+            {
+                mLevelTask(taskIndex);
+            }
+            catch (...)
+            {
+                std::lock_guard<std::mutex> lock(mWorkerMutex);
+                if (!mWorkerException)
+                    mWorkerException = std::current_exception();
+                mNextTask.store(mTaskCount);
+                return;
+            }
+        }
+    }
+
+    void ORBextractor::WorkerLoop()
+    {
+        std::size_t observedGeneration = 0;
+        while (true)
+        {
+            {
+                std::unique_lock<std::mutex> lock(mWorkerMutex);
+                mWorkerCv.wait(lock, [&] {
+                    return mStopWorkers || mTaskGeneration != observedGeneration;
+                });
+                if (mStopWorkers)
+                    return;
+                observedGeneration = mTaskGeneration;
+            }
+
+            ExecuteAvailableTasks();
+
+            {
+                std::lock_guard<std::mutex> lock(mWorkerMutex);
+                ++mCompletedHelpers;
+            }
+            mWorkerDoneCv.notify_one();
+        }
+    }
+
+    void ORBextractor::RunLevelTasks(
+        int taskCount, const std::function<void(int)> &task)
+    {
+        if (mWorkerThreads.empty() || taskCount <= 1)
+        {
+            for (int i = 0; i < taskCount; ++i)
+                task(i);
+            return;
+        }
+
+        {
+            std::lock_guard<std::mutex> lock(mWorkerMutex);
+            mLevelTask = task;
+            mTaskCount = taskCount;
+            mNextTask.store(0);
+            mCompletedHelpers = 0;
+            mWorkerException = nullptr;
+            ++mTaskGeneration;
+        }
+        mWorkerCv.notify_all();
+        ExecuteAvailableTasks();
+
+        std::exception_ptr workerException;
+        {
+            std::unique_lock<std::mutex> lock(mWorkerMutex);
+            mWorkerDoneCv.wait(lock, [&] {
+                return mCompletedHelpers ==
+                       static_cast<int>(mWorkerThreads.size());
+            });
+            workerException = mWorkerException;
+            mLevelTask = nullptr;
+        }
+        if (workerException)
+            std::rethrow_exception(workerException);
     }
 
     static void computeOrientation(const Mat& image, vector<KeyPoint>& keypoints, const vector<int>& umax)
@@ -552,9 +735,12 @@ namespace ORB_SLAM3
         }
     }
 
-    vector<cv::KeyPoint> ORBextractor::DistributeOctTree(const vector<cv::KeyPoint>& vToDistributeKeys, const int &minX,
-                                                         const int &maxX, const int &minY, const int &maxY, const int &N, const int &level)
+    void ORBextractor::DistributeOctTree(const vector<cv::KeyPoint>& vToDistributeKeys, const int &minX,
+                                         const int &maxX, const int &minY, const int &maxY, const int &N, const int &level,
+                                         vector<cv::KeyPoint> &vResultKeys,
+                                         std::uint32_t *splitCount)
     {
+        (void)level;
         // Compute how many initial nodes
         const int nIni = round(static_cast<float>(maxX-minX)/(maxY-minY));
 
@@ -574,7 +760,11 @@ namespace ORB_SLAM3
             ni.BR = cv::Point2i(ni.UR.x,maxY-minY);
             ni.vKeys.reserve(vToDistributeKeys.size());
 
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
             lNodes.push_back(ni);
+#else
+            lNodes.push_back(std::move(ni));
+#endif
             vpIniNodes[i] = &lNodes.back();
         }
 
@@ -632,48 +822,34 @@ namespace ORB_SLAM3
                     // If more than one point, subdivide
                     ExtractorNode n1,n2,n3,n4;
                     lit->DivideNode(n1,n2,n3,n4);
+                    if(splitCount)
+                        ++(*splitCount);
 
                     // Add childs if they contain points
-                    if(n1.vKeys.size()>0)
+                    auto pushChild = [&](ExtractorNode &child)
                     {
-                        lNodes.push_front(n1);
-                        if(n1.vKeys.size()>1)
+                        const std::size_t childSize = child.vKeys.size();
+                        const bool expandable = childSize > 1;
+                        if(childSize == 0)
+                            return;
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+                        lNodes.push_front(child);
+#else
+                        lNodes.push_front(std::move(child));
+#endif
+                        if(expandable)
                         {
                             nToExpand++;
-                            vSizeAndPointerToNode.push_back(make_pair(n1.vKeys.size(),&lNodes.front()));
+                            vSizeAndPointerToNode.push_back(
+                                make_pair(static_cast<int>(childSize),
+                                          &lNodes.front()));
                             lNodes.front().lit = lNodes.begin();
                         }
-                    }
-                    if(n2.vKeys.size()>0)
-                    {
-                        lNodes.push_front(n2);
-                        if(n2.vKeys.size()>1)
-                        {
-                            nToExpand++;
-                            vSizeAndPointerToNode.push_back(make_pair(n2.vKeys.size(),&lNodes.front()));
-                            lNodes.front().lit = lNodes.begin();
-                        }
-                    }
-                    if(n3.vKeys.size()>0)
-                    {
-                        lNodes.push_front(n3);
-                        if(n3.vKeys.size()>1)
-                        {
-                            nToExpand++;
-                            vSizeAndPointerToNode.push_back(make_pair(n3.vKeys.size(),&lNodes.front()));
-                            lNodes.front().lit = lNodes.begin();
-                        }
-                    }
-                    if(n4.vKeys.size()>0)
-                    {
-                        lNodes.push_front(n4);
-                        if(n4.vKeys.size()>1)
-                        {
-                            nToExpand++;
-                            vSizeAndPointerToNode.push_back(make_pair(n4.vKeys.size(),&lNodes.front()));
-                            lNodes.front().lit = lNodes.begin();
-                        }
-                    }
+                    };
+                    pushChild(n1);
+                    pushChild(n2);
+                    pushChild(n3);
+                    pushChild(n4);
 
                     lit=lNodes.erase(lit);
                     continue;
@@ -702,44 +878,33 @@ namespace ORB_SLAM3
                     {
                         ExtractorNode n1,n2,n3,n4;
                         vPrevSizeAndPointerToNode[j].second->DivideNode(n1,n2,n3,n4);
+                        if(splitCount)
+                            ++(*splitCount);
 
                         // Add childs if they contain points
-                        if(n1.vKeys.size()>0)
+                        auto pushChild = [&](ExtractorNode &child)
                         {
-                            lNodes.push_front(n1);
-                            if(n1.vKeys.size()>1)
+                            const std::size_t childSize = child.vKeys.size();
+                            const bool expandable = childSize > 1;
+                            if(childSize == 0)
+                                return;
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+                            lNodes.push_front(child);
+#else
+                            lNodes.push_front(std::move(child));
+#endif
+                            if(expandable)
                             {
-                                vSizeAndPointerToNode.push_back(make_pair(n1.vKeys.size(),&lNodes.front()));
+                                vSizeAndPointerToNode.push_back(
+                                    make_pair(static_cast<int>(childSize),
+                                              &lNodes.front()));
                                 lNodes.front().lit = lNodes.begin();
                             }
-                        }
-                        if(n2.vKeys.size()>0)
-                        {
-                            lNodes.push_front(n2);
-                            if(n2.vKeys.size()>1)
-                            {
-                                vSizeAndPointerToNode.push_back(make_pair(n2.vKeys.size(),&lNodes.front()));
-                                lNodes.front().lit = lNodes.begin();
-                            }
-                        }
-                        if(n3.vKeys.size()>0)
-                        {
-                            lNodes.push_front(n3);
-                            if(n3.vKeys.size()>1)
-                            {
-                                vSizeAndPointerToNode.push_back(make_pair(n3.vKeys.size(),&lNodes.front()));
-                                lNodes.front().lit = lNodes.begin();
-                            }
-                        }
-                        if(n4.vKeys.size()>0)
-                        {
-                            lNodes.push_front(n4);
-                            if(n4.vKeys.size()>1)
-                            {
-                                vSizeAndPointerToNode.push_back(make_pair(n4.vKeys.size(),&lNodes.front()));
-                                lNodes.front().lit = lNodes.begin();
-                            }
-                        }
+                        };
+                        pushChild(n1);
+                        pushChild(n2);
+                        pushChild(n3);
+                        pushChild(n4);
 
                         lNodes.erase(vPrevSizeAndPointerToNode[j].second->lit);
 
@@ -755,7 +920,7 @@ namespace ORB_SLAM3
         }
 
         // Retain the best point in each node
-        vector<cv::KeyPoint> vResultKeys;
+        vResultKeys.clear();
         vResultKeys.reserve(nfeatures);
         for(list<ExtractorNode>::iterator lit=lNodes.begin(); lit!=lNodes.end(); lit++)
         {
@@ -775,124 +940,109 @@ namespace ORB_SLAM3
             vResultKeys.push_back(*pKP);
         }
 
-        return vResultKeys;
     }
 
-    void ORBextractor::ComputeKeyPointsOctTree(vector<vector<KeyPoint> >& allKeypoints)
+    void ORBextractor::ComputeKeyPointsOctTreeLevel(
+        int level, vector<KeyPoint> &keypoints, LevelTiming &timing)
     {
-        allKeypoints.resize(nlevels);
-
+        timing = LevelTiming();
         const float W = 35;
+        const int minBorderX = EDGE_THRESHOLD-3;
+        const int minBorderY = minBorderX;
+        const int maxBorderX = mvImagePyramid[level].cols-EDGE_THRESHOLD+3;
+        const int maxBorderY = mvImagePyramid[level].rows-EDGE_THRESHOLD+3;
 
-        for (int level = 0; level < nlevels; ++level)
-        {
-            const int minBorderX = EDGE_THRESHOLD-3;
-            const int minBorderY = minBorderX;
-            const int maxBorderX = mvImagePyramid[level].cols-EDGE_THRESHOLD+3;
-            const int maxBorderY = mvImagePyramid[level].rows-EDGE_THRESHOLD+3;
-
-            vector<cv::KeyPoint> vToDistributeKeys;
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+        vector<cv::KeyPoint> legacyKeysCell;
+        vector<cv::KeyPoint> legacyToDistributeKeys;
+        vector<cv::KeyPoint> &vKeysCell = legacyKeysCell;
+        vector<cv::KeyPoint> &vToDistributeKeys = legacyToDistributeKeys;
+#else
+        vector<cv::KeyPoint> &vKeysCell = mCellKeypoints[level];
+        vector<cv::KeyPoint> &vToDistributeKeys = mCandidateKeypoints[level];
+#endif
+        vKeysCell.clear();
+        vToDistributeKeys.clear();
+        if(vToDistributeKeys.capacity() < static_cast<std::size_t>(nfeatures*10))
             vToDistributeKeys.reserve(nfeatures*10);
 
-            const float width = (maxBorderX-minBorderX);
-            const float height = (maxBorderY-minBorderY);
+        const float width = (maxBorderX-minBorderX);
+        const float height = (maxBorderY-minBorderY);
+        const int nCols = width/W;
+        const int nRows = height/W;
+        const int wCell = ceil(width/nCols);
+        const int hCell = ceil(height/nRows);
 
-            const int nCols = width/W;
-            const int nRows = height/W;
-            const int wCell = ceil(width/nCols);
-            const int hCell = ceil(height/nRows);
+        for(int i=0; i<nRows; i++)
+        {
+            const float iniY = minBorderY+i*hCell;
+            float maxY = iniY+hCell+6;
+            if(iniY>=maxBorderY-3)
+                continue;
+            if(maxY>maxBorderY)
+                maxY = maxBorderY;
 
-            for(int i=0; i<nRows; i++)
+            for(int j=0; j<nCols; j++)
             {
-                const float iniY =minBorderY+i*hCell;
-                float maxY = iniY+hCell+6;
-
-                if(iniY>=maxBorderY-3)
+                const float iniX = minBorderX+j*wCell;
+                float maxX = iniX+wCell+6;
+                if(iniX>=maxBorderX-6)
                     continue;
-                if(maxY>maxBorderY)
-                    maxY = maxBorderY;
+                if(maxX>maxBorderX)
+                    maxX = maxBorderX;
 
-                for(int j=0; j<nCols; j++)
+                const Mat cellImage =
+                    mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX);
+                vKeysCell.clear();
+                ORB_TIME_START(fastStart);
+                FAST(cellImage, vKeysCell, iniThFAST, true);
+                ORB_TIME_ADD(timing.fast_initial_ms, fastStart);
+
+                if(vKeysCell.empty())
                 {
-                    const float iniX =minBorderX+j*wCell;
-                    float maxX = iniX+wCell+6;
-                    if(iniX>=maxBorderX-6)
-                        continue;
-                    if(maxX>maxBorderX)
-                        maxX = maxBorderX;
-
-                    vector<cv::KeyPoint> vKeysCell;
-
-                    FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                         vKeysCell,iniThFAST,true);
-
-                    /*if(bRight && j <= 13){
-                        FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                             vKeysCell,10,true);
-                    }
-                    else if(!bRight && j >= 16){
-                        FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                             vKeysCell,10,true);
-                    }
-                    else{
-                        FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                             vKeysCell,iniThFAST,true);
-                    }*/
-
-
-                    if(vKeysCell.empty())
-                    {
-                        FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                             vKeysCell,minThFAST,true);
-                        /*if(bRight && j <= 13){
-                            FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                                 vKeysCell,5,true);
-                        }
-                        else if(!bRight && j >= 16){
-                            FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                                 vKeysCell,5,true);
-                        }
-                        else{
-                            FAST(mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX),
-                                 vKeysCell,minThFAST,true);
-                        }*/
-                    }
-
-                    if(!vKeysCell.empty())
-                    {
-                        for(vector<cv::KeyPoint>::iterator vit=vKeysCell.begin(); vit!=vKeysCell.end();vit++)
-                        {
-                            (*vit).pt.x+=j*wCell;
-                            (*vit).pt.y+=i*hCell;
-                            vToDistributeKeys.push_back(*vit);
-                        }
-                    }
-
+                    ++timing.fallback_cells;
+                    ORB_TIME_START(fallbackStart);
+                    FAST(cellImage, vKeysCell, minThFAST, true);
+                    ORB_TIME_ADD(timing.fast_fallback_ms, fallbackStart);
                 }
-            }
 
-            vector<KeyPoint> & keypoints = allKeypoints[level];
-            keypoints.reserve(nfeatures);
-
-            keypoints = DistributeOctTree(vToDistributeKeys, minBorderX, maxBorderX,
-                                          minBorderY, maxBorderY,mnFeaturesPerLevel[level], level);
-
-            const int scaledPatchSize = PATCH_SIZE*mvScaleFactor[level];
-
-            // Add border to coordinates and scale information
-            const int nkps = keypoints.size();
-            for(int i=0; i<nkps ; i++)
-            {
-                keypoints[i].pt.x+=minBorderX;
-                keypoints[i].pt.y+=minBorderY;
-                keypoints[i].octave=level;
-                keypoints[i].size = scaledPatchSize;
+                for(vector<cv::KeyPoint>::iterator vit=vKeysCell.begin();
+                    vit!=vKeysCell.end(); ++vit)
+                {
+                    vit->pt.x += j*wCell;
+                    vit->pt.y += i*hCell;
+                    vToDistributeKeys.push_back(*vit);
+                }
             }
         }
 
-        // compute orientations
-        for (int level = 0; level < nlevels; ++level)
-            computeOrientation(mvImagePyramid[level], allKeypoints[level], umax);
+        timing.candidate_count =
+            static_cast<std::uint32_t>(vToDistributeKeys.size());
+        ORB_TIME_START(octreeStart);
+        DistributeOctTree(vToDistributeKeys, minBorderX, maxBorderX,
+                          minBorderY, maxBorderY,
+                          mnFeaturesPerLevel[level], level, keypoints,
+                          &timing.octree_splits);
+        ORB_TIME_SET(timing.octree_ms, octreeStart);
+
+        const int scaledPatchSize = PATCH_SIZE*mvScaleFactor[level];
+        for(std::size_t i=0; i<keypoints.size(); ++i)
+        {
+            keypoints[i].pt.x += minBorderX;
+            keypoints[i].pt.y += minBorderY;
+            keypoints[i].octave = level;
+            keypoints[i].size = scaledPatchSize;
+        }
+    }
+
+    void ORBextractor::ComputeKeyPointsOctTree(
+        vector<vector<KeyPoint> >& allKeypoints)
+    {
+        allKeypoints.resize(nlevels);
+        RunLevelTasks(nlevels, [&](int level) {
+            ComputeKeyPointsOctTreeLevel(
+                level, allKeypoints[level], mLastStageTiming.levels[level]);
+        });
     }
 
     void ORBextractor::ComputeKeyPointsOld(std::vector<std::vector<KeyPoint> > &allKeypoints)
@@ -1077,7 +1227,11 @@ namespace ORB_SLAM3
     static void computeDescriptors(const Mat& image, vector<KeyPoint>& keypoints, Mat& descriptors,
                                    const vector<Point>& pattern)
     {
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
         descriptors = Mat::zeros((int)keypoints.size(), 32, CV_8UC1);
+#else
+        descriptors.create((int)keypoints.size(), 32, CV_8UC1);
+#endif
 
         for (size_t i = 0; i < keypoints.size(); i++)
             computeOrbDescriptor(keypoints[i], image, &pattern[0], descriptors.ptr((int)i));
@@ -1086,25 +1240,50 @@ namespace ORB_SLAM3
     int ORBextractor::operator()( InputArray _image, InputArray _mask, vector<KeyPoint>& _keypoints,
                                   OutputArray _descriptors, std::vector<int> &vLappingArea)
     {
+        (void)_mask;
+        mLastStageTiming = StageTiming();
         //cout << "[ORBextractor]: Max Features: " << nfeatures << endl;
         if(_image.empty())
             return -1;
 
         Mat image = _image.getMat();
         assert(image.type() == CV_8UC1 );
+        EnsureWorkspace(image);
+        mLastStageTiming.level_count = nlevels;
 
         // Pre-compute the scale pyramid
+        ORB_TIME_START(pyramid_start);
         ComputePyramid(image);
+        ORB_TIME_SET(mLastStageTiming.pyramid_ms, pyramid_start);
 
-        vector < vector<KeyPoint> > allKeypoints;
-        ComputeKeyPointsOctTree(allKeypoints);
+        ORB_TIME_START(keypoints_start);
+        ComputeKeyPointsOctTree(mAllKeypoints);
+        ORB_TIME_SET(mLastStageTiming.keypoints_octree_ms, keypoints_start);
         //ComputeKeyPointsOld(allKeypoints);
+
+        ORB_TIME_START(orientation_start);
+        RunLevelTasks(nlevels, [&](int level) {
+            ORB_TIME_START(levelStart);
+            computeOrientation(mvImagePyramid[level], mAllKeypoints[level], umax);
+            ORB_TIME_SET(mLastStageTiming.levels[level].orientation_ms,
+                         levelStart);
+        });
+        ORB_TIME_SET(mLastStageTiming.orientation_ms, orientation_start);
+
+        for (int level = 0; level < nlevels; ++level)
+        {
+            const LevelTiming &levelTiming = mLastStageTiming.levels[level];
+            mLastStageTiming.fast_initial_ms += levelTiming.fast_initial_ms;
+            mLastStageTiming.fast_fallback_ms += levelTiming.fast_fallback_ms;
+            mLastStageTiming.octree_ms += levelTiming.octree_ms;
+        }
 
         Mat descriptors;
 
+        ORB_TIME_START(output_setup_start);
         int nkeypoints = 0;
         for (int level = 0; level < nlevels; ++level)
-            nkeypoints += (int)allKeypoints[level].size();
+            nkeypoints += (int)mAllKeypoints[level].size();
         if( nkeypoints == 0 )
             _descriptors.release();
         else
@@ -1115,31 +1294,70 @@ namespace ORB_SLAM3
 
         //_keypoints.clear();
         //_keypoints.reserve(nkeypoints);
-        _keypoints = vector<cv::KeyPoint>(nkeypoints);
+        _keypoints.assign(nkeypoints, cv::KeyPoint());
+        ORB_TIME_ADD(mLastStageTiming.result_assembly_ms, output_setup_start);
 
-        int offset = 0;
+        ORB_TIME_START(blurStart);
+        for (int level = 0; level < nlevels; ++level)
+        {
+            if(mAllKeypoints[level].empty())
+                continue;
+            LevelTiming &levelTiming = mLastStageTiming.levels[level];
+#ifdef ORB_SLAM3_ORB_DIRECT_ISOLATED_BLUR
+            levelTiming.copy_ms = 0.0;
+#else
+            ORB_TIME_START(copyStart);
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+            mBlurredPyramid[level] = mvImagePyramid[level].clone();
+#else
+            mvImagePyramid[level].copyTo(mBlurredPyramid[level]);
+#endif
+            ORB_TIME_SET(levelTiming.copy_ms, copyStart);
+#endif
+
+            ORB_TIME_START(gaussianStart);
+#ifdef ORB_SLAM3_ORB_DIRECT_ISOLATED_BLUR
+            GaussianBlur(mvImagePyramid[level], mBlurredPyramid[level],
+                         Size(7, 7), 2, 2,
+                         BORDER_REFLECT_101 | BORDER_ISOLATED);
+#else
+            GaussianBlur(mBlurredPyramid[level], mBlurredPyramid[level],
+                         Size(7, 7), 2, 2, BORDER_REFLECT_101);
+#endif
+            ORB_TIME_SET(levelTiming.gaussian_ms, gaussianStart);
+            mLastStageTiming.copy_ms += levelTiming.copy_ms;
+            mLastStageTiming.gaussian_ms += levelTiming.gaussian_ms;
+        }
+        ORB_TIME_SET(mLastStageTiming.blur_ms, blurStart);
+
+        ORB_TIME_START(descriptorStart);
+        RunLevelTasks(nlevels, [&](int level) {
+            vector<KeyPoint>& keypoints = mAllKeypoints[level];
+            if(keypoints.empty())
+            {
+                mLevelDescriptors[level].release();
+                return;
+            }
+            ORB_TIME_START(levelStart);
+            computeDescriptors(mBlurredPyramid[level], keypoints,
+                               mLevelDescriptors[level], pattern);
+            ORB_TIME_SET(mLastStageTiming.levels[level].descriptor_ms,
+                         levelStart);
+        });
+        ORB_TIME_SET(mLastStageTiming.descriptor_ms, descriptorStart);
+
         //Modified for speeding up stereo fisheye matching
         int monoIndex = 0, stereoIndex = nkeypoints-1;
         for (int level = 0; level < nlevels; ++level)
         {
-            vector<KeyPoint>& keypoints = allKeypoints[level];
+            vector<KeyPoint>& keypoints = mAllKeypoints[level];
             int nkeypointsLevel = (int)keypoints.size();
 
             if(nkeypointsLevel==0)
                 continue;
+            Mat &desc = mLevelDescriptors[level];
 
-            // preprocess the resized image
-            Mat workingMat = mvImagePyramid[level].clone();
-            GaussianBlur(workingMat, workingMat, Size(7, 7), 2, 2, BORDER_REFLECT_101);
-
-            // Compute the descriptors
-            //Mat desc = descriptors.rowRange(offset, offset + nkeypointsLevel);
-            Mat desc = cv::Mat(nkeypointsLevel, 32, CV_8U);
-            computeDescriptors(workingMat, keypoints, desc, pattern);
-
-            offset += nkeypointsLevel;
-
-
+            ORB_TIME_START(assembly_start);
             float scale = mvScaleFactor[level]; //getScale(level, firstLevel, scaleFactor);
             int i = 0;
             for (vector<KeyPoint>::iterator keypoint = keypoints.begin(),
@@ -1162,9 +1380,39 @@ namespace ORB_SLAM3
                 }
                 i++;
             }
+            ORB_TIME_ADD(mLastStageTiming.result_assembly_ms, assembly_start);
         }
+        mLastStageTiming.mono_index = monoIndex;
+#ifdef ORB_SLAM3_ORB_OUTPUT_HASH
+        ORB_TIME_START(hashStart);
+        mLastStageTiming.output_hash =
+            HashOrbOutput(_keypoints, descriptors, monoIndex);
+        ORB_TIME_ADD(mLastStageTiming.result_assembly_ms, hashStart);
+#endif
         //cout << "[ORBextractor]: extracted " << _keypoints.size() << " KeyPoints" << endl;
         return monoIndex;
+    }
+
+    void ORBextractor::EnsureWorkspace(const cv::Mat &image)
+    {
+        for (int level = 0; level < nlevels; ++level)
+        {
+            const float scale = mvInvScaleFactor[level];
+            const Size size(cvRound((float)image.cols*scale),
+                            cvRound((float)image.rows*scale));
+            const Size wholeSize(size.width + EDGE_THRESHOLD*2,
+                                 size.height + EDGE_THRESHOLD*2);
+            mPyramidStorage[level].create(wholeSize, image.type());
+            mvImagePyramid[level] = mPyramidStorage[level](
+                Rect(EDGE_THRESHOLD, EDGE_THRESHOLD, size.width, size.height));
+            mBlurredPyramid[level].create(size, image.type());
+            if(mAllKeypoints[level].capacity() <
+               static_cast<std::size_t>(nfeatures))
+                mAllKeypoints[level].reserve(nfeatures);
+            if(mCandidateKeypoints[level].capacity() <
+               static_cast<std::size_t>(nfeatures*10))
+                mCandidateKeypoints[level].reserve(nfeatures*10);
+        }
     }
 
     void ORBextractor::ComputePyramid(cv::Mat image)
@@ -1173,9 +1421,16 @@ namespace ORB_SLAM3
         {
             float scale = mvInvScaleFactor[level];
             Size sz(cvRound((float)image.cols*scale), cvRound((float)image.rows*scale));
-            Size wholeSize(sz.width + EDGE_THRESHOLD*2, sz.height + EDGE_THRESHOLD*2);
-            Mat temp(wholeSize, image.type()), masktemp;
-            mvImagePyramid[level] = temp(Rect(EDGE_THRESHOLD, EDGE_THRESHOLD, sz.width, sz.height));
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+            const Size wholeSize(sz.width + EDGE_THRESHOLD*2,
+                                 sz.height + EDGE_THRESHOLD*2);
+            Mat legacyTemp(wholeSize, image.type());
+            mvImagePyramid[level] = legacyTemp(Rect(
+                EDGE_THRESHOLD, EDGE_THRESHOLD, sz.width, sz.height));
+            Mat &temp = legacyTemp;
+#else
+            Mat &temp = mPyramidStorage[level];
+#endif
 
             // Compute the resized image
             if( level != 0 )
@@ -1183,7 +1438,7 @@ namespace ORB_SLAM3
                 resize(mvImagePyramid[level-1], mvImagePyramid[level], sz, 0, 0, INTER_LINEAR);
 
                 copyMakeBorder(mvImagePyramid[level], temp, EDGE_THRESHOLD, EDGE_THRESHOLD, EDGE_THRESHOLD, EDGE_THRESHOLD,
-                               BORDER_REFLECT_101+BORDER_ISOLATED);
+                               BORDER_REFLECT_101|BORDER_ISOLATED);
             }
             else
             {

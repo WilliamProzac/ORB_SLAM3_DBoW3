@@ -22,8 +22,16 @@
 #ifndef ORBEXTRACTOR_H
 #define ORBEXTRACTOR_H
 
+#include <array>
+#include <atomic>
+#include <condition_variable>
+#include <cstdint>
+#include <exception>
+#include <functional>
 #include <list>
+#include <mutex>
 #include <opencv2/opencv.hpp>
+#include <thread>
 #include <vector>
 
 using namespace std;
@@ -47,10 +55,43 @@ class ORBextractor {
 public:
   enum { HARRIS_SCORE = 0, FAST_SCORE = 1 };
 
-  ORBextractor(int nfeatures, float scaleFactor, int nlevels, int iniThFAST,
-               int minThFAST);
+  static constexpr std::size_t kMaxTimedLevels = 16;
 
-  ~ORBextractor() {}
+  struct LevelTiming {
+    double fast_initial_ms = 0.0;
+    double fast_fallback_ms = 0.0;
+    double octree_ms = 0.0;
+    double orientation_ms = 0.0;
+    double copy_ms = 0.0;
+    double gaussian_ms = 0.0;
+    double descriptor_ms = 0.0;
+    std::uint32_t candidate_count = 0;
+    std::uint32_t fallback_cells = 0;
+    std::uint32_t octree_splits = 0;
+  };
+
+  struct StageTiming {
+    double pyramid_ms = 0.0;
+    double keypoints_octree_ms = 0.0;
+    double orientation_ms = 0.0;
+    double blur_ms = 0.0;
+    double descriptor_ms = 0.0;
+    double result_assembly_ms = 0.0;
+    double fast_initial_ms = 0.0;
+    double fast_fallback_ms = 0.0;
+    double octree_ms = 0.0;
+    double copy_ms = 0.0;
+    double gaussian_ms = 0.0;
+    std::uint64_t output_hash = 0;
+    int mono_index = 0;
+    int level_count = 0;
+    std::array<LevelTiming, kMaxTimedLevels> levels{};
+  };
+
+  ORBextractor(int nfeatures, float scaleFactor, int nlevels, int iniThFAST,
+               int minThFAST, int parallelWorkers = 1);
+
+  ~ORBextractor();
 
   // Compute the ORB features and descriptors on an image.
   // ORB are dispersed on the image using an octree.
@@ -60,6 +101,8 @@ public:
                  cv::OutputArray _descriptors, std::vector<int> &vLappingArea);
 
   int inline GetLevels() { return nlevels; }
+
+  const StageTiming &GetLastStageTiming() const { return mLastStageTiming; }
 
   float inline GetScaleFactor() { return scaleFactor; }
 
@@ -78,13 +121,25 @@ public:
   std::vector<cv::Mat> mvImagePyramid;
 
 protected:
+  StageTiming mLastStageTiming;
+
+  void EnsureWorkspace(const cv::Mat &image);
   void ComputePyramid(cv::Mat image);
   void
   ComputeKeyPointsOctTree(std::vector<std::vector<cv::KeyPoint>> &allKeypoints);
-  std::vector<cv::KeyPoint>
-  DistributeOctTree(const std::vector<cv::KeyPoint> &vToDistributeKeys,
-                    const int &minX, const int &maxX, const int &minY,
-                    const int &maxY, const int &nFeatures, const int &level);
+  void ComputeKeyPointsOctTreeLevel(int level,
+                                    std::vector<cv::KeyPoint> &keypoints,
+                                    LevelTiming &timing);
+  void DistributeOctTree(const std::vector<cv::KeyPoint> &vToDistributeKeys,
+                         const int &minX, const int &maxX, const int &minY,
+                         const int &maxY, const int &nFeatures,
+                         const int &level,
+                         std::vector<cv::KeyPoint> &resultKeys,
+                         std::uint32_t *splitCount = nullptr);
+
+  void RunLevelTasks(int taskCount, const std::function<void(int)> &task);
+  void WorkerLoop();
+  void ExecuteAvailableTasks();
 
   void
   ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint>> &allKeypoints);
@@ -95,6 +150,7 @@ protected:
   int nlevels;
   int iniThFAST;
   int minThFAST;
+  int mParallelWorkers;
 
   std::vector<int> mnFeaturesPerLevel;
 
@@ -104,6 +160,25 @@ protected:
   std::vector<float> mvInvScaleFactor;
   std::vector<float> mvLevelSigma2;
   std::vector<float> mvInvLevelSigma2;
+
+  std::vector<cv::Mat> mPyramidStorage;
+  std::vector<cv::Mat> mBlurredPyramid;
+  std::vector<cv::Mat> mLevelDescriptors;
+  std::vector<std::vector<cv::KeyPoint>> mAllKeypoints;
+  std::vector<std::vector<cv::KeyPoint>> mCellKeypoints;
+  std::vector<std::vector<cv::KeyPoint>> mCandidateKeypoints;
+
+  std::vector<std::thread> mWorkerThreads;
+  std::mutex mWorkerMutex;
+  std::condition_variable mWorkerCv;
+  std::condition_variable mWorkerDoneCv;
+  std::function<void(int)> mLevelTask;
+  std::atomic<int> mNextTask{0};
+  int mTaskCount = 0;
+  int mCompletedHelpers = 0;
+  std::size_t mTaskGeneration = 0;
+  bool mStopWorkers = false;
+  std::exception_ptr mWorkerException;
 };
 
 } // namespace ORB_SLAM3

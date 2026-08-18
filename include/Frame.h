@@ -22,6 +22,8 @@
 #ifndef FRAME_H
 #define FRAME_H
 
+#include <array>
+#include <cstdint>
 #include <vector>
 
 #include "Thirdparty/DBoW3/src/BowVector.h"
@@ -36,6 +38,7 @@
 
 #include "Converter.h"
 #include "Settings.h"
+#include "RgbdTiming.h"
 
 #include <mutex>
 #include <opencv2/opencv.hpp>
@@ -329,6 +332,30 @@ public:
   // from the legacy REGISTER_TIMES switch so detailed CSVs remain complete
   // without enabling the broader ORB-SLAM3 statistics machinery.
   double mTimeRgbdOrbExtract = 0.0;
+  double mTimeRgbdOrbPyramid = 0.0;
+  double mTimeRgbdOrbKeypointsOctree = 0.0;
+  double mTimeRgbdOrbOrientation = 0.0;
+  double mTimeRgbdOrbBlur = 0.0;
+  double mTimeRgbdOrbDescriptor = 0.0;
+  double mTimeRgbdOrbResultAssembly = 0.0;
+  double mTimeRgbdOrbFastInitial = 0.0;
+  double mTimeRgbdOrbFastFallback = 0.0;
+  double mTimeRgbdOrbOctree = 0.0;
+  double mTimeRgbdOrbCopy = 0.0;
+  double mTimeRgbdOrbGaussian = 0.0;
+  std::uint64_t mRgbdOrbOutputHash = 0;
+  int mRgbdOrbMonoIndex = 0;
+  int mRgbdOrbLevelCount = 0;
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelFastInitial{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelFastFallback{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelOctree{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelOrientation{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelCopy{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelGaussian{};
+  std::array<double, kMaxRgbdOrbLevels> mRgbdOrbLevelDescriptor{};
+  std::array<std::uint32_t, kMaxRgbdOrbLevels> mRgbdOrbLevelCandidates{};
+  std::array<std::uint32_t, kMaxRgbdOrbLevels> mRgbdOrbLevelFallbackCells{};
+  std::array<std::uint32_t, kMaxRgbdOrbLevels> mRgbdOrbLevelOctreeSplits{};
   double mTimeRgbdDepthAssoc = 0.0;
 
 #ifdef REGISTER_TIMES

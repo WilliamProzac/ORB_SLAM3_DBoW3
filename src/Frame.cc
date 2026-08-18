@@ -102,6 +102,30 @@ Frame::Frame(const Frame &frame)
     mmMatchedInImage = frame.mmMatchedInImage;
 
     mTimeRgbdOrbExtract = frame.mTimeRgbdOrbExtract;
+    mTimeRgbdOrbPyramid = frame.mTimeRgbdOrbPyramid;
+    mTimeRgbdOrbKeypointsOctree = frame.mTimeRgbdOrbKeypointsOctree;
+    mTimeRgbdOrbOrientation = frame.mTimeRgbdOrbOrientation;
+    mTimeRgbdOrbBlur = frame.mTimeRgbdOrbBlur;
+    mTimeRgbdOrbDescriptor = frame.mTimeRgbdOrbDescriptor;
+    mTimeRgbdOrbResultAssembly = frame.mTimeRgbdOrbResultAssembly;
+    mTimeRgbdOrbFastInitial = frame.mTimeRgbdOrbFastInitial;
+    mTimeRgbdOrbFastFallback = frame.mTimeRgbdOrbFastFallback;
+    mTimeRgbdOrbOctree = frame.mTimeRgbdOrbOctree;
+    mTimeRgbdOrbCopy = frame.mTimeRgbdOrbCopy;
+    mTimeRgbdOrbGaussian = frame.mTimeRgbdOrbGaussian;
+    mRgbdOrbOutputHash = frame.mRgbdOrbOutputHash;
+    mRgbdOrbMonoIndex = frame.mRgbdOrbMonoIndex;
+    mRgbdOrbLevelCount = frame.mRgbdOrbLevelCount;
+    mRgbdOrbLevelFastInitial = frame.mRgbdOrbLevelFastInitial;
+    mRgbdOrbLevelFastFallback = frame.mRgbdOrbLevelFastFallback;
+    mRgbdOrbLevelOctree = frame.mRgbdOrbLevelOctree;
+    mRgbdOrbLevelOrientation = frame.mRgbdOrbLevelOrientation;
+    mRgbdOrbLevelCopy = frame.mRgbdOrbLevelCopy;
+    mRgbdOrbLevelGaussian = frame.mRgbdOrbLevelGaussian;
+    mRgbdOrbLevelDescriptor = frame.mRgbdOrbLevelDescriptor;
+    mRgbdOrbLevelCandidates = frame.mRgbdOrbLevelCandidates;
+    mRgbdOrbLevelFallbackCells = frame.mRgbdOrbLevelFallbackCells;
+    mRgbdOrbLevelOctreeSplits = frame.mRgbdOrbLevelOctreeSplits;
     mTimeRgbdDepthAssoc = frame.mTimeRgbdDepthAssoc;
 
 #ifdef REGISTER_TIMES
@@ -271,6 +295,36 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
         std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
             std::chrono::steady_clock::now() - time_StartExtORB)
             .count();
+    const ORBextractor::StageTiming &orb_stage_timing =
+        mpORBextractorLeft->GetLastStageTiming();
+    mTimeRgbdOrbPyramid = orb_stage_timing.pyramid_ms;
+    mTimeRgbdOrbKeypointsOctree = orb_stage_timing.keypoints_octree_ms;
+    mTimeRgbdOrbOrientation = orb_stage_timing.orientation_ms;
+    mTimeRgbdOrbBlur = orb_stage_timing.blur_ms;
+    mTimeRgbdOrbDescriptor = orb_stage_timing.descriptor_ms;
+    mTimeRgbdOrbResultAssembly = orb_stage_timing.result_assembly_ms;
+    mTimeRgbdOrbFastInitial = orb_stage_timing.fast_initial_ms;
+    mTimeRgbdOrbFastFallback = orb_stage_timing.fast_fallback_ms;
+    mTimeRgbdOrbOctree = orb_stage_timing.octree_ms;
+    mTimeRgbdOrbCopy = orb_stage_timing.copy_ms;
+    mTimeRgbdOrbGaussian = orb_stage_timing.gaussian_ms;
+    mRgbdOrbOutputHash = orb_stage_timing.output_hash;
+    mRgbdOrbMonoIndex = orb_stage_timing.mono_index;
+    mRgbdOrbLevelCount = orb_stage_timing.level_count;
+    for (int level = 0; level < mRgbdOrbLevelCount; ++level) {
+      const ORBextractor::LevelTiming &level_timing =
+          orb_stage_timing.levels[level];
+      mRgbdOrbLevelFastInitial[level] = level_timing.fast_initial_ms;
+      mRgbdOrbLevelFastFallback[level] = level_timing.fast_fallback_ms;
+      mRgbdOrbLevelOctree[level] = level_timing.octree_ms;
+      mRgbdOrbLevelOrientation[level] = level_timing.orientation_ms;
+      mRgbdOrbLevelCopy[level] = level_timing.copy_ms;
+      mRgbdOrbLevelGaussian[level] = level_timing.gaussian_ms;
+      mRgbdOrbLevelDescriptor[level] = level_timing.descriptor_ms;
+      mRgbdOrbLevelCandidates[level] = level_timing.candidate_count;
+      mRgbdOrbLevelFallbackCells[level] = level_timing.fallback_cells;
+      mRgbdOrbLevelOctreeSplits[level] = level_timing.octree_splits;
+    }
 #ifdef REGISTER_TIMES
     mTimeORB_Ext = mTimeRgbdOrbExtract;
 #endif
