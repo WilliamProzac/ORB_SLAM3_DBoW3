@@ -520,3 +520,75 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
   `xfeat_rdk_x5/artifacts/f22_hybrid_ab/summary.json` plus the six paired CSV
   and log files. The original unindexed `2026-08-06-09-50-14.bag` was not
   modified; the tested indexed copy is `/tmp/f22_2026-08-06-09-50-14.bag`.
+
+## F23 Full XFeat frontend validation (2026-08-10)
+
+- Descriptor unit check:
+  `g++ -std=c++17 -Wall -Wextra -Werror -Iinclude
+  xfeat_rdk_x5/test_feature_descriptor.cpp src/FeatureDescriptor.cc
+  $(pkg-config --cflags --libs opencv4) -o
+  /tmp/f23_test_feature_descriptor && /tmp/f23_test_feature_descriptor`.
+  Success requires exact ORB Hamming checks, finite float cosine distances,
+  descriptor-family rejection, and the expected float medoid.
+- Host build check: `cmake --build build --target ORB_SLAM3 -j1` from the
+  repository root. Script check: `bash -n
+  xfeat_rdk_x5/run_f23_xfeat_smoke.sh`. Also require `git diff --check`.
+- RDK cross-build check: from `/home/ywl/Project/RDK_X5_orb_slam`, run
+  `RDK_BUILD_JOBS=1 ./tools/build_rdk_arm64_docker.sh`. The package must use
+  `-DORB_SLAM3_SOURCE_DIR=/ros1_project/orb_slam3_dbow3` so the tested core is
+  this repository rather than a stale mirror.
+- Board smoke/full replay helper:
+  `F23_ARTIFACTS=<output> F23_DURATION=<seconds>
+  ./xfeat_rdk_x5/run_f23_xfeat_smoke.sh <bag>`. It uses the isolated stage
+  `/userdata/orb_slam/f23_xfeat_20260810`, 0.5x playback, CPUs 2-7, a unique
+  topic prefix, Pangolin disabled, and copies the per-callback CSV back.
+- The 8-second temporal-Fine smoke passed 87/87 state-2 callbacks with no
+  `Fail to track local map!`. Evidence:
+  `xfeat_rdk_x5/artifacts/f23_xfeat_smoke_temporal_fine/`.
+- The complete `2026-08-06-09-46-39.bag` temporal-Fine run is failing
+  evidence, not a pass: 981 callbacks, 682 state-2, 299 state-3, 29 loss
+  segments, 2.97 s maximum loss and eight maps. Evidence:
+  `xfeat_rdk_x5/artifacts/f23_lawn_full_094639_temporal_fine/`.
+- The authoritative F23 gate remains five runs each of MH_01, MH_03 and MH_05,
+  requiring 5/5 initialization, ATE/RPE no greater than 1.05x ORB, and no
+  worse loss duration. No matching local dataset directories were found on
+  2026-08-10, so that gate is blocked and F23 must not be marked passing.
+
+## BR01 branch and archive validation (2026-09-07)
+
+The separation check compares inherited XFeat source bytes against `419878d`,
+the four runtime core modifications against their pre-migration backup, and all
+54 saved source/config files against `backup_manifest.json`. The archived 7,626
+file/link records were verified after relocation against SHA-256, size, mode or
+symlink target. Existing branch refs are compared with the saved ref inventory.
+
+Run the existing F23 descriptor test on its branch:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Werror -Iinclude \
+  xfeat_rdk_x5/test_feature_descriptor.cpp src/FeatureDescriptor.cc \
+  $(pkg-config --cflags --libs opencv4) -o /tmp/f23_branch_descriptor_check
+/tmp/f23_branch_descriptor_check
+```
+
+Run `bash -n` on migrated shell scripts and use Python `ast.parse` on migrated
+Python files. Check `git diff --check`, the source/artifact ownership, unique
+feature IDs, expected branch ancestry, ignore rules and final clean statuses in
+both core worktrees and the separate ROS/build repository. Validate build-script
+default and override paths without starting Docker or ROS.
+
+Results are recorded in the local archive's `validation.json`; branch/source
+routing is documented in `docs/branch-layout.md`.
+
+Full host/ARM builds and board replays were not rerun: this task preserves the
+existing C++ source bytes and organizes branch ownership. Only runner data-root
+selection and build-script default workspace/core routing were adjusted. The
+F23 long-run and EuRoC limitations remain blocked; imported runtime passing
+states describe the earlier recorded experiments, not new runtime verification.
+
+Verified 2026-09-07: 79 inherited source files match `419878d`; all four pending
+runtime core files and four unchanged ROS/build files match their saved bytes.
+The descriptor test passed, 9 shell scripts and 10 Python modules passed syntax
+checks, and build defaults/overrides, feature ownership and ignore rules passed.
+The new local branch commit IDs and clean statuses are recorded in the archive
+after committing. Original branch refs are retained.

@@ -2,100 +2,35 @@
 
 ## Summary
 
-- Active feature: F25
-- Final state: passing as a temporary diagnostic experiment; the gate is not
-  promoted as a production default.
-- Main result: the 25-inlier gate kept `09-59-04` in one map, including a
-  geometrically plausible frame at exactly 25 local-map inliers. `09-56-06`
-  still split because reference-keyframe matching failed before the local-map
-  gate, demonstrating a separate asynchronous map-state repeatability issue.
+- Active feature: BR01; final state: `passing` for branch/source/archive separation.
+- Scope: organize existing changes into the requested branches and archive
+  generated evidence. See `docs/branch-layout.md` for exact ownership and bases.
+- The original branch tips and frozen board production binaries are preserved.
+- Next recommended step: Continue F23 tracking-quality work on `feature/xfeat-f23`; the EuRoC/full-lawn gate remains blocked.
 
-## Commands Run
+## Validation and evidence
 
-```text
-git status --short
-sed -n '1,260p' README.md
-sed -n '1,260p' docs/repo-map.md
-sed -n '1,260p' docs/features.md
-sed -n '1,260p' docs/validation.md
-sed -n '1,260p' docs/progress.md
-sed -n '1,260p' docs/session-handoff.md
-rg -n "robot_pose_map|pose_correction|PoseCorrection|map_anchor|GetCorrectedMapPose|BlendPose|AutoEnableOnMapEvent|CorrectionHorizonFrames|EnableCorrectedMapPose" Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml README.md docs/features.md docs/validation.md docs/progress.md docs/session-handoff.md
-sed -n '1,320p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '320,620p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '620,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '1,240p' include/System.h
-sed -n '330,430p' src/System.cc
-sed -n '110,150p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml
-sed -n '110,150p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
-rg -n "robot_pose_map|PoseCorrection|map event|loop closure|merge|continuous_map" README.md docs/features.md docs/validation.md docs/progress.md docs/session-handoff.md
-nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '300,700p'
-nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '700,860p'
-sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml
-sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
-./build_ros.sh
-```
+- Pre-change snapshots: `backups/` and `backup_manifest.json` in the local
+  `20260907_git_reorganization` archive.
+- Archive move mapping and fingerprints: `artifact_moves.json` and
+  `artifact_manifest.json`; all 7,626 records verified after relocation.
+- Descriptor, syntax, source-preservation, ancestry, ignore and status checks:
+  `validation.json` in the same archive. Descriptor checks passed; all 9 shell
+  scripts and 10 Python modules passed syntax checks. Build-path defaults and
+  explicit overrides resolved to the expected source/workspace.
+- No host/ARM full build, board replay, new ATE/RPE gate or deployment was run
+  during this organization. C++ logic is inherited or preserved byte-for-byte;
+  build/data-root routing was adjusted and checked separately.
 
-## Commands Not Run
+## Files and remaining limitations
 
-- `./build.sh` was not rerun in this follow-up because the change surface was
-  limited to the ROS wrapper and its governance/docs updates.
-- `./run_stereo_inertial.sh mapping stereo --log` and
-  `./run_stereo_inertial.sh localization stereo --log` were not run in this
-  turn, so the new unstable-window behavior, TF visibility, and runtime service
-  semantics remain unverified here.
-
-## Touched Files
-
-- `README.md`
-- `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml`
-- `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml`
-- `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`
-- `docs/features.md`
-- `docs/progress.md`
-- `docs/validation.md`
-- `docs/session-handoff.md`
-
-## Evidence Paths
-
-- No new runtime logs or bag captures were produced in this session.
-- `./build_ros.sh` completed successfully in this follow-up, so the ROS wrapper
-  change set is at least build-verified even though runtime semantics are still
-  pending.
-- Static evidence came from `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`,
-  `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml`,
-  `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml`, `include/System.h`,
-  and `src/System.cc`.
-
-## Blockers and Assumptions
-
-- TODO: Runtime validation still depends on a reachable ROS master plus live or
-  replayed stereo image topics that can trigger both `Fail to track local
-  map!` and a later merge-equivalent big Atlas event in the same run.
-- TODO: Confirm in runtime that `/robot_pose` stays continuous in
-  `continuous_map` across tracking loss, new-map recovery, and later big map
-  events, with no residual convergence toward `/robot_pose_slam`.
-- TODO: Confirm in runtime that `/robot_pose_map` stays continuous in
-  `planning_map` throughout the tracking-loss window and only resumes
-  convergence toward `/robot_pose_slam` after the subsequent merge-equivalent
-  big map event closes that unstable window.
-- TODO: Confirm in runtime that ordinary `map_change` increments still do not
-  spam correction warnings, and that only big map events such as merge or loop
-  closure resume gradual convergence for `/robot_pose_map`.
-- TODO: Confirm in runtime that `PoseCorrection.EnableCorrectedMapPose = 0`
-  plus `PoseCorrection.AutoEnableOnMapEvent = 1` still produces a one-shot
-  correction window after the unstable window closes.
-
-## Next Recommended Step
-
-- Launch a stereo mapping or localization session that can reproduce tracking
-  loss followed by a later merge-equivalent big map event, and record
-  `/robot_pose_map`, `/robot_pose_slam`, `/robot_pose`,
-  `/robot_pose_tracking_ok`, and `/tf`.
-- In that session, explicitly verify the unstable-window contract and then test
-  the service toggle plus the case `EnableCorrectedMapPose = 0` with
-  `AutoEnableOnMapEvent = 1` to confirm the runtime still matches the intended
-  one-shot auto-correction design after instability clears.
+- Branch routing, feature list, progress, validation and handoff documentation;
+  ignore rules; branch-owned tests or runtime scripts/core fixes.
+- The outer ROS/build repository has its own same-named runtime branch.
+- TODO: F23 full-lawn tracking and the required EuRoC gate remain blocked.
+- TODO: archived board evidence needs to be supplied separately in a fresh clone.
+- The local runtime core includes changes absent from the frozen production
+  library. A clean Git branch does not mean those changes are deployed.
 
 ## Addendum 2026-06-06
 
@@ -772,3 +707,59 @@ sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
   temporal descriptor integration, XFeat vocabulary, relocalization, loop
   closing, or Atlas model-tag compatibility. Those belong to F23/F24 and must
   not be inferred from the passing F22 depth-only bridge.
+
+## Addendum 2026-08-10 — F23 full XFeat tracking blocked
+
+- Active feature/final state: F23 is `blocked`. F24 was not started because it
+  remains gated on F23 passing.
+- Implemented descriptor-aware ORB/XFeat distance and medoid utilities; a full
+  stereo feature-provider seam; an RDK-X5 XFeat provider; float-descriptor
+  Frame/MapPoint/reference-keyframe tracking; single-scale-aware projection;
+  and last-frame/current-frame mutual-nearest-neighbor plus M384 Fine temporal
+  matching. Float BoW is intentionally bypassed and loop closing is explicitly
+  disabled until F24 supplies a float vocabulary and descriptor-tagged Atlas.
+- Host commands passed: the `-Wall -Wextra -Werror` descriptor test,
+  `cmake --build build --target ORB_SLAM3 -j1`, `bash -n
+  xfeat_rdk_x5/run_f23_xfeat_smoke.sh`, and `git diff --check`.
+- RDK cross-build passed with `RDK_BUILD_JOBS=1
+  ./tools/build_rdk_arm64_docker.sh` in
+  `/home/ywl/Project/RDK_X5_orb_slam`. Final ARM64 node/library SHA-256 values
+  were `1d1f2ae6f1c8f218ebcae036431e92a2bb5082beab2383a6c4c6a2ffc42ebd8b`
+  and `7cad809094747f0ec4d64e7e9ed9bd24574939405c907c464ef6f2f18e595029`.
+- Board stage: `/userdata/orb_slam/f23_xfeat_20260810`. The test stage contains
+  the final core library. The final ROS node was not copied after a combined
+  upload approval-channel failure, but no ROS-facing ABI was changed in that
+  iteration; the staged node loaded and exercised the final core library.
+- Best short evidence:
+  `xfeat_rdk_x5/artifacts/f23_xfeat_smoke_temporal_fine/smoke.csv` and
+  `smoke.log`; 87/87 state-2 and pose-valid callbacks, zero loss segment,
+  158.25 mean inliers, 72.23 ms frontend mean. SHA-256 values are
+  `9ed85cb222016c9f8a1e5bc0cf376fedae4028e1acd8cc1e9e79570f8e5d5e82`
+  and `74dd7bbbf2f82c3b8f647e5d3a63f7c03cf959bc49cc9e12dd314101bfc964af`.
+- Complete first-lawn evidence:
+  `xfeat_rdk_x5/artifacts/f23_lawn_full_094639_temporal_fine/smoke.csv` and
+  `smoke.log`; 981 callbacks, 682 state-2, 299 state-3, 29 loss segments,
+  2.97 s maximum loss and eight maps. SHA-256 values are
+  `49cfbba2c226190117eb1d19a04cffef43eeb277f0945d1feb362878bab1079c`
+  and `096cb1f8051817a1acbf7e403dcf9cc725618e3a48f27765bf8731d85cdb7946`.
+- Commands not run: the formal MH_01/MH_03/MH_05 five-run ORB/XFeat gate,
+  because no matching dataset directories were found under the local project
+  roots; the other two lawn bags were not promoted as substitutes because
+  the first complete bag already fails long-run continuity and none supplies
+  external ground truth for ATE/RPE. `./build.sh` was not rerun end-to-end;
+  the directly affected `ORB_SLAM3` target and ARM64 ROS package both passed.
+- Touched current-repository areas: `CMakeLists.txt`,
+  `include/{FeatureDescriptor,StereoFeatureProvider,Frame,LoopClosing,ORBmatcher,System,Tracking}.h`,
+  `src/{FeatureDescriptor,Frame,KeyFrame,MapPoint,ORBmatcher,System,Tracking}.cc`,
+  F23 provider/test/replay files and evidence under `xfeat_rdk_x5/`, and the
+  four governance documents. The RDK workspace additionally changed its
+  package CMake/source/config/launch and cross-build wrapper.
+- Preserved user/runtime content: `.ros_runtime_11312/` remains untracked and
+  untouched; all three original lawn bags remain unchanged. The existing host
+  ROS master at `192.168.1.3:11311` was reused and left running.
+- Next recommended step: inspect why long-run LocalMapping culls the map to
+  zero optimization vertices despite strong short-run temporal tracking.
+  Add per-keyframe MapPoint creation/culling and covisibility evidence, then
+  validate a targeted fix on the complete first lawn bag before acquiring and
+  running the formal EuRoC five-run gate. Do not lower the 30-inlier tracking
+  gate or mark F23 passing from the 8-second smoke alone.

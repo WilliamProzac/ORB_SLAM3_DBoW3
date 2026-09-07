@@ -2,17 +2,11 @@
 
 ## Current Active Feature
 
-- Feature ID: F21
-- Current state: active
-- Owner/session: XFeat* semi-dense, fixed-size Fine Matcher, and production
-  ORB-SLAM3 baseline on 2026-08-03
-- Blockers: the first production ORB run and the full hard-grid M384 board
-  replay are complete. Hard balancing fixes nominal grid coverage, but lowers
-  mean NCC-qualified stereo correspondences from 289.42 to 186.03 and reaches
-  only 49.6% of the common-PnP ORB control's mean inliers, including one
-  24-inlier fragile pair. Advancement to F22 is blocked on a softened quota,
-  five alternating production runs, the map-reset statistics fix, and full
-  tracking/trajectory evidence.
+- Feature ID: BR01
+- Current state: passing
+- Owner/session: branch and local archive separation, 2026-09-07.
+- Source preservation, archive verification, descriptor/syntax checks and build/data routing checks passed. Final commit/status results are recorded in the archive.
+- Next feature: Continue F23 tracking-quality work on `feature/xfeat-f23`; the EuRoC/full-lawn gate remains blocked.
 
 ## Command Log
 
@@ -556,3 +550,48 @@
   remove duplicate extraction rather than promote this Hybrid mode unchanged.
 - Evidence: `xfeat_rdk_x5/artifacts/f22_hybrid_ab/summary.json` and the six
   paired CSV/log files in the same directory.
+
+### 2026-08-10 — F23 full XFeat stereo frontend and temporal tracking
+
+- Added descriptor-family-aware distance/medoid handling. ORB retains exact
+  Hamming behavior; normalized `CV_32F` XFeat descriptors use a scaled cosine
+  distance compatible with the existing matcher thresholds. MapPoint
+  representative descriptors now use the same type-aware medoid calculation.
+- Added a full stereo feature-provider seam and RDK-X5 implementation. In
+  `Feature.Type=XFeat`, both ORB extractors and ORB stereo matching are
+  bypassed; the frozen 600-point backbone, M384 Fine model, guided stereo
+  matching and NCC depth acceptance produce the complete Frame feature set.
+- XFeat tracking now bypasses BoW where no float vocabulary exists, disables
+  ORB octave filtering for the single-scale descriptor family, uses direct
+  descriptor matching plus Fine for the reference-keyframe path, and uses
+  mutual-nearest-neighbor last-frame/current-frame matching plus Fine before
+  motion-model pose optimization. Short non-inertial loss also retries the
+  direct reference path instead of calling ORB-vocabulary relocalization.
+- Host validation passed: the descriptor test printed `feature descriptor
+  checks passed`, `cmake --build build --target ORB_SLAM3 -j1` passed, the
+  smoke script passed `bash -n`, and `git diff --check` was clean. The RDK
+  single-job cross-build passed; final node/library SHA-256 values were
+  `1d1f2ae6...42ebd8b` and `7cad8090...95029`.
+- The best 8-second first-bag run recorded 87/87 state-2/pose-valid callbacks,
+  zero loss segment, 158.25 mean tracked inliers, and 72.23 ms mean frontend
+  time. Evidence hashes are `9ed85cb2...d5e82` for CSV and
+  `74dd7bbb...64af` for the log.
+- The complete first lawn bag did not pass long-run continuity: 981 callbacks,
+  682 state-2, 299 state-3, 29 loss segments, 2.97 s maximum loss, and eight
+  Atlas maps. It improved loss segmentation versus the original F23 attempt
+  (47 segments and 3.06 s maximum), but did not improve the original 692
+  state-2 callbacks. Evidence hashes are `49cfbba2...079c` for CSV and
+  `096cb1f8...7946` for the log.
+- F23 is `blocked`, not `passing`. No local MH_01/MH_03/MH_05 dataset
+  directories were found, so the required five-run initialization and
+  ATE/RPE comparison cannot be run. The lawn result independently shows that
+  keyframe/local-map longevity still needs work before that formal gate.
+
+### 2026-09-07 — BR01 worktree separation
+
+- Created the XFeat branch from `419878d` and the runtime branch from `84a964b`.
+- Preserved the runtime core fixes and the separate ROS/build repository changes.
+- Migrated 12 evaluation scripts and six OOM tool files to the runtime core.
+- Archived 7,626 files/links (1,585,974,243 regular-file bytes) outside Git and verified their fingerprints.
+- Kept compatibility links for existing evidence paths; see `docs/branch-layout.md`.
+- Runtime experiments imported into this branch retain historical evidence and use scoped RD IDs where present.

@@ -1,5 +1,7 @@
 # ORB-SLAM3_DBoW3 (Modified Version)
 
+当前目录维护 `feature/xfeat-f23`；板端 RGB-D 加速和诊断开发位于独立的 runtime worktree。分支、构建与本地归档位置见 [工作区说明](docs/branch-layout.md)。
+
 本项目在原有的 ORB-SLAM3 基础上进行了多项定制化修改，主要针对工程实用性、性能监控、快速启动与测试流程进行了优化。
 
 ## 本项目主要修改内容 (Modifications)
