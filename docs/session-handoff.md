@@ -1,204 +1,36 @@
 # Session Handoff
 
-## 2026-08-17 F27 RDK-X5 RGB-D ORB optimization
-
-- Active feature/final state: F27 passing. Production S316 uses
-  `ORBextractor.parallelWorkers: 3`; fine ORB timing, output hashes, legacy
-  allocation paths and direct isolated-ROI blur default OFF.
-- Implemented reusable per-level workspace, order-preserving OctTree moves and
-  an extractor-owned persistent worker pool without `cv::setNumThreads()` or
-  `cv::parallel_for_`. Added per-level debug counters, deterministic hashes,
-  blur/output/FAST validators and result-analysis tooling.
-- ARM64 build passed on OpenCV 4.5.4. Production `ros_rgbd` SHA-256 is
-  `a41fd835...cc7b`; core SHA-256 is `51c3e4d7...a2860`.
-- Legacy/optimized, serial/workers 2/3/4 and three worker-3 repetitions had
-  zero mismatches over all 1114 real frames. The 50-case blur test passed full
-  image and three-pixel boundary comparisons.
-- Final production verification ran each accepted bag five times at 1.0x. All
-  runs processed 490/490 or 624/624 frames, had zero sequence gaps, remained
-  in tracking state 2 and created one map. Pooled ORB mean/P95 was
-  28.915/34.707 and 27.650/33.530 ms; callback P95 was 85.256/80.427 ms.
-- Board deployment:
-  `/userdata/orb_slam/rgbd_orb_optimization_20260817/production_w3`.
-  Local report/raw evidence:
-  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_optimization_20260817/`.
-- Extra non-gating A/B note: one final hot-board production-off repetition had
-  one input gap after the formal ten-run gate. The ten required final runs all
-  passed; retain frequency/temperature telemetry for future regressions.
-- Commands not run: no `Runtime.OpenCVThreads` experiment was needed because
-  Gaussian P99 stayed below 12 ms. The direct isolated-ROI path passed all
-  hashes but remains disabled because it saved less than 0.7 ms.
-
-## 2026-08-14 F26 ORB six-stage timing extension
-
-- Active feature/final state: F26 remains passing; its RGB-D ORB total is now
-  split into pyramid, FAST/OctTree, orientation, blur, descriptor and result
-  assembly without changing feature extraction order.
-- ARM64 cross-build passed with two jobs. `ros_rgbd` SHA-256 is
-  `35332603...c4494`; core SHA-256 is `3a45dc2f...40f81a`.
-- The new build was deployed separately at
-  `/userdata/orb_slam/rgbd_orb_stage_timing_20260814`; prior debug and
-  production deployments were not overwritten.
-- `13-54-55 @ 1.0x` exited cleanly with 470 frame and 108 LocalMapping rows,
-  no lost frames, and one map. FAST/OctTree was the largest ORB stage at
-  26.856 ms mean (51.63%), followed by descriptor at 9.475 ms (18.21%) and
-  blur at 7.590 ms (14.59%).
-- Local evidence and analysis:
-  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_orb_stage_timing_20260814/`.
-- Unverified assumption/TODO: this was one instrumentation smoke replay, not a
-  repeated before/after optimization gate. CPU frequency/throttle telemetry
-  and a production build with timing disabled remain separate follow-ups.
-
-## 2026-08-14 F26 board deployment and runtime timing
-
-- Active feature and final state: F26, passing including board runtime CSV
-  verification and three controlled bag replays.
-- The first replay found the new fields accidentally dependent on disabled
-  legacy `REGISTER_TIMES`. The corrected implementation always records only
-  the new RGB-D/LocalMapping fields and does not enable the wider legacy
-  statistics machinery.
-- Corrected ARM64 build passed with `RDK_BUILD_JOBS=1` in 1 h 22 min. Node
-  SHA-256 remains `8a5d230d...7c09c`; core SHA-256 is
-  `6df2983c...efe0d9b`.
-- Board deployment: `/userdata/orb_slam/rgbd_timing_20260814`; old production
-  `/userdata/orb_slam/rgbd_20260812` was not modified. The incomplete debug
-  core is backed up as `liborb_slam3_ros.r1_incomplete.so`.
-- Valid runtime rows (frame/LocalMapping): `13-54-55 @ 1.0x` 477/93;
-  `13-56-52 @ 1.0x` 597/123; `13-56-52 @ 0.5x` 624/134. All play/node exit
-  codes were 0 and all shutdowns flushed CSVs cleanly.
-- Main evidence: foreground callback mean 89.5--91.2 ms against a 90 ms
-  period; ORB mean 49.5--52.5 ms; depth association 0.13 ms; Local BA abort
-  ratio 60%--75% at 1.0x versus 33% at 0.5x.
-- `13-54-55 @ 1.0x` lost tracking for 35 frames after a critical dropped pair
-  and a keyframe/LBA-abort burst. `13-56-52 @ 1.0x` stayed OK despite 27 drops,
-  proving drops are a risk multiplier rather than a sufficient cause.
-- Report and raw evidence:
-  `/home/ywl/Project/ORB_SLAM3_DBoW3/board_rgbd_timing_test_20260814/REPORT.md`.
-- Next recommended step: test 8 Hz and 9 Hz five times each, then optimize ORB
-  extraction before changing depth or ROS publishing.
-
-## 2026-08-13 F26 RGB-D timing debug branch
-
-- Active feature and final state: F26, passing for isolated source and ARM64
-  cross-build. Runtime CSV population remains TODO.
-- Core branch/worktree: `debug/rgbd-track-timing` at
-  `/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_track_timing/core`.
-- ROS companion workspace: parent `rgbd_track_timing/`, also on a local
-  `debug/rgbd-track-timing` branch because the original RDK workspace had an
-  empty `.git` directory.
-- Commands: `git diff --check`; initial four-job Docker cross-build (failed by
-  OOM at `Optimizer.cc`); single-job incremental cross-build (passed).
-- Evidence: aarch64 `ros_rgbd` SHA-256
-  `8a5d230d0756acee8a18a5ddddd5b18597e936da751e628d8e66c76a1c87c09c`;
-  core library SHA-256
-  `31e050f8f53e3d37afa959930434f3545affaf52ea224845aab290f5da61836b`.
-- Touched core files: `include/RgbdTiming.h`, `include/{Frame,Tracking,System,
-  LocalMapping}.h`, `src/{Frame,Tracking,System,LocalMapping}.cc`, and F26
-  docs. Touched ROS files: `src/ros_rgbd.cc`, `launch/s316_rgbd.launch`, the
-  Docker build wrapper and `DEBUG_BRANCH.md`.
-- Unverified assumptions/TODO: board deployment was not performed; neither
-  bag was replayed with this build; confirm both CSV files are populated on a
-  clean shutdown and correlate the known failing bag interval at 1.0x/0.5x.
-- Next step: stage the two ARM64 artifacts separately on the RDK-X5, replay the
-  accepted RGB-D bags, copy back `rgbd_frame_timing.csv` and
-  `local_mapping_timing.csv`, then compare P50/P90/P99 and deadline misses.
-
 ## Summary
 
-- Active feature: F25
-- Final state: passing as a temporary diagnostic experiment; the gate is not
-  promoted as a production default.
-- Main result: the 25-inlier gate kept `09-59-04` in one map, including a
-  geometrically plausible frame at exactly 25 local-map inliers. `09-56-06`
-  still split because reference-keyframe matching failed before the local-map
-  gate, demonstrating a separate asynchronous map-state repeatability issue.
+- Active feature: BR01; final state: `passing` for branch/source/archive separation.
+- Scope: organize existing changes into the requested branches and archive
+  generated evidence. See `docs/branch-layout.md` for exact ownership and bases.
+- The original branch tips and frozen board production binaries are preserved.
+- Next recommended step: Continue RGB-D runtime diagnostics here with the same-named outer ROS/build branch; explicitly choose a validated deployment before a board test.
 
-## Commands Run
+## Validation and evidence
 
-```text
-git status --short
-sed -n '1,260p' README.md
-sed -n '1,260p' docs/repo-map.md
-sed -n '1,260p' docs/features.md
-sed -n '1,260p' docs/validation.md
-sed -n '1,260p' docs/progress.md
-sed -n '1,260p' docs/session-handoff.md
-rg -n "robot_pose_map|pose_correction|PoseCorrection|map_anchor|GetCorrectedMapPose|BlendPose|AutoEnableOnMapEvent|CorrectionHorizonFrames|EnableCorrectedMapPose" Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml README.md docs/features.md docs/validation.md docs/progress.md docs/session-handoff.md
-sed -n '1,320p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '320,620p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '620,860p' Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc
-sed -n '1,240p' include/System.h
-sed -n '330,430p' src/System.cc
-sed -n '110,150p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml
-sed -n '110,150p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
-rg -n "robot_pose_map|PoseCorrection|map event|loop closure|merge|continuous_map" README.md docs/features.md docs/validation.md docs/progress.md docs/session-handoff.md
-nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '300,700p'
-nl -ba Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc | sed -n '700,860p'
-sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml
-sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
-./build_ros.sh
-```
+- Pre-change snapshots: `backups/` and `backup_manifest.json` in the local
+  `20260907_git_reorganization` archive.
+- Archive move mapping and fingerprints: `artifact_moves.json` and
+  `artifact_manifest.json`; all 7,626 records verified after relocation.
+- Descriptor, syntax, source-preservation, ancestry, ignore and status checks:
+  `validation.json` in the same archive. Descriptor checks passed; all 9 shell
+  scripts and 10 Python modules passed syntax checks. Build-path defaults and
+  explicit overrides resolved to the expected source/workspace.
+- No host/ARM full build, board replay, new ATE/RPE gate or deployment was run
+  during this organization. C++ logic is inherited or preserved byte-for-byte;
+  build/data-root routing was adjusted and checked separately.
 
-## Commands Not Run
+## Files and remaining limitations
 
-- `./build.sh` was not rerun in this follow-up because the change surface was
-  limited to the ROS wrapper and its governance/docs updates.
-- `./run_stereo_inertial.sh mapping stereo --log` and
-  `./run_stereo_inertial.sh localization stereo --log` were not run in this
-  turn, so the new unstable-window behavior, TF visibility, and runtime service
-  semantics remain unverified here.
-
-## Touched Files
-
-- `README.md`
-- `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml`
-- `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml`
-- `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`
-- `docs/features.md`
-- `docs/progress.md`
-- `docs/validation.md`
-- `docs/session-handoff.md`
-
-## Evidence Paths
-
-- No new runtime logs or bag captures were produced in this session.
-- `./build_ros.sh` completed successfully in this follow-up, so the ROS wrapper
-  change set is at least build-verified even though runtime semantics are still
-  pending.
-- Static evidence came from `Examples_old/ROS/ORB_SLAM3/src/ros_stereo.cc`,
-  `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo.yaml`,
-  `Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml`, `include/System.h`,
-  and `src/System.cc`.
-
-## Blockers and Assumptions
-
-- TODO: Runtime validation still depends on a reachable ROS master plus live or
-  replayed stereo image topics that can trigger both `Fail to track local
-  map!` and a later merge-equivalent big Atlas event in the same run.
-- TODO: Confirm in runtime that `/robot_pose` stays continuous in
-  `continuous_map` across tracking loss, new-map recovery, and later big map
-  events, with no residual convergence toward `/robot_pose_slam`.
-- TODO: Confirm in runtime that `/robot_pose_map` stays continuous in
-  `planning_map` throughout the tracking-loss window and only resumes
-  convergence toward `/robot_pose_slam` after the subsequent merge-equivalent
-  big map event closes that unstable window.
-- TODO: Confirm in runtime that ordinary `map_change` increments still do not
-  spam correction warnings, and that only big map events such as merge or loop
-  closure resume gradual convergence for `/robot_pose_map`.
-- TODO: Confirm in runtime that `PoseCorrection.EnableCorrectedMapPose = 0`
-  plus `PoseCorrection.AutoEnableOnMapEvent = 1` still produces a one-shot
-  correction window after the unstable window closes.
-
-## Next Recommended Step
-
-- Launch a stereo mapping or localization session that can reproduce tracking
-  loss followed by a later merge-equivalent big map event, and record
-  `/robot_pose_map`, `/robot_pose_slam`, `/robot_pose`,
-  `/robot_pose_tracking_ok`, and `/tf`.
-- In that session, explicitly verify the unstable-window contract and then test
-  the service toggle plus the case `EnableCorrectedMapPose = 0` with
-  `AutoEnableOnMapEvent = 1` to confirm the runtime still matches the intended
-  one-shot auto-correction design after instability clears.
+- Branch routing, feature list, progress, validation and handoff documentation;
+  ignore rules; branch-owned tests or runtime scripts/core fixes.
+- The outer ROS/build repository has its own same-named runtime branch.
+- TODO: F23 full-lawn tracking and the required EuRoC gate remain blocked.
+- TODO: archived board evidence needs to be supplied separately in a fresh clone.
+- The local runtime core includes changes absent from the frozen production
+  library. A clean Git branch does not mean those changes are deployed.
 
 ## Addendum 2026-06-06
 
@@ -875,3 +707,80 @@ sed -n '110,155p' Examples_old/ROS/ORB_SLAM3/MyD435i_stereo_load.yaml
   temporal descriptor integration, XFeat vocabulary, relocalization, loop
   closing, or Atlas model-tag compatibility. Those belong to F23/F24 and must
   not be inferred from the passing F22 depth-only bridge.
+
+## Archived RD35 handoff before branch separation
+
+
+### Summary
+
+- Active feature: RD35
+- Final state: `passing`.
+- Main result: the 3163-pair ultra-long host bag completed a cold-start 1.0x
+  LAN replay. The board processed 3136 callbacks and 741 KFs across five maps,
+  exited cleanly, and showed no kernel OOM or allocation failure. Peak RSS was
+  923.6 MiB; no loop/GBA occurred, so the reported 1000+ single-map failure
+  remains outside this run's coverage.
+
+### Commands Run
+
+```text
+F33_RUN_PREFIX=f35_long154955 F33_CONFIG_ROOT=<RD33 configs> \
+  F33_ARTIFACTS=<RD35 root> F33_REMOTE_ROOT=<RD35 board root> \
+  F33_BAG=2026-08-25-15-49-55.bag \
+  ./evaluation/run_f33_rgbd_orb_one.sh f700_l5 1
+python3 evaluation/analyze_f35_rgbd_oom.py \
+  evaluation/artifacts/f35_rgbd_oom_20260825_154955 \
+  2026-08-25-15-49-55.bag
+roscore -p 11312 with ROS_IP=192.168.1.3
+rosbag play --rate=1.0 <host bag> <unique RGB/depth LAN remaps>
+ssh/scp to launch the production board binary and retrieve timing only
+sha256sum 2026-08-25-15-49-55.bag
+bash -n evaluation/run_f33_rgbd_orb_one.sh
+git diff --check
+```
+
+### Commands Not Run
+
+- `./build.sh` and `./build_ros.sh` were not run because no SLAM source or
+  binary changed; the previously verified production ARM64 hashes were checked
+  in every run.
+- ATE/RPE was not run because the bag has no external trajectory ground truth.
+- A second replay or a forced 1000+ single-map workload was not run; the
+  requested bag produced only 741 KFs and fragmented into five maps.
+
+### Touched Files
+
+- `docs/features.md`, `docs/progress.md`, `docs/validation.md`, and this file
+- `evaluation/run_f33_rgbd_orb_one.sh` (OOM telemetry and system snapshots)
+- `evaluation/analyze_f35_rgbd_oom.py`
+- `evaluation/artifacts/f35_rgbd_oom_20260825_154955/`
+- No SLAM source, build artifact, vocabulary, or deployed production binary was
+  modified.
+
+### Evidence Paths
+
+- `evaluation/artifacts/f35_rgbd_oom_20260825_154955/report.md`
+- `evaluation/artifacts/f35_rgbd_oom_20260825_154955/summary.json`
+- `memory_pressure.png` and raw timing/log/pose/tracking/telemetry plus
+  before/after kernel snapshots beneath the same root. Board results are under
+  `/userdata/orb_slam/rgbd_long_154955_20260829/`; no bag exists there.
+
+### Blockers and Assumptions
+
+- The bag has no external ground truth, so absolute map accuracy is unverified.
+- This run had zero loop/merge events and no GBA. It therefore cannot validate
+  the suspected `vpKFs.size() * vpMP.size()` reserve behavior at a 1000+ KF
+  single-map loop closure.
+- RSS growth of about 0.590 MiB per processed KF is an observed workload slope,
+  not proof of a leak. Atlas intentionally retains all five maps, and memory
+  returned to baseline after node exit.
+- Twenty-seven paired inputs were lost in two overload clusters; the run is a
+  valid memory stress observation but not a complete-delivery mapping result.
+
+### Next Recommended Step
+
+- Reproduce the failure with a workload that keeps one map beyond 1000 KFs and
+  actually closes a loop, while retaining the RD35 commit/RSS/swap telemetry and
+  capturing `std::terminate`/exception output. That is the discriminating test
+  for the suspected Global BA allocation failure; merely replaying this
+  fragmented no-loop bag longer is not equivalent.

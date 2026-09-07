@@ -1,5 +1,7 @@
 # ORB-SLAM3_DBoW3 (Modified Version)
 
+当前目录维护 `debug/rgbd-runtime-diagnostics`；同级外层仓库保存配套 ROS 节点和构建脚本。分支、构建与本地归档位置见 [工作区说明](docs/branch-layout.md)。
+
 本项目在原有的 ORB-SLAM3 基础上进行了多项定制化修改，主要针对工程实用性、性能监控、快速启动与测试流程进行了优化。
 
 ## 本项目主要修改内容 (Modifications)

@@ -591,6 +591,18 @@ long unsigned int System::GetCurrentMapId() {
   return pCurrentMap ? pCurrentMap->GetId() : 0;
 }
 
+long unsigned int System::GetAtlasMapCount() {
+  return mpAtlas ? static_cast<long unsigned int>(mpAtlas->CountMaps()) : 0;
+}
+
+long unsigned int System::GetCurrentMapKeyFrames() {
+  return mpAtlas ? mpAtlas->KeyFramesInMap() : 0;
+}
+
+long unsigned int System::GetCurrentMapPoints() {
+  return mpAtlas ? mpAtlas->MapPointsInMap() : 0;
+}
+
 int System::GetLastBigChangeIdx() {
   return mpAtlas ? mpAtlas->GetLastBigChangeIdx() : 0;
 }
@@ -1515,6 +1527,10 @@ double System::GetTimeFromIMUInit() {
     return mpLocalMapper->GetCurrKFTime() - mpLocalMapper->mFirstTs;
   else
     return 0.f;
+}
+
+bool System::IsImuInitialized() {
+  return mpAtlas && mpAtlas->isImuInitialized();
 }
 
 bool System::isLost() {

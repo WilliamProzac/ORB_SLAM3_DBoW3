@@ -126,3 +126,19 @@ borrar/*
 /Thirdparty/accelerated_features/
 /Thirdparty/DBoW3.zip
 /Vocabulary/*.dbow3
+
+# Local experiment evidence and deployment archives (2026-09-07 separation).
+# Omit trailing slashes so both directories and archive symlinks are ignored.
+/local_archive/
+/.ros_runtime_*
+/bag_rgbd_quality_*
+/board_rgbd_*
+/handheld_oom_runs
+/rdk_userdata_archive
+/rdk_x5_rgbd_accelerated_package_*
+/rdk_x5_rgbd_accelerated_orb_slam_*.tar.xz
+/rdk_x5_rgbd_accelerated_orb_slam_*.tar.xz.sha256
+/evaluation/artifacts
+/xfeat_rdk_x5/artifacts/f23_*
+/tools/oom_debug/gdb-multiarch-root
+__pycache__/

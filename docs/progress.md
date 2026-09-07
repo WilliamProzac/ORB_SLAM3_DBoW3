@@ -2,12 +2,11 @@
 
 ## Current Active Feature
 
-- Feature ID: F27
+- Feature ID: BR01
 - Current state: passing
-- Owner/session: RDK-X5 RGB-D ORB workspace/move/level-parallel optimization
-  and 11 Hz repeated bag validation on 2026-08-17
-- Blockers: none. The safer copy-to-standalone blur remains production default;
-  direct isolated-ROI blur is a validated but disabled experiment.
+- Owner/session: branch and local archive separation, 2026-09-07.
+- Source preservation, archive verification, descriptor/syntax checks and build/data routing checks passed. Final commit/status results are recorded in the archive.
+- Next feature: Continue RGB-D runtime diagnostics here with the same-named outer ROS/build branch; explicitly choose a validated deployment before a board test.
 
 ## Command Log
 
@@ -556,3 +555,171 @@
   remove duplicate extraction rather than promote this Hybrid mode unchanged.
 - Evidence: `xfeat_rdk_x5/artifacts/f22_hybrid_ab/summary.json` and the six
   paired CSV/log files in the same directory.
+
+
+### Imported runtime command evidence
+
+| Date | Command | Result | Evidence |
+|---|---|---|---|
+| 2026-08-21 | Board-local `run_board_rgbd_timing_test.sh` for one mapping run and two cold-start localization runs at 1.0x; `python3 evaluation/analyze_f30_rgbd_map_localization.py 2026-08-20-13-14-09.bag 2026-08-20-13-38-22.bag evaluation/artifacts/f30_rgbd_map_relocalization` | passed | Mapping saved one 122-KF/6,840-MP Atlas. Both localization runs loaded all 122 KFs, matched KF15 after 30 startup LOST frames, accepted 144 inliers, and stayed OK for the next 773 frames with zero Local Mapping rows/new KFs/maps. Full evidence: `evaluation/artifacts/f30_rgbd_map_relocalization/report.md`. |
+| 2026-08-21 | Board-local `run_board_rgbd_timing_test.sh` at `1.0x` twice and `0.5x` once; `python3 evaluation/analyze_f29_rgbd.py 2026-08-20-13-14-09.bag evaluation/artifacts/f29_rgbd_20260820_131409` | passed | All three runs exited cleanly, returned only state 2 after initialization, and created only map 0. No loop or merge event appeared. Offline analysis found a strong actual-keyframe revisit (299 ratio matches/263 fundamental inliers). The camera initialization attempt failed, so no live-camera CPU load was present. Full evidence and limitations are in `evaluation/artifacts/f29_rgbd_20260820_131409/report.md`. |
+| 2026-08-20 | `./tools/build_rdk_arm64_docker.sh`, `evaluation/run_f28_stereo_parallel_one.sh <mode> <workers> <bag> <repeat>`, and `evaluation/summarize_f28_stereo_parallel.py` | passed | ARM64 catkin build passed after reducing build parallelism to avoid an `Optimizer.cc` compiler OOM. Twenty-one board runs screened workers 1-4, repeated candidates, and confirmed on all three bags with the live S316 driver CPU-isolated. Selected stereo w2 and stereo-inertial w3; evidence and report are in `evaluation/artifacts/f28_stereo_parallel_tuning/`. |
+
+### 2026-08-18 — RD26 RDK X5 S316 stereo-inertial integration
+
+- Added an RDK ROS stereo-inertial node with independent bounded image/IMU
+  queues, exact stereo pairing, SDK-derived IMU timestamp correction, and
+  calibrated `TrackStereo` inertial batches. Added the S316 inertial YAML and
+  launch configuration in the RDK workspace.
+- Diagnosed the initial first-frame SIGSEGV with the board core dump. The
+  diagnostics queried `GetTimeFromIMUInit()` before the first local-mapping
+  keyframe, exposing an uninitialized `mpCurrentKeyFrame`. Initializing it to
+  null made the existing guard safe; the repeat smoke did not crash.
+- The ARM64 cross-build passed. Deployed hashes are
+  `d3a6019e...5e28` for the node and `518ec0df...00bfe` for the core library.
+- Complete 0.5x replays processed `996/811/715` stereo pairs and
+  `17933/14609/12863` corrected IMU samples. Each run reached inertial
+  initialization, ended in state 2 with a valid pose, and had zero state-3
+  rows. Mean `TrackStereo` time was `115.106/115.015/109.214 ms`.
+- The first two bags had insufficient-motion resets early in inertial
+  initialization but recovered. The third initialized without an early reset.
+  The original unindexed third bag remained untouched.
+- Evidence: `evaluation/artifacts/f26_stereo_inertial_rdk_x5/summary.md` and
+  its three per-frame CSV files. Test ROS/SLAM processes and diagnostic core
+  files were removed after verification; the deployed binaries/configuration
+  and CSV evidence remain on the board.
+
+### 2026-08-18 — RD27 original-speed stereo versus stereo-inertial
+
+- Added common Atlas/map/pose evidence to the pure-stereo and
+  stereo-inertial ROS wrappers, plus explicit pure-ORB S316 settings. Built a
+  shared ARM64 core and both nodes, then deployed them to the isolated board
+  stage `/userdata/orb_slam/f27_stereo_vs_imu_rate1_20260818`.
+- Replayed all three supplied lawn bags once per mode at `1.0x`, alternating
+  run order. Both modes used ORB 600/5, the same camera/baseline/vocabulary,
+  viewer off and CPUs 2-7. All six runs completed without a runtime error.
+- Pure stereo delivered `840/679/631` callbacks versus stereo-inertial
+  `785/638/593`, an aggregate 85.25% versus 79.94% of source pairs. Mean
+  callback cost was 104.8 versus 112.5 ms.
+- Pure stereo lost `0/26/55` callbacks and ended with `1/2/3` Atlas maps.
+  Stereo-inertial had zero tracking-loss rows and one map on all bags, with
+  materially larger final active maps on the two difficult bags. Its weighted
+  mean tracked-inlier count was 120.0 versus 111.1 for pure stereo.
+- Each inertial run underwent one early insufficient-motion active-map reset,
+  then reinitialized and remained stable. This startup sensitivity remains a
+  live-use caveat even though it did not fragment the final Atlas.
+- Generated a machine-readable summary, a Chinese comparison report, and
+  mapping-health/ground-plane trajectory plots under
+  `evaluation/artifacts/f27_stereo_vs_imu_rate1/`. No absolute accuracy claim
+  is made because the bags lack external ground truth. Test processes were
+  stopped; the board had no remaining SLAM process after validation.
+
+### 2026-08-21 — RD31 RGB-D-inertial mapping and localization A/B
+
+- Added an S316 `ros_rgbd_inertial` node with exact RGB/depth pairing,
+  corrected IMU batching, bounded asynchronous queues, full RGB-D stage timing,
+  IMU initialization evidence and map/pose output. Added matching mapping and
+  localization configurations and extended the cross-build/board runners.
+- Fixed loaded-inertial-Atlas pure-localization velocity recovery after
+  relocalization. The pre-fix run had only 74/802 OK frames; the retained final
+  run had 771/802 OK, with 31 RECENTLY_LOST frames only during processed frames
+  2-47 and stable tracking thereafter.
+- Completed four fair 1.0x board runs. Pure RGB-D mapping/localization stayed
+  OK for 670/670 and 803/803 frames. IMU mapping initialized at 2.70 s and
+  saved a 117-KF/6254-MP Atlas; localization loaded it without adding a
+  keyframe, Local Mapping row or second map.
+- IMU increased callback mean/P95 by 7.76/14.93 ms in mapping and
+  18.59/25.52 ms in localization. IMU localization exceeded the 11 Hz period
+  on 33.79% of frames and built almost 3 s of queue lag. ORB extraction was
+  essentially unchanged; Local Map tracking accounted for most of the cost.
+- Without external ground truth, only aligned-trajectory and route-repeatability
+  proxies were evaluated. They showed close geometry when IMU tracking was OK,
+  but no measurable accuracy benefit over pure RGB-D. RD31 passes its functional
+  and comparison verification, while the report recommends pure RGB-D for the
+  current 11 Hz deployment.
+- Evidence: `evaluation/artifacts/f31_rgbd_imu_ab/report.md`, `summary.json`,
+  four formal run directories, deploy artifacts, exact configs and plot.
+
+### 2026-08-25 — RD32 RGB-D 1.0x ROS LAN mapping replay
+
+- Kept `2026-08-25-09-56-06.bag` on host `192.168.1.3`, ran ROS master on
+  port 11312, and connected the accelerated RGB-D node on RDK X5
+  `192.168.1.10`. The aborted preliminary board transfer was removed before
+  the formal test.
+- The complete 1.0x run delivered 888/888 exact RGB/depth pairs with zero
+  sequence gaps. Every callback ended in state 2 and all 888 tracking-status
+  messages were true. Only map 0 was created, through KF190.
+- Callback mean/P95/max was 61.46/77.27/89.10 ms; none exceeded the 90 ms
+  source period. ORB mean was 27.72 ms and mean tracked inliers were 170.15.
+- No explicit loop event occurred. Frames 199/642 are a strong visual revisit
+  with 159 ratio matches and 135 fundamental-matrix inliers, but the retained
+  log does not expose the loop-candidate rejection gate.
+- The node shut down cleanly and all host/board test processes were stopped.
+  No Atlas was saved because the production YAML has no save path. Evidence:
+  `evaluation/artifacts/rgbd_20260825_lan/report.md` and `summary.json`.
+
+### 2026-08-25 — RD33 RGB-D ORB feature/level matrix
+
+- Reused the exact RD32 production ARM64 node/library/vocabulary and changed only
+  `ORBextractor.nFeatures` and `ORBextractor.nLevels`. Kept the bag on the host
+  and completed eight cold-start 1.0x ROS LAN runs: `600x5`, two `700x5`, two
+  `800x5`, `800x6`, `1000x6`, and `1200x8`.
+- Selected `700x5`. Both repeats processed 888/888 pairs with zero gaps, every
+  callback in state 2, one map, callback P95 `84.02/82.87 ms`, and mean tracked
+  inliers `189.3/188.3`. This is about 13.6% more inliers than the matrix
+  `600x5` baseline while preserving complete delivery.
+- Both `800x5` runs lost input (`2/3` pairs). The larger `800x6`, `1000x6`,
+  and `1200x8` settings lost `4/18/83` pairs. Increasing features raised local
+  inliers but never produced a loop event, so it does not resolve the earlier
+  loop-candidate/geometry question.
+- Every node and rosbag exit was zero, every SLAM shutdown reported all threads
+  finished, and no runtime error or second map occurred. The host ROS master
+  and all board processes were stopped; no bag was copied to the board.
+- Evidence: `evaluation/artifacts/f33_rgbd_orb_matrix/report.md`, `summary.json`,
+  two plots, six YAMLs, and the eight raw run directories.
+
+### 2026-08-25 — RD34 new RGB-D bag 1.0x LAN mapping
+
+- Kept `2026-08-25-13-12-57.bag` on host `192.168.1.3` and replayed it at
+  `1.0x` over ROS1 to the accelerated node on RDK X5 `192.168.1.10`, using
+  RD33's selected `700x5` setting. No bag was copied to the board.
+- The run delivered all 1247 exact RGB/depth pairs with zero sequence gaps.
+  Every callback ended in state 2, all tracking-status messages were true, and
+  only map 0 was created through KF158.
+- Two explicit loops occurred at KF80 and KF141. Published map-frame trajectory
+  updates of 0.1479 m and 0.1338 m appeared five source frames after the loop
+  keyframes, confirming that map correction was applied.
+- Callback mean/P95/max was 64.46/81.29/100.25 ms. Eleven callbacks exceeded
+  90 ms, but delivery remained complete and header-age growth was 14.78 ms.
+  Node maximum RSS was 661.0 MiB and maximum board temperature was 55.19 C.
+- rosbag and node exited zero and all SLAM threads finished. The bag has no
+  ground truth and no Atlas save path, so ATE/RPE and persisted-map loading were
+  not tested. Evidence: `evaluation/artifacts/f34_rgbd_20260825_131257/`.
+
+### 2026-08-29 — RD35 ultra-long RGB-D OOM replay
+
+- Kept the 7.76 GB `2026-08-25-15-49-55.bag` on host `192.168.1.3` and
+  completed one 1.0x ROS LAN replay to the production accelerated RGB-D node
+  on RDK X5 `192.168.1.10`. The source contains 3163 exact timestamp pairs.
+- The board processed 3136 pairs and 741 keyframes. Four tracking-loss windows
+  split the Atlas into five maps; 27 input pairs were lost in two callback
+  overload clusters, and no loop/merge occurred.
+- Peak node RSS was 923.6 MiB, VSZ 2419.5 MiB, and node VmSwap 0 MiB. System
+  MemAvailable bottomed at 140.7 MiB, while Committed_AS retained at least
+  1238.1 MiB of headroom below CommitLimit. Kernel and node logs contained no
+  OOM, allocation failure or segmentation fault.
+- Both playback and node exited zero, all SLAM threads finished, memory returned
+  to the pre-run level, and the board retained neither a bag nor a SLAM process.
+- This run did not reproduce the reported 1000+ KF exit because it stopped at
+  KF740 and fragmented into maps no larger than about 255 KFs. With no loop,
+  the suspicious Global BA Cartesian-product reserve path was not exercised.
+  Evidence: `evaluation/artifacts/f35_rgbd_oom_20260825_154955/`.
+
+### 2026-09-07 — BR01 worktree separation
+
+- Created the XFeat branch from `419878d` and the runtime branch from `84a964b`.
+- Preserved the runtime core fixes and the separate ROS/build repository changes.
+- Migrated 12 evaluation scripts and six OOM tool files to the runtime core.
+- Archived 7,626 files/links (1,585,974,243 regular-file bytes) outside Git and verified their fingerprints.
+- Kept compatibility links for existing evidence paths; see `docs/branch-layout.md`.
+- Runtime experiments imported into this branch retain historical evidence and use scoped RD IDs where present.

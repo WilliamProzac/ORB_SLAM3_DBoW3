@@ -166,6 +166,11 @@ public:
   // Current active Atlas map id, useful for ROS-facing continuity wrappers.
   long unsigned int GetCurrentMapId();
 
+  // Read-only map population statistics for runtime evaluation.
+  long unsigned int GetAtlasMapCount();
+  long unsigned int GetCurrentMapKeyFrames();
+  long unsigned int GetCurrentMapPoints();
+
   // Current Atlas big-change counter without consuming MapChanged() state.
   int GetLastBigChangeIdx();
 
@@ -228,6 +233,7 @@ public:
 
   // For debugging
   double GetTimeFromIMUInit();
+  bool IsImuInitialized();
   bool isLost();
   bool isFinished();
 

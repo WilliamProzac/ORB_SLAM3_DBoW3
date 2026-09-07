@@ -2339,7 +2339,19 @@ void Tracking::Track() {
         // Right after relocalization, the pose jump can make a stale/large
         // velocity model that destabilizes pure localization.
         if (mCurrentFrame.mnId <= mnLastRelocFrameId + 5) {
-          mbVelocity = false;
+          if (mbOnlyTracking) {
+            // Pure localization needs projection matching immediately after
+            // relocalization. Keep an identity model for the accepted frame,
+            // then update it from consecutive successful poses.
+            if (mCurrentFrame.mnId == mnLastRelocFrameId)
+              mVelocity = Sophus::SE3f();
+            else
+              mVelocity =
+                  mCurrentFrame.GetPose() * mLastFrame.GetPose().inverse();
+            mbVelocity = true;
+          } else {
+            mbVelocity = false;
+          }
         } else {
           Sophus::SE3f LastTwc = mLastFrame.GetPose().inverse();
           mVelocity = mCurrentFrame.GetPose() * LastTwc;
@@ -4130,10 +4142,12 @@ bool Tracking::Relocalization() {
     // tracking. Projection-based search uses the known pose to reproject all
     // visible MapPoints into the new frame within a pixel search radius,
     // returning 100+ matches regardless of vocabulary quality.
-    // We use identity velocity (zero motion assumption) as a conservative
-    // starting point; the actual pose will be refined by PoseOptimization.
-    // mVelocity = Sophus::SE3f(); // identity = assume zero motion for 1 frame
-    mbVelocity = false;
+    // Use identity velocity (zero motion assumption) as a conservative
+    // starting point; the next frame can then use projection matching around
+    // the relocalized pose instead of falling back to weak infrared BoW
+    // reference-keyframe matching.
+    mVelocity = Sophus::SE3f();
+    mbVelocity = true;
 
     // Re-bootstrap IMU preintegration chain from the matched keyframe.
     // Do not delete the previous object here: current/previous frame copies
