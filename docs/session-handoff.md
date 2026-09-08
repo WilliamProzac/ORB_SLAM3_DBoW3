@@ -1,5 +1,35 @@
 # Session Handoff
 
+## RGB-D callback code review completed — 2026-09-08
+
+The user requested deeper acceleration analysis without compromising extraction,
+matching or tracking quality. Read `docs/rgbd-callback-optimization-review.md`.
+Analysis artifacts are in outer `experiments/rgbd_callback_review_20260908/`:
+18 existing runs / 37,905 callbacks, source hashes, frozen ARM64 disassembly,
+per-run tail statistics and explicitly hypothetical arithmetic sensitivity.
+No new board replay, SLAM build, deployment or runtime source edit was performed.
+
+Frozen binary confirms per-byte Hamming popcount, grid copies/allocations,
+MapPoint descriptor clone and FrameDrawer updates. First candidates: preserve
+candidate order with grid references and reusable scratch; exact 32-byte ORB
+SIMD distance; locked descriptor snapshot into caller storage; headless-only
+visualization cache gating. No threshold, feature-count, optimization-iteration
+or map-selection reductions. Local-map substage costs are still unmeasured;
+no speedup or P99 target is claimed achieved. Future implementation must verify
+fixed-snapshot output equivalence and asynchronous mapping quality separately.
+RD37 implementation remains not_started. Existing RD36 stop-testing direction
+and frozen deployment protections remain in effect.
+
+## RD36 completed diagnostic study — 2026-09-08
+
+Completed 18 full recovered-bag replays in the owning outer workspace. Evidence: `../experiments/rgbd_queue_20260908_1518/`; read `conclusion.md`, `report.md`, `matrix.json` and `run_manifest.json`. The user requested convergence on existing results: no more parameter tests were started after the already-running final 8/8/20 replay. Prepared but unexecuted runs are excluded.
+
+Increasing subscription capacity alone is not a reliable, sufficient repair. Production 700 and 500 each lost tracking in 2/3 runs. Diagnostic 500/4/4/10 missed 1/0/31 pairs across three runs and lost tracking in two. B700/8/8/10 lost 28 pairs after both streams were dequeued: ExactTime trace replay reproduces capacity eviction. Separately, C500/4/4/10 r1 lost tracking at seq761 before its only missing input at1199. Thus input completeness alone cannot ensure stable tracking. No production configuration passed repeated complete-input/single-map validation. Final 700/8/8/20 missed one pair without tracking loss, but is one observation with substantial relative latency variation, not a validated recommendation.
+
+The diagnostic wrapper was built in local ARM64 Docker and ABI-checked against frozen core (same 12 ORB symbol references, System size1888, timing size1424 and offsets). Node SHA2797d3fd...6239a; library51c3e4d7...a2860. All 18 SLAM/player exits were zero; the first controller's collection error was recovered with rsync and preserved in evidence. Validation passed measurement/provenance invariants, not runtime correctness. Frozen production and bag hashes are unchanged. Experiment processes and master11332 ended; unrelated master11311 remains. User-approved temporary arm64 binfmt was removed after compilation. No Git commit, core algorithm change, or original XFeat user-edit modification.
+
+No further replay is pending in this task. Future work, if requested, should locate pre-subscription reception/eviction and two-stream dispatch skew, and explain tracking failures with complete input. Source patches and final board/host checks are in `provenance/`. Historical sections below describe earlier work and are not the current task status.
+
 ## Summary
 
 - Active feature: BR01; final state: `passing` for branch/source/archive separation.

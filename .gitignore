@@ -94,7 +94,8 @@ borrar/*
 
 # Governance files kept local on master
 /AGENTS.md
-/docs/
+/docs/*
+!/docs/rgbd-callback-optimization-review.md
 
 # Local ROS recordings and runtime output
 *.bag

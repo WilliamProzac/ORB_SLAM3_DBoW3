@@ -841,3 +841,37 @@ The descriptor test passed, 9 shell scripts and 10 Python modules passed syntax
 checks, and build defaults/overrides, feature ownership and ignore rules passed.
 The new local branch commit IDs and clean statuses are recorded in the archive
 after committing. Original branch refs are retained.
+
+
+## RD36 — recovered RGB-D queue study (2026-09-08)
+
+Completed 18 full-bag board replays with frozen production core. Evidence lives in
+outer `experiments/rgbd_queue_20260908_1518/`, including `conclusion.md`,
+`report.md`, `run_manifest.json`, `validation.json` and `provenance/`.
+`python3 experiments/rgbd_queue_20260908_1518/validate_results.py` validates
+pair accounting, effective configurations, binary provenance, clean SLAM/player
+exits and absence of new OOM. All 18 passed these measurement checks; this is
+not a stable-tracking or complete-input acceptance pass. The first controller
+collection error was recovered and remains explicitly recorded.
+
+The wrapper-only Docker build passed; frozen-library ABI symbol/layout checks
+passed. Source bag and production binary hashes matched at completion. Temporary
+arm64 binfmt was removed, experiment processes/master11332 ended, and unrelated
+master11311 was retained. Source patches are supplied without a Git commit.
+No further parameter runs are pending: the user requested stopping based on
+existing evidence. One favorable 8/8/20 result is insufficient to recommend
+production deployment. See the conclusion for synchronization eviction proof,
+complete-input tracking failures and latency-reference limitations.
+
+
+## RD37 analysis only — 2026-09-08
+
+`python3 experiments/rgbd_callback_review_20260908/analyze_existing.py` from
+outer workspace recomputes statistics on 18 existing RD36 CSVs (37,905 rows).
+The new callback mean/P95/P99 and counts were cross-checked against the previous
+matrix. SHA-256 identifies every input CSV and inspected source/frozen library.
+Host llvm-objdump-10 inspected ARM64 code without executing it. See
+`docs/rgbd-callback-optimization-review.md` and outer analysis artifacts.
+No optimized SLAM build, component-equivalence test, board replay or deployment
+was run; implementation and runtime acceptance remain not_started. The
+arithmetic sensitivity scenarios are not measurements of optimized code.
