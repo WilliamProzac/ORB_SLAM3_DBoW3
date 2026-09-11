@@ -137,6 +137,13 @@ public:
                                    const int maxLevel = -1,
                                    const bool bRight = false) const;
 
+  // Same candidate order as the legacy query; caller owns reusable storage.
+  void GetFeaturesInArea(const float &x, const float &y, const float &r,
+                         std::vector<size_t> &indices, int minLevel = -1,
+                         int maxLevel = -1, bool bRight = false) const;
+  // Pure RGB-D opt-in only. Copied with the frame; other sensors stay at zero.
+  int mRgbdOptimizationLevel = 0;
+
   // Apply subpixel temporal refinements and rebuild the search grid. For
   // pinhole stereo, shift mvuRight by the same x delta to preserve disparity.
   void ApplyKeypointRefinements(

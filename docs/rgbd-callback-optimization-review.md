@@ -143,3 +143,11 @@ return static_cast<int>(vaddlvq_u8(vaddq_u8(c0, c1)));
 2. **真实异步建图的质量与耗时**：相同binary baseline、参数、输入及后台工作条件，检查完整输入、相对积压、P95/P99/超90ms连续段、失跟踪/重定位、KF/MP和地图连续性，并保留LocalMapping/GBA/内存表现。异步时序变化本身可能改变地图演化，不能靠源码等价证明端到端绝对同一轨迹。当前没有真值，不能声称已证明精度不下降。
 
 本次用户要求分析，且前轮已要求停止追加参数测试，因此上述为后续实现验收要求，**本轮没有执行这些新测试，也没有把任何优化标为已验证加速**。无需继续扫队列矩阵来确认这里已经由源码/二进制确定的开销。
+
+## Subsequent implementation and measurement
+
+The later explicit user request authorized implementing the four exact changes.
+RD37–RD41 are now implemented and Docker/board-tested; this historical review's
+"not implemented" observations refer to its original timestamp. Read the outer
+`experiments/rgbd_exact_20260908_1901/conclusion.md`. Median P95 improved to
+89.35ms, but P99 remained103.20ms and input/tracking failures were not eliminated.

@@ -143,6 +143,8 @@ public:
   void ComputeDistinctiveDescriptors();
 
   cv::Mat GetDescriptor();
+  // Independent 32-byte snapshot, under the same feature mutex as GetDescriptor.
+  bool CopyOrbDescriptor(unsigned char (&output)[32]);
 
   void UpdateNormalAndDepth();
 

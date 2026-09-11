@@ -20,6 +20,8 @@ bool FeatureDescriptorsCompatible(const cv::Mat &a, const cv::Mat &b);
 // exact Hamming distance. Float descriptors use 256 * cosine distance, so the
 // existing TH_LOW=50 gate corresponds to cosine similarity about 0.805.
 int FeatureDescriptorDistance(const cv::Mat &a, const cv::Mat &b);
+// Exact ORB32 fast path; validates inputs and preserves generic fallback.
+int FeatureDescriptorDistanceExact(const cv::Mat &a, const cv::Mat &b);
 
 // Selects the observed descriptor whose median distance to the other
 // observations is smallest. This is the MapPoint representative descriptor

@@ -875,3 +875,30 @@ Host llvm-objdump-10 inspected ARM64 code without executing it. See
 No optimized SLAM build, component-equivalence test, board replay or deployment
 was run; implementation and runtime acceptance remain not_started. The
 arithmetic sensitivity scenarios are not measurements of optimized code.
+
+## RD37–RD41 exact RGB-D implementation (2026-09-08)
+
+Pre-change commits: outer b838bcb, core eb7aee3. Docker ARM64 build and
+board component parity passed (6,000 distance, 49,344 candidate queries,
+96 matcher and exact pose cases). Extractor and optimizer sources unchanged.
+Ten complete benchmark runs and one separate main-TID profile were collected.
+Same-build L0/L4 three-run median mean/P95/P99:76.59/95.90/110.81 vs
+70.20/89.35/103.20 ms. L4 lost9/24/15 input pairs; loss episodes0/0/2,
+map counts1/1/2. No complete-input acceptance and no P99<90ms acceptance.
+No ground-truth ATE/RPE claim. All experiment exit/provenance checks passed.
+See outer experiments/rgbd_exact_20260908_1901/{conclusion,report,implementation}.md
+and component_parity.json, validation.json, run_manifest.json. New changes
+remain uncommitted for review; production is frozen and experiment processes
+have ended. Temporary ARM64 binfmt was unregistered after compilation.
+
+## RD42 optimized feature/queue tuning (2026-09-09)
+
+Existing level4 node/core reused, no algorithm edits or rebuild. Nine host bag 1x
+replays:700/600/500 queue 1 screening and 700 queue 4/8, then interleaved 700
+queue 1/8 repeats. Queue8 three runs all 2128/2128,no loss,one map; queue1
+missing 4/21/36, loss 0/1/1. Queue8 median P95/P99=89.45/103.76ms andmaximum
+relative schedule backlog 674.30 ms: input continuity gate passed on this bag;
+strict low-latency gate did not. All run provenance/exit checks passed.
+Full evidence: outer experiments/rgbd_tuning_20260909_0938/conclusion.md,
+report.md, validation.json and run_manifest.json. Production unchanged,
+original bag unchanged, experiment processes ended. No Git commit.

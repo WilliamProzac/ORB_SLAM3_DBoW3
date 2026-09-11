@@ -4,6 +4,9 @@
 #include <cmath>
 #include <cstdint>
 #include <stdexcept>
+#if defined(__aarch64__)
+#include <arm_neon.h>
+#endif
 
 namespace ORB_SLAM3 {
 namespace {
@@ -90,6 +93,25 @@ int FeatureDescriptorDistance(const cv::Mat &a, const cv::Mat &b) {
     return HammingDistance(a, b);
   }
   return ScaledCosineDistance(a, b);
+}
+
+int FeatureDescriptorDistanceExact(const cv::Mat &a, const cv::Mat &b) {
+  // Retain public validation and all non-ORB32 behavior.
+  ValidateDescriptorRow(a);
+  ValidateDescriptorRow(b);
+  if (!FeatureDescriptorsCompatible(a, b))
+    throw std::invalid_argument("incompatible feature descriptor types or widths");
+#if defined(__aarch64__)
+  if (a.type() == CV_8UC1 && a.cols == 32) {
+    const uint8_t *pa = a.ptr<uint8_t>();
+    const uint8_t *pb = b.ptr<uint8_t>();
+    const uint8x16_t lo = vcntq_u8(veorq_u8(vld1q_u8(pa), vld1q_u8(pb)));
+    const uint8x16_t hi = vcntq_u8(veorq_u8(vld1q_u8(pa+16), vld1q_u8(pb+16)));
+    // Lane sums <=16, full sum <=256: widening reduction avoids overflow.
+    return static_cast<int>(vaddlvq_u8(vaddq_u8(lo, hi)));
+  }
+#endif
+  return a.type() == CV_8UC1 ? HammingDistance(a, b) : ScaledCosineDistance(a, b);
 }
 
 cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors) {

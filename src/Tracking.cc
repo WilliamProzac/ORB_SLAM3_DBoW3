@@ -122,6 +122,19 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
     }
   }
 
+  // Read in both legacy and Settings-based loaders; no effect on other sensors.
+  if (mSensor == System::RGBD) {
+    cv::FileStorage options(strSettingPath, cv::FileStorage::READ);
+    const cv::FileNode level = options["RGBD.ExactOptimizationLevel"];
+    if (!level.empty()) {
+      if (!level.isInt() || int(level) < 0 || int(level) > 4)
+        throw std::invalid_argument("RGBD.ExactOptimizationLevel must be integer 0..4");
+      mRgbdOptimizationLevel = int(level);
+    }
+    std::cout << "RGB-D exact optimization level: " << mRgbdOptimizationLevel
+              << " (0=reference,1=grid,2=distance,3=snapshot,4=headless)" << std::endl;
+  }
+
   initID = 0;
   lastID = 0;
   mbInitWith3KFs = false;
@@ -1566,6 +1579,7 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
     mCurrentFrame =
         Frame(mImGray, imDepth, timestamp, mpORBextractorLeft, mpORBVocabulary,
               mK, mDistCoef, mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
+  mCurrentFrame.mRgbdOptimizationLevel = mRgbdOptimizationLevel;
   if (timing) {
     timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
     timing->frame_id = mCurrentFrame.mnId;
@@ -2329,7 +2343,8 @@ void Tracking::Track() {
 #endif
 
     // Update drawer
-    mpFrameDrawer->Update(this);
+    if (mRgbdOptimizationLevel < 4 || mpViewer)
+      mpFrameDrawer->Update(this);
     if (mCurrentFrame.isSet())
       mpMapDrawer->SetCurrentCameraPose(mCurrentFrame.GetPose());
 
@@ -3707,7 +3722,7 @@ void Tracking::SearchLocalPoints() {
       pMP->IncreaseVisible();
       nToMatch++;
     }
-    if (pMP->mbTrackInView) {
+    if (pMP->mbTrackInView && (mRgbdOptimizationLevel < 4 || mpViewer)) {
       mCurrentFrame.mmProjectPoints[pMP->mnId] =
           cv::Point2f(pMP->mTrackProjX, pMP->mTrackProjY);
     }

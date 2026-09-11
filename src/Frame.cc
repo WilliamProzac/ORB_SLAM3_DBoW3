@@ -98,6 +98,7 @@ Frame::Frame(const Frame &frame)
         SetVelocity(frame.GetVelocity());
     }
 
+    mRgbdOptimizationLevel = frame.mRgbdOptimizationLevel;
     mmProjectPoints = frame.mmProjectPoints;
     mmMatchedInImage = frame.mmMatchedInImage;
 
@@ -859,6 +860,74 @@ vector<size_t> Frame::GetFeaturesInArea(const float &x, const float  &y, const f
     }
 
     return vIndices;
+}
+
+void Frame::GetFeaturesInArea(const float &x, const float  &y, const float  &r, vector<size_t> &vIndices, const int minLevel, const int maxLevel, const bool bRight) const
+{
+    vIndices.clear();
+    vIndices.reserve(N);
+
+    float factorX = r;
+    float factorY = r;
+
+    const int nMinCellX = max(0,(int)floor((x-mnMinX-factorX)*mfGridElementWidthInv));
+    if(nMinCellX>=FRAME_GRID_COLS)
+    {
+        return;
+    }
+
+    const int nMaxCellX = min((int)FRAME_GRID_COLS-1,(int)ceil((x-mnMinX+factorX)*mfGridElementWidthInv));
+    if(nMaxCellX<0)
+    {
+        return;
+    }
+
+    const int nMinCellY = max(0,(int)floor((y-mnMinY-factorY)*mfGridElementHeightInv));
+    if(nMinCellY>=FRAME_GRID_ROWS)
+    {
+        return;
+    }
+
+    const int nMaxCellY = min((int)FRAME_GRID_ROWS-1,(int)ceil((y-mnMinY+factorY)*mfGridElementHeightInv));
+    if(nMaxCellY<0)
+    {
+        return;
+    }
+
+    const bool bCheckLevels = (minLevel>0) || (maxLevel>=0);
+
+    for(int ix = nMinCellX; ix<=nMaxCellX; ix++)
+    {
+        for(int iy = nMinCellY; iy<=nMaxCellY; iy++)
+        {
+            const vector<size_t> &vCell = (!bRight) ? mGrid[ix][iy] : mGridRight[ix][iy];
+            if(vCell.empty())
+                continue;
+
+            for(size_t j=0, jend=vCell.size(); j<jend; j++)
+            {
+                const cv::KeyPoint &kpUn = (Nleft == -1) ? mvKeysUn[vCell[j]]
+                                                         : (!bRight) ? mvKeys[vCell[j]]
+                                                                     : mvKeysRight[vCell[j]];
+                if(bCheckLevels)
+                {
+                    if(kpUn.octave<minLevel)
+                        continue;
+                    if(maxLevel>=0)
+                        if(kpUn.octave>maxLevel)
+                            continue;
+                }
+
+                const float distx = kpUn.pt.x-x;
+                const float disty = kpUn.pt.y-y;
+
+                if(fabs(distx)<factorX && fabs(disty)<factorY)
+                    vIndices.push_back(vCell[j]);
+            }
+        }
+    }
+
+    return;
 }
 
 bool Frame::PosInGrid(const cv::KeyPoint &kp, int &posX, int &posY)

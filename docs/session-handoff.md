@@ -1,5 +1,92 @@
 # Session Handoff
 
+## RD43 deployment package completed — 2026-09-09
+
+User requested a portable700-feature queue8 version for another board.
+Archive: outer packages/rdk_x5_rgbd700_q8_20260909.tar.gz with .sha256 sidecar.
+Package inputs/evidence: packages/rgbd700_q8_20260909, including recipe/,
+collect_runtime.py, release.json and package_validation.json. Includes original
+node/core, vocabulary, private ARM64 loader and library closure, Chinese guide,
+board check/run scripts and host replay/save/stop tools. No board ROS setup
+is needed; host ROS1 Noetic and original bag are separate prerequisites.
+
+Validated on the existing RDK in a new isolated directory using package scripts:
+225 shared objects loaded only from package lib/, component parity passed,
+full2128-pair replay hadzero non-OK frames andone map; Atlas/trajectories saved,
+exit0. This is relocation/integration validation, not a physical new-board test.
+Target Ubuntu22.04 ARM64/RDK X5. Production unchanged; no source algorithm
+edits or Git commit. Package tests and owned11332 master have ended.
+
+
+## RD42 parameter followup completed — 2026-09-09
+
+The user authorized feature/queue tests on the existing level 4 optimized
+build. No algorithm edits, rebuild or Git commits were made. Evidence is in
+outer experiments/rgbd_tuning_20260909_0938: read conclusion.md, report.md,
+run_manifest.json and final_verification.json.
+
+Nine full 1x host-bag runs completed. Screening compared 700/600/500 features
+with queue 1, and 700 features with queues 4/8. The 700-feature queue 1/8
+configurations each received three interleaved runs. All provenance and exit
+checks passed. Queue 8 delivered all 2128 pairs with zero tracking loss and
+one map in all three runs; queue 1 missed 4/21/36 pairs, with loss episodes
+0/1/1 and map counts 1/2/2. The 600/500 single runs missed 14/16 pairs and
+both lost tracking, with lower online support and more saved keyframes.
+
+Retain 700 features, 5 levels and 3 workers. The strongest complete-input
+candidate on this bag is RGB/depth queues 8/8, sync 10, level 4, viewer off.
+No production defaults were changed. Queue 8 median mean/P95/P99 was
+70.04/89.45/103.76 ms. Its third run had P95 93.28 ms and maximum relative
+schedule backlog 674.30 ms before draining. Input continuity passed 3/3 on
+this bag, but strict low-latency and P99 <90 ms acceptance did not pass.
+No external ATE/RPE, broader-load or longer-map validation is claimed.
+
+All experiment runs and the owned 11332 master ended; unrelated 11311 was
+preserved. Production/optimized binaries and the original bag are unchanged.
+No bag was copied to the board. Further work, if requested, should target
+callback/dispatch tails; deeper queues do not make computation faster.
+
+## RGB-D exact optimizations completed — 2026-09-08
+
+Latest user request authorized implementation, Docker build and board tests,
+with a commit of existing changes before runtime edits. Pre-change commits:
+outer b838bcb, core eb7aee3. New implementation/evidence remain uncommitted for
+review; the original prohibition on unsolicited later commits is respected.
+
+Implemented RD37–RD40: pure RGB-D opt-in `RGBD.ExactOptimizationLevel` 0–4
+(default 0): grid scratch/references, exact ARM64 ORB32 Hamming, locked
+caller-storage descriptor snapshots, headless display-cache gating.
+ORBextractor.cc and Optimizer.cc are byte-identical to the pre-change commit.
+
+Docker v3 ARM64 build passed; core SHA
+c41d2d0ba1ca2ae0f61d70207fae0bfb11ff44d17eb3a9162154bf287c6945d1;
+node SHA2797d3fd...6239a. Three jobs, 12 GiB final memory cap. Temporary arm64
+binfmt was removed after compilation. Board component parity passed: 6,000
+distance cases, 49,344 queries, 96 matcher and exactly equal pose cases.
+
+RD41 completed 10 benchmark runs plus one separate perf run. L0/L4 each had
+three interleaved repeats. Median per-run callback mean/P95/P99:
+L0 76.59/95.90/110.81 ms; L4 70.20/89.35/103.20 ms. L4 missing input 9/24/15;
+loss episodes 0/0/2; maps 1/1/2. Thus measurable improvement, but no run met
+complete input + no loss + one map, and no L4 P99 was below90ms. Do not
+claim production acceptance or universal precision non-regression. Default
+remains0; keep frozen production. No external trajectory truth was available.
+
+Read outer `experiments/rgbd_exact_20260908_1901/conclusion.md`, `report.md`,
+`implementation.md`, `run_manifest.json`, `validation.json`, and source/binary
+manifests. All raw runs, trajectories, saved maps and perf data remain local.
+Independent deployment: /userdata/orb_slam/rgbd_exact_20260908_1901/deploy.
+Production and bag hashes were verified unchanged; no experiment SLAM/master
+or build container remains. No bag was copied to the board. XFeat worktree
+user modifications remain untouched.
+
+Further work, if requested, should measure local-map substages and callback-
+external dispatch costs; self perf samples cannot attribute waiting or libc
+costs to callers. Memory pressure exists late in the bag, but early no-swap
+frames also exceed90ms. No threshold/feature/map-scope reductions were made.
+The historical stop-testing direction below was superseded only for this
+explicit implementation/build/test task, now completed.
+
 ## RGB-D callback code review completed — 2026-09-08
 
 The user requested deeper acceleration analysis without compromising extraction,
@@ -814,3 +901,39 @@ git diff --check
   capturing `std::terminate`/exception output. That is the discriminating test
   for the suspected Global BA allocation failure; merely replaying this
   fragmented no-loop bag longer is not equivalent.
+
+## 2026-09-09 legacy-format RGB-D700/q8 package
+
+Per user request, rebuilt as `packages/rdk_x5_rgbd700_q8_orb_slam_20260909.tar.xz`.
+Archive member paths exactly match the 20260819 `orb_slam/` package, including
+three scripts and config/S316.yaml. Uses board ROS/OpenCV runtime dependencies,
+original camera helper and default camera topics. Node/core/YAML are unchanged
+from validated 700/q8/L4 artifacts; queue flags are explicit in legacy launcher.
+Extracted final archive in an isolated existing-board directory and completed
+1.0x full bag:2121/2128 (7 missing),zero non-OK,one saved map,exit0; bundled
+core/DBoW3/g2o loading verified. Deployment works but zero-missing acceptance
+FAILED on this replay. Do not infer packaging/system libraries caused the gaps.
+No live-camera/new-physical-board test. Read deployment requirements in
+packages/rgbd700_q8_legacy_20260909/recipe/README_DEPLOY.md; evidence in its
+package_validation.json and layout_validation.json. Previous tar.gz retained.
+Production was not modified; no Git commit.
+
+## 2026-09-11 new bag board test
+
+New 2026-09-10-11-35-57.bag, legacy700/q8/L4 package:2876/2910,34 missing,
+21 consecutive sync-stage drops at7112–7132 despite both streams dequeued;
+7133 lost,7168 initialized new map,2 live maps. P95/P99=98.19/118.08ms.
+RSS peak sampled1048.97MiB,Swap284.54MiB incl saving; no new OOM,SLAM exit0.
+Repeated PreSave appends backup entries (2 live maps,4 backup entries at
+second save); archive reload untested. Production hashes verified unchanged.
+Evidence: experiments/bag_20260910_113557_board_20260911/report.md.
+No algorithm changes, no Git commit, test processes ended.
+
+### Failure-image followup
+101 frames7090–7190 extracted. Runtime-source host ORB: adjacent7111→7112
+187 matches/154H vs jump7111→7133 41/32, no0.2–4m matched support on jump.
+Bag stream skew~11ms vs board post-dequeue~850–977ms. ExactTime trace replay
+capacity10 matches actual missing set;16 recovers21 critical pairs on fixed
+trace only,13 upstream missing remain. Failure-frame inliers140 is stale
+mnMatchesInliers when TrackLocalMap skipped. No board retest/source edits.
+See experiments/bag_20260910_113557_board_20260911/failure_images/report.md.

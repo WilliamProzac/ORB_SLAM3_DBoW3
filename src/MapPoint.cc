@@ -371,6 +371,15 @@ cv::Mat MapPoint::GetDescriptor() {
   return mDescriptor.clone();
 }
 
+bool MapPoint::CopyOrbDescriptor(unsigned char (&output)[32]) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  if (mDescriptor.type() != CV_8UC1 || mDescriptor.rows != 1 ||
+      mDescriptor.cols != 32 || mDescriptor.empty())
+    return false;
+  std::copy_n(mDescriptor.ptr<unsigned char>(), 32, output);
+  return true;
+}
+
 tuple<int, int> MapPoint::GetIndexInKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexFeatures);
   if (mObservations.count(pKF))

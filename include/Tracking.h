@@ -320,6 +320,8 @@ protected:
   // System
   System *mpSystem;
 
+  int mRgbdOptimizationLevel = 0;
+
   // Drawers
   Viewer *mpViewer;
   FrameDrawer *mpFrameDrawer;

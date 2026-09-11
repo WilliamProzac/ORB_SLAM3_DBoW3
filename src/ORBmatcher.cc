@@ -35,6 +35,27 @@ using namespace std;
 
 namespace ORB_SLAM3 {
 
+namespace {
+void QueryCandidates(const Frame &frame, float x, float y, float radius,
+                     std::vector<size_t> &scratch, int minLevel = -1,
+                     int maxLevel = -1, bool right = false) {
+  if (frame.mRgbdOptimizationLevel >= 1)
+    frame.GetFeaturesInArea(x, y, radius, scratch, minLevel, maxLevel, right);
+  else
+    scratch = frame.GetFeaturesInArea(x, y, radius, minLevel, maxLevel, right);
+}
+cv::Mat MatchingDescriptor(MapPoint *point, const Frame &frame,
+                           unsigned char (&storage)[32]) {
+  if (frame.mRgbdOptimizationLevel >= 3 && point->CopyOrbDescriptor(storage))
+    return cv::Mat(1, 32, CV_8UC1, storage);
+  return point->GetDescriptor();
+}
+int MatchingDistance(const Frame &frame, const cv::Mat &a, const cv::Mat &b) {
+  return frame.mRgbdOptimizationLevel >= 2 ? FeatureDescriptorDistanceExact(a, b)
+                                         : FeatureDescriptorDistance(a, b);
+}
+} // namespace
+
 const int ORBmatcher::TH_HIGH = 100;
 const int ORBmatcher::TH_LOW = 50;
 const int ORBmatcher::HISTO_LENGTH = 30;
@@ -47,6 +68,8 @@ int ORBmatcher::SearchByProjection(Frame &F,
                                    const float th, const bool bFarPoints,
                                    const float thFarPoints) {
   int nmatches = 0, left = 0, right = 0;
+  std::vector<size_t> vIndices;
+  unsigned char descriptorStorage[32];
 
   const bool bFactor = th != 1.0;
   const bool uses_float_descriptors = F.mDescriptors.type() == CV_32FC1;
@@ -71,16 +94,15 @@ int ORBmatcher::SearchByProjection(Frame &F,
       if (bFactor)
         r *= th;
 
-      const vector<size_t> vIndices =
-          F.GetFeaturesInArea(pMP->mTrackProjX, pMP->mTrackProjY,
-                              r * F.mvScaleFactors[nPredictedLevel],
+      QueryCandidates(F, pMP->mTrackProjX, pMP->mTrackProjY,
+                              r * F.mvScaleFactors[nPredictedLevel], vIndices,
                               uses_float_descriptors ? -1
                                                      : nPredictedLevel - 1,
                               uses_float_descriptors ? -1
                                                      : nPredictedLevel);
 
       if (!vIndices.empty()) {
-        const cv::Mat MPdescriptor = pMP->GetDescriptor();
+        const cv::Mat MPdescriptor = MatchingDescriptor(pMP, F, descriptorStorage);
 
         int bestDist = 256;
         int bestLevel = -1;
@@ -106,7 +128,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
 
           const cv::Mat &d = F.mDescriptors.row(idx);
 
-          const int dist = DescriptorDistance(MPdescriptor, d);
+          const int dist = MatchingDistance(F, MPdescriptor, d);
 
           if (dist < bestDist) {
             bestDist2 = bestDist;
@@ -154,9 +176,8 @@ int ORBmatcher::SearchByProjection(Frame &F,
       if (nPredictedLevel != -1) {
         float r = RadiusByViewingCos(pMP->mTrackViewCosR);
 
-        const vector<size_t> vIndices =
-            F.GetFeaturesInArea(pMP->mTrackProjXR, pMP->mTrackProjYR,
-                                r * F.mvScaleFactors[nPredictedLevel],
+        QueryCandidates(F, pMP->mTrackProjXR, pMP->mTrackProjYR,
+                                r * F.mvScaleFactors[nPredictedLevel], vIndices,
                                 uses_float_descriptors
                                     ? -1
                                     : nPredictedLevel - 1,
@@ -167,7 +188,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
         if (vIndices.empty())
           continue;
 
-        const cv::Mat MPdescriptor = pMP->GetDescriptor();
+        const cv::Mat MPdescriptor = MatchingDescriptor(pMP, F, descriptorStorage);
 
         int bestDist = 256;
         int bestLevel = -1;
@@ -187,7 +208,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
 
           const cv::Mat &d = F.mDescriptors.row(idx + F.Nleft);
 
-          const int dist = DescriptorDistance(MPdescriptor, d);
+          const int dist = MatchingDistance(F, MPdescriptor, d);
 
           if (dist < bestDist) {
             bestDist2 = bestDist;
@@ -1683,6 +1704,8 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2,
 int ORBmatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
                                    const float th, const bool bMono) {
   int nmatches = 0;
+  std::vector<size_t> vIndices2;
+  unsigned char descriptorStorage[32];
 
   // Rotation Histogram (to check rotation consistency)
   vector<int> rotHist[HISTO_LENGTH];
@@ -1729,22 +1752,20 @@ int ORBmatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
         // Search in a window. Size depends on scale
         float radius = th * CurrentFrame.mvScaleFactors[nLastOctave];
 
-        vector<size_t> vIndices2;
 
         if (bForward)
-          vIndices2 =
-              CurrentFrame.GetFeaturesInArea(uv(0), uv(1), radius, nLastOctave);
+          QueryCandidates(CurrentFrame, uv(0), uv(1), radius, vIndices2, nLastOctave);
         else if (bBackward)
-          vIndices2 = CurrentFrame.GetFeaturesInArea(uv(0), uv(1), radius, 0,
+          QueryCandidates(CurrentFrame, uv(0), uv(1), radius, vIndices2, 0,
                                                      nLastOctave);
         else
-          vIndices2 = CurrentFrame.GetFeaturesInArea(
-              uv(0), uv(1), radius, nLastOctave - 1, nLastOctave + 1);
+          QueryCandidates(CurrentFrame,
+              uv(0), uv(1), radius, vIndices2, nLastOctave - 1, nLastOctave + 1);
 
         if (vIndices2.empty())
           continue;
 
-        const cv::Mat dMP = pMP->GetDescriptor();
+        const cv::Mat dMP = MatchingDescriptor(pMP, CurrentFrame, descriptorStorage);
 
         int bestDist = 256;
         int bestIdx2 = -1;
@@ -1767,7 +1788,7 @@ int ORBmatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
 
           const cv::Mat &d = CurrentFrame.mDescriptors.row(i2);
 
-          const int dist = DescriptorDistance(dMP, d);
+          const int dist = MatchingDistance(CurrentFrame, dMP, d);
 
           if (dist < bestDist) {
             bestDist = dist;
@@ -1813,19 +1834,18 @@ int ORBmatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
           // Search in a window. Size depends on scale
           float radius = th * CurrentFrame.mvScaleFactors[nLastOctave];
 
-          vector<size_t> vIndices2;
 
           if (bForward)
-            vIndices2 = CurrentFrame.GetFeaturesInArea(uv(0), uv(1), radius,
+            QueryCandidates(CurrentFrame, uv(0), uv(1), radius, vIndices2,
                                                        nLastOctave, -1, true);
           else if (bBackward)
-            vIndices2 = CurrentFrame.GetFeaturesInArea(uv(0), uv(1), radius, 0,
+            QueryCandidates(CurrentFrame, uv(0), uv(1), radius, vIndices2, 0,
                                                        nLastOctave, true);
           else
-            vIndices2 = CurrentFrame.GetFeaturesInArea(
-                uv(0), uv(1), radius, nLastOctave - 1, nLastOctave + 1, true);
+            QueryCandidates(CurrentFrame,
+                uv(0), uv(1), radius, vIndices2, nLastOctave - 1, nLastOctave + 1, true);
 
-          const cv::Mat dMP = pMP->GetDescriptor();
+          const cv::Mat dMP = MatchingDescriptor(pMP, CurrentFrame, descriptorStorage);
 
           int bestDist = 256;
           int bestIdx2 = -1;
@@ -1842,7 +1862,7 @@ int ORBmatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
             const cv::Mat &d =
                 CurrentFrame.mDescriptors.row(i2 + CurrentFrame.Nleft);
 
-            const int dist = DescriptorDistance(dMP, d);
+            const int dist = MatchingDistance(CurrentFrame, dMP, d);
 
             if (dist < bestDist) {
               bestDist = dist;
