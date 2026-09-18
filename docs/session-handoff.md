@@ -1,5 +1,60 @@
 # Session Handoff
 
+## RD47 completed — 2026-09-12
+
+Wrapper now preserves ROS MessageEvent receipt time, callback wall/steady, input
+lock acquisition and receive-body end in bounded input_transport.csv (20000 rows,
+1.37MiB). Both direct/FIFO supported; default-off diagnostic_receive_only uses
+same C++ reception without creating System. Core library reused byte-identically.
+New node SHA256 c1d386b22024dd4609b4a254ba6366c1c93036e89b7bf87b111ade457cd12208.
+Deployment /userdata/rgbd_transport_timing_20260912/deploy_runtime.
+Full receive-only2910/2910; full SLAM received2910/processed2899 (11 FIFO drops),
+non-OK0/map1; direct8s89/89. All diagnostics/drain/save/exit checks pass.
+seq7582 callback skew502.264ms, ROS receipt skew502.186ms: almost all before
+subscription/deserialization, but publisher/TCP/socket cause not yet separated.
+Historical1.5s not reproduced. Maps archived/checksummed, no reload; all owned
+processes stopped. See outer experiments/rgbd_transport_timing_20260912/report.md.
+Code remains uncommitted for review. Older source_manifest refers to pre-RD47
+wrapper; use new manifest.json for this build.
+
+## RD44–RD46 completed — 2026-09-11
+
+Prior pending RGB-D source/docs committed before edits:outer18ba684/core4d6df6a.
+Task workspace is the outer rgbd_track_timing repository and this core worktree.
+Do not build from the separate XFeat worktree or touch its user modifications.
+
+Implemented opt-in exact pairing/complete-frame FIFO, bounded image payload and
+scalar diagnostics, private receiver queue, serial main-thread SLAM and controls,
+synchronous stop/drain service and safe logging after receiver join. Defaults
+remain direct. Host state-machine sanitizers and random delivery tests passed;
+Docker ARM64 cross build and board component parity passed. No binfmt registered.
+Core changes only LocalMapping timing-row cap; algorithm and headers unchanged.
+
+Nine full1x replays:direct sync10 A1/A2 processed2908/2905,maps1/2; direct sync16
+B1/B2/B3 processed2889/2897/2892,all tracking OK,one map. FIFO8 C1 received every
+image but capacity dropped6 complete pairs. FIFO16 three repeats received every
+image,processed2901/2910/2910,non-OK35/0/0,maps2/1/1. The failing repeat hit1500ms
+pair timeout for7238–7246 (actual stream skew1510–1616ms). FIFO16 maximum wait
+1.25–1.42s. No stable production recommendation; no further parameter expansion.
+All9 processed historical7112–7132,so that exact old failure was not reproduced.
+A2 lost at7909 before its first missing7914; avoid claiming all loss follows gaps.
+
+New independent board deployment:/userdata/rgbd_fifo_20260911/deploy_runtime.
+Node f0f5c159b9e973a21e35a3575290172991fabbcdcac56bdeb64c19b8c86c2607;
+core c1258675ee591f67948aa12cb76677a8742f7bc0cb5684f420035a4f2e3dcb00;
+YAML bbd550b26de4225e8988dc10681c5d1d921405d8976eac0372df58405db6d44f.
+Sources and build images in outer experiments/rgbd_fifo_20260911/source_manifest.json.
+Read conclusion.md,report.md,README.md,design.md there. Raw timings,resource logs,
+plots,trajectories and maps are in runs/*; map downloads were SHA-verified before
+only their new board copies were removed. No map reload validation. Atlas backup
+entry duplication and stale failure-frame inliers are documented,not modified.
+
+All formal nodes exited0 with empty new-mode input and no new OOM. Frozen
+production preserved. New implementation remains uncommitted for review; only
+pre-change commits were authorized/requested. Additional lifecycle/final
+verification evidence is in lifecycle_validation.json and final_verification.json.
+
+
 ## RD43 deployment package completed — 2026-09-09
 
 User requested a portable700-feature queue8 version for another board.
@@ -937,3 +992,59 @@ capacity10 matches actual missing set;16 recovers21 critical pairs on fixed
 trace only,13 upstream missing remain. Failure-frame inliers140 is stale
 mnMatchesInliers when TrackLocalMap skipped. No board retest/source edits.
 See experiments/bag_20260910_113557_board_20260911/failure_images/report.md.
+
+
+## RD48 TCP detailed measurement — 2026-09-12
+
+Full capture reproduced 1900.420ms skew with depth advertised window5888B, rcv_ssthresh5792B and12.884s rwnd-limited/12.900s; direct transport mechanism identified, memory-cgroup trigger unproven. slam_2 teardown failed after full playback; not normal-exit acceptance. Normal slam_3 processed2910/2910,non-OK0,map1,save/exit0; receive_only2910/2910,max30.458ms,exit0. Host wall-clock adjustment invalidates precise cross-host alignment in slam_3; same-board timing remains valid. No repair or parameter changes. Evidence: outer experiments/rgbd_tcp_detail_20260912/report.md.
+
+
+## RD49 window cause validation — 2026-09-12
+
+Same-board monotonic TCP/reclaim/perf observation: full SLAM received2910,processed2909,one FIFO eviction,non-OK0,map1,save/exit0,max1139.887ms; small depth thresholds during background kswapd reclaim, no swap I/O in those episodes. Same-sampling receive-only2910,exit0,max48.081ms,no small thresholds or pgscan/pgsteal. Vendor public source matches pressure path, exact running commit unknown. FTRACE/KPROBES/BPF_SYSCALL compiled out; perf samples do not prove socket_pressure write. Strong memcg-pressure evidence, not branch-level root-cause proof or repair. Evidence: outer experiments/rgbd_window_cause_20260912/report.md.
+
+
+## RD50 memory.low candidate validation — 2026-09-13
+
+ABBA full1x experiment, fresh root-leaf cgroup before node exec/socket creation; low0 vs900MiB only, min0/high-max unchanged, no global or parent changes. All4 received/processed2910,non-OK0,map1,drain/save/exit0,OOM0. A max358/522ms,P9973/192ms; B max733/768ms,P99270/414ms. B early reclaim suppressed but late working set>900MiB still reclaims; candidate not accepted. All temporary groups removed; all maps checksummed/archived. Evidence: outer experiments/rgbd_memory_low_20260913/report.md.
+
+## RD51 — RGB-D稳定基线轻量故障记录器（2026-09-13）
+
+本节是当前独立feature/rgbd-field-recorder工作树的交付；之前RD44–RD50保留为实验记录，
+其FIFO/网络/cgroup实验不进入本次源码。outer18ba684/core4d6df6a，direct8/8/10不变。
+定长纯数字core观测、默认关闭的有界双缓冲记录器、分析器、独立配置/构建部署取回工具已实现。
+node6db74402与core4ea31242必须成套使用；旧重型日志在轻量及关闭对照配置中关闭。
+
+真实记录器ASan/UBSan及ARM64自测、exact match/pose parity、独立烟雾/SIGINT/写失败通过。
+原包+关闭/开启/开启/关闭全回放均exit0，处理2897/2910/2900/2899/2895；
+后四轮非OK0/0/35/43，活动地图1/1/2/2。CPU开启-关闭均值-0.070个百分点，
+小于重复噪声；不宣称算法输出一致或零开销。ARM64两bank实测保守预算1768KiB<2MiB。
+
+验收和源哈希详见外层diagnostics/validation_report.md、memory_budget.md、comparison.json，
+最终真实回放事件见verified_first_failure.json，完整原始数据在diagnostics/runs/verified_*。
+10分钟数字压力结果见board_stress.txt。地图已取回校验SHA后只删除对应轮次板端副本，生产哈希不变。
+没有验证地图重载。现场驱动源码/另一块板/实体相机仍缺；driver明确unsupported，
+本地跨主机bag事件不代表现场根因。core采用定长事件sink而非轮询末帧getter；缺失阶段为null。
+
+## RD52 — 地图支持分层观测（2026-09-14）
+
+在RD51纯观测接口上补充参考KF、局部KF/点池、可投影点、已关联/新增匹配、
+优化前后关联/外点、原地图版本变化；以KF ID和创建frame ID关联入队、处理、
+视觉局部BA开始/返回、建图周期完成。默认关闭、direct8/8/10和全部算法判断不变。
+
+详细字段见外层diagnostics/map_support/design.md，验证及交付范围见validation.md。
+记录器双bank容量/线程/内存布局不变，新增行缩短实际窗口，不宣称仍完整保留30+10秒。
+旧RD51数据缺少新增字段，分析器标unsupported；不能补造历史故障的地图支持链。
+BA返回不表示收敛，未执行的可选阶段时长为invalid。描述子过滤细项、BA精确写回、
+位姿漂移及更早的地图演化仍非完整观测；相邻建图事件不构成因果证明。
+RD51的ABBA CPU数值仅为历史证据，不作为RD52新增字段的开销验收。
+
+### RD52 同包追加四轮回放（2026-09-14）
+
+固定最终3f6c core的发布包，4轮诊断开启/空地图完整回放：处理2907/2892/2876/2902，非OK 0/34/34/0，活动地图1/2/2/1。两次异常前分别有450 ms和2070 ms实际处理源缺口，中间4/22个源序号两路回调及ExactTime drop均可见。前者在运动模型/参考KF阶段失败；后者优化前158关联、剔除140、18内点低于原30阈值。不是地图点总数逐步耗尽的证明；第四轮630 ms间隔后70内点仍跟踪成功。详见外层 `diagnostics/map_support/repeats_20260914/report.md`、`results.json`、`failure_evidence.json`，原始数据 `diagnostics/runs/rd52_repeat_0N_20260914`。四轮地图取回SHA校验后删除对应板端副本，生产/发布二进制未变。正常轮没有覆盖异常源位置的完整支持链，驱动/网络/调度根因仍缺观测。此次仅追加验证记录，不变更RD52实现或发布包。
+
+## RD53 — S316驱动至SLAM交付观测（2026-09-14）
+
+驱动SDK边界、三路原始身份、左右转换/publish、深度转换/publish、release阶段通过固定共享数字区交给SLAM记录器；默认关闭，无图像引用/驱动写盘线程，原core与Recorder不变。真实相机最终开启1024帧、关闭358帧均OK；成功关联168帧，能够分解驱动发布差和发布后新增错位。完整实现/限制见外层diagnostics/camera_delivery/design.md、validation.md、README.md。ARM64满记录区保守组件预算1708KiB，CPU完整ABBA尚未验收。SDK内部和ROS队列/反序列化细分仍未知，不声称严重迟到根因已复现。
+
+RD53补充：默认不限时运行，Ctrl+C/stop_board.sh正常保存；补齐未初始化RGB-D地图的保存保护。node e07edfde...，core不变。验证与失败修复记录见外层diagnostics/camera_delivery/manual_validation。

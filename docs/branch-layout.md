@@ -100,3 +100,10 @@ It exposes map statistics and IMU initialization accessors that the frozen
 production library does not. Branch organization does not imply these newer
 changes have been deployed. OOM scripts intentionally retain the frozen binary
 hash checks so their evidence remains tied to the observed production version.
+
+## RD51 independent stable-baseline worktree
+
+`/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_field_recorder/core`
+is on `feature/rgbd-field-recorder`, based on4d6df6a. Its outer repository is
+based on18ba684. FIFO/RD47 code stays in the archive branch; later historical
+RD48–RD50 documentation is carried forward as evidence, not as code inheritance.

@@ -1,3 +1,4 @@
+#include "FieldObservation.h"
 /**
  * This file is part of ORB-SLAM3
  *
@@ -67,7 +68,7 @@ LocalMapping::LocalMapping(System *pSys, Atlas *pAtlas, const float bMonocular,
   nLBA_exec = 0;
   nLBA_abort = 0;
 #endif
-  mvDetailedTimings.reserve(4096);
+  if (HeavyDiagnostics()) mvDetailedTimings.reserve(4096);
 }
 
 void LocalMapping::SetLoopCloser(LoopClosing *pLoopCloser) {
@@ -152,6 +153,9 @@ void LocalMapping::Run() {
 #endif
 
       bool b_doneLBA = false;
+// FIELD_MAP_BEGIN
+      bool field_kf_culling_done=false;
+// FIELD_MAP_END
       int num_FixedKF_BA = 0;
       int num_OptKF_BA = 0;
       int num_MPs_BA = 0;
@@ -194,9 +198,16 @@ void LocalMapping::Run() {
                 !mpCurrentKeyFrame->GetMap()->GetIniertialBA2());
             b_doneLBA = true;
           } else {
+// FIELD_MAP_BEGIN
+            if(FieldEnabled()) FieldEmit(27,mpCurrentKeyFrame->mnId,2,1,mpCurrentKeyFrame->mnFrameId);
+// FIELD_MAP_END
             Optimizer::LocalBundleAdjustment(
                 mpCurrentKeyFrame, &mbAbortBA, mpCurrentKeyFrame->GetMap(),
                 num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA);
+// FIELD_MAP_BEGIN
+            if(FieldEnabled()) FieldEmit(28,mpCurrentKeyFrame->mnId,2,31,mpCurrentKeyFrame->mnFrameId,num_FixedKF_BA,num_OptKF_BA,num_MPs_BA,num_edges_BA);
+// FIELD_MAP_END
+
             b_doneLBA = true;
           }
           mCurrentTiming.local_ba_ms =
@@ -237,6 +248,9 @@ void LocalMapping::Run() {
         const std::chrono::steady_clock::time_point detailed_kf_culling_start =
             std::chrono::steady_clock::now();
         KeyFrameCulling();
+// FIELD_MAP_BEGIN
+        field_kf_culling_done=true;
+// FIELD_MAP_END
         mCurrentTiming.keyframe_culling_ms =
             LocalMappingMillisecondsSince(detailed_kf_culling_start);
 
@@ -300,6 +314,9 @@ void LocalMapping::Run() {
       vdKFCullingSync_ms.push_back(timeKFCulling_ms);
 #endif
 
+// FIELD_MAP_BEGIN
+      if(FieldEnabled()) FieldEmit(29,mpCurrentKeyFrame->mnId,0,7|(field_kf_culling_done?8:0)|(b_doneLBA?16:0),mpCurrentKeyFrame->mnFrameId,uint64_t(mCurrentTiming.map_point_culling_ms*1e6),uint64_t(mCurrentTiming.map_point_creation_ms*1e6),uint64_t(mCurrentTiming.keyframe_culling_ms*1e6),uint64_t(mCurrentTiming.local_ba_ms*1e6));
+// FIELD_MAP_END
       mpLoopCloser->InsertKeyFrame(mpCurrentKeyFrame);
 
 #ifdef REGISTER_TIMES
@@ -320,7 +337,7 @@ void LocalMapping::Run() {
       mCurrentTiming.lba_optimized_keyframes = num_OptKF_BA;
       mCurrentTiming.lba_fixed_keyframes = num_FixedKF_BA;
       mCurrentTiming.lba_map_points = num_MPs_BA;
-      mvDetailedTimings.push_back(mCurrentTiming);
+      if (HeavyDiagnostics() && mvDetailedTimings.size()<20000) mvDetailedTimings.push_back(mCurrentTiming);
     } else if (Stop() && !mbBadImu) {
       // Safe area to stop
       while (isStopped() && !CheckFinish()) {
@@ -348,6 +365,10 @@ void LocalMapping::InsertKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexNewKFs);
   mlNewKeyFrames.push_back(pKF);
   mKeyFrameEnqueueTimes[pKF] = std::chrono::steady_clock::now();
+// FIELD_MAP_BEGIN
+  if(FieldEnabled()) FieldEmit(26,pKF->mnId,0,3,pKF->mnFrameId,mlNewKeyFrames.size());
+// FIELD_MAP_END
+
   mbAbortBA = true;
 }
 
@@ -372,6 +393,9 @@ void LocalMapping::ProcessNewKeyFrame() {
     }
   }
 
+// FIELD_MAP_BEGIN
+  if(FieldEnabled()) FieldEmit(27,mpCurrentKeyFrame->mnId,1,3,mpCurrentKeyFrame->mnFrameId,mCurrentTiming.queue_depth_before_pop);
+// FIELD_MAP_END
   mCurrentTiming.keyframe_id = mpCurrentKeyFrame->mnId;
   mCurrentTiming.image_timestamp = mpCurrentKeyFrame->mTimeStamp;
 
@@ -407,6 +431,10 @@ void LocalMapping::ProcessNewKeyFrame() {
 
   // Insert Keyframe in Map
   mpAtlas->AddKeyFrame(mpCurrentKeyFrame);
+// FIELD_MAP_BEGIN
+  if(FieldEnabled()) FieldEmit(28,mpCurrentKeyFrame->mnId,1,1,mpCurrentKeyFrame->mnFrameId);
+// FIELD_MAP_END
+
 }
 
 void LocalMapping::EmptyQueue() {

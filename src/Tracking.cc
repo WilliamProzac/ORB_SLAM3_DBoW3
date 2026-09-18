@@ -1,3 +1,4 @@
+#include "FieldObservation.h"
 /**
  * This file is part of ORB-SLAM3
  *
@@ -39,6 +40,28 @@
 using namespace std;
 
 namespace ORB_SLAM3 {
+namespace { FieldSink field_sink=nullptr; void* field_context=nullptr; bool heavy_diagnostics=false; }
+void SetFieldSink(FieldSink sink,void*context){field_sink=sink;field_context=context;}
+bool FieldEnabled(){return field_sink!=nullptr;}
+void SetHeavyDiagnostics(bool enabled){heavy_diagnostics=enabled;}
+bool HeavyDiagnostics(){return heavy_diagnostics;}
+void FieldEmit(uint16_t kind,uint64_t frame,uint32_t id,uint16_t valid,uint64_t a,uint64_t b,uint64_t c,uint64_t d,uint64_t e){if(field_sink)field_sink(field_context,kind,frame,id,valid,a,b,c,d,e);}
+namespace {
+int FieldPoseOptimization(Frame* frame) {
+ const int n=Optimizer::PoseOptimization(frame);
+ if(FieldEnabled()) {
+  FieldEmit(14,frame->mnId,0,1,n);
+  uint64_t q[4]={};
+  for(int i=0;i<frame->N;++i) if(frame->mvpMapPoints[i]&&!frame->mvbOutlier[i]) {
+   const auto &p=frame->mvKeysUn[i].pt;
+   ++q[(p.x>=(frame->mnMinX+frame->mnMaxX)/2?1:0)+(p.y>=(frame->mnMinY+frame->mnMaxY)/2?2:0)];
+  }
+  FieldEmit(21,frame->mnId,0,15,q[0],q[1],q[2],q[3]);
+ }
+ return n;
+}
+}
+
 
 namespace {
 class ScopedTimingAccumulator {
@@ -1446,13 +1469,13 @@ void Tracking::SetReferenceKeyFrame(KeyFrame *pKF) {
     if (mbOnlyTracking) {
       // In localization mode, force LOST so the system relocalizes immediately
       // instead of blindly assuming it starts at the reference KF.
-      mState = LOST;
+      (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
       cout << "Tracking: Initialized with reference KF " << pKF->mnId
            << " but force-set state to LOST to trigger Relocalization" << endl;
     } else {
       // Set state to OK so tracking can start directly with loaded map (normal
       // mapping continuation)
-      mState = OK;
+      (mState = OK, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
       cout << "Tracking: Initialized with reference KF " << pKF->mnId << endl;
     }
   }
@@ -1622,6 +1645,11 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
     timing->rgbd_depth_assoc_ms = mCurrentFrame.mTimeRgbdDepthAssoc;
   }
 
+  if(FieldEnabled()) {
+    uint64_t valid=0,near=0,far=0;
+    for(float d:mCurrentFrame.mvDepth) if(std::isfinite(d)&&d>0) {++valid;if(d<mThDepth)++near;else ++far;}
+    FieldEmit(20,mCurrentFrame.mnId,0,31,mCurrentFrame.N,valid,near,far,mState);
+  }
   mCurrentFrame.mNameFile = filename;
   mCurrentFrame.mnDataset = mnNumDataset;
 
@@ -1969,7 +1997,7 @@ void Tracking::Track() {
                  << endl;
             bFirstJump = false;
           }
-          mState = LOST;
+          (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
           // Update mLastFrame timestamp to current so we don't keep detecting
           // jumps
           mLastFrame.mTimeStamp = mCurrentFrame.mTimeStamp;
@@ -2001,7 +2029,7 @@ void Tracking::Track() {
     mCurrentFrame.SetNewBias(mpLastKeyFrame->GetImuBias());
 
   if (mState == NO_IMAGES_YET) {
-    mState = NOT_INITIALIZED;
+    (mState = NOT_INITIALIZED, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
   }
 
   mLastProcessedState = mState;
@@ -2043,6 +2071,10 @@ void Tracking::Track() {
     pCurrentMap->SetLastMapChange(nCurMapChangeIndex);
     mbMapUpdated = true;
   }
+// FIELD_MAP_BEGIN
+  if(FieldEnabled()) FieldEmit(33,mCurrentFrame.mnId,0,7,pCurrentMap->GetId(),nCurMapChangeIndex,mbMapUpdated);
+// FIELD_MAP_END
+
 
   if (mState == NOT_INITIALIZED) {
     if (mSensor == System::STEREO || mSensor == System::RGBD ||
@@ -2101,13 +2133,13 @@ void Tracking::Track() {
           if (mCurrentFrame.mnId <= (mnLastRelocFrameId + mnFramesToResetIMU) &&
               (mSensor == System::IMU_MONOCULAR ||
                mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD)) {
-            mState = LOST;
+            (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
           } else if (pCurrentMap->KeyFramesInMap() > 10) {
             // cout << "KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
-            mState = RECENTLY_LOST;
+            (mState = RECENTLY_LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
             mTimeStampLost = mCurrentFrame.mTimeStamp;
           } else {
-            mState = LOST;
+            (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
           }
         }
       } else {
@@ -2126,7 +2158,7 @@ void Tracking::Track() {
 
             if (mCurrentFrame.mTimeStamp - mTimeStampLost >
                 time_recently_lost) {
-              mState = LOST;
+              (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
               Verbose::PrintMess("Track Lost...", Verbose::VERBOSITY_NORMAL);
               bOK = false;
             }
@@ -2146,7 +2178,7 @@ void Tracking::Track() {
             // to_string(mCurrentFrame.mTimeStamp) << std::endl; std::cout <<
             // "mTimeStampLost:" << to_string(mTimeStampLost) << std::endl;
             if (mCurrentFrame.mTimeStamp - mTimeStampLost > 3.0f && !bOK) {
-              mState = LOST;
+              (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
               Verbose::PrintMess("Track Lost...", Verbose::VERBOSITY_NORMAL);
               bOK = false;
             }
@@ -2266,7 +2298,7 @@ void Tracking::Track() {
     }
 
     if (bOK)
-      mState = OK;
+      (mState = OK, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
     else if (mState == OK) {
       if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
           mSensor == System::IMU_RGBD) {
@@ -2279,9 +2311,9 @@ void Tracking::Track() {
           mpSystem->ResetActiveMap();
         }
 
-        mState = RECENTLY_LOST;
+        (mState = RECENTLY_LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
       } else
-        mState = RECENTLY_LOST; // visual to lost
+        (mState = RECENTLY_LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState)); // visual to lost
 
       /*if(mCurrentFrame.mnId>mnLastRelocFrameId+mMaxFrames)
       {*/
@@ -2504,7 +2536,7 @@ void Tracking::StereoInitialization() {
     cout << "Localization mode: Skipping StereoInitialization, setting LOST "
             "to trigger Relocalization."
          << endl;
-    mState = LOST;
+    (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
     return;
   }
 
@@ -2614,7 +2646,7 @@ void Tracking::StereoInitialization() {
 
     mpMapDrawer->SetCurrentCameraPose(mCurrentFrame.GetPose());
 
-    mState = OK;
+    (mState = OK, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
   }
 }
 
@@ -2626,7 +2658,7 @@ void Tracking::MonocularInitialization() {
     cout << "Localization mode: Skipping MonocularInitialization, setting LOST "
             "to trigger Relocalization."
          << endl;
-    mState = LOST;
+    (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
     return;
   }
 
@@ -2827,7 +2859,7 @@ void Tracking::CreateInitialMapMonocular() {
 
   mpAtlas->GetCurrentMap()->mvpKeyFrameOrigins.push_back(pKFini);
 
-  mState = OK;
+  (mState = OK, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
 
   initID = pKFcur->mnId;
 }
@@ -2836,7 +2868,7 @@ void Tracking::CreateMapInAtlas() {
   // In localization mode, don't create new maps - use the loaded map
   if (mbOnlyTracking) {
     // cout << "CreateMapInAtlas: Skipping in localization mode" << endl;
-    mState = LOST; // Set to LOST to trigger relocalization
+    (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState)); // Set to LOST to trigger relocalization
     return;
   }
 
@@ -2848,7 +2880,7 @@ void Tracking::CreateMapInAtlas() {
   mbSetInit = false;
 
   mnInitialFrameId = mCurrentFrame.mnId + 1;
-  mState = NO_IMAGES_YET;
+  (mState = NO_IMAGES_YET, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
 
   // Restart the variable with information about the last KF
   mbVelocity = false;
@@ -2898,6 +2930,7 @@ void Tracking::CheckReplacedInLastFrame() {
 }
 
 bool Tracking::TrackReferenceKeyFrame() {
+  FieldStage field_stage(mCurrentFrame.mnId,2);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->reference_kf_ms : nullptr);
   const bool uses_float_descriptors =
@@ -2913,7 +2946,7 @@ bool Tracking::TrackReferenceKeyFrame() {
   // Debug: Check reference KF
   if (!mpReferenceKF) {
     cout << "TRACK_REF_KF: mpReferenceKF is NULL!\n";
-    return false;
+    return field_stage.Result(false,__LINE__);
   }
 
   vector<ReferenceFeatureMatch> coarse_reference_matches;
@@ -2956,13 +2989,14 @@ bool Tracking::TrackReferenceKeyFrame() {
     mCurrentFrame.ApplyKeypointRefinements(keypoint_refinements);
   }
 
+  FieldEmit(12,mCurrentFrame.mnId,2,1,nmatches);
   if (nmatches < 10) {
     cout << "TRACK_REF_KF: Less than 10 matches!! (got " << nmatches
          << ", RefKF=" << mpReferenceKF->mnId
          << ", RefKF_MPs=" << mpReferenceKF->GetMapPointMatches().size()
          << ", RefKF_BowEmpty=" << mpReferenceKF->mBowVec.empty()
          << ", CurFrame_BowEmpty=" << mCurrentFrame.mBowVec.empty() << ")\n";
-    return false;
+    return field_stage.Result(false,__LINE__);
   }
 
   mCurrentFrame.mvpMapPoints = vpMapPointMatches;
@@ -2972,7 +3006,7 @@ bool Tracking::TrackReferenceKeyFrame() {
 
   // cout << " TrackReferenceKeyFrame mLastFrame.mTcw:  " << mLastFrame.mTcw <<
   // endl;
-  Optimizer::PoseOptimization(&mCurrentFrame);
+  FieldPoseOptimization(&mCurrentFrame);
 
   // Discard outliers
   int nmatchesMap = 0;
@@ -3000,10 +3034,10 @@ bool Tracking::TrackReferenceKeyFrame() {
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
       mSensor == System::IMU_RGBD) {
     if (mbOnlyTracking)
-      return nmatchesMap >= 15;
-    return true;
+      return field_stage.Result(nmatchesMap >= 15,__LINE__);
+    return field_stage.Result(true,__LINE__);
   } else
-    return nmatchesMap >= 10;
+    return field_stage.Result(nmatchesMap >= 10,__LINE__);
 }
 
 void Tracking::UpdateLastFrame() {
@@ -3073,6 +3107,7 @@ void Tracking::UpdateLastFrame() {
 }
 
 bool Tracking::TrackWithMotionModel() {
+  FieldStage field_stage(mCurrentFrame.mnId,1);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->motion_model_ms : nullptr);
   const bool uses_float_descriptors =
@@ -3093,7 +3128,7 @@ bool Tracking::TrackWithMotionModel() {
     // In pure localization mode we still require visual correspondences to
     // avoid drifting away after relocalization.
     if (!mbOnlyTracking)
-      return true;
+      return field_stage.Result(true,__LINE__);
   } else {
     mCurrentFrame.SetPose(mVelocity * mLastFrame.GetPose());
   }
@@ -3191,6 +3226,7 @@ bool Tracking::TrackWithMotionModel() {
   }
 
   // If few matches, uses a wider window search
+  FieldEmit(12,mCurrentFrame.mnId,1,1,nmatches);
   if (nmatches < 20) {
     Verbose::PrintMess("Not enough matches, wider window search!!",
                        Verbose::VERBOSITY_NORMAL);
@@ -3204,19 +3240,20 @@ bool Tracking::TrackWithMotionModel() {
                        Verbose::VERBOSITY_NORMAL);
   }
 
+  FieldEmit(12,mCurrentFrame.mnId,1,1,nmatches);
   if (nmatches < 20) {
     Verbose::PrintMess("Not enough matches!!", Verbose::VERBOSITY_NORMAL);
     if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
         mSensor == System::IMU_RGBD) {
       if (mbOnlyTracking || bPredictedWithIMU)
-        return false;
-      return true;
+        return field_stage.Result(false,__LINE__);
+      return field_stage.Result(true,__LINE__);
     } else
-      return false;
+      return field_stage.Result(false,__LINE__);
   }
 
   // Optimize frame pose with all matches
-  Optimizer::PoseOptimization(&mCurrentFrame);
+  FieldPoseOptimization(&mCurrentFrame);
 
   // Discard outliers
   int nmatchesMap = 0;
@@ -3241,17 +3278,18 @@ bool Tracking::TrackWithMotionModel() {
 
   if (mbOnlyTracking) {
     mbVO = nmatchesMap < 10;
-    return nmatches > 20 && nmatchesMap >= 10;
+    return field_stage.Result(nmatches > 20 && nmatchesMap >= 10,__LINE__);
   }
 
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
       mSensor == System::IMU_RGBD)
-    return true;
+    return field_stage.Result(true,__LINE__);
   else
-    return nmatchesMap >= 10;
+    return field_stage.Result(nmatchesMap >= 10,__LINE__);
 }
 
 bool Tracking::TrackLocalMap() {
+  FieldStage field_stage(mCurrentFrame.mnId,3);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_map_ms : nullptr);
 
@@ -3272,13 +3310,16 @@ bool Tracking::TrackLocalMap() {
         aux2++;
     }
 
+// FIELD_MAP_BEGIN
+  FieldEmit(25,mCurrentFrame.mnId,0,3,aux1,aux2);
+// FIELD_MAP_END
   int inliers;
   if (!mpAtlas->isImuInitialized())
-    Optimizer::PoseOptimization(&mCurrentFrame);
+    FieldPoseOptimization(&mCurrentFrame);
   else {
     if (mCurrentFrame.mnId <= mnLastRelocFrameId + mnFramesToResetIMU) {
       Verbose::PrintMess("TLM: PoseOptimization ", Verbose::VERBOSITY_DEBUG);
-      Optimizer::PoseOptimization(&mCurrentFrame);
+      FieldPoseOptimization(&mCurrentFrame);
     } else {
       // Check if IMU preintegration data is valid before using IMU-based
       // optimization
@@ -3293,7 +3334,7 @@ bool Tracking::TrackLocalMap() {
         Verbose::PrintMess(
             "TLM: Falling back to PoseOptimization (IMU data unavailable)",
             Verbose::VERBOSITY_DEBUG);
-        Optimizer::PoseOptimization(&mCurrentFrame);
+        FieldPoseOptimization(&mCurrentFrame);
       } else if (!mbMapUpdated) {
         const bool bHasPrevPrior = mCurrentFrame.mpPrevFrame &&
                                    mCurrentFrame.mpPrevFrame->mpcpi != nullptr;
@@ -3318,7 +3359,7 @@ bool Tracking::TrackLocalMap() {
           cout << "TLM: IMU optimization failed, falling back to "
                   "PoseOptimization"
                << endl;
-          Optimizer::PoseOptimization(&mCurrentFrame);
+          FieldPoseOptimization(&mCurrentFrame);
         }
       } else {
         Verbose::PrintMess("TLM: PoseInertialOptimizationLastKeyFrame ",
@@ -3330,7 +3371,7 @@ bool Tracking::TrackLocalMap() {
           cout << "TLM: IMU optimization failed, falling back to "
                   "PoseOptimization"
                << endl;
-          Optimizer::PoseOptimization(&mCurrentFrame);
+          FieldPoseOptimization(&mCurrentFrame);
         }
       }
     }
@@ -3344,6 +3385,9 @@ bool Tracking::TrackLocalMap() {
         aux2++;
     }
 
+// FIELD_MAP_BEGIN
+  FieldEmit(25,mCurrentFrame.mnId,1,3,aux1,aux2);
+// FIELD_MAP_END
   mnMatchesInliers = 0;
 
   // Update MapPoints Statistics
@@ -3364,9 +3408,10 @@ bool Tracking::TrackLocalMap() {
   // Decide if the tracking was succesful
   // More restrictive if there was a relocalization recently
   mpLocalMapper->mnMatchesInliers = mnMatchesInliers;
+  FieldEmit(13,mCurrentFrame.mnId,3,1,mnMatchesInliers);
   if (mCurrentFrame.mnId < mnLastRelocFrameId + mMaxFrames &&
       mnMatchesInliers < 50)
-    return false;
+    return field_stage.Result(false,__LINE__);
 
   // In pure localization + IMU mode, keep a stricter gate to prevent drift
   // when visual constraints become weak.
@@ -3374,27 +3419,27 @@ bool Tracking::TrackLocalMap() {
       (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
        mSensor == System::IMU_RGBD) &&
       mnMatchesInliers < 25)
-    return false;
+    return field_stage.Result(false,__LINE__);
 
   if ((mnMatchesInliers > 10) && (mState == RECENTLY_LOST))
-    return true;
+    return field_stage.Result(true,__LINE__);
 
   if (mSensor == System::IMU_MONOCULAR) {
     if ((mnMatchesInliers < 15 && mpAtlas->isImuInitialized()) ||
         (mnMatchesInliers < 50 && !mpAtlas->isImuInitialized())) {
-      return false;
+      return field_stage.Result(false,__LINE__);
     } else
-      return true;
+      return field_stage.Result(true,__LINE__);
   } else if (mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) {
     if (mnMatchesInliers < 15) {
-      return false;
+      return field_stage.Result(false,__LINE__);
     } else
-      return true;
+      return field_stage.Result(true,__LINE__);
   } else {
     if (mnMatchesInliers < 30)
-      return false;
+      return field_stage.Result(false,__LINE__);
     else
-      return true;
+      return field_stage.Result(true,__LINE__);
   }
 }
 
@@ -3688,6 +3733,9 @@ void Tracking::CreateNewKeyFrame() {
 }
 
 void Tracking::SearchLocalPoints() {
+// FIELD_MAP_BEGIN
+  uint64_t field_associated=0;
+// FIELD_MAP_END
   // Do not search map points already matched
   for (vector<MapPoint *>::iterator vit = mCurrentFrame.mvpMapPoints.begin(),
                                     vend = mCurrentFrame.mvpMapPoints.end();
@@ -3697,6 +3745,9 @@ void Tracking::SearchLocalPoints() {
       if (pMP->isBad()) {
         *vit = static_cast<MapPoint *>(NULL);
       } else {
+// FIELD_MAP_BEGIN
+        if(FieldEnabled()) ++field_associated;
+// FIELD_MAP_END
         pMP->IncreaseVisible();
         pMP->mnLastFrameSeen = mCurrentFrame.mnId;
         pMP->mbTrackInView = false;
@@ -3728,6 +3779,12 @@ void Tracking::SearchLocalPoints() {
     }
   }
 
+// FIELD_MAP_BEGIN
+  if(FieldEnabled()) {
+    FieldEmit(23,mCurrentFrame.mnId,0,mpReferenceKF?31:30,mpReferenceKF?mpReferenceKF->mnId:0,mvpLocalKeyFrames.size(),mvpLocalMapPoints.size(),nToMatch,field_associated);
+    if(nToMatch==0) FieldEmit(24,mCurrentFrame.mnId,0,1,0);
+  }
+// FIELD_MAP_END
   if (nToMatch > 0) {
     const bool uses_float_descriptors =
         mCurrentFrame.mDescriptors.type() == CV_32FC1;
@@ -3757,6 +3814,10 @@ void Tracking::SearchLocalPoints() {
     int matches = matcher.SearchByProjection(mCurrentFrame, mvpLocalMapPoints,
                                              th, mpLocalMapper->mbFarPoints,
                                              mpLocalMapper->mThFarPoints);
+// FIELD_MAP_BEGIN
+    FieldEmit(24,mCurrentFrame.mnId,1,3,matches,th);
+// FIELD_MAP_END
+
   }
 }
 
@@ -3943,6 +4004,7 @@ void Tracking::UpdateLocalKeyFrames() {
 }
 
 bool Tracking::Relocalization() {
+  FieldStage field_stage(mCurrentFrame.mnId,4);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->relocalization_ms : nullptr);
   Verbose::PrintMess("Starting relocalization", Verbose::VERBOSITY_NORMAL);
@@ -3961,7 +4023,7 @@ bool Tracking::Relocalization() {
     Verbose::PrintMess("There are not candidates", Verbose::VERBOSITY_NORMAL);
     cout << "Relocalization: No candidates found!" << endl;
     SetLatestRelocalizationStatus(RelocalizationFailed);
-    return false;
+    return field_stage.Result(false,__LINE__);
   }
   cout << "Relocalization: Found " << vpCandidateKFs.size() << " candidates"
        << endl;
@@ -4055,7 +4117,7 @@ bool Tracking::Relocalization() {
             mCurrentFrame.mvpMapPoints[j] = NULL;
         }
 
-        int nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+        int nGood = FieldPoseOptimization(&mCurrentFrame);
         cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
              << ": inliers after 1st PoseOpt=" << nGood << endl;
 
@@ -4091,7 +4153,7 @@ bool Tracking::Relocalization() {
                << ": additional via projection+covis=" << nadditional << endl;
 
           if (nadditional + nGood >= 20) {
-            nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+            nGood = FieldPoseOptimization(&mCurrentFrame);
             cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
                  << ": inliers after 2nd PoseOpt=" << nGood << endl;
 
@@ -4112,7 +4174,7 @@ bool Tracking::Relocalization() {
               }
 
               if (nGood + nadditional >= 20) {
-                nGood = Optimizer::PoseOptimization(&mCurrentFrame);
+                nGood = FieldPoseOptimization(&mCurrentFrame);
                 cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
                      << ": inliers after 3rd PoseOpt=" << nGood << endl;
 
@@ -4142,7 +4204,7 @@ bool Tracking::Relocalization() {
 
   if (!bMatch) {
     SetLatestRelocalizationStatus(RelocalizationFailed);
-    return false;
+    return field_stage.Result(false,__LINE__);
   } else {
     mnLastRelocFrameId = mCurrentFrame.mnId;
     if (pMatchedRelocKF && !pMatchedRelocKF->isBad()) {
@@ -4183,7 +4245,7 @@ bool Tracking::Relocalization() {
 
     cout << "Relocalized!!" << endl;
     SetLatestRelocalizationStatus(RelocalizationSucceed);
-    return true;
+    return field_stage.Result(true,__LINE__);
   }
 }
 
@@ -4223,7 +4285,7 @@ void Tracking::Reset(bool bLocMap) {
 
   KeyFrame::nNextId = 0;
   Frame::nNextId = 0;
-  mState = NO_IMAGES_YET;
+  (mState = NO_IMAGES_YET, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
 
   mbReadyToInitializate = false;
   mbSetInit = false;
@@ -4279,7 +4341,7 @@ void Tracking::ResetActiveMap(bool bLocMap) {
   // Frame::nNextId = mnLastInitFrameId;
   mnLastInitFrameId = Frame::nNextId;
   // mnLastRelocFrameId = mnLastInitFrameId;
-  mState = NO_IMAGES_YET; // NOT_INITIALIZED;
+  (mState = NO_IMAGES_YET, FieldEmit(15,mCurrentFrame.mnId,0,1,mState)); // NOT_INITIALIZED;
 
   mbReadyToInitializate = false;
 
