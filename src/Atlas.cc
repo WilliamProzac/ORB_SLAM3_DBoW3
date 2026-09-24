@@ -81,6 +81,7 @@ void Atlas::ChangeMap(Map *pMap) {
 
   mpCurrentMap = pMap;
   mpCurrentMap->SetCurrentMap();
+  mpCurrentMap->PublishLocalTrackingEvent(LocalMapEventType::Switch);
 }
 
 unsigned long int Atlas::GetLastInitKFid() {

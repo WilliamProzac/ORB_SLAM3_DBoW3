@@ -1,10 +1,12 @@
 #include "Tracking.h"
 #include "LocalMapBudget.h"
+#include "LocalMapGrid.h"
 #include "LocalTrackingIdentity.h"
 #include "FieldObservation.h"
 #include <algorithm>
 #include <chrono>
 #include <set>
+#include <cmath>
 
 namespace ORB_SLAM3 {
 namespace {
@@ -12,10 +14,31 @@ using Clock = std::chrono::steady_clock;
 double elapsed(Clock::time_point start) {
   return std::chrono::duration<double,std::milli>(Clock::now()-start).count();
 }
+LocalMapHealth MeasureHealth(const LocalTrackingAttempt& attempt) {
+  LocalMapHealth health;
+  health.inliers=attempt.inliers; health.tracking=attempt.TrackingSucceeded();
+  const auto& frame=attempt.frame;
+  const float width=frame.mnMaxX-frame.mnMinX,height=frame.mnMaxY-frame.mnMinY;
+  if(!(width>0 && height>0)) return health;
+  uint64_t features=0,inliers=0;
+  for(int i=0;i<frame.N;++i) {
+    const auto& p=frame.mvKeysUn[i].pt;
+    const int cell=LocalMapGridCell(p.x,p.y,frame.mnMinX,frame.mnMaxX,
+                                    frame.mnMinY,frame.mnMaxY,8,6);
+    if(cell<0) continue;
+    const uint64_t bit=uint64_t(1)<<cell;
+    features|=bit;
+    if(frame.mvpMapPoints[i] && !frame.mvbOutlier[i]) inliers|=bit;
+  }
+  health.feature_cells=__builtin_popcountll(features);
+  health.occupied=__builtin_popcountll(inliers);
+  return health;
+}
 }
 
 void Tracking::ResetLocalMapBudgetHistory() {
   mLocalMapTemporal.clear();
+  mLocalMapController.Reset();
   mpLocalBudgetMap=nullptr;
   mpLocalBudgetRelocation=nullptr;
 }
@@ -75,16 +98,31 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
     }
     return attempt.Commit(mCurrentFrame);
   };
-  const bool protected_frame=mState!=OK || mCurrentFrame.mnId<mnLastRelocFrameId+mMaxFrames ||
-                              mCurrentFrame.mnId<mnLastInitFrameId+20;
-  bool budget_attempt=mLocalMapMode>=2 && (!protected_frame || shadow);
+  const auto event=input.map->GetLocalTrackingEvent();
+  const uint64_t legacy_end=std::max<uint64_t>(mnLastRelocFrameId+mMaxFrames,mnLastInitFrameId+20);
+  const bool protected_frame=mState!=OK || mCurrentFrame.mnId<legacy_end;
+  const bool managed=mLocalMapAdaptive && mLocalMapMode>=2 && !shadow;
+  LocalBudgetDecision decision{protected_frame?3:0,false};
+  if(managed) decision=mLocalMapController.Begin(mCurrentFrame.mnId,event.generation,event.version,
+      input.recently_lost,mnLastRelocFrameId,legacy_end);
+  if(shadow) decision={0,false};
+  if(mLocalMapMode==1) decision={3,false};
+  const bool wanted_budget=mLocalMapMode>=2 && decision.Bounded();
+  bool budget_attempt=wanted_budget;
+  const size_t current_limit=decision.Bounded()?size_t(std::ceil(mLocalMapKeyFrameBudget*decision.Scale())):
+                                               mLocalMapKeyFrameBudget;
   LocalKeyFrameSelection selection;
-  std::string reason=protected_frame?"protection":"full";
+  std::string reason=mLocalMapMode==1?"full":(decision.Bounded()?"votes":"recovery");
+  std::string budget_failure;
+  double health_ms=0;
+  auto measure=[&](const LocalTrackingAttempt& attempt) {
+    const auto start=Clock::now(); auto health=MeasureHealth(attempt); health_ms+=elapsed(start); return health;
+  };
   auto start=Clock::now();
   std::unique_ptr<LocalTrackingAttempt> trial(new LocalTrackingAttempt(input));
   trial->BuildLocalMap();
   if(budget_attempt) {
-    selection=SelectLocalKeyFrames(*trial,mLocalMapKeyFrameBudget,temporal);
+    selection=SelectLocalKeyFrames(*trial,current_limit,temporal);
     budget_attempt=selection.bounded;
     reason=selection.reason;
   }
@@ -92,11 +130,18 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   const double trial_ms=elapsed(start);
   const int budget_inliers=budget_attempt?trial->inliers:-1;
   const size_t trial_keyframes=trial->keyframes.size(), trial_points=trial->points.size();
-  bool retry=budget_attempt && (!trial->TrackingSucceeded() || shadow);
+  const auto trial_health=measure(*trial);
+  auto final_health=trial_health;
+  const bool budget_low=trial_health.Low(mLocalMapController.HealthyReference());
+  bool retry=budget_attempt && (shadow || mLocalMapController.ShouldRetry(decision,trial_health));
+  if(budget_attempt && !trial_health.tracking) budget_failure="tracking_gate";
+  else if(budget_attempt && trial_health.Severe()) budget_failure="severe_coverage";
+  else if(budget_attempt && decision.probe && retry) budget_failure="probe_health";
+  if(wanted_budget && !budget_attempt) budget_failure=selection.reason;
   bool committed=false;
   if(!retry) {
     committed=commit(*trial);
-    if(!committed) { reason=trial->rejection; retry=budget_attempt; }
+    if(!committed) { reason=trial->rejection; budget_failure=trial->rejection; retry=budget_attempt; }
   }
   std::unique_ptr<LocalTrackingAttempt> full;
   LocalTrackingAttempt* final=trial.get();
@@ -107,6 +152,7 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
     full.reset(new LocalTrackingAttempt(input));
     full->BuildLocalMap(); full->SearchAndOptimize(); full_ms=elapsed(start);
     final=full.get();
+    final_health=measure(*full);
     if(shadow) {
       // Trial membership was fixed before the full match/optimization. Count
       // unique retained MP identities separately from actual feature matches.
@@ -145,6 +191,14 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   }
   mpLocalMapper->mnMatchesInliers=mnMatchesInliers;
   const bool success=committed && final->TrackingSucceeded();
+  final_health.tracking=success;
+  if(!committed) { final_health.inliers=0; final_health.occupied=0; }
+  if(managed) {
+    auto controller_trial=trial_health;
+    if(wanted_budget && !budget_attempt) controller_trial.tracking=false;
+    mLocalMapController.Observe(mCurrentFrame.mnId,decision,wanted_budget,controller_trial,final_health,
+                               retry || (wanted_budget && !budget_attempt));
+  }
   const double update_ms=trial->build_ms+(full?full->build_ms:0)+selection.milliseconds;
   const double search_ms=trial->search_ms+(full?full->search_ms:0);
   const double pose_ms=trial->optimize_ms+(full?full->optimize_ms:0);
@@ -161,12 +215,17 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   std::lock_guard<std::mutex> log_lock(mLocalMapLogMutex);
   if(mLocalMapLog.is_open())
     mLocalMapLog<<mCurrentFrame.mnId<<','<<input.map->GetId()<<','<<mLocalMapMode<<','
-      <<mLocalMapKeyFrameBudget<<','<<mvpLocalKeyFrames.size()<<','<<mvpLocalMapPoints.size()<<','
+      <<current_limit<<','<<mvpLocalKeyFrames.size()<<','<<mvpLocalMapPoints.size()<<','
       <<selection.mandatory<<','<<selection.candidates<<','<<budget_attempt<<','<<budget_inliers<<','
       <<mnMatchesInliers<<','<<success<<','<<(retry&&!shadow)<<','<<committed<<','<<reason<<','
       <<selection.milliseconds<<','<<snapshot_ms<<','<<update_ms<<','<<search_ms<<','<<pose_ms<<','
       <<commit_ms<<','<<trial_ms<<','<<full_ms<<','<<retained<<','<<total<<','<<retained_new<<','
-      <<total_new<<','<<association<<','<<trial_keyframes<<','<<trial_points<<','<<identity_wait_ms<<'\n';
+      <<total_new<<','<<association<<','<<trial_keyframes<<','<<trial_points<<','<<identity_wait_ms<<','
+      <<mLocalMapController.Level()<<','<<decision.level<<','<<decision.probe<<','<<budget_low<<','
+      <<trial_health.occupied<<','<<trial_health.feature_cells<<','<<trial_health.Coverage()<<','
+      <<final_health.occupied<<','<<final_health.feature_cells<<','<<final_health.Coverage()<<','
+      <<mLocalMapController.HoldUntil()<<','<<mLocalMapController.CoolUntil()<<','<<mLocalMapController.SafetyUntil()<<','
+      <<event.generation<<','<<event.version<<','<<unsigned(event.type)<<','<<budget_failure<<','<<health_ms<<'\n';
   }
   if(FieldEnabled()) {
     FieldEmit(13,mCurrentFrame.mnId,3,1,mnMatchesInliers);

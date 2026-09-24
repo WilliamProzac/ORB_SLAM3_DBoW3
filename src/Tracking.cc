@@ -249,12 +249,18 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
         throw std::invalid_argument("RGBD.LocalMapKFs must be integer 1..512");
       mLocalMapKeyFrameBudget = int(local_limit);
     }
+    const auto local_adaptive = options["RGBD.LocalMapAdaptive"];
+    if (!local_adaptive.empty()) {
+      if (!local_adaptive.isInt() || (int(local_adaptive)!=0 && int(local_adaptive)!=1))
+        throw std::invalid_argument("RGBD.LocalMapAdaptive must be 0 or 1");
+      mLocalMapAdaptive = int(local_adaptive)!=0;
+    }
     const auto local_log = options["RGBD.LocalMapLog"];
     if (mLocalMapMode && !local_log.empty()) {
       if (!local_log.isString()) throw std::invalid_argument("RGBD.LocalMapLog must be a path string");
       mLocalMapLog.open(static_cast<std::string>(local_log));
       if (!mLocalMapLog) throw std::runtime_error("cannot open RGBD.LocalMapLog");
-      mLocalMapLog << "frame_id,map_id,mode,budget_kf,active_kf,active_mp,mandatory,candidate_kf,budget_attempt,budget_inliers,final_inliers,tracking_ok,retry,commit_ok,reason,selection_ms,snapshot_ms,update_ms,search_ms,pose_ms,commit_ms,trial_ms,full_ms,selected_inliers,total_inliers,selected_new_inliers,total_new_inliers,association_inliers,trial_kf,trial_mp,identity_wait_ms\n";
+      mLocalMapLog << "frame_id,map_id,mode,budget_kf,active_kf,active_mp,mandatory,candidate_kf,budget_attempt,budget_inliers,final_inliers,tracking_ok,retry,commit_ok,reason,selection_ms,snapshot_ms,update_ms,search_ms,pose_ms,commit_ms,trial_ms,full_ms,selected_inliers,total_inliers,selected_new_inliers,total_new_inliers,association_inliers,trial_kf,trial_mp,identity_wait_ms,controller_level,attempt_level,probe,budget_low,trial_cells,trial_feature_cells,trial_coverage,final_cells,final_feature_cells,final_coverage,hold_until,cool_until,safety_until,map_generation,event_version,event_kind,budget_failure,health_ms\n";
     }
   }
 

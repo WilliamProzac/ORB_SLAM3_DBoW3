@@ -1337,3 +1337,31 @@ artifacts/local_map_budget_20260924/c21/r2/checks.json and immutable runs/.
 Tools now freeze native binary pairs before replay, record governor/frequency,
 CPU time and temperature, report full-path residence including budget recovery,
 and provide a TUM PNG replay driver (20/20 reader smoke only, no precision claim).
+
+
+## LM01 C3 — typed events and adaptive probes (2026-09-24)
+
+Map event generations/versions are runtime-only. Loop correction, committed
+GBA, merge, active-map switch and reset publish explicit types; ordinary
+IncreaseChangeIndex does not. Controller separates budget and final health,
+uses undistorted8x6 relative/absolute coverage, keeps one retry, escalates budgets,
+and requires actual5-frame bounded probes after recovery. Startup/event safety
+is separate from budget-induced cooldown, so fallback accounting cannot hide
+budget recovery. Both health records and event/controller deadlines are logged.
+
+Native120 and2910 KF80 runs process all inputs in stateOK. Original27 ARM probes
+and new transaction/controller/event/grid fixtures pass (graph delta<=7.1e-15).
+Controller event concurrency passes TSan and ASan/UBSan/LSan without suppressions.
+The inherited full-System LSan issue is unchanged. C3r1's stale stationary-view
+inlier reference caused repeated healthy probes to fail; negative evidence is
+retained. C3r2 starts a fresh budget-health reference after entering recovery,
+then still requires20 protected frames and5 real bounded successes. Full retry
+inliers never establish budget health. Scene-change regression tests pass.
+
+First boardKF80 long screen:2450/2910, non-OK0, callbackP95=136.285ms,
+fixedlast25P95=145.490ms. OrdinaryOK full/retry fraction13.54%, last25=19.01%:
+REALTIME,INPUT and RESIDENCE gates FAIL. DefaultOFF; no production promotion.
+KF96/KF64 screening remains running on the immutable C3r2 ARM pair. C4–C6 remain.
+C2.1 fixedKF80 long also failed:2490/2910,non-OK0,P95=123.895ms,last25=126.206ms;
+cap violations/retries/commit failures0. Do not infer a win from smaller maps.
+Evidence: IDE artifacts/local_map_budget_20260924/c3/r2/checks.json and runs/.

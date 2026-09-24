@@ -1243,6 +1243,7 @@ void LoopClosing::CorrectLoop() {
 #endif
 
   mpAtlas->InformNewBigChange();
+  pLoopMap->PublishLocalTrackingEvent(LocalMapEventType::LoopCorrection);
 
   // Add loop edge
   mpLoopMatchedKF->AddLoopEdge(mpCurrentKF);
@@ -1829,6 +1830,7 @@ void LoopClosing::MergeLocal() {
 
   pCurrentMap->IncreaseChangeIndex();
   pMergeMap->IncreaseChangeIndex();
+  pMergeMap->PublishLocalTrackingEvent(LocalMapEventType::Merge);
 
   mpAtlas->RemoveBadMaps();
 }
@@ -2091,6 +2093,7 @@ void LoopClosing::MergeLocal2() {
   // TODO Check: If new map is too small, we suppose that not informaiton can be
   // propagated from new to old map
   if (numKFnew < 10) {
+    pCurrentMap->PublishLocalTrackingEvent(LocalMapEventType::Merge);
     mpLocalMapper->Release();
     return;
   }
@@ -2112,6 +2115,7 @@ void LoopClosing::MergeLocal2() {
       cout << "BAD ESSENTIAL GRAPH 6!!" << endl;*/
 
   // Release Local Mapping.
+  pCurrentMap->PublishLocalTrackingEvent(LocalMapEventType::Merge);
   mpLocalMapper->Release();
 
   return;
@@ -2566,6 +2570,7 @@ void LoopClosing::RunGlobalBundleAdjustment(Map *pActiveMap,
 
       pActiveMap->InformNewBigChange();
       pActiveMap->IncreaseChangeIndex();
+      pActiveMap->PublishLocalTrackingEvent(LocalMapEventType::GlobalBA);
 
       // TODO Check this update
       // mpTracker->UpdateFrameIMU(1.0f,

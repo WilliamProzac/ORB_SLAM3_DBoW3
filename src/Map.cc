@@ -204,6 +204,7 @@ void Map::clear() {
   mvpSavePointOwners.clear();
   mbIMU_BA1 = false;
   mbIMU_BA2 = false;
+  mLocalTrackingEvents.ResetGeneration();
 }
 
 bool Map::IsInUse() { return mIsInUse; }

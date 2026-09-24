@@ -23,6 +23,7 @@
 #define MAP_H
 
 #include "MapPointHandle.h"
+#include "LocalMapEvents.h"
 #include "KeyFrame.h"
 #include "MapPoint.h"
 
@@ -110,6 +111,8 @@ public:
 
   int GetMapChangeIndex();
   void IncreaseChangeIndex();
+  LocalMapEventState GetLocalTrackingEvent() const { return mLocalTrackingEvents.Snapshot(); }
+  void PublishLocalTrackingEvent(LocalMapEventType type) { mLocalTrackingEvents.Publish(type); }
   int GetLastMapChange();
   void SetLastMapChange(int currentChangeId);
 
@@ -211,6 +214,7 @@ protected:
 
   // Mutex
   std::mutex mMutexMap;
+  LocalMapEvents mLocalTrackingEvents; // runtime only; never serialized
 };
 
 } // namespace ORB_SLAM3

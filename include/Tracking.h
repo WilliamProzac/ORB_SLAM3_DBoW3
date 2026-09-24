@@ -30,6 +30,7 @@
 #include "ImuTypes.h"
 #include "KeyFrameDatabase.h"
 #include "LocalMapping.h"
+#include "LocalMapController.h"
 #include "LoopClosing.h"
 #include "MapDrawer.h"
 #include "ORBVocabulary.h"
@@ -327,6 +328,8 @@ protected:
   // LM01: off=0, full transaction=1, KF budget=2, shadow=3. Default off.
   int mLocalMapMode = 0;
   size_t mLocalMapKeyFrameBudget = 80;
+  bool mLocalMapAdaptive = true;
+  LocalMapController mLocalMapController;
   std::ofstream mLocalMapLog;
   std::mutex mLocalMapLogMutex;
   std::vector<KeyFrame*> mLocalMapTemporal;

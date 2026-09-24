@@ -60,6 +60,7 @@ src/MemoryStats.cc
 src/Tracking.cc
 src/LocalTrackingAttempt.cc
 src/LocalMapBudget.cc
+src/LocalMapEvents.cc
 src/TrackingLocalMap.cc
 src/LocalMapping.cc
 src/LoopClosing.cc
