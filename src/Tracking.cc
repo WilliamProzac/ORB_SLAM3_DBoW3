@@ -249,6 +249,19 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
         throw std::invalid_argument("RGBD.LocalMapKFs must be integer 1..512");
       mLocalMapKeyFrameBudget = int(local_limit);
     }
+    const auto local_strategy = options["RGBD.LocalMapKFStrategy"];
+    if (!local_strategy.empty()) {
+      if (!local_strategy.isString()) throw std::invalid_argument("RGBD.LocalMapKFStrategy must be votes/coverage");
+      const std::string strategy=local_strategy;
+      if (strategy!="votes" && strategy!="coverage") throw std::invalid_argument("RGBD.LocalMapKFStrategy must be votes/coverage");
+      mLocalMapCoverage=strategy=="coverage";
+    }
+    const auto local_detailed = options["RGBD.LocalMapDiagnostics"];
+    if (!local_detailed.empty()) {
+      if (!local_detailed.isInt() || (int(local_detailed)!=0 && int(local_detailed)!=1))
+        throw std::invalid_argument("RGBD.LocalMapDiagnostics must be 0 or 1");
+      mLocalMapDetailed=int(local_detailed)!=0;
+    }
     const auto local_adaptive = options["RGBD.LocalMapAdaptive"];
     if (!local_adaptive.empty()) {
       if (!local_adaptive.isInt() || (int(local_adaptive)!=0 && int(local_adaptive)!=1))
@@ -260,7 +273,7 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
       if (!local_log.isString()) throw std::invalid_argument("RGBD.LocalMapLog must be a path string");
       mLocalMapLog.open(static_cast<std::string>(local_log));
       if (!mLocalMapLog) throw std::runtime_error("cannot open RGBD.LocalMapLog");
-      mLocalMapLog << "frame_id,map_id,mode,budget_kf,active_kf,active_mp,mandatory,candidate_kf,budget_attempt,budget_inliers,final_inliers,tracking_ok,retry,commit_ok,reason,selection_ms,snapshot_ms,update_ms,search_ms,pose_ms,commit_ms,trial_ms,full_ms,selected_inliers,total_inliers,selected_new_inliers,total_new_inliers,association_inliers,trial_kf,trial_mp,identity_wait_ms,controller_level,attempt_level,probe,budget_low,trial_cells,trial_feature_cells,trial_coverage,final_cells,final_feature_cells,final_coverage,hold_until,cool_until,safety_until,map_generation,event_version,event_kind,budget_failure,health_ms\n";
+      mLocalMapLog << "frame_id,map_id,mode,budget_kf,active_kf,active_mp,mandatory,candidate_kf,budget_attempt,budget_inliers,final_inliers,tracking_ok,retry,commit_ok,reason,selection_ms,snapshot_ms,update_ms,search_ms,pose_ms,commit_ms,trial_ms,full_ms,selected_inliers,total_inliers,selected_new_inliers,total_new_inliers,association_inliers,trial_kf,trial_mp,identity_wait_ms,controller_level,attempt_level,probe,budget_low,trial_cells,trial_feature_cells,trial_coverage,final_cells,final_feature_cells,final_coverage,hold_until,cool_until,safety_until,map_generation,event_version,event_kind,budget_failure,health_ms,kf_strategy,coverage_used,support_points,support_cells,mandatory_support,mandatory_cells,coverage_saturation_selected,saturation_slots,saturation_votes,saturation_diversity,saturation_ties,association_lost,association_changed,association_added,pose_delta_m,pose_delta_deg,trial_residual_rms,full_residual_rms,trial_residual_p95,full_residual_p95,trial_information_min,trial_information_max,full_information_min,full_information_max,trial_rank,full_rank,diagnostic_ms\n";
     }
   }
 

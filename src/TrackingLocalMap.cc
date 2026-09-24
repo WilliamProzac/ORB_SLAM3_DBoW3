@@ -1,5 +1,6 @@
 #include "Tracking.h"
 #include "LocalMapBudget.h"
+#include "LocalMapDiagnostics.h"
 #include "LocalMapGrid.h"
 #include "LocalTrackingIdentity.h"
 #include "FieldObservation.h"
@@ -122,7 +123,8 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   std::unique_ptr<LocalTrackingAttempt> trial(new LocalTrackingAttempt(input));
   trial->BuildLocalMap();
   if(budget_attempt) {
-    selection=SelectLocalKeyFrames(*trial,current_limit,temporal);
+    selection=SelectLocalKeyFrames(*trial,current_limit,temporal,
+        mLocalMapCoverage?LocalKeyFrameStrategy::Coverage:LocalKeyFrameStrategy::Votes);
     budget_attempt=selection.bounded;
     reason=selection.reason;
   }
@@ -147,6 +149,9 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   LocalTrackingAttempt* final=trial.get();
   double full_ms=0;
   size_t retained=0,total=0,retained_new=0,total_new=0,association=0;
+  size_t association_lost=0,association_changed=0,association_added=0;
+  double pose_delta_m=0,pose_delta_deg=0,diagnostic_ms=0;
+  LocalGeometryDiagnostics trial_geometry,full_geometry;
   if(retry) {
     start=Clock::now();
     full.reset(new LocalTrackingAttempt(input));
@@ -154,6 +159,19 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
     final=full.get();
     final_health=measure(*full);
     if(shadow) {
+      const auto diagnostic_start=Clock::now();
+      const auto delta=full->frame.GetPose()*trial->frame.GetPose().inverse();
+      pose_delta_m=delta.translation().norm();pose_delta_deg=delta.so3().log().norm()*180./3.14159265358979323846;
+      if(mLocalMapDetailed) {
+        trial_geometry=DiagnoseLocalGeometry(*trial);full_geometry=DiagnoseLocalGeometry(*full);
+      }
+      for(int i=0;i<full->frame.N;++i) {
+        const bool a=trial->frame.mvpMapPoints[i] && !trial->frame.mvbOutlier[i];
+        const bool b=full->frame.mvpMapPoints[i] && !full->frame.mvbOutlier[i];
+        if(b && !a) ++association_lost;
+        if(a && !b) ++association_added;
+        if(a && b && trial->frame.mvpMapPoints[i]!=full->frame.mvpMapPoints[i]) ++association_changed;
+      }
       // Trial membership was fixed before the full match/optimization. Count
       // unique retained MP identities separately from actual feature matches.
       std::set<MapPoint*> selected,existing,seen;
@@ -168,6 +186,7 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
         ++total; if(selected.count(point.get())) ++retained;
         if(!existing.count(point.get())) { ++total_new; if(selected.count(point.get())) ++retained_new; }
       }
+      diagnostic_ms=elapsed(diagnostic_start);
     }
     committed=commit(*full);
     if(!committed) reason=full->rejection;
@@ -225,7 +244,14 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
       <<trial_health.occupied<<','<<trial_health.feature_cells<<','<<trial_health.Coverage()<<','
       <<final_health.occupied<<','<<final_health.feature_cells<<','<<final_health.Coverage()<<','
       <<mLocalMapController.HoldUntil()<<','<<mLocalMapController.CoolUntil()<<','<<mLocalMapController.SafetyUntil()<<','
-      <<event.generation<<','<<event.version<<','<<unsigned(event.type)<<','<<budget_failure<<','<<health_ms<<'\n';
+      <<event.generation<<','<<event.version<<','<<unsigned(event.type)<<','<<budget_failure<<','<<health_ms<<','
+      <<mLocalMapCoverage<<','<<selection.coverage_used<<','<<selection.support_points<<','<<selection.support_cells<<','
+      <<selection.mandatory_support<<','<<selection.mandatory_cells<<','<<selection.saturation_selected<<','
+      <<selection.saturation_slots<<','<<selection.saturation_votes<<','<<selection.saturation_diversity<<','<<selection.saturation_ties<<','
+      <<association_lost<<','<<association_changed<<','<<association_added<<','<<pose_delta_m<<','<<pose_delta_deg<<','
+      <<trial_geometry.residual_rms<<','<<full_geometry.residual_rms<<','<<trial_geometry.residual_p95<<','<<full_geometry.residual_p95<<','
+      <<trial_geometry.information_min<<','<<trial_geometry.information_max<<','<<full_geometry.information_min<<','<<full_geometry.information_max<<','
+      <<trial_geometry.rank<<','<<full_geometry.rank<<','<<diagnostic_ms<<'\n';
   }
   if(FieldEnabled()) {
     FieldEmit(13,mCurrentFrame.mnId,3,1,mnMatchesInliers);

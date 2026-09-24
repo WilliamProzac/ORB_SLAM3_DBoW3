@@ -329,6 +329,7 @@ protected:
   int mLocalMapMode = 0;
   size_t mLocalMapKeyFrameBudget = 80;
   bool mLocalMapAdaptive = true;
+  bool mLocalMapCoverage = false, mLocalMapDetailed = false;
   LocalMapController mLocalMapController;
   std::ofstream mLocalMapLog;
   std::mutex mLocalMapLogMutex;

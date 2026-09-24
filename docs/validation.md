@@ -1264,3 +1264,35 @@ KF96/KF64 screening remains running on the immutable C3r2 ARM pair. C4–C6 rema
 C2.1 fixedKF80 long also failed:2490/2910,non-OK0,P95=123.895ms,last25=126.206ms;
 cap violations/retries/commit failures0. Do not infer a win from smaller maps.
 Evidence: IDE artifacts/local_map_budget_20260924/c3/r2/checks.json and runs/.
+
+
+## LM01 C4a — experimental coverage and association/geometry diagnostics
+
+Votes stays default. Coverage uses entry matched-point/grid bitsets, normalized
+marginals, one pose read per candidate and incremental minimum diversity. It
+never scans candidate KF point slots to score; chosen KFs retain original gather
+order. Logs distinguish mandatory coverage, first saturation and post-saturation
+vote/diversity/tie decisions. Optional shadow diagnostics compare actual feature
+associations, optimized pose delta, residual and6x6 information spectrum. Their
+cost is included in tracking; they do not change Tracking success criteria.
+
+Native120 coverage/shadow,27 ARM probes, saturation/order and controlled frozen
+transaction tests, geometry-rank fixture and ASan/UBSan/LSan fixture pass. The
+sanitizer builds now read a frozen source snapshot, so later stages cannot alter
+an in-flight build. C1 Boost UBSan-only exceptions remain; full-SystemLSan stays
+open. Live shadow is separately labeled from exact frozen fixture parity.
+
+First native2910 pair is2910/2910 OK in both modes. New-match recall votes99.833%
+versus coverage99.885% (+0.052pp), new-recallP5 98.571/98.750%. Tail new recall
+99.757/99.817%. SelectionP95 .229/1.883ms. Coverage saturates2879/2909 frames,
+1456 at the mandatory set. This does not justify promotion. Second native pair
+and interleaved board pairs remain running on immutable binaries/configs; C4b
+will retain final decision evidence. C4a is an implementation checkpoint, not
+final performance acceptance. First boardvotes2612/2910,non-OK35,P95=120.518ms.
+
+Completed C3 adaptive tier screen also rejects every tier: KF96 processed2495,
+non-OK70,P95=143.660ms; KF80 processed2450,non-OK0,P95=136.285ms; KF64 processed2577,
+non-OK35,P95=129.535ms. KF96's first failure is before Local Map execution, after
+a successful full-path frame and an input-sequence gap; cause remains unproven.
+No candidate is eligible for production. C5 MP/statistics/cohort work and C6
+formal verification/delivery remain. Evidence: IDE artifacts/local_map_budget_20260924/c4/.
