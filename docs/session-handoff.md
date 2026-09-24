@@ -1,3 +1,23 @@
+# LM01 current handoff — 2026-09-24
+
+Active feature: LM01. C0 source snapshots committed; C1 transaction foundation
+verified, default off, fixture-only until C2 integration. Preserve all MEM18
+lifecycle repairs and frozen perf20. Target runtime is this independent core,
+with outer branch `perf/tracking-local-map-budget`.
+
+C1 adds LocalTrackingAttempt, immutable MP/geometry snapshots, RGB-D projection
+adapter, scratch ORB matching and frozen-position PoseOptimization. Validation
+is recorded in outer `memory/LM01.md` and IDE artifact c1/checks.json. Native/ARM
+27 probes and transaction fixture pass; host short run 120/120 OK. Sanitizer
+exceptions are explicit and narrow; no complete-System concurrency/leak claim.
+
+Next: wire before UpdateLocalMap, final publication once, hard KF cap with
+mandatory set, one full retry, preserve upstream seen markers and legacy counts.
+Then events/controller, coverage comparison, MP statistics/budgets, formal gates.
+Do not enable defaults without the complete approved quality/realtime matrix.
+
+Prior handoff follows unchanged below.
+
 # Session Handoff
 
 ## 2026-09-23 8GB X5 source attribution / realtime optimization

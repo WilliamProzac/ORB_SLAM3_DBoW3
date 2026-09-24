@@ -23,6 +23,7 @@
 #define MAPPOINT_H
 
 #include "MapPointHandle.h"
+#include "LocalMapProjection.h"
 #include "Converter.h"
 #include "Frame.h"
 #include "KeyFrame.h"
@@ -46,6 +47,7 @@ class Map;
 class Frame;
 
 class MapPoint : public std::enable_shared_from_this<MapPoint> {
+  friend class LocalTrackingAttempt;
 
   MemoryStats::Lifetime<1> mMemoryLifetime;
   friend class boost::serialization::access;
@@ -124,6 +126,8 @@ public:
   Eigen::Vector3f GetWorldPos();
 
   Eigen::Vector3f GetNormal();
+  LocalPointGeometry GetLocalTrackingGeometry();
+  LocalPointSnapshot SnapshotLocalTracking();
   void SetNormalVector(const Eigen::Vector3f &normal);
 
   KeyFrame *GetReferenceKeyFrame();

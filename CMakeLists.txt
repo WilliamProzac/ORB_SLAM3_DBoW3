@@ -58,6 +58,7 @@ add_library(${PROJECT_NAME} SHARED
 src/System.cc
 src/MemoryStats.cc
 src/Tracking.cc
+src/LocalTrackingAttempt.cc
 src/LocalMapping.cc
 src/LoopClosing.cc
 src/ORBextractor.cc

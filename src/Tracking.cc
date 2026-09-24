@@ -1680,6 +1680,7 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
         Frame(mImGray, imDepth, timestamp, mpORBextractorLeft, mpORBVocabulary,
               mK, mDistCoef, mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
   mCurrentFrame.mRgbdOptimizationLevel = mRgbdOptimizationLevel;
+  mCurrentFrame.mPureRgbd = mSensor == System::RGBD;
   if (timing) {
     timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
     timing->frame_id = mCurrentFrame.mnId;

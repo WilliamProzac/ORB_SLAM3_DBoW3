@@ -38,6 +38,9 @@ namespace ORB_SLAM3 {
 class ORBmatcher {
 public:
   ORBmatcher(float nnratio = 0.6, bool checkOri = true);
+  // RGB-D/ORB only. Reads immutable snapshots and writes only Frame + queried.
+  int SearchLocalProjection(Frame& frame, std::vector<LocalProjectedPoint>& points,
+                            float threshold);
 
   // Computes the Hamming distance between two ORB descriptors
   static int DescriptorDistance(const cv::Mat &a, const cv::Mat &b);

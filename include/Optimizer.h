@@ -73,7 +73,8 @@ public:
                                     int &num_fixedKF, int &num_OptKF,
                                     int &num_MPs, int &num_edges);
 
-  int static PoseOptimization(Frame *pFrame);
+  int static PoseOptimization(Frame *pFrame,
+      const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions = nullptr);
   int static PoseInertialOptimizationLastKeyFrame(Frame *pFrame,
                                                   bool bRecInit = false);
   int static PoseInertialOptimizationLastFrame(Frame *pFrame,

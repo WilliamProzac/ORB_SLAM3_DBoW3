@@ -54,6 +54,7 @@ class KeyFrameDatabase;
 class GeometricCamera;
 
 class KeyFrame {
+  friend class LocalTrackingAttempt;
   MemoryStats::Lifetime<0> mMemoryLifetime;
   friend class boost::serialization::access;
 

@@ -144,6 +144,42 @@ Eigen::Vector3f MapPoint::GetNormal() {
   return mNormalVector;
 }
 
+LocalPointGeometry MapPoint::GetLocalTrackingGeometry() {
+  unique_lock<mutex> lock(mMutexPos);
+  LocalPointGeometry result;
+  result.position = mWorldPos;
+  result.normal = mNormalVector;
+  result.min_distance = mfMinDistance;
+  result.max_distance = mfMaxDistance;
+  return result;
+}
+
+LocalPointSnapshot MapPoint::SnapshotLocalTracking() {
+  // Never call into a KF under these locks. No inverse map -> feature nesting
+  // exists in UpdateMap/GetMap. Tracking markers have one Tracking writer.
+  unique_lock<mutex> features(mMutexFeatures);
+  unique_lock<mutex> position(mMutexPos);
+  unique_lock<mutex> map(mMutexMap);
+  LocalPointSnapshot result;
+  result.owner = shared_from_this();
+  result.map = mpMap;
+  result.id = mnId;
+  result.entry_seen = mnLastFrameSeen;
+  result.entry_reference = mnTrackReferenceForFrame;
+  result.observations = nObs;
+  result.visible = mnVisible;
+  result.found = mnFound;
+  result.geometry.position = mWorldPos;
+  result.geometry.normal = mNormalVector;
+  result.geometry.min_distance = mfMinDistance;
+  result.geometry.max_distance = mfMaxDistance;
+  result.valid = !mbBad && !mpReplaced && mDescriptor.type() == CV_8UC1 &&
+                 mDescriptor.rows == 1 && mDescriptor.cols == 32;
+  if (result.valid)
+    std::copy_n(mDescriptor.ptr<unsigned char>(), 32, result.descriptor.begin());
+  return result;
+}
+
 KeyFrame *MapPoint::GetReferenceKeyFrame() {
   unique_lock<mutex> lock(mMutexFeatures);
   return mpRefKF;

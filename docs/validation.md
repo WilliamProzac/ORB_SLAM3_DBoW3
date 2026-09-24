@@ -1178,3 +1178,18 @@ Correction: the generic Fail-to-track-local-map log can be printed when upstream
 bOK is alreadyfalse and TrackLocalMap did not run. Earlier prose using this as
 a specific failing-stage label is not supported. First trigger remainsunknown.
 See ../../memory/TRACKING_LATENCY_ANALYSIS.md; no runtime change or new replay.
+
+## LM01 C1 transaction foundation
+
+From the runtime outer repository: `bash memory/tools/build_localmap_host.sh c1`.
+Run `memory/devel-host-lm01-c1/lib/orb_slam3_ros/local_map_budget_probe`.
+Full cross build: `bash memory/tools/build_arm.sh --output build-arm-lm01-c1 --localmap`
+(the output directory must not already exist). Board check runner:
+`bash memory/tools/run_localmap_board_probes.sh c1` (unique package/round).
+Native/ARM 27 probes, new parity/concurrent geometry fixture and native 120-frame
+S316 pass. Exact logs, source/binary manifest and sanitizer exceptions are in
+IDE `artifacts/local_map_budget_20260924/c1/`; see outer `memory/LM01.md` for limits.
+ASan/UBSan/LSan pass in a non-sandbox run, with two documented Boost UBSan
+header exclusions. TSan data-race and bounded lock-order fixtures pass with
+explicit tool-limit/GDAL qualifications. Full-System LSan remains open.
+Budgets and production transaction integration remain C2 work.

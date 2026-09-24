@@ -23,6 +23,7 @@
 #define FRAME_H
 
 #include "MapPointHandle.h"
+#include "LocalMapProjection.h"
 #include <array>
 #include <cstdint>
 #include <vector>
@@ -125,6 +126,9 @@ public:
   // Check if a MapPoint is in the frustum of the camera
   // and fill variables of the MapPoint to be used by the tracking
   bool isInFrustum(const MapPointPtr& pMP, float viewingCosLimit);
+  LocalProjection ProjectLocalPoint(const LocalPointGeometry& point,
+                                    float viewingCosLimit) const;
+  static void ApplyLocalProjection(MapPoint& point, const LocalProjection& projection);
 
   bool ProjectPointDistort(MapPointPtr pMP, cv::Point2f &kp, float &u, float &v);
 
@@ -144,6 +148,7 @@ public:
                          int maxLevel = -1, bool bRight = false) const;
   // Pure RGB-D opt-in only. Copied with the frame; other sensors stay at zero.
   int mRgbdOptimizationLevel = 0;
+  bool mPureRgbd = false;
 
   // Apply subpixel temporal refinements and rebuild the search grid. For
   // pinhole stereo, shift mvuRight by the same x delta to preserve disparity.
@@ -389,7 +394,7 @@ private:
 
   bool mbImuPreintegrated;
 
-  std::mutex *mpMutexImu;
+  std::mutex *mpMutexImu = nullptr;
 
 public:
   GeometricCamera *mpCamera, *mpCamera2;

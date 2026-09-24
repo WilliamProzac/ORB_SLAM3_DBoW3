@@ -802,7 +802,8 @@ void Optimizer::FullInertialBA(Map *pMap, int its, const bool bFixLocal,
   pMap->IncreaseChangeIndex();
 }
 
-int Optimizer::PoseOptimization(Frame *pFrame) {
+int Optimizer::PoseOptimization(Frame *pFrame,
+    const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions) {
   g2o::SparseOptimizer optimizer;
   g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
 
@@ -876,7 +877,7 @@ int Optimizer::PoseOptimization(Frame *pFrame) {
             rk->setDelta(deltaMono);
 
             e->pCamera = pFrame->mpCamera;
-            e->Xw = pMP->GetWorldPos().cast<double>();
+            e->Xw = (frozen_positions ? frozen_positions->at(pMP.get()) : pMP->GetWorldPos()).cast<double>();
 
             optimizer.addEdge(e);
 
@@ -911,7 +912,7 @@ int Optimizer::PoseOptimization(Frame *pFrame) {
             e->cx = pFrame->cx;
             e->cy = pFrame->cy;
             e->bf = pFrame->mbf;
-            e->Xw = pMP->GetWorldPos().cast<double>();
+            e->Xw = (frozen_positions ? frozen_positions->at(pMP.get()) : pMP->GetWorldPos()).cast<double>();
 
             optimizer.addEdge(e);
 
@@ -947,7 +948,7 @@ int Optimizer::PoseOptimization(Frame *pFrame) {
             rk->setDelta(deltaMono);
 
             e->pCamera = pFrame->mpCamera;
-            e->Xw = pMP->GetWorldPos().cast<double>();
+            e->Xw = (frozen_positions ? frozen_positions->at(pMP.get()) : pMP->GetWorldPos()).cast<double>();
 
             optimizer.addEdge(e);
 
@@ -975,7 +976,7 @@ int Optimizer::PoseOptimization(Frame *pFrame) {
             rk->setDelta(deltaMono);
 
             e->pCamera = pFrame->mpCamera2;
-            e->Xw = pMP->GetWorldPos().cast<double>();
+            e->Xw = (frozen_positions ? frozen_positions->at(pMP.get()) : pMP->GetWorldPos()).cast<double>();
 
             e->mTrl = g2o::SE3Quat(
                 pFrame->GetRelativePoseTrl().unit_quaternion().cast<double>(),

@@ -64,6 +64,45 @@ const int ORBmatcher::HISTO_LENGTH = 30;
 ORBmatcher::ORBmatcher(float nnratio, bool checkOri)
     : mfNNratio(nnratio), mbCheckOrientation(checkOri) {}
 
+int ORBmatcher::SearchLocalProjection(Frame& frame,
+    std::vector<LocalProjectedPoint>& points, float threshold) {
+  if (frame.Nleft != -1 || frame.mpCamera2 || frame.mDescriptors.type() != CV_8UC1)
+    throw std::invalid_argument("local-map scratch matcher requires RGB-D ORB");
+  int matches = 0;
+  std::vector<size_t> indices;
+  for (auto& candidate : points) {
+    const auto& snapshot = *candidate.snapshot;
+    const auto& p = candidate.projection;
+    if (!snapshot.valid || !p.visible) continue;
+    float radius = RadiusByViewingCos(p.view_cos);
+    if (threshold != 1.f) radius *= threshold;
+    candidate.queried = true; // Empty neighborhood is still an opportunity.
+    QueryCandidates(frame, p.x, p.y, radius * frame.mvScaleFactors[p.level],
+                    indices, p.level - 1, p.level);
+    if (indices.empty()) continue;
+    const cv::Mat descriptor(1, 32, CV_8UC1,
+                            const_cast<unsigned char*>(snapshot.descriptor.data()));
+    int best = 256, second = 256, level = -1, second_level = -1, index = -1;
+    for (const auto i : indices) {
+      if (frame.mvpMapPoints[i] && frame.mvpMapPoints[i]->Observations() > 0) continue;
+      if (frame.mvuRight[i] > 0 &&
+          std::fabs(p.right - frame.mvuRight[i]) > radius * frame.mvScaleFactors[p.level]) continue;
+      const int distance = MatchingDistance(frame, descriptor, frame.mDescriptors.row(i));
+      if (distance < best) {
+        second = best; second_level = level;
+        best = distance; level = frame.mvKeysUn[i].octave; index = i;
+      } else if (distance < second) {
+        second = distance; second_level = frame.mvKeysUn[i].octave;
+      }
+    }
+    if (best <= TH_HIGH && !(level == second_level && best > mfNNratio * second)) {
+      frame.mvpMapPoints[index] = snapshot.owner;
+      ++matches;
+    }
+  }
+  return matches;
+}
+
 int ORBmatcher::SearchByProjection(Frame &F,
                                    const vector<MapPointPtr > &vpMapPoints,
                                    const float th, const bool bFarPoints,

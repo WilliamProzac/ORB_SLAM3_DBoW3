@@ -99,6 +99,7 @@ Frame::Frame(const Frame &frame)
     }
 
     mRgbdOptimizationLevel = frame.mRgbdOptimizationLevel;
+    mPureRgbd = frame.mPureRgbd;
     mmProjectPoints = frame.mmProjectPoints;
     mmMatchedInImage = frame.mmMatchedInImage;
 
@@ -649,8 +650,59 @@ Eigen::Vector3f Frame::GetRelativePoseTlr_translation() {
 }
 
 
+LocalProjection Frame::ProjectLocalPoint(const LocalPointGeometry& point,
+                                              float viewingCosLimit) const {
+    LocalProjection p;
+    const Eigen::Vector3f Pc = mRcw * point.position + mtcw;
+    p.z = Pc.z();
+    p.distance = Pc.norm(); // Legacy mTrackDepth is Euclidean distance, not Z.
+    if (!Pc.allFinite()) { p.rejection = LocalProjectionRejection::NonFinite; return p; }
+    if (!(p.z > 0)) { p.rejection = LocalProjectionRejection::Depth; return p; }
+    const Eigen::Vector2f uv = mpCamera->project(Pc);
+    if (!uv.allFinite()) { p.rejection = LocalProjectionRejection::NonFinite; return p; }
+    if (uv.x() < mnMinX || uv.x() > mnMaxX || uv.y() < mnMinY || uv.y() > mnMaxY) {
+        p.rejection = LocalProjectionRejection::Image; return p;
+    }
+    p.x = uv.x(); p.y = uv.y();
+    const Eigen::Vector3f PO = point.position - mOw;
+    const float distance = PO.norm();
+    if (!(distance > 0) || distance < 0.8f * point.min_distance ||
+        distance > 1.2f * point.max_distance) {
+        p.rejection = LocalProjectionRejection::Distance; return p;
+    }
+    p.view_cos = PO.dot(point.normal) / distance;
+    if (!std::isfinite(p.view_cos) || p.view_cos < viewingCosLimit) {
+        p.rejection = LocalProjectionRejection::View; return p;
+    }
+    const float scale = std::ceil(std::log(point.max_distance / distance) / mfLogScaleFactor);
+    if (!std::isfinite(scale) || mnScaleLevels < 1) {
+        p.rejection = LocalProjectionRejection::NonFinite; return p;
+    }
+    p.level = std::max(0, std::min(mnScaleLevels - 1, static_cast<int>(scale)));
+    p.right = p.x - mbf * (1.0f / p.z);
+    p.visible = true;
+    return p;
+}
+
+void Frame::ApplyLocalProjection(MapPoint& point, const LocalProjection& p) {
+    point.mbTrackInView = p.visible;
+    point.mTrackProjX = p.x;
+    point.mTrackProjY = p.y;
+    if (p.visible) {
+        point.mTrackProjXR = p.right;
+        point.mTrackDepth = p.distance;
+        point.mnTrackScaleLevel = p.level;
+        point.mTrackViewCos = p.view_cos;
+    }
+}
+
 bool Frame::isInFrustum(const MapPointPtr& pMP, float viewingCosLimit)
 {
+    if (mPureRgbd && Nleft == -1 && mDescriptors.type() == CV_8UC1) {
+        const auto projection = ProjectLocalPoint(pMP->GetLocalTrackingGeometry(), viewingCosLimit);
+        ApplyLocalProjection(*pMP, projection);
+        return projection.visible;
+    }
     if(Nleft == -1){
         pMP->mbTrackInView = false;
         pMP->mTrackProjX = -1;
