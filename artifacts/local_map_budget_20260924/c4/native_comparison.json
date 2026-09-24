@@ -1,0 +1,690 @@
+{
+  "coverage_1": {
+    "frames": 2909,
+    "bounded_attempts": 2909,
+    "retries": 0,
+    "commit_failures": 0,
+    "tracking_failures": 0,
+    "reasons": {
+      "coverage": 2909
+    },
+    "cap_violation_frames": [],
+    "shadow": {
+      "frames": 2909,
+      "weighted_overall_recall": 0.999619579414838,
+      "weighted_new_recall": 0.9988525558948094,
+      "weighted_association_recall": 0.9994105287637739,
+      "new_recall_p5": 0.9875
+    },
+    "usage": {
+      "local_tracking_frames": 2909,
+      "full_frames": 2909,
+      "full_fraction": 1.0,
+      "longest_full_local_frame_run": 2909,
+      "ordinary_ok_frames": 0,
+      "ordinary_ok_full_or_retry_fraction": null,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "3": 2909
+      }
+    },
+    "controller": {
+      "probe_frames": 0,
+      "budget_low_frames": 0,
+      "budget_failure_reasons": {},
+      "retry_final_successes": 0,
+      "event_epochs": 1,
+      "event_kinds": {
+        "0": 2909
+      }
+    },
+    "fixed_input_last25": {
+      "usage": {
+        "local_tracking_frames": 727,
+        "full_frames": 727,
+        "full_fraction": 1.0,
+        "longest_full_local_frame_run": 727,
+        "ordinary_ok_frames": 0,
+        "ordinary_ok_full_or_retry_fraction": null,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 727
+        }
+      },
+      "shadow": {
+        "frames": 727,
+        "weighted_overall_recall": 0.9993731370801708,
+        "weighted_new_recall": 0.9981701738334858,
+        "new_recall_p5": 0.986168188736682
+      }
+    },
+    "costs_ms": {
+      "selection_ms": {
+        "p50": 0.943424,
+        "p95": 1.882805999999999,
+        "p99": 2.7190952000000004
+      },
+      "snapshot_ms": {
+        "p50": 5.05028,
+        "p95": 7.646277999999999,
+        "p99": 9.026129599999999
+      },
+      "update_ms": {
+        "p50": 9.73806,
+        "p95": 14.719560000000001,
+        "p99": 17.572956000000005
+      },
+      "search_ms": {
+        "p50": 1.17817,
+        "p95": 1.8158600000000003,
+        "p99": 2.262660000000001
+      },
+      "pose_ms": {
+        "p50": 2.59445,
+        "p95": 3.920874,
+        "p99": 4.861105600000001
+      },
+      "commit_ms": {
+        "p50": 1.28246,
+        "p95": 2.6972620000000003,
+        "p99": 3.3827276000000004
+      },
+      "trial_ms": {
+        "p50": 7.25061,
+        "p95": 10.25466,
+        "p99": 13.029244000000011
+      },
+      "full_ms": {
+        "p50": 6.99118,
+        "p95": 10.607479999999999,
+        "p99": 13.062836
+      },
+      "identity_wait_ms": {
+        "p50": 0.001467,
+        "p95": 0.002375,
+        "p99": 0.002863
+      },
+      "health_ms": {
+        "p50": 0.016833,
+        "p95": 0.0250046,
+        "p99": 0.030426080000000022
+      },
+      "diagnostic_ms": {
+        "p50": 0.658095,
+        "p95": 0.9717763999999998,
+        "p99": 1.557384
+      },
+      "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+    },
+    "coverage": {
+      "frames": 2909,
+      "saturated_frames": 2879,
+      "mandatory_saturated_frames": 1456,
+      "post_saturation_slots": 203077,
+      "decisions": {
+        "votes": 62365,
+        "diversity": 140712,
+        "ties": 0
+      }
+    },
+    "frozen_association_diagnostics": {
+      "note": "live shadow replay; exact frozen-state parity is checked separately by the controlled fixture",
+      "changed_slots": 17,
+      "lost_slots": 348,
+      "added_slots": 173,
+      "rank_lower_than_full_frames": 0,
+      "pose_delta_m": {
+        "p50": 9.53674e-07,
+        "p95": 4.545495999999999e-05,
+        "p99": 0.00014019828000000022,
+        "max": 0.000496219
+      },
+      "pose_delta_deg": {
+        "p50": 8.28597e-07,
+        "p95": 0.004824599999999998,
+        "p99": 0.011456572,
+        "max": 0.0471752
+      },
+      "trial_residual_rms": {
+        "p50": 1.85544,
+        "p95": 2.0973499999999996,
+        "p99": 2.1755120000000003,
+        "max": 2.29181
+      },
+      "full_residual_rms": {
+        "p50": 1.85575,
+        "p95": 2.100588,
+        "p99": 2.1802464,
+        "max": 2.29181
+      },
+      "trial_information_min": {
+        "p50": 2800600.0,
+        "p95": 3866290.0,
+        "p99": 5498882.800000003,
+        "max": 7033030.0
+      },
+      "full_information_min": {
+        "p50": 2800530.0,
+        "p95": 3867078.0,
+        "p99": 5498882.800000003,
+        "max": 7033030.0
+      }
+    }
+  },
+  "coverage_2": {
+    "frames": 2909,
+    "bounded_attempts": 2909,
+    "retries": 0,
+    "commit_failures": 0,
+    "tracking_failures": 0,
+    "reasons": {
+      "coverage": 2909
+    },
+    "cap_violation_frames": [],
+    "shadow": {
+      "frames": 2909,
+      "weighted_overall_recall": 0.9996207824358244,
+      "weighted_new_recall": 0.9988637257988352,
+      "weighted_association_recall": 0.9993714961315343,
+      "new_recall_p5": 0.9871794871794872
+    },
+    "usage": {
+      "local_tracking_frames": 2909,
+      "full_frames": 2909,
+      "full_fraction": 1.0,
+      "longest_full_local_frame_run": 2909,
+      "ordinary_ok_frames": 0,
+      "ordinary_ok_full_or_retry_fraction": null,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "3": 2909
+      }
+    },
+    "controller": {
+      "probe_frames": 0,
+      "budget_low_frames": 0,
+      "budget_failure_reasons": {},
+      "retry_final_successes": 0,
+      "event_epochs": 1,
+      "event_kinds": {
+        "0": 2909
+      }
+    },
+    "fixed_input_last25": {
+      "usage": {
+        "local_tracking_frames": 727,
+        "full_frames": 727,
+        "full_fraction": 1.0,
+        "longest_full_local_frame_run": 727,
+        "ordinary_ok_frames": 0,
+        "ordinary_ok_full_or_retry_fraction": null,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 727
+        }
+      },
+      "shadow": {
+        "frames": 727,
+        "weighted_overall_recall": 0.999392516048223,
+        "weighted_new_recall": 0.9982431673700034,
+        "new_recall_p5": 0.9853580562659847
+      }
+    },
+    "costs_ms": {
+      "selection_ms": {
+        "p50": 0.905905,
+        "p95": 1.9288679999999998,
+        "p99": 2.7771164
+      },
+      "snapshot_ms": {
+        "p50": 4.98338,
+        "p95": 7.089758,
+        "p99": 8.4529188
+      },
+      "update_ms": {
+        "p50": 9.61514,
+        "p95": 13.768099999999997,
+        "p99": 16.176268
+      },
+      "search_ms": {
+        "p50": 1.18249,
+        "p95": 1.772225999999999,
+        "p99": 2.1924272
+      },
+      "pose_ms": {
+        "p50": 2.5329,
+        "p95": 3.630851999999999,
+        "p99": 4.575130400000001
+      },
+      "commit_ms": {
+        "p50": 1.22377,
+        "p95": 2.354234,
+        "p99": 3.6067964000000003
+      },
+      "trial_ms": {
+        "p50": 7.08268,
+        "p95": 10.01184,
+        "p99": 11.837128000000003
+      },
+      "full_ms": {
+        "p50": 6.91161,
+        "p95": 9.812408,
+        "p99": 11.856596000000001
+      },
+      "identity_wait_ms": {
+        "p50": 0.001467,
+        "p95": 0.002375,
+        "p99": 0.00279392
+      },
+      "health_ms": {
+        "p50": 0.016554,
+        "p95": 0.023859999999999992,
+        "p99": 0.028288
+      },
+      "diagnostic_ms": {
+        "p50": 0.660044,
+        "p95": 0.8970208,
+        "p99": 1.5356352000000006
+      },
+      "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+    },
+    "coverage": {
+      "frames": 2909,
+      "saturated_frames": 2879,
+      "mandatory_saturated_frames": 1351,
+      "post_saturation_slots": 202593,
+      "decisions": {
+        "votes": 61380,
+        "diversity": 141213,
+        "ties": 0
+      }
+    },
+    "frozen_association_diagnostics": {
+      "note": "live shadow replay; exact frozen-state parity is checked separately by the controlled fixture",
+      "changed_slots": 14,
+      "lost_slots": 373,
+      "added_slots": 189,
+      "rank_lower_than_full_frames": 0,
+      "pose_delta_m": {
+        "p50": 9.55535e-07,
+        "p95": 5.1667659999999984e-05,
+        "p99": 0.00014430708000000034,
+        "max": 0.000354066
+      },
+      "pose_delta_deg": {
+        "p50": 8.43507e-07,
+        "p95": 0.004930301999999998,
+        "p99": 0.013801140000000017,
+        "max": 0.0364348
+      },
+      "trial_residual_rms": {
+        "p50": 1.86768,
+        "p95": 2.096572,
+        "p99": 2.1804124000000003,
+        "max": 2.3885
+      },
+      "full_residual_rms": {
+        "p50": 1.86908,
+        "p95": 2.0977259999999998,
+        "p99": 2.1783684,
+        "max": 2.3885
+      },
+      "trial_information_min": {
+        "p50": 2770210.0,
+        "p95": 3931678.0,
+        "p99": 4929742.800000004,
+        "max": 7033030.0
+      },
+      "full_information_min": {
+        "p50": 2768090.0,
+        "p95": 3931678.0,
+        "p99": 4929742.800000004,
+        "max": 7033030.0
+      }
+    }
+  },
+  "votes_1": {
+    "frames": 2909,
+    "bounded_attempts": 2909,
+    "retries": 0,
+    "commit_failures": 0,
+    "tracking_failures": 0,
+    "reasons": {
+      "votes": 2909
+    },
+    "cap_violation_frames": [],
+    "shadow": {
+      "frames": 2909,
+      "weighted_overall_recall": 0.9994425506514264,
+      "weighted_new_recall": 0.9983282457429443,
+      "weighted_association_recall": 0.9991678351173581,
+      "new_recall_p5": 0.9857142857142858
+    },
+    "usage": {
+      "local_tracking_frames": 2909,
+      "full_frames": 2909,
+      "full_fraction": 1.0,
+      "longest_full_local_frame_run": 2909,
+      "ordinary_ok_frames": 0,
+      "ordinary_ok_full_or_retry_fraction": null,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "3": 2909
+      }
+    },
+    "controller": {
+      "probe_frames": 0,
+      "budget_low_frames": 0,
+      "budget_failure_reasons": {},
+      "retry_final_successes": 0,
+      "event_epochs": 1,
+      "event_kinds": {
+        "0": 2909
+      }
+    },
+    "fixed_input_last25": {
+      "usage": {
+        "local_tracking_frames": 727,
+        "full_frames": 727,
+        "full_fraction": 1.0,
+        "longest_full_local_frame_run": 727,
+        "ordinary_ok_frames": 0,
+        "ordinary_ok_full_or_retry_fraction": null,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 727
+        }
+      },
+      "shadow": {
+        "frames": 727,
+        "weighted_overall_recall": 0.9991549454470339,
+        "weighted_new_recall": 0.9975663397750216,
+        "new_recall_p5": 0.9849163274536409
+      }
+    },
+    "costs_ms": {
+      "selection_ms": {
+        "p50": 0.105331,
+        "p95": 0.22939179999999995,
+        "p99": 0.3542055600000005
+      },
+      "snapshot_ms": {
+        "p50": 4.701,
+        "p95": 6.6468620000000005,
+        "p99": 7.857358000000002
+      },
+      "update_ms": {
+        "p50": 8.35061,
+        "p95": 11.87,
+        "p99": 14.276032000000004
+      },
+      "search_ms": {
+        "p50": 1.14717,
+        "p95": 1.7303199999999999,
+        "p99": 2.086742
+      },
+      "pose_ms": {
+        "p50": 2.58037,
+        "p95": 3.755884,
+        "p99": 4.6304180000000015
+      },
+      "commit_ms": {
+        "p50": 1.22736,
+        "p95": 2.3031119999999996,
+        "p99": 3.1220808000000018
+      },
+      "trial_ms": {
+        "p50": 5.87241,
+        "p95": 8.248759999999999,
+        "p99": 10.003969600000001
+      },
+      "full_ms": {
+        "p50": 6.72376,
+        "p95": 10.00496,
+        "p99": 11.493244
+      },
+      "identity_wait_ms": {
+        "p50": 0.001885,
+        "p95": 0.002375,
+        "p99": 0.002864
+      },
+      "health_ms": {
+        "p50": 0.016765,
+        "p95": 0.024279399999999993,
+        "p99": 0.027311
+      },
+      "diagnostic_ms": {
+        "p50": 0.621997,
+        "p95": 0.8300995999999999,
+        "p99": 1.2767200000000007
+      },
+      "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+    },
+    "coverage": {
+      "frames": 0,
+      "saturated_frames": 0,
+      "mandatory_saturated_frames": 0,
+      "post_saturation_slots": 0,
+      "decisions": {
+        "votes": 0,
+        "diversity": 0,
+        "ties": 0
+      }
+    },
+    "frozen_association_diagnostics": {
+      "note": "live shadow replay; exact frozen-state parity is checked separately by the controlled fixture",
+      "changed_slots": 17,
+      "lost_slots": 494,
+      "added_slots": 175,
+      "rank_lower_than_full_frames": 0,
+      "pose_delta_m": {
+        "p50": 9.55535e-07,
+        "p95": 6.038685999999999e-05,
+        "p99": 0.00016818352000000012,
+        "max": 0.000386998
+      },
+      "pose_delta_deg": {
+        "p50": 8.66021e-07,
+        "p95": 0.005875389999999999,
+        "p99": 0.013792380000000014,
+        "max": 0.026722
+      },
+      "trial_residual_rms": {
+        "p50": 1.8697,
+        "p95": 2.0991419999999996,
+        "p99": 2.1957848,
+        "max": 2.33672
+      },
+      "full_residual_rms": {
+        "p50": 1.87084,
+        "p95": 2.100132,
+        "p99": 2.1932944,
+        "max": 2.33672
+      },
+      "trial_information_min": {
+        "p50": 2740550.0,
+        "p95": 3935796.0,
+        "p99": 5485266.400000003,
+        "max": 7033030.0
+      },
+      "full_information_min": {
+        "p50": 2740930.0,
+        "p95": 3935796.0,
+        "p99": 5485266.400000003,
+        "max": 7033030.0
+      }
+    }
+  },
+  "votes_2": {
+    "frames": 2909,
+    "bounded_attempts": 2909,
+    "retries": 0,
+    "commit_failures": 0,
+    "tracking_failures": 0,
+    "reasons": {
+      "votes": 2909
+    },
+    "cap_violation_frames": [],
+    "shadow": {
+      "frames": 2909,
+      "weighted_overall_recall": 0.9995269320227598,
+      "weighted_new_recall": 0.998578304331729,
+      "weighted_association_recall": 0.9992718845026792,
+      "new_recall_p5": 0.9864864864864865
+    },
+    "usage": {
+      "local_tracking_frames": 2909,
+      "full_frames": 2909,
+      "full_fraction": 1.0,
+      "longest_full_local_frame_run": 2909,
+      "ordinary_ok_frames": 0,
+      "ordinary_ok_full_or_retry_fraction": null,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "3": 2909
+      }
+    },
+    "controller": {
+      "probe_frames": 0,
+      "budget_low_frames": 0,
+      "budget_failure_reasons": {},
+      "retry_final_successes": 0,
+      "event_epochs": 1,
+      "event_kinds": {
+        "0": 2909
+      }
+    },
+    "fixed_input_last25": {
+      "usage": {
+        "local_tracking_frames": 727,
+        "full_frames": 727,
+        "full_fraction": 1.0,
+        "longest_full_local_frame_run": 727,
+        "ordinary_ok_frames": 0,
+        "ordinary_ok_full_or_retry_fraction": null,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 727
+        }
+      },
+      "shadow": {
+        "frames": 727,
+        "weighted_overall_recall": 0.9992651912370941,
+        "weighted_new_recall": 0.9978679579373396,
+        "new_recall_p5": 0.9855072463768118
+      }
+    },
+    "costs_ms": {
+      "selection_ms": {
+        "p50": 0.106724,
+        "p95": 0.22715199999999997,
+        "p99": 0.32978612000000007
+      },
+      "snapshot_ms": {
+        "p50": 4.60897,
+        "p95": 6.7355339999999995,
+        "p99": 8.137501600000002
+      },
+      "update_ms": {
+        "p50": 8.23445,
+        "p95": 11.80238,
+        "p99": 14.368340000000003
+      },
+      "search_ms": {
+        "p50": 1.12724,
+        "p95": 1.6985179999999995,
+        "p99": 2.173532400000001
+      },
+      "pose_ms": {
+        "p50": 2.50006,
+        "p95": 3.561592,
+        "p99": 4.5891884
+      },
+      "commit_ms": {
+        "p50": 1.16887,
+        "p95": 2.515872,
+        "p99": 3.593286000000001
+      },
+      "trial_ms": {
+        "p50": 5.66826,
+        "p95": 8.178984,
+        "p99": 10.311116000000002
+      },
+      "full_ms": {
+        "p50": 6.68863,
+        "p95": 9.718182,
+        "p99": 12.066056000000003
+      },
+      "identity_wait_ms": {
+        "p50": 0.001467,
+        "p95": 0.002374,
+        "p99": 0.002794
+      },
+      "health_ms": {
+        "p50": 0.016554,
+        "p95": 0.024277799999999995,
+        "p99": 0.02987160000000002
+      },
+      "diagnostic_ms": {
+        "p50": 0.611638,
+        "p95": 0.825967,
+        "p99": 1.2766204000000003
+      },
+      "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+    },
+    "coverage": {
+      "frames": 0,
+      "saturated_frames": 0,
+      "mandatory_saturated_frames": 0,
+      "post_saturation_slots": 0,
+      "decisions": {
+        "votes": 0,
+        "diversity": 0,
+        "ties": 0
+      }
+    },
+    "frozen_association_diagnostics": {
+      "note": "live shadow replay; exact frozen-state parity is checked separately by the controlled fixture",
+      "changed_slots": 11,
+      "lost_slots": 437,
+      "added_slots": 155,
+      "rank_lower_than_full_frames": 0,
+      "pose_delta_m": {
+        "p50": 9.55535e-07,
+        "p95": 4.880267999999991e-05,
+        "p99": 0.00015024676,
+        "max": 0.000569729
+      },
+      "pose_delta_deg": {
+        "p50": 8.32482e-07,
+        "p95": 0.004969339999999999,
+        "p99": 0.012630968000000041,
+        "max": 0.0506586
+      },
+      "trial_residual_rms": {
+        "p50": 1.86057,
+        "p95": 2.08792,
+        "p99": 2.1885996,
+        "max": 2.34853
+      },
+      "full_residual_rms": {
+        "p50": 1.86121,
+        "p95": 2.08822,
+        "p99": 2.1888508,
+        "max": 2.34853
+      },
+      "trial_information_min": {
+        "p50": 2776350.0,
+        "p95": 3874746.0,
+        "p99": 5501196.400000005,
+        "max": 7033030.0
+      },
+      "full_information_min": {
+        "p50": 2777710.0,
+        "p95": 3877431.9999999995,
+        "p99": 5504258.000000002,
+        "max": 7033030.0
+      }
+    }
+  }
+}
