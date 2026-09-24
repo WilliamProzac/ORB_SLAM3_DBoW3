@@ -22,6 +22,7 @@
 #ifndef FRAMEDRAWER_H
 #define FRAMEDRAWER_H
 
+#include "MapPointHandle.h"
 #include "Atlas.h"
 #include "MapPoint.h"
 #include "Tracking.h"
@@ -75,11 +76,11 @@ protected:
   vector<pair<cv::Point2f, cv::Point2f>> mvTracks;
 
   Frame mCurrentFrame;
-  vector<MapPoint *> mvpLocalMap;
+  vector<MapPointPtr > mvpLocalMap;
   vector<cv::KeyPoint> mvMatchedKeys;
-  vector<MapPoint *> mvpMatchedMPs;
+  vector<MapPointPtr > mvpMatchedMPs;
   vector<cv::KeyPoint> mvOutlierKeys;
-  vector<MapPoint *> mvpOutlierMPs;
+  vector<MapPointPtr > mvpOutlierMPs;
 
   map<long unsigned int, cv::Point2f> mmProjectPoints;
   map<long unsigned int, cv::Point2f> mmMatchedInImage;

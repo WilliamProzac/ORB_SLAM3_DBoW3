@@ -22,6 +22,7 @@
 #ifndef ORBMATCHER_H
 #define ORBMATCHER_H
 
+#include "MapPointHandle.h"
 #include "sophus/sim3.hpp"
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d/features2d.hpp>
@@ -43,7 +44,7 @@ public:
 
   // Search matches between Frame keypoints and projected MapPoints. Returns
   // number of matches Used to track the local map (Tracking)
-  int SearchByProjection(Frame &F, const std::vector<MapPoint *> &vpMapPoints,
+  int SearchByProjection(Frame &F, const std::vector<MapPointPtr > &vpMapPoints,
                          const float th = 3, const bool bFarPoints = false,
                          const float thFarPoints = 50.0f);
 
@@ -55,22 +56,22 @@ public:
   // Project MapPoints seen in KeyFrame into the Frame and search matches.
   // Used in relocalisation (Tracking)
   int SearchByProjection(Frame &CurrentFrame, KeyFrame *pKF,
-                         const std::set<MapPoint *> &sAlreadyFound,
+                         const std::set<MapPointPtr > &sAlreadyFound,
                          const float th, const int ORBdist);
 
   // Project MapPoints using a Similarity Transformation and search matches.
   // Used in loop detection (Loop Closing)
   int SearchByProjection(KeyFrame *pKF, Sophus::Sim3<float> &Scw,
-                         const std::vector<MapPoint *> &vpPoints,
-                         std::vector<MapPoint *> &vpMatched, int th,
+                         const std::vector<MapPointPtr > &vpPoints,
+                         std::vector<MapPointPtr > &vpMatched, int th,
                          float ratioHamming = 1.0);
 
   // Project MapPoints using a Similarity Transformation and search matches.
   // Used in Place Recognition (Loop Closing and Merging)
   int SearchByProjection(KeyFrame *pKF, Sophus::Sim3<float> &Scw,
-                         const std::vector<MapPoint *> &vpPoints,
+                         const std::vector<MapPointPtr > &vpPoints,
                          const std::vector<KeyFrame *> &vpPointsKFs,
-                         std::vector<MapPoint *> &vpMatched,
+                         std::vector<MapPointPtr > &vpMatched,
                          std::vector<KeyFrame *> &vpMatchedKF, int th,
                          float ratioHamming = 1.0);
 
@@ -78,14 +79,14 @@ public:
   // Brute force constrained to ORB that belong to the same vocabulary node (at
   // a certain level) Used in Relocalisation and Loop Detection
   int SearchByBoW(KeyFrame *pKF, Frame &F,
-                  std::vector<MapPoint *> &vpMapPointMatches);
+                  std::vector<MapPointPtr > &vpMapPointMatches);
   // Vocabulary-free reference-keyframe matching used by F23 float
   // descriptors. Relocalization and loop retrieval remain F24 work.
   int SearchByDescriptor(KeyFrame *pKF, Frame &F,
-                         std::vector<MapPoint *> &vpMapPointMatches,
+                         std::vector<MapPointPtr > &vpMapPointMatches,
                          std::vector<ReferenceFeatureMatch> *coarseMatches = nullptr);
   int SearchByBoW(KeyFrame *pKF1, KeyFrame *pKF2,
-                  std::vector<MapPoint *> &vpMatches12);
+                  std::vector<MapPointPtr > &vpMatches12);
 
   // Matching for the Map Initialization (only used in the monocular case)
   int SearchForInitialization(Frame &F1, Frame &F2,
@@ -101,22 +102,22 @@ public:
 
   // Search matches between MapPoints seen in KF1 and KF2 transforming by a Sim3
   // [s12*R12|t12] In the stereo and RGB-D case, s12=1 int
-  // SearchBySim3(KeyFrame* pKF1, KeyFrame* pKF2, std::vector<MapPoint *>
+  // SearchBySim3(KeyFrame* pKF1, KeyFrame* pKF2, std::vector<MapPointPtr >
   // &vpMatches12, const float &s12, const cv::Mat &R12, const cv::Mat &t12,
   // const float th);
   int SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2,
-                   std::vector<MapPoint *> &vpMatches12,
+                   std::vector<MapPointPtr > &vpMatches12,
                    const Sophus::Sim3f &S12, const float th);
 
   // Project MapPoints into KeyFrame and search for duplicated MapPoints.
-  int Fuse(KeyFrame *pKF, const vector<MapPoint *> &vpMapPoints,
+  int Fuse(KeyFrame *pKF, const vector<MapPointPtr > &vpMapPoints,
            const float th = 3.0, const bool bRight = false);
 
   // Project MapPoints into KeyFrame using a given Sim3 and search for
   // duplicated MapPoints.
   int Fuse(KeyFrame *pKF, Sophus::Sim3f &Scw,
-           const std::vector<MapPoint *> &vpPoints, float th,
-           vector<MapPoint *> &vpReplacePoint);
+           const std::vector<MapPointPtr > &vpPoints, float th,
+           vector<MapPointPtr > &vpReplacePoint);
 
 public:
   static const int TH_LOW;

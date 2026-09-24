@@ -22,6 +22,7 @@
 #ifndef LOCALMAPPING_H
 #define LOCALMAPPING_H
 
+#include "MapPointHandle.h"
 #include "Atlas.h"
 #include "KeyFrame.h"
 #include "KeyFrameDatabase.h"
@@ -168,7 +169,7 @@ protected:
 
   KeyFrame *mpCurrentKeyFrame;
 
-  std::list<MapPoint *> mlpRecentAddedMapPoints;
+  std::list<MapPointPtr > mlpRecentAddedMapPoints;
 
   std::mutex mMutexNewKFs;
 

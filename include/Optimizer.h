@@ -22,6 +22,9 @@
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
 
+#include "MapPointHandle.h"
+#include <atomic>
+
 #include "Frame.h"
 #include "KeyFrame.h"
 #include "LoopClosing.h"
@@ -48,20 +51,23 @@ class LoopClosing;
 class Optimizer {
 public:
   void static BundleAdjustment(const std::vector<KeyFrame *> &vpKF,
-                               const std::vector<MapPoint *> &vpMP,
+                               const std::vector<MapPointPtr > &vpMP,
                                int nIterations = 5, bool *pbStopFlag = NULL,
                                const unsigned long nLoopKF = 0,
-                               const bool bRobust = true);
+                               const bool bRobust = true,
+                               const std::atomic<bool>* cancel = nullptr);
   void static GlobalBundleAdjustemnt(Map *pMap, int nIterations = 5,
                                      bool *pbStopFlag = NULL,
                                      const unsigned long nLoopKF = 0,
-                                     const bool bRobust = true);
+                                     const bool bRobust = true,
+                                     const std::atomic<bool>* cancel = nullptr);
   void static FullInertialBA(Map *pMap, int its, const bool bFixLocal = false,
                              const unsigned long nLoopKF = 0,
                              bool *pbStopFlag = NULL, bool bInit = false,
                              float priorG = 1e2, float priorA = 1e6,
                              Eigen::VectorXd *vSingVal = NULL,
-                             bool *bHess = NULL);
+                             bool *bHess = NULL,
+                             const std::atomic<bool>* cancel = nullptr);
 
   void static LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
                                     int &num_fixedKF, int &num_OptKF,
@@ -85,7 +91,7 @@ public:
                                      vector<KeyFrame *> &vpFixedKFs,
                                      vector<KeyFrame *> &vpFixedCorrectedKFs,
                                      vector<KeyFrame *> &vpNonFixedKFs,
-                                     vector<MapPoint *> &vpNonCorrectedMPs);
+                                     vector<MapPointPtr > &vpNonCorrectedMPs);
 
   // For inertial loopclosing
   void static OptimizeEssentialGraph4DoF(
@@ -97,7 +103,7 @@ public:
   // if bFixScale is true, optimize SE3 (stereo,rgbd), Sim3 otherwise (mono)
   // (NEW)
   static int OptimizeSim3(KeyFrame *pKF1, KeyFrame *pKF2,
-                          std::vector<MapPoint *> &vpMatches1,
+                          std::vector<MapPointPtr > &vpMatches1,
                           g2o::Sim3 &g2oS12, const float th2,
                           const bool bFixScale,
                           Eigen::Matrix<double, 7, 7> &mAcumHessian,

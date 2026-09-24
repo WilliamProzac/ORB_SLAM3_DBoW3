@@ -37,7 +37,7 @@ namespace ORB_SLAM3 {
     }
 
     public:
-        Pinhole() {
+        Pinhole() : tvr(nullptr) {
             mvParameters.resize(4);
             mnId=nNextId++;
             mnType = CAM_PINHOLE;

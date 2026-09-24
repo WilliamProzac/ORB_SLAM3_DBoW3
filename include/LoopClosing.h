@@ -22,11 +22,13 @@
 #ifndef LOOPCLOSING_H
 #define LOOPCLOSING_H
 
+#include "MapPointHandle.h"
 #include "Atlas.h"
 #include "KeyFrame.h"
 #include "LocalMapping.h"
 #include "ORBVocabulary.h"
 #include "Tracking.h"
+#include "JoinableTask.h"
 
 #include "KeyFrameDatabase.h"
 
@@ -67,15 +69,16 @@ public:
   void RequestResetActiveMap(Map *pMap);
 
   // This function will run in a separate thread
-  void RunGlobalBundleAdjustment(Map *pActiveMap, unsigned long nLoopKF);
+  void RunGlobalBundleAdjustment(Map *pActiveMap, unsigned long nLoopKF,
+                                 const std::atomic<bool>& stop);
+
+  size_t MemoryQueueSize() { std::unique_lock<std::mutex> lock(mMutexLoopQueue); return mlpLoopKeyFrameQueue.size(); }
 
   bool isRunningGBA() {
-    unique_lock<std::mutex> lock(mMutexGBA);
-    return mbRunningGBA;
+    return mGBA.Running();
   }
   bool isFinishedGBA() {
-    unique_lock<std::mutex> lock(mMutexGBA);
-    return mbFinishedGBA;
+    return !mGBA.Running();
   }
 
   void RequestFinish();
@@ -124,30 +127,33 @@ protected:
   bool DetectAndReffineSim3FromLastKF(KeyFrame *pCurrentKF,
                                       KeyFrame *pMatchedKF, g2o::Sim3 &gScw,
                                       int &nNumProjMatches,
-                                      std::vector<MapPoint *> &vpMPs,
-                                      std::vector<MapPoint *> &vpMatchedMPs);
+                                      std::vector<MapPointPtr > &vpMPs,
+                                      std::vector<MapPointPtr > &vpMatchedMPs);
   bool DetectCommonRegionsFromBoW(std::vector<KeyFrame *> &vpBowCand,
                                   KeyFrame *&pMatchedKF,
                                   KeyFrame *&pLastCurrentKF, g2o::Sim3 &g2oScw,
                                   int &nNumCoincidences,
-                                  std::vector<MapPoint *> &vpMPs,
-                                  std::vector<MapPoint *> &vpMatchedMPs);
+                                  std::vector<MapPointPtr > &vpMPs,
+                                  std::vector<MapPointPtr > &vpMatchedMPs);
   bool DetectCommonRegionsFromLastKF(KeyFrame *pCurrentKF, KeyFrame *pMatchedKF,
                                      g2o::Sim3 &gScw, int &nNumProjMatches,
-                                     std::vector<MapPoint *> &vpMPs,
-                                     std::vector<MapPoint *> &vpMatchedMPs);
+                                     std::vector<MapPointPtr > &vpMPs,
+                                     std::vector<MapPointPtr > &vpMatchedMPs);
   int FindMatchesByProjection(KeyFrame *pCurrentKF, KeyFrame *pMatchedKFw,
                               g2o::Sim3 &g2oScw,
-                              set<MapPoint *> &spMatchedMPinOrigin,
-                              vector<MapPoint *> &vpMapPoints,
-                              vector<MapPoint *> &vpMatchedMapPoints);
+                              set<MapPointPtr > &spMatchedMPinOrigin,
+                              vector<MapPointPtr > &vpMapPoints,
+                              vector<MapPointPtr > &vpMatchedMapPoints);
 
   void SearchAndFuse(const KeyFrameAndPose &CorrectedPosesMap,
-                     vector<MapPoint *> &vpMapPoints);
+                     vector<MapPointPtr > &vpMapPoints);
   void SearchAndFuse(const vector<KeyFrame *> &vConectedKFs,
-                     vector<MapPoint *> &vpMapPoints);
+                     vector<MapPointPtr > &vpMapPoints);
 
   void CorrectLoop();
+
+  void StartGlobalBundleAdjustment(Map* map, unsigned long loopKF);
+  void StopGlobalBundleAdjustment();
 
   void MergeLocal();
   void MergeLocal2();
@@ -189,8 +195,8 @@ protected:
   std::vector<ConsistentGroup> mvConsistentGroups;
   std::vector<KeyFrame *> mvpEnoughConsistentCandidates;
   std::vector<KeyFrame *> mvpCurrentConnectedKFs;
-  std::vector<MapPoint *> mvpCurrentMatchedPoints;
-  std::vector<MapPoint *> mvpLoopMapPoints;
+  std::vector<MapPointPtr > mvpCurrentMatchedPoints;
+  std::vector<MapPointPtr > mvpLoopMapPoints;
   cv::Mat mScw;
   g2o::Sim3 mg2oScw;
 
@@ -204,8 +210,8 @@ protected:
   g2o::Sim3 mg2oLoopSlw;
   g2o::Sim3 mg2oLoopScw;
   KeyFrame *mpLoopMatchedKF;
-  std::vector<MapPoint *> mvpLoopMPs;
-  std::vector<MapPoint *> mvpLoopMatchedMPs;
+  std::vector<MapPointPtr > mvpLoopMPs;
+  std::vector<MapPointPtr > mvpLoopMatchedMPs;
   bool mbMergeDetected;
   int mnMergeNumCoincidences;
   int mnMergeNumNotFound;
@@ -214,8 +220,8 @@ protected:
   g2o::Sim3 mg2oMergeSmw;
   g2o::Sim3 mg2oMergeScw;
   KeyFrame *mpMergeMatchedKF;
-  std::vector<MapPoint *> mvpMergeMPs;
-  std::vector<MapPoint *> mvpMergeMatchedMPs;
+  std::vector<MapPointPtr > mvpMergeMPs;
+  std::vector<MapPointPtr > mvpMergeMatchedMPs;
   std::vector<KeyFrame *> mvpMergeConnectedKFs;
 
   g2o::Sim3 mSold_new;
@@ -224,16 +230,13 @@ protected:
   long unsigned int mLastLoopKFid;
 
   // Variables related to Global Bundle Adjustment
-  bool mbRunningGBA;
-  bool mbFinishedGBA;
-  bool mbStopGBA;
-  std::mutex mMutexGBA;
-  std::thread *mpThreadGBA;
+  JoinableTask mGBA;
+  bool mHaveGBA = false; // accessed only by the LoopClosing control thread
+  unsigned long mGBAMapId = 0;
+  unsigned long mGBALoopKF = 0;
 
   // Fix scale in the stereo/RGB-D case
   bool mbFixScale;
-
-  int mnFullBAIdx;
 
   vector<double> vdPR_CurrentTime;
   vector<double> vdPR_MatchedTime;

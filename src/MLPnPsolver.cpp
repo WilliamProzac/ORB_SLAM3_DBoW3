@@ -57,7 +57,7 @@
 
 namespace ORB_SLAM3 {
 MLPnPsolver::MLPnPsolver(const Frame &F,
-                         const vector<MapPoint *> &vpMapPointMatches)
+                         const vector<MapPointPtr > &vpMapPointMatches)
     : mnInliersi(0), mnIterations(0), mnBestInliers(0), N(0),
       mpCamera(F.mpCamera) {
   mvpMapPointMatches = vpMapPointMatches;
@@ -70,7 +70,7 @@ MLPnPsolver::MLPnPsolver(const Frame &F,
 
   int idx = 0;
   for (size_t i = 0, iend = mvpMapPointMatches.size(); i < iend; i++) {
-    MapPoint *pMP = vpMapPointMatches[i];
+    MapPointPtr pMP = vpMapPointMatches[i];
 
     if (pMP) {
       if (!pMP->isBad()) {
@@ -102,6 +102,8 @@ MLPnPsolver::MLPnPsolver(const Frame &F,
 
   SetRansacParameters();
 }
+
+MLPnPsolver::~MLPnPsolver() = default;
 
 // RANSAC methods
 bool MLPnPsolver::iterate(int nIterations, bool &bNoMore,

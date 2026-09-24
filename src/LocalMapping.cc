@@ -406,11 +406,11 @@ void LocalMapping::ProcessNewKeyFrame() {
   mCurrentTiming.bow_ms = LocalMappingMillisecondsSince(bow_start);
 
   // Associate MapPoints to the new keyframe and update normal and descriptor
-  const vector<MapPoint *> vpMapPointMatches =
+  const vector<MapPointPtr > vpMapPointMatches =
       mpCurrentKeyFrame->GetMapPointMatches();
 
   for (size_t i = 0; i < vpMapPointMatches.size(); i++) {
-    MapPoint *pMP = vpMapPointMatches[i];
+    MapPointPtr pMP = vpMapPointMatches[i];
     if (pMP) {
       if (!pMP->isBad()) {
         if (!pMP->IsInKeyFrame(mpCurrentKeyFrame)) {
@@ -444,7 +444,7 @@ void LocalMapping::EmptyQueue() {
 
 void LocalMapping::MapPointCulling() {
   // Check Recent Added MapPoints
-  list<MapPoint *>::iterator lit = mlpRecentAddedMapPoints.begin();
+  list<MapPointPtr >::iterator lit = mlpRecentAddedMapPoints.begin();
   const unsigned long int nCurrentKFid = mpCurrentKeyFrame->mnId;
 
   int nThObs;
@@ -457,7 +457,7 @@ void LocalMapping::MapPointCulling() {
   int borrar = mlpRecentAddedMapPoints.size();
 
   while (lit != mlpRecentAddedMapPoints.end()) {
-    MapPoint *pMP = *lit;
+    MapPointPtr pMP = *lit;
 
     if (pMP->isBad())
       lit = mlpRecentAddedMapPoints.erase(lit);
@@ -778,8 +778,8 @@ void LocalMapping::CreateNewMapPoints() {
         continue;
 
       // Triangulation is succesfull
-      MapPoint *pMP =
-          new MapPoint(x3D, mpCurrentKeyFrame, mpAtlas->GetCurrentMap());
+      MapPointPtr pMP =
+          MapPoint::Create(x3D, mpCurrentKeyFrame, mpAtlas->GetCurrentMap());
       if (bPointStereo)
         countStereo++;
 
@@ -853,7 +853,7 @@ void LocalMapping::SearchInNeighbors() {
 
   // Search matches by projection from current KF in target KFs
   ORBmatcher matcher;
-  vector<MapPoint *> vpMapPointMatches =
+  vector<MapPointPtr > vpMapPointMatches =
       mpCurrentKeyFrame->GetMapPointMatches();
   for (vector<KeyFrame *>::iterator vit = vpTargetKFs.begin(),
                                     vend = vpTargetKFs.end();
@@ -869,7 +869,7 @@ void LocalMapping::SearchInNeighbors() {
     return;
 
   // Search matches by projection from target KFs in current KF
-  vector<MapPoint *> vpFuseCandidates;
+  vector<MapPointPtr > vpFuseCandidates;
   vpFuseCandidates.reserve(vpTargetKFs.size() * vpMapPointMatches.size());
 
   for (vector<KeyFrame *>::iterator vitKF = vpTargetKFs.begin(),
@@ -877,12 +877,12 @@ void LocalMapping::SearchInNeighbors() {
        vitKF != vendKF; vitKF++) {
     KeyFrame *pKFi = *vitKF;
 
-    vector<MapPoint *> vpMapPointsKFi = pKFi->GetMapPointMatches();
+    vector<MapPointPtr > vpMapPointsKFi = pKFi->GetMapPointMatches();
 
-    for (vector<MapPoint *>::iterator vitMP = vpMapPointsKFi.begin(),
+    for (vector<MapPointPtr >::iterator vitMP = vpMapPointsKFi.begin(),
                                       vendMP = vpMapPointsKFi.end();
          vitMP != vendMP; vitMP++) {
-      MapPoint *pMP = *vitMP;
+      MapPointPtr pMP = *vitMP;
       if (!pMP)
         continue;
       if (pMP->isBad() || pMP->mnFuseCandidateForKF == mpCurrentKeyFrame->mnId)
@@ -899,7 +899,7 @@ void LocalMapping::SearchInNeighbors() {
   // Update points
   vpMapPointMatches = mpCurrentKeyFrame->GetMapPointMatches();
   for (size_t i = 0, iend = vpMapPointMatches.size(); i < iend; i++) {
-    MapPoint *pMP = vpMapPointMatches[i];
+    MapPointPtr pMP = vpMapPointMatches[i];
     if (pMP) {
       if (!pMP->isBad()) {
         pMP->ComputeDistinctiveDescriptors();
@@ -1021,14 +1021,14 @@ void LocalMapping::KeyFrameCulling() {
 
     if ((pKF->mnId == pKF->GetMap()->GetInitKFid()) || pKF->isBad())
       continue;
-    const vector<MapPoint *> vpMapPoints = pKF->GetMapPointMatches();
+    const vector<MapPointPtr > vpMapPoints = pKF->GetMapPointMatches();
 
     int nObs = 3;
     const int thObs = nObs;
     int nRedundantObservations = 0;
     int nMPs = 0;
     for (size_t i = 0, iend = vpMapPoints.size(); i < iend; i++) {
-      MapPoint *pMP = vpMapPoints[i];
+      MapPointPtr pMP = vpMapPoints[i];
       if (pMP) {
         if (!pMP->isBad()) {
           if (!mbMonocular) {
@@ -1435,10 +1435,10 @@ void LocalMapping::InitializeIMU(float priorG, float priorA, bool bFIBA) {
   }
 
   // Correct MapPoints
-  const vector<MapPoint *> vpMPs = mpAtlas->GetCurrentMap()->GetAllMapPoints();
+  const vector<MapPointPtr > vpMPs = mpAtlas->GetCurrentMap()->GetAllMapPoints();
 
   for (size_t i = 0; i < vpMPs.size(); i++) {
-    MapPoint *pMP = vpMPs[i];
+    MapPointPtr pMP = vpMPs[i];
 
     if (pMP->isBad())
       continue;

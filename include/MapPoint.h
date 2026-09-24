@@ -22,12 +22,14 @@
 #ifndef MAPPOINT_H
 #define MAPPOINT_H
 
+#include "MapPointHandle.h"
 #include "Converter.h"
 #include "Frame.h"
 #include "KeyFrame.h"
 #include "Map.h"
 
 #include "SerializationUtils.h"
+#include "MemoryStats.h"
 
 #include <mutex>
 #include <opencv2/core/core.hpp>
@@ -43,8 +45,9 @@ class KeyFrame;
 class Map;
 class Frame;
 
-class MapPoint {
+class MapPoint : public std::enable_shared_from_this<MapPoint> {
 
+  MemoryStats::Lifetime<1> mMemoryLifetime;
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
@@ -96,6 +99,7 @@ class MapPoint {
     // ar & mnFound;
 
     ar & mbBad;
+    if (Archive::is_loading::value && mbBad) mMemoryLifetime.Retire();
     ar & mBackupReplacedId;
 
     ar & mfMinDistance;
@@ -104,6 +108,10 @@ class MapPoint {
 
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  template<class... Args> static MapPointPtr Create(Args&&... args) {
+    // Preserve Eigen alignment instead of relying on C++14 make_shared.
+    return MapPointPtr(new MapPoint(std::forward<Args>(args)...));
+  }
   MapPoint();
 
   MapPoint(const Eigen::Vector3f &Pos, KeyFrame *pRefKF, Map *pMap);
@@ -132,8 +140,8 @@ public:
   void SetBadFlag();
   bool isBad();
 
-  void Replace(MapPoint *pMP);
-  MapPoint *GetReplaced();
+  void Replace(MapPointPtr pMP);
+  MapPointPtr GetReplaced();
 
   void IncreaseVisible(int n = 1);
   void IncreaseFound(int n = 1);
@@ -158,9 +166,9 @@ public:
 
   void PrintObservations();
 
-  void PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP);
+  void PreSave(set<KeyFrame *> &spKF, set<MapPointPtr > &spMP);
   void PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                map<long unsigned int, MapPoint *> &mpMPid);
+                map<long unsigned int, MapPointPtr > &mpMPid);
 
 public:
   long unsigned int mnId;
@@ -234,7 +242,7 @@ protected:
 
   // Bad flag (we do not currently erase MapPoint from memory)
   bool mbBad;
-  MapPoint *mpReplaced;
+  MapPointPtr mpReplaced;
   // For save relation without pointer, this is necessary for save/load function
   long long int mBackupReplacedId;
 

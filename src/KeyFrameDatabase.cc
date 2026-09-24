@@ -796,7 +796,8 @@ vector<KeyFrame *> KeyFrameDatabase::DetectRelocalizationCandidates(Frame *F,
                                       vend = vpNeighs.end();
          vit != vend; vit++) {
       KeyFrame *pKF2 = *vit;
-      if (pKF2->mnRelocQuery != F->mnId)
+      if (pKF2->mnRelocQuery != F->mnId ||
+          pKF2->mnRelocWords <= minCommonWords)
         continue;
 
       accScore += pKF2->mRelocScore;

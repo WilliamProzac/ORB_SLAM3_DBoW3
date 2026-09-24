@@ -67,6 +67,13 @@ struct RgbdTimingRecord {
   double motion_model_ms = 0.0;
   double relocalization_ms = 0.0;
   double local_map_ms = 0.0;
+  double local_update_ms = 0.0;
+  double local_keyframes_ms = 0.0;
+  double local_points_ms = 0.0;
+  double local_search_ms = 0.0;
+  double local_pose_ms = 0.0;
+  std::uint64_t local_keyframes = 0;
+  std::uint64_t local_points = 0;
   double need_new_kf_ms = 0.0;
   double create_new_kf_ms = 0.0;
 };

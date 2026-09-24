@@ -36,11 +36,18 @@
 #include <openssl/md5.h>
 #include <pangolin/pangolin.h>
 #include <thread>
+#include <cerrno>
+#include <cstring>
+#include <unistd.h>
+#include <stdexcept>
 using namespace std;
 
 namespace ORB_SLAM3 {
 
 namespace {
+// Serializes persistence requests (including filename changes), not map mutators.
+// Recursive because SaveMap uses the same private SaveAtlas entry as Shutdown.
+std::recursive_mutex atlasSaveMutex;
 double MillisecondsSince(const std::chrono::steady_clock::time_point &start) {
   return std::chrono::duration_cast<
              std::chrono::duration<double, std::milli>>(
@@ -589,6 +596,14 @@ long unsigned int System::GetCurrentMapId() {
   Map *pCurrentMap =
       mpAtlas ? mpAtlas->GetCurrentMap() : static_cast<Map *>(NULL);
   return pCurrentMap ? pCurrentMap->GetId() : 0;
+}
+
+void System::RecordMemoryStats() {
+  if (!MemoryStats::Enabled()) return;
+  auto maps = mpAtlas->GetAllMaps();
+  size_t kfs=0, mps=0;
+  for (auto map : maps) { kfs += map->KeyFramesInMap(); mps += map->MapPointsInMap(); }
+  MemoryStats::Sample(maps.size(), kfs, mps, mpLocalMapper->KeyframesInQueue(), mpLoopCloser->MemoryQueueSize(), mpLoopCloser->isRunningGBA());
 }
 
 long unsigned int System::GetAtlasMapCount() {
@@ -1483,7 +1498,7 @@ int System::GetTrackingState() {
   return mTrackingState;
 }
 
-vector<MapPoint *> System::GetTrackedMapPoints() {
+vector<MapPointPtr > System::GetTrackedMapPoints() {
   unique_lock<mutex> lock(mMutexState);
   return mTrackedMapPoints;
 }
@@ -1656,63 +1671,51 @@ void System::InsertTrackTime(double &time) {
 #endif
 
 void System::SaveAtlas(int type) {
-  if (!mStrSaveAtlasToFile.empty()) {
-    // clock_t start = clock();
+  std::lock_guard<std::recursive_mutex> saveLock(atlasSaveMutex);
+  if (mStrSaveAtlasToFile.empty()) return;
+  if (type != TEXT_FILE && type != BINARY_FILE)
+    throw std::invalid_argument("Unsupported Atlas archive type");
 
-    // Save the current session
-    cout << "SaveAtlas: PreSave..." << flush;
-    mpAtlas->PreSave();
-    cout << " done." << endl;
+  // Raw archive backup pointers are pinned only for this save attempt, also
+  // when PreSave, opening, writing or rename fails.
+  struct SaveSnapshotScope {
+    Atlas* atlas;
+    ~SaveSnapshotScope() { atlas->ReleaseSaveSnapshot(); }
+  } snapshot{mpAtlas};
+  cout << "SaveAtlas: PreSave..." << flush;
+  mpAtlas->PreSave();
+  const string destination = "./" + mStrSaveAtlasToFile + ".osa";
+  const string checksum = CalculateCheckSum(mStrVocabularyFilePath, TEXT_FILE);
+  const size_t separator = mStrVocabularyFilePath.find_last_of("/\\");
+  const string vocabulary = mStrVocabularyFilePath.substr(separator + 1);
 
-    string pathSaveFileName = "./";
-    pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
-    pathSaveFileName = pathSaveFileName.append(".osa");
-
-    cout << "SaveAtlas: CalculateCheckSum..." << flush;
-    string strVocabularyChecksum =
-        CalculateCheckSum(mStrVocabularyFilePath, TEXT_FILE);
-    std::size_t found = mStrVocabularyFilePath.find_last_of("/\\");
-    string strVocabularyName = mStrVocabularyFilePath.substr(found + 1);
-    cout << " done." << endl;
-
-    if (type == TEXT_FILE) // File text
-    {
-      cout << "Starting to write the save text file " << endl;
-      std::remove(pathSaveFileName.c_str());
-      std::ofstream ofs(pathSaveFileName, std::ios::binary);
-      boost::archive::text_oarchive oa(ofs);
-
-      oa << strVocabularyName;
-      oa << strVocabularyChecksum;
-      oa << mpAtlas;
-      cout << "End to write the save text file" << endl;
-    } else if (type == BINARY_FILE) // File binary
-    {
-      cout << "Starting to write the save binary file" << endl;
-      cout << "SaveAtlas: Opening file..." << flush;
-      std::remove(pathSaveFileName.c_str());
-      std::ofstream ofs(pathSaveFileName, std::ios::binary);
-      cout << " done." << endl;
-
-      cout << "SaveAtlas: Creating archive..." << flush;
-      boost::archive::binary_oarchive oa(ofs);
-      cout << " done." << endl;
-
-      cout << "SaveAtlas: Writing vocabulary name..." << flush;
-      oa << strVocabularyName;
-      cout << " done." << endl;
-
-      cout << "SaveAtlas: Writing checksum..." << flush;
-      oa << strVocabularyChecksum;
-      cout << " done." << endl;
-
-      cout << "SaveAtlas: Writing Atlas..." << flush;
-      oa << mpAtlas;
-      cout << " done." << endl;
-
-      cout << "End to write save binary file" << endl;
+  // Stage in the same directory so failed serialization never destroys the last
+  // successful map. Rename is atomic visibility, not a power-loss durability claim.
+  string pattern = destination + ".tmp.XXXXXX";
+  vector<char> temporary(pattern.begin(), pattern.end());
+  temporary.push_back('\0');
+  const int fd = mkstemp(temporary.data());
+  if (fd < 0) throw std::runtime_error("Cannot stage Atlas: " + string(std::strerror(errno)));
+  close(fd);
+  try {
+    std::ofstream output;
+    output.exceptions(std::ios::failbit | std::ios::badbit);
+    output.open(temporary.data(), std::ios::binary | std::ios::trunc);
+    if (type == TEXT_FILE) {
+      boost::archive::text_oarchive archive(output);
+      archive << vocabulary << checksum << mpAtlas;
+    } else {
+      boost::archive::binary_oarchive archive(output);
+      archive << vocabulary << checksum << mpAtlas;
     }
+    output.close();
+    if (std::rename(temporary.data(), destination.c_str()) != 0)
+      throw std::runtime_error("Cannot publish Atlas: " + string(std::strerror(errno)));
+  } catch (...) {
+    std::remove(temporary.data());
+    throw;
   }
+  cout << "SaveAtlas: Saved " << destination << endl;
 }
 
 bool System::LoadAtlas(int type) {
@@ -1813,14 +1816,17 @@ string System::CalculateCheckSum(string filename, int type) {
 }
 
 bool System::SaveMap(const string &filename) {
+  std::lock_guard<std::recursive_mutex> saveLock(atlasSaveMutex);
+  if (filename.empty()) return false;
+  // Keep the requested destination for Shutdown retry even if this attempt fails.
   mStrSaveAtlasToFile = filename;
-  if (mStrSaveAtlasToFile.empty()) {
+  try {
+    SaveAtlas(FileType::BINARY_FILE);
+    return true;
+  } catch (const std::exception &error) {
+    cerr << "SaveMap failed: " << error.what() << endl;
     return false;
   }
-  Verbose::PrintMess("Atlas saving to file " + mStrSaveAtlasToFile,
-                     Verbose::VERBOSITY_NORMAL);
-  SaveAtlas(FileType::BINARY_FILE);
-  return true;
 }
 
 } // namespace ORB_SLAM3

@@ -52,6 +52,7 @@
 #ifndef ORB_SLAM3_MLPNPSOLVER_H
 #define ORB_SLAM3_MLPNPSOLVER_H
 
+#include "MapPointHandle.h"
 #include "Frame.h"
 #include "MapPoint.h"
 
@@ -64,7 +65,7 @@ class MLPnPsolver {
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  MLPnPsolver(const Frame &F, const vector<MapPoint *> &vpMapPointMatches);
+  MLPnPsolver(const Frame &F, const vector<MapPointPtr > &vpMapPointMatches);
 
   ~MLPnPsolver();
 
@@ -177,7 +178,7 @@ private:
   //----------------------------------------------------
   // Fields of the solver
   //----------------------------------------------------
-  vector<MapPoint *> mvpMapPointMatches;
+  vector<MapPointPtr > mvpMapPointMatches;
 
   // 2D Points
   vector<cv::Point2f> mvP2D;

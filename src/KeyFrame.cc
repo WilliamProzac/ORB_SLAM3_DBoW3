@@ -25,6 +25,20 @@
 #include <mutex>
 
 namespace ORB_SLAM3 {
+namespace {
+bool HasWeakOwner(const MapPointWeak& slot) {
+  const MapPointWeak empty;
+  return slot.owner_before(empty) || empty.owner_before(slot);
+}
+// Caller holds the owning KeyFrame's feature mutex. Atomic weak promotion
+// protects lifetime even when the active Map owner is concurrently dropped.
+std::vector<MapPointPtr> LockPointSlots(const std::vector<MapPointWeak>& slots) {
+  std::vector<MapPointPtr> points;points.reserve(slots.size());
+  for (const auto& slot : slots) points.push_back(slot.lock());
+  return points;
+}
+}
+
 
 long unsigned int KeyFrame::nNextId = 0;
 
@@ -72,7 +86,7 @@ KeyFrame::KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB)
       mvInvLevelSigma2(F.mvInvLevelSigma2), mnMinX(F.mnMinX), mnMinY(F.mnMinY),
       mnMaxX(F.mnMaxX), mnMaxY(F.mnMaxY), mK_(F.mK_), mPrevKF(NULL),
       mNextKF(NULL), mpImuPreintegrated(F.mpImuPreintegrated),
-      mImuCalib(F.mImuCalib), mvpMapPoints(F.mvpMapPoints), mpKeyFrameDB(pKFDB),
+      mImuCalib(F.mImuCalib), mvpMapPoints(F.mvpMapPoints.begin(), F.mvpMapPoints.end()), mpKeyFrameDB(pKFDB),
       mpORBvocabulary(F.mpORBvocabulary), mbFirstConnection(true),
       mpParent(NULL), mDistCoef(F.mDistCoef), mbNotErase(false),
       mnDataset(F.mnDataset), mbToBeErased(false), mbBad(false),
@@ -294,43 +308,47 @@ int KeyFrame::GetNumberMPs() {
   unique_lock<mutex> lock(mMutexFeatures);
   int numberMPs = 0;
   for (size_t i = 0, iend = mvpMapPoints.size(); i < iend; i++) {
-    if (!mvpMapPoints[i])
-      continue;
-    numberMPs++;
+    if (!mvpMapPoints[i].expired()) numberMPs++;
   }
   return numberMPs;
 }
 
-void KeyFrame::AddMapPoint(MapPoint *pMP, const size_t &idx) {
+void KeyFrame::AddMapPoint(MapPointPtr pMP, const size_t &idx) {
   unique_lock<mutex> lock(mMutexFeatures);
   mvpMapPoints[idx] = pMP;
+}
+
+void KeyFrame::ClearMapPointMatches() {
+  unique_lock<mutex> lock(mMutexFeatures);
+  std::fill(mvpMapPoints.begin(), mvpMapPoints.end(), MapPointWeak());
 }
 
 void KeyFrame::EraseMapPointMatch(const int &idx) {
   unique_lock<mutex> lock(mMutexFeatures);
-  mvpMapPoints[idx] = static_cast<MapPoint *>(NULL);
+  mvpMapPoints[idx] = MapPointPtr();
 }
 
-void KeyFrame::EraseMapPointMatch(MapPoint *pMP) {
+void KeyFrame::EraseMapPointMatch(MapPointPtr pMP) {
   tuple<size_t, size_t> indexes = pMP->GetIndexInKeyFrame(this);
   size_t leftIndex = get<0>(indexes), rightIndex = get<1>(indexes);
+  unique_lock<mutex> lock(mMutexFeatures);
   if (leftIndex != -1)
-    mvpMapPoints[leftIndex] = static_cast<MapPoint *>(NULL);
+    mvpMapPoints[leftIndex] = MapPointPtr();
   if (rightIndex != -1)
-    mvpMapPoints[rightIndex] = static_cast<MapPoint *>(NULL);
+    mvpMapPoints[rightIndex] = MapPointPtr();
 }
 
-void KeyFrame::ReplaceMapPointMatch(const int &idx, MapPoint *pMP) {
+void KeyFrame::ReplaceMapPointMatch(const int &idx, MapPointPtr pMP) {
+  unique_lock<mutex> lock(mMutexFeatures);
   mvpMapPoints[idx] = pMP;
 }
 
-set<MapPoint *> KeyFrame::GetMapPoints() {
+set<MapPointPtr > KeyFrame::GetMapPoints() {
   unique_lock<mutex> lock(mMutexFeatures);
-  set<MapPoint *> s;
+  set<MapPointPtr > s;
   for (size_t i = 0, iend = mvpMapPoints.size(); i < iend; i++) {
-    if (!mvpMapPoints[i])
-      continue;
-    MapPoint *pMP = mvpMapPoints[i];
+    const auto pMP = mvpMapPoints[i].lock();
+    if (!pMP) continue;
     if (!pMP->isBad())
       s.insert(pMP);
   }
@@ -343,11 +361,11 @@ int KeyFrame::TrackedMapPoints(const int &minObs) {
   int nPoints = 0;
   const bool bCheckObs = minObs > 0;
   for (int i = 0; i < N; i++) {
-    MapPoint *pMP = mvpMapPoints[i];
+    const auto pMP = mvpMapPoints[i].lock();
     if (pMP) {
       if (!pMP->isBad()) {
         if (bCheckObs) {
-          if (mvpMapPoints[i]->Observations() >= minObs)
+          if (pMP->Observations() >= minObs)
             nPoints++;
         } else
           nPoints++;
@@ -358,31 +376,59 @@ int KeyFrame::TrackedMapPoints(const int &minObs) {
   return nPoints;
 }
 
-vector<MapPoint *> KeyFrame::GetMapPointMatches() {
+vector<MapPointPtr > KeyFrame::GetMapPointMatches() {
   unique_lock<mutex> lock(mMutexFeatures);
-  return mvpMapPoints;
+  return LockPointSlots(mvpMapPoints);
 }
 
-MapPoint *KeyFrame::GetMapPoint(const size_t &idx) {
+void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
+    std::vector<MapPointPtr>& output,
+    RetainedPointCache& identities) {
   unique_lock<mutex> lock(mMutexFeatures);
-  return mvpMapPoints[idx];
+  for (const auto& slot : mvpMapPoints) {
+    const auto identity = slot.identity();
+    // If retained, its address cannot be recycled. An expired stale slot with
+    // the same address would yield null anyway. No unowned pointer is read.
+    if (!identity || identities.count(identity)) continue;
+    auto point = slot.lock();
+    if (!point || point->mnTrackReferenceForFrame == frame_id || point->isBad()) continue;
+    point->mnTrackReferenceForFrame = frame_id;
+    output.push_back(std::move(point));
+    identities.insert(identity);
+  }
+}
+
+MapPointPtr KeyFrame::GetMapPoint(const size_t &idx) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  return mvpMapPoints[idx].lock();
+}
+
+bool KeyFrame::HasMapPointAssociation(const size_t &idx) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  return HasWeakOwner(mvpMapPoints[idx]);
+}
+
+MapPointPtr KeyFrame::GetMapPoint(const size_t &idx, bool &assigned) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  assigned = HasWeakOwner(mvpMapPoints[idx]);
+  return mvpMapPoints[idx].lock();
 }
 
 void KeyFrame::UpdateConnections(bool upParent) {
   map<KeyFrame *, int> KFcounter;
 
-  vector<MapPoint *> vpMP;
+  vector<MapPointPtr > vpMP;
 
   {
     unique_lock<mutex> lockMPs(mMutexFeatures);
-    vpMP = mvpMapPoints;
+    vpMP = LockPointSlots(mvpMapPoints);
   }
 
   // For all map points in keyframe check in which other keyframes are they seen
   // Increase counter for those keyframes
-  for (vector<MapPoint *>::iterator vit = vpMP.begin(), vend = vpMP.end();
+  for (vector<MapPointPtr >::iterator vit = vpMP.begin(), vend = vpMP.end();
        vit != vend; vit++) {
-    MapPoint *pMP = *vit;
+    MapPointPtr pMP = *vit;
 
     if (!pMP)
       continue;
@@ -560,9 +606,10 @@ void KeyFrame::SetBadFlag() {
     mit->first->EraseConnection(this);
   }
 
-  for (size_t i = 0; i < mvpMapPoints.size(); i++) {
-    if (mvpMapPoints[i]) {
-      mvpMapPoints[i]->EraseObservation(this);
+  const auto retirementPoints = GetMapPointMatches();
+  for (size_t i = 0; i < retirementPoints.size(); i++) {
+    if (retirementPoints[i]) {
+      retirementPoints[i]->EraseObservation(this);
     }
   }
 
@@ -572,6 +619,9 @@ void KeyFrame::SetBadFlag() {
 
     mConnectedKeyFrameWeights.clear();
     mvpOrderedConnectedKeyFrames.clear();
+    // Keep slot count for old reference-frame readers, but no MP payload owner
+    // is needed by the retired KF's pose/history chain.
+    std::fill(mvpMapPoints.begin(), mvpMapPoints.end(), MapPointWeak());
 
     // Update Spanning Tree
     set<KeyFrame *> sParentCandidates;
@@ -635,6 +685,7 @@ void KeyFrame::SetBadFlag() {
       mpParent->EraseChild(this);
       mTcp = mTcw * mpParent->GetPoseInverse();
     }
+    mMemoryLifetime.Retire();
     mbBad = true;
   }
 
@@ -736,13 +787,13 @@ float KeyFrame::ComputeSceneMedianDepth(const int q) {
   if (N == 0)
     return -1.0;
 
-  vector<MapPoint *> vpMapPoints;
+  vector<MapPointPtr > vpMapPoints;
   Eigen::Matrix3f Rcw;
   Eigen::Vector3f tcw;
   {
     unique_lock<mutex> lock(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPose);
-    vpMapPoints = mvpMapPoints;
+    vpMapPoints = LockPointSlots(mvpMapPoints);
     tcw = mTcw.translation();
     Rcw = mRcw;
   }
@@ -752,8 +803,8 @@ float KeyFrame::ComputeSceneMedianDepth(const int q) {
   Eigen::Matrix<float, 1, 3> Rcw2 = Rcw.row(2);
   float zcw = tcw(2);
   for (int i = 0; i < N; i++) {
-    if (mvpMapPoints[i]) {
-      MapPoint *pMP = mvpMapPoints[i];
+    if (vpMapPoints[i]) {
+      MapPointPtr pMP = vpMapPoints[i];
       Eigen::Vector3f x3Dw = pMP->GetWorldPos();
       float z = Rcw2.dot(x3Dw) + zcw;
       vDepths.push_back(z);
@@ -797,17 +848,18 @@ void KeyFrame::UpdateMap(Map *pMap) {
   mpMap = pMap;
 }
 
-void KeyFrame::PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP,
+void KeyFrame::PreSave(set<KeyFrame *> &spKF, set<MapPointPtr > &spMP,
                        set<GeometricCamera *> &spCam) {
   // Save the id of each MapPoint in this KF, there can be null pointer in the
   // vector
+  const auto savePoints = GetMapPointMatches();
   mvBackupMapPointsId.clear();
   mvBackupMapPointsId.reserve(N);
   for (int i = 0; i < N; ++i) {
 
-    if (mvpMapPoints[i] && spMP.find(mvpMapPoints[i]) !=
+    if (savePoints[i] && spMP.find(savePoints[i]) !=
                                spMP.end()) // Checks if the element is not null
-      mvBackupMapPointsId.push_back(mvpMapPoints[i]->mnId);
+      mvBackupMapPointsId.push_back(savePoints[i]->mnId);
     else // If the element is null his value is -1 because all the id are
          // positives
       mvBackupMapPointsId.push_back(-1);
@@ -874,7 +926,7 @@ void KeyFrame::PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP,
 }
 
 void KeyFrame::PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                        map<long unsigned int, MapPoint *> &mpMPid,
+                        map<long unsigned int, MapPointPtr > &mpMPid,
                         map<unsigned int, GeometricCamera *> &mpCamId) {
   // Rebuild the empty variables
 
@@ -891,7 +943,7 @@ void KeyFrame::PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
     if (mvBackupMapPointsId[i] != -1)
       mvpMapPoints[i] = mpMPid[mvBackupMapPointsId[i]];
     else
-      mvpMapPoints[i] = static_cast<MapPoint *>(NULL);
+      mvpMapPoints[i] = MapPointPtr();
   }
 
   // Conected KeyFrames with him weight
@@ -980,7 +1032,7 @@ void KeyFrame::PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
   }
 }
 
-bool KeyFrame::ProjectPointDistort(MapPoint *pMP, cv::Point2f &kp, float &u,
+bool KeyFrame::ProjectPointDistort(MapPointPtr pMP, cv::Point2f &kp, float &u,
                                    float &v) {
 
   // 3D in absolute coordinates
@@ -1041,7 +1093,7 @@ bool KeyFrame::ProjectPointDistort(MapPoint *pMP, cv::Point2f &kp, float &u,
   return true;
 }
 
-bool KeyFrame::ProjectPointUnDistort(MapPoint *pMP, cv::Point2f &kp, float &u,
+bool KeyFrame::ProjectPointUnDistort(MapPointPtr pMP, cv::Point2f &kp, float &u,
                                      float &v) {
 
   // 3D in absolute coordinates

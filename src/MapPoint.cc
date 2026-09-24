@@ -20,12 +20,14 @@
  */
 
 #include "MapPoint.h"
+#include <stdexcept>
 #include "FeatureDescriptor.h"
 #include "ORBmatcher.h"
 
 #include <mutex>
 
 namespace ORB_SLAM3 {
+namespace { std::mutex replacementMutex; }
 
 long unsigned int MapPoint::nNextId = 0;
 mutex MapPoint::mGlobalMutex;
@@ -35,8 +37,8 @@ MapPoint::MapPoint()
       mnLastFrameSeen(0), mnBALocalForKF(0), mnFuseCandidateForKF(0),
       mnLoopPointForKF(0), mnCorrectedByKF(0), mnCorrectedReference(0),
       mnBAGlobalForKF(0), mnVisible(1), mnFound(1), mbBad(false),
-      mpReplaced(static_cast<MapPoint *>(NULL)) {
-  mpReplaced = static_cast<MapPoint *>(NULL);
+      mpReplaced(MapPointPtr()) {
+  mpReplaced = MapPointPtr();
 }
 
 MapPoint::MapPoint(const Eigen::Vector3f &Pos, KeyFrame *pRefKF, Map *pMap)
@@ -45,7 +47,7 @@ MapPoint::MapPoint(const Eigen::Vector3f &Pos, KeyFrame *pRefKF, Map *pMap)
       mnFuseCandidateForKF(0), mnLoopPointForKF(0), mnCorrectedByKF(0),
       mnCorrectedReference(0), mnBAGlobalForKF(0), mpRefKF(pRefKF),
       mnVisible(1), mnFound(1), mbBad(false),
-      mpReplaced(static_cast<MapPoint *>(NULL)), mfMinDistance(0),
+      mpReplaced(MapPointPtr()), mfMinDistance(0),
       mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()) {
   SetWorldPos(Pos);
 
@@ -67,7 +69,7 @@ MapPoint::MapPoint(const double invDepth, cv::Point2f uv_init, KeyFrame *pRefKF,
       mnFuseCandidateForKF(0), mnLoopPointForKF(0), mnCorrectedByKF(0),
       mnCorrectedReference(0), mnBAGlobalForKF(0), mpRefKF(pRefKF),
       mnVisible(1), mnFound(1), mbBad(false),
-      mpReplaced(static_cast<MapPoint *>(NULL)), mfMinDistance(0),
+      mpReplaced(MapPointPtr()), mfMinDistance(0),
       mfMaxDistance(0), mpMap(pMap), mnOriginMapId(pMap->GetId()) {
   mInvDepth = invDepth;
   mInitU = (double)uv_init.x;
@@ -172,6 +174,7 @@ void MapPoint::AddObservation(KeyFrame *pKF, int idx) {
 }
 
 void MapPoint::EraseObservation(KeyFrame *pKF) {
+  const auto keepAlive = shared_from_this();
   bool bBad = false;
   {
     unique_lock<mutex> lock(mMutexFeatures);
@@ -192,7 +195,7 @@ void MapPoint::EraseObservation(KeyFrame *pKF) {
       mObservations.erase(pKF);
 
       if (mpRefKF == pKF)
-        mpRefKF = mObservations.begin()->first;
+        mpRefKF = mObservations.empty() ? nullptr : mObservations.begin()->first;
 
       // If only 2 observations or less, discard point
       if (nObs <= 2)
@@ -215,10 +218,13 @@ int MapPoint::Observations() {
 }
 
 void MapPoint::SetBadFlag() {
+  const auto keepAlive = shared_from_this();
   map<KeyFrame *, tuple<int, int>> obs;
   {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
+    if (mbBad) return;
+    mMemoryLifetime.Retire();
     mbBad = true;
     obs = mObservations;
     mObservations.clear();
@@ -236,26 +242,39 @@ void MapPoint::SetBadFlag() {
     }
   }
 
-  mpMap->EraseMapPoint(this);
+  mpMap->EraseMapPoint(keepAlive);
 }
 
-MapPoint *MapPoint::GetReplaced() {
+MapPointPtr MapPoint::GetReplaced() {
   unique_lock<mutex> lock1(mMutexFeatures);
   unique_lock<mutex> lock2(mMutexPos);
   return mpReplaced;
 }
 
-void MapPoint::Replace(MapPoint *pMP) {
-  if (pMP->mnId == this->mnId)
-    return;
+void MapPoint::Replace(MapPointPtr pMP) {
+  const auto keepAlive = shared_from_this();
+  // Serialize replacement edges so opposite concurrent replacements cannot
+  // create a strong cycle. A retired source never changes its published edge.
+  std::lock_guard<std::mutex> transition(replacementMutex);
+  if (!pMP) return;
+  std::set<MapPoint*> seen;
+  while (pMP) {
+    if (pMP.get() == this || pMP->mnId == mnId || !seen.insert(pMP.get()).second) return;
+    auto next = pMP->GetReplaced();
+    if (!next) break;
+    pMP = next;
+  }
+  if (pMP->isBad()) return;
 
   int nvisible, nfound;
   map<KeyFrame *, tuple<int, int>> obs;
   {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
+    if (mbBad) return;
     obs = mObservations;
     mObservations.clear();
+    mMemoryLifetime.Retire();
     mbBad = true;
     nvisible = mnVisible;
     nfound = mnFound;
@@ -293,14 +312,13 @@ void MapPoint::Replace(MapPoint *pMP) {
   pMP->IncreaseVisible(nvisible);
   pMP->ComputeDistinctiveDescriptors();
 
-  mpMap->EraseMapPoint(this);
+  mpMap->EraseMapPoint(keepAlive);
 }
 
 bool MapPoint::isBad() {
-  unique_lock<mutex> lock1(mMutexFeatures, std::defer_lock);
-  unique_lock<mutex> lock2(mMutexPos, std::defer_lock);
-  lock(lock1, lock2);
-
+  // Both published writes (SetBadFlag/Replace) hold mMutexFeatures. Position
+  // reads/writes do not modify mbBad, so taking mMutexPos adds no protection.
+  unique_lock<mutex> lock(mMutexFeatures);
   return mbBad;
 }
 
@@ -531,18 +549,20 @@ void MapPoint::UpdateMap(Map *pMap) {
   mpMap = pMap;
 }
 
-void MapPoint::PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP) {
+void MapPoint::PreSave(set<KeyFrame *> &spKF, set<MapPointPtr > &spMP) {
   mBackupReplacedId = -1;
-  if (mpReplaced && spMP.find(mpReplaced) != spMP.end())
-    mBackupReplacedId = mpReplaced->mnId;
+  const auto replaced = GetReplaced();
+  if (replaced && spMP.find(replaced) != spMP.end())
+    mBackupReplacedId = replaced->mnId;
 
   mBackupObservationsId1.clear();
   mBackupObservationsId2.clear();
   // Save the id and position in each KF who view it
+  const auto observations = GetObservations();
   vector<KeyFrame *> vToErase;
   for (std::map<KeyFrame *, std::tuple<int, int>>::const_iterator
-           it = mObservations.begin(),
-           end = mObservations.end();
+           it = observations.begin(),
+           end = observations.end();
        it != end; ++it) {
     KeyFrame *pKFi = it->first;
     if (spKF.find(pKFi) != spKF.end()) {
@@ -558,24 +578,33 @@ void MapPoint::PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP) {
   }
 
   // Save the id of the reference KF
-  if (spKF.find(mpRefKF) != spKF.end()) {
-    mBackupRefKFId = mpRefKF->mnId;
+  const auto refKF = GetReferenceKeyFrame();
+  mBackupRefKFId = -1;
+  if (refKF && spKF.find(refKF) != spKF.end()) {
+    mBackupRefKFId = refKF->mnId;
   }
 }
 
 void MapPoint::PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                        map<long unsigned int, MapPoint *> &mpMPid) {
+                        map<long unsigned int, MapPointPtr > &mpMPid) {
   mpRefKF = mpKFid[mBackupRefKFId];
   if (!mpRefKF) {
     cout << "ERROR: MP without KF reference " << mBackupRefKFId
          << "; Num obs: " << nObs << endl;
   }
-  mpReplaced = static_cast<MapPoint *>(NULL);
+  mpReplaced = MapPointPtr();
   if (mBackupReplacedId >= 0) {
-    map<long unsigned int, MapPoint *>::iterator it =
+    map<long unsigned int, MapPointPtr >::iterator it =
         mpMPid.find(mBackupReplacedId);
-    if (it != mpMPid.end())
+    if (it != mpMPid.end()) {
+      // Load is unpublished and sequential. Reject the edge that would close
+      // a cycle before installing a strong reference.
+      std::set<MapPoint*> seen;
+      for (auto target = it->second; target; target = target->GetReplaced())
+        if (target.get() == this || !seen.insert(target.get()).second)
+          throw std::runtime_error("cyclic MapPoint replacement in archive");
       mpReplaced = it->second;
+    }
   }
 
   mObservations.clear();

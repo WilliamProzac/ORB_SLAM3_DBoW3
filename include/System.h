@@ -22,6 +22,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "MapPointHandle.h"
 #include <opencv2/core/core.hpp>
 #include <stdio.h>
 #include <stdlib.h>
@@ -168,6 +169,7 @@ public:
 
   // Read-only map population statistics for runtime evaluation.
   long unsigned int GetAtlasMapCount();
+  void RecordMemoryStats();
   long unsigned int GetCurrentMapKeyFrames();
   long unsigned int GetCurrentMapPoints();
 
@@ -224,7 +226,7 @@ public:
   // Information from most recent processed frame
   // You can call this right after TrackMonocular (or stereo or RGBD)
   int GetTrackingState();
-  std::vector<MapPoint *> GetTrackedMapPoints();
+  std::vector<MapPointPtr > GetTrackedMapPoints();
   std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
   bool IsOnlyTrackingEnabled();
   bool TryGetLatestRelocalizationStatus(int &status_code);
@@ -313,7 +315,7 @@ private:
 
   // Tracking state
   int mTrackingState;
-  std::vector<MapPoint *> mTrackedMapPoints;
+  std::vector<MapPointPtr > mTrackedMapPoints;
   std::vector<cv::KeyPoint> mTrackedKeyPointsUn;
   std::mutex mMutexState;
 

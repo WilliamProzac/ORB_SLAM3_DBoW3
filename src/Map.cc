@@ -80,7 +80,7 @@ void Map::AddKeyFrame(KeyFrame *pKF) {
   }
 }
 
-void Map::AddMapPoint(MapPoint *pMP) {
+void Map::AddMapPoint(MapPointPtr pMP) {
   unique_lock<mutex> lock(mMutexMap);
   mspMapPoints.insert(pMP);
 }
@@ -95,12 +95,11 @@ bool Map::isImuInitialized() {
   return mbImuInitialized;
 }
 
-void Map::EraseMapPoint(MapPoint *pMP) {
+void Map::EraseMapPoint(MapPointPtr pMP) {
   unique_lock<mutex> lock(mMutexMap);
   mspMapPoints.erase(pMP);
 
-  // TODO: This only erase the pointer.
-  // Delete the MapPoint
+  // Existing reader handles determine the final destruction time.
 }
 
 void Map::EraseKeyFrame(KeyFrame *pKF) {
@@ -121,7 +120,7 @@ void Map::EraseKeyFrame(KeyFrame *pKF) {
   // Delete the MapPoint
 }
 
-void Map::SetReferenceMapPoints(const vector<MapPoint *> &vpMPs) {
+void Map::SetReferenceMapPoints(const vector<MapPointPtr > &vpMPs) {
   unique_lock<mutex> lock(mMutexMap);
   mvpReferenceMapPoints = vpMPs;
 }
@@ -141,9 +140,9 @@ vector<KeyFrame *> Map::GetAllKeyFrames() {
   return vector<KeyFrame *>(mspKeyFrames.begin(), mspKeyFrames.end());
 }
 
-vector<MapPoint *> Map::GetAllMapPoints() {
+vector<MapPointPtr > Map::GetAllMapPoints() {
   unique_lock<mutex> lock(mMutexMap);
-  return vector<MapPoint *>(mspMapPoints.begin(), mspMapPoints.end());
+  return vector<MapPointPtr >(mspMapPoints.begin(), mspMapPoints.end());
 }
 
 long unsigned int Map::MapPointsInMap() {
@@ -156,7 +155,7 @@ long unsigned int Map::KeyFramesInMap() {
   return mspKeyFrames.size();
 }
 
-vector<MapPoint *> Map::GetReferenceMapPoints() {
+vector<MapPointPtr > Map::GetReferenceMapPoints() {
   unique_lock<mutex> lock(mMutexMap);
   return mvpReferenceMapPoints;
 }
@@ -184,24 +183,25 @@ void Map::SetCurrentMap() { mIsInUse = true; }
 void Map::SetStoredMap() { mIsInUse = false; }
 
 void Map::clear() {
-  //    for(set<MapPoint*>::iterator sit=mspMapPoints.begin(),
-  //    send=mspMapPoints.end(); sit!=send; sit++)
-  //        delete *sit;
-
-  for (set<KeyFrame *>::iterator sit = mspKeyFrames.begin(),
-                                 send = mspKeyFrames.end();
-       sit != send; sit++) {
-    KeyFrame *pKF = *sit;
-    pKF->UpdateMap(static_cast<Map *>(NULL));
-    //        delete *sit;
+  // The reset caller has stopped mapping and joined GBA. Take owned snapshots
+  // before detaching indices; never hold the map mutex while retiring points.
+  const auto points = GetAllMapPoints();
+  const auto keys = GetAllKeyFrames();
+  for (const auto& point : points)
+    if (point && point->GetMap() == this) point->SetBadFlag();
+  for (auto* key : keys) {
+    key->ClearMapPointMatches();
+    key->UpdateMap(nullptr);
   }
-
+  unique_lock<mutex> lock(mMutexMap);
   mspMapPoints.clear();
   mspKeyFrames.clear();
   mnMaxKFid = mnInitKFid;
   mbImuInitialized = false;
   mvpReferenceMapPoints.clear();
   mvpKeyFrameOrigins.clear();
+  mvpBackupMapPoints.clear();
+  mvpSavePointOwners.clear();
   mbIMU_BA1 = false;
   mbIMU_BA2 = false;
 }
@@ -235,9 +235,9 @@ void Map::ApplyScaledRotation(const Sophus::SE3f &T, const float s,
     else
       pKF->SetVelocity(Ryw * Vw * s);
   }
-  for (set<MapPoint *>::iterator sit = mspMapPoints.begin();
+  for (set<MapPointPtr >::iterator sit = mspMapPoints.begin();
        sit != mspMapPoints.end(); sit++) {
-    MapPoint *pMP = *sit;
+    MapPointPtr pMP = *sit;
     pMP->SetWorldPos(s * Ryw * pMP->GetWorldPos() + tyw);
     pMP->UpdateNormalAndDepth();
   }
@@ -305,14 +305,22 @@ void Map::SetLastMapChange(int currentChangeId) {
 }
 
 void Map::PreSave(std::set<GeometricCamera *> &spCams) {
+  // Copy owners while the live indexes are locked; EraseObservation may itself
+  // retire a point, so never iterate an index that its callbacks can erase.
+  const auto points = GetAllMapPoints();
+  const auto keys = GetAllKeyFrames();
+  std::set<MapPointPtr> savePoints(points.begin(), points.end());
+  std::set<KeyFrame*> saveKeys(keys.begin(), keys.end());
+  mvpSavePointOwners.clear();
+
   // Note: NOT using mutex here as nested calls would cause deadlock
 
-  cout << "Map::PreSave: Start, MPs=" << mspMapPoints.size()
-       << ", KFs=" << mspKeyFrames.size() << endl;
+  cout << "Map::PreSave: Start, MPs=" << savePoints.size()
+       << ", KFs=" << saveKeys.size() << endl;
 
   int nMPWithoutObs = 0;
   int mpIdx = 0;
-  for (MapPoint *pMPi : mspMapPoints) {
+  for (MapPointPtr pMPi : savePoints) {
     if (!pMPi || pMPi->isBad())
       continue;
 
@@ -344,12 +352,13 @@ void Map::PreSave(std::set<GeometricCamera *> &spCams) {
   // Backup of MapPoints
   mvpBackupMapPoints.clear();
   int savedMPs = 0;
-  for (MapPoint *pMPi : mspMapPoints) {
+  for (MapPointPtr pMPi : savePoints) {
     if (!pMPi || pMPi->isBad())
       continue;
 
-    mvpBackupMapPoints.push_back(pMPi);
-    pMPi->PreSave(mspKeyFrames, mspMapPoints);
+    mvpSavePointOwners.push_back(pMPi);
+    mvpBackupMapPoints.push_back(pMPi.get());
+    pMPi->PreSave(saveKeys, savePoints);
     savedMPs++;
   }
   cout << "Map::PreSave: Backed up " << savedMPs << " MapPoints" << endl;
@@ -357,12 +366,12 @@ void Map::PreSave(std::set<GeometricCamera *> &spCams) {
   // Backup of KeyFrames
   mvpBackupKeyFrames.clear();
   int savedKFs = 0;
-  for (KeyFrame *pKFi : mspKeyFrames) {
+  for (KeyFrame *pKFi : saveKeys) {
     if (!pKFi || pKFi->isBad())
       continue;
 
     mvpBackupKeyFrames.push_back(pKFi);
-    pKFi->PreSave(mspKeyFrames, mspMapPoints, spCams);
+    pKFi->PreSave(saveKeys, savePoints, spCams);
     savedKFs++;
   }
   cout << "Map::PreSave: Backed up " << savedKFs << " KeyFrames" << endl;
@@ -380,18 +389,28 @@ void Map::PreSave(std::set<GeometricCamera *> &spCams) {
   cout << "Map::PreSave: Complete" << endl;
 }
 
+void Map::ReleaseSaveSnapshot() {
+  mvpBackupMapPoints.clear();
+  mvpSavePointOwners.clear();
+}
+
 void Map::PostLoad(
     KeyFrameDatabase *pKFDB,
     ORBVocabulary
         *pORBVoc /*, map<long unsigned int, KeyFrame*>& mpKeyFrameId*/,
-    map<unsigned int, GeometricCamera *> &mpCams) {
-  std::copy(mvpBackupMapPoints.begin(), mvpBackupMapPoints.end(),
-            std::inserter(mspMapPoints, mspMapPoints.begin()));
+    map<unsigned int, GeometricCamera *> &mpCams,
+    LoadedMapPointOwners& owners) {
+  for (MapPoint* raw : mvpBackupMapPoints) {
+    if (!raw) continue;
+    auto& owner = owners[raw];
+    if (!owner) owner.reset(raw);
+    mspMapPoints.insert(owner);
+  }
   std::copy(mvpBackupKeyFrames.begin(), mvpBackupKeyFrames.end(),
             std::inserter(mspKeyFrames, mspKeyFrames.begin()));
 
-  map<long unsigned int, MapPoint *> mpMapPointId;
-  for (MapPoint *pMPi : mspMapPoints) {
+  map<long unsigned int, MapPointPtr > mpMapPointId;
+  for (MapPointPtr pMPi : mspMapPoints) {
     if (!pMPi || pMPi->isBad())
       continue;
 
@@ -411,7 +430,7 @@ void Map::PostLoad(
   }
 
   // References reconstruction between different instances
-  for (MapPoint *pMPi : mspMapPoints) {
+  for (MapPointPtr pMPi : mspMapPoints) {
     if (!pMPi || pMPi->isBad())
       continue;
 

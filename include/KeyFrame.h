@@ -22,6 +22,7 @@
 #ifndef KEYFRAME_H
 #define KEYFRAME_H
 
+#include "MapPointHandle.h"
 #include "Frame.h"
 #include "ImuTypes.h"
 #include "KeyFrameDatabase.h"
@@ -33,8 +34,10 @@
 
 #include "GeometricCamera.h"
 #include "SerializationUtils.h"
+#include "MemoryStats.h"
 
 #include <mutex>
+#include "RetainedPointCache.h"
 
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/map.hpp>
@@ -51,6 +54,7 @@ class KeyFrameDatabase;
 class GeometricCamera;
 
 class KeyFrame {
+  MemoryStats::Lifetime<0> mMemoryLifetime;
   friend class boost::serialization::access;
 
   template <class Archive>
@@ -161,6 +165,7 @@ class KeyFrame {
     ar & mbNotErase;
     ar & mbToBeErased;
     ar & mbBad;
+    if (Archive::is_loading::value && mbBad) mMemoryLifetime.Retire();
 
     ar & mHalfBaseline;
 
@@ -193,6 +198,11 @@ class KeyFrame {
 
 public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  // Tracking-only ordered collection. identities must describe points strongly
+  // owned by output; caller keeps output alive across all KFs in this frame.
+  void AppendLocalMapPoints(unsigned long frame_id,
+      std::vector<MapPointPtr>& output,
+      RetainedPointCache& identities);
   KeyFrame();
   KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB);
 
@@ -247,14 +257,23 @@ public:
 
   // MapPoint observation functions
   int GetNumberMPs();
-  void AddMapPoint(MapPoint *pMP, const size_t &idx);
+  void AddMapPoint(MapPointPtr pMP, const size_t &idx);
+  // Quiescent reset: drop owners while preserving feature-slot indices.
+  void ClearMapPointMatches();
   void EraseMapPointMatch(const int &idx);
-  void EraseMapPointMatch(MapPoint *pMP);
-  void ReplaceMapPointMatch(const int &idx, MapPoint *pMP);
-  std::set<MapPoint *> GetMapPoints();
-  std::vector<MapPoint *> GetMapPointMatches();
+  void EraseMapPointMatch(MapPointPtr pMP);
+  void ReplaceMapPointMatch(const int &idx, MapPointPtr pMP);
+  std::set<MapPointPtr > GetMapPoints();
+  std::vector<MapPointPtr > GetMapPointMatches();
   int TrackedMapPoints(const int &minObs);
-  MapPoint *GetMapPoint(const size_t &idx);
+  MapPointPtr GetMapPoint(const size_t &idx);
+
+  // Preserve the distinction between an explicitly empty slot and a stale
+  // assigned slot whose retired payload has been reclaimed. No payload access.
+  bool HasMapPointAssociation(const size_t &idx);
+  // Read occupancy and acquire a real reader in one feature-lock snapshot.
+  // assigned may be true with a null point; treat that as a retired association.
+  MapPointPtr GetMapPoint(const size_t &idx, bool &assigned);
 
   // KeyPoint functions
   std::vector<size_t> GetFeaturesInArea(const float &x, const float &y,
@@ -292,14 +311,14 @@ public:
 
   IMU::Bias GetImuBias();
 
-  bool ProjectPointDistort(MapPoint *pMP, cv::Point2f &kp, float &u, float &v);
-  bool ProjectPointUnDistort(MapPoint *pMP, cv::Point2f &kp, float &u,
+  bool ProjectPointDistort(MapPointPtr pMP, cv::Point2f &kp, float &u, float &v);
+  bool ProjectPointUnDistort(MapPointPtr pMP, cv::Point2f &kp, float &u,
                              float &v);
 
-  void PreSave(set<KeyFrame *> &spKF, set<MapPoint *> &spMP,
+  void PreSave(set<KeyFrame *> &spKF, set<MapPointPtr > &spMP,
                set<GeometricCamera *> &spCam);
   void PostLoad(map<long unsigned int, KeyFrame *> &mpKFid,
-                map<long unsigned int, MapPoint *> &mpMPid,
+                map<long unsigned int, MapPointPtr > &mpMPid,
                 map<unsigned int, GeometricCamera *> &mpCamId);
 
   void SetORBVocabulary(ORBVocabulary *pORBVoc);
@@ -448,7 +467,9 @@ protected:
   IMU::Bias mImuBias;
 
   // MapPoints associated to keypoints
-  std::vector<MapPoint *> mvpMapPoints;
+  // Non-owning feature index; active Map/Frame/worker handles own the payload.
+  // Promote under mMutexFeatures before returning a reader snapshot.
+  std::vector<MapPointWeak> mvpMapPoints;
   // For save relation without pointer, this is necessary for save/load function
   std::vector<long long int> mvBackupMapPointsId;
 
@@ -527,10 +548,11 @@ public:
   Eigen::Vector3f GetRightTranslation();
 
   void PrintPointDistribution() {
+    const auto points = GetMapPointMatches();
     int left = 0, right = 0;
     int Nlim = (NLeft != -1) ? NLeft : N;
     for (int i = 0; i < N; i++) {
-      if (mvpMapPoints[i]) {
+      if (points[i]) {
         if (i < Nlim)
           left++;
         else

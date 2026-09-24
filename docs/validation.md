@@ -1,5 +1,20 @@
 # Validation
 
+Latest memory-task state: [current session summary](../../memory/SESSION_SUMMARY_20260920_MEM18.md).
+Current frozen/source candidate is the active MEM17/MEM18 repair worktree; see [current progress](../../memory/MEM17_CANDIDATE_SCORE_PROGRESS.md).
+Native/ASan paired builds and106 source/14 binary hashes pass. Real candidate API
+regression changes history-dependent B/A to A/A while preserving3 positive
+controls.26+26 legal checks and normal native955 allOK/save/GBA join pass.
+Old-map native330 still fails305(map9<10), recovering306; this cause remains open.
+MEM16→MEM17 ASan330 observed101→1 nonOK; MEM18 retains only305 nonOK in the
+fixed-map330 replay, with LSan3,379,036B/7,205 allocations still failing.
+Full ARM17 build/hash verification is complete; direct board link is unavailable.
+No realtime/board runtime acceptance yet.
+MP physical release exists; MLPnPsolver RAII is now applied and passes targeted
+native/ASan fixtures, while full-System LSan remains failed at3,379,036B/7,205
+allocations. KF/Map deletion remains disabled. Joint memory, tracking and realtime
+acceptance remains open; no repair commit/production update.
+
 Source basis: `README.md`, `build.sh`, `build_ros.sh`,
 `run_stereo_inertial.sh`, and repository tree scan on `master`.
 
@@ -998,3 +1013,168 @@ RD51的ABBA CPU数值仅为历史证据，不作为RD52新增字段的开销验�
 驱动SDK边界、三路原始身份、左右转换/publish、深度转换/publish、release阶段通过固定共享数字区交给SLAM记录器；默认关闭，无图像引用/驱动写盘线程，原core与Recorder不变。真实相机最终开启1024帧、关闭358帧均OK；成功关联168帧，能够分解驱动发布差和发布后新增错位。完整实现/限制见外层diagnostics/camera_delivery/design.md、validation.md、README.md。ARM64满记录区保守组件预算1708KiB，CPU完整ABBA尚未验收。SDK内部和ROS队列/反序列化细分仍未知，不声称严重迟到根因已复现。
 
 RD53补充：默认不限时运行，Ctrl+C/stop_board.sh正常保存；补齐未初始化RGB-D地图的保存保护。node e07edfde...，core不变。验证与失败修复记录见外层diagnostics/camera_delivery/manual_validation。
+
+## MEM01–MEM04 RGB-D memory work (2026-09-18)
+
+Authoritative implementation is the independent `rgbd_memory_lifecycle` outer
+workspace and this core on `fix/rgbd-memory-lifecycle`. Snapshot/provenance and
+all commands/results live in `../../memory/README.md` and `../../memory/evidence/`.
+Host: `bash memory/tools/build_host.sh` from the outer root. ARM64 full paired
+build: `bash memory/tools/build_arm.sh`; baseline: add `--baseline` after restoring
+the instrumentation-only source described by evidence/stats-baseline-core.patch.
+These full builds do not reuse cached core/node objects. Runtime dependencies
+and compiler options are recorded; a copied native g2o without matching Eigen
+alignment caused initial failures, fixed by a matching full dependency rebuild.
+
+Completed gates so far: atomic concurrent lifetime counter probes (ASan/UBSan),
+actual KF/MP repeated retirement and replacement, fresh bag extraction SHA256,
+2910/2910 native baseline states OK, four fixed graph BA comparisons (mono,
+stereo, second camera, visual local) with identical graph sizes and pose/point
+text outputs, checked capacity growth/overflow (ASan/UBSan), repeated/legacy/
+growing/multimap/empty Atlas round-trips with observation identity checks,
+300-frame saved-map relocalization (300 OK), 180-frame reset (180 OK), and
+controlled mid-write failure preserving the existing map hash then successful retry.
+
+Not equivalent to completion: baseline full run overlapped compilation, so its
+resource numbers are exploratory. No ground truth for this bag. Synthetic GBA
+exercises the actual optimizer but not loop detection or delayed GBA writeback.
+General concurrent save, inertial/real merge, and physical reclamation are NOT
+accepted by these tests. Object counters intentionally show retired objects
+remaining live; this patch has no automatic object deletion.
+
+### Final verification update
+
+Full paired ARM64 baseline/candidate core and node were built from all current
+source units, uploaded after explicit session authorization, and verified by
+SHA256 and actual process library maps. Deployment is isolated under
+`/userdata/rgbd_memory_lifecycle_20260918`; production and field binaries remain
+unchanged. No test node/probe/camera or independent ROS master remains running.
+Build/probe/source checks: `../../memory/evidence/arm_build_verified.json` and
+`final_verification.json`. Board runtime probes include mono/stereo/body/global,
+local and merge-local BA, retirement, and all five quiescent save fixtures.
+
+Formal native ABBA completed without concurrent builds: each 2910/2910, non-OK0,
+one map. Mean peak PSS A1262.59/B1210.65MiB; mean TrackRGBD P99 A26.19/B30.79ms.
+The memory observation improved; the native tail target failed. No process swap
+or major faults occurred, although system swap-in was nonzero. The early
+compilation-overlapped baseline is excluded. Off/on/on/off 120-frame diagnostic
+screening found no stable additional tail, not proof of zero overhead or ARM
+overhead acceptance. Output SE3 disagreement is not ground-truth accuracy.
+
+Board ABBA at 1x processed A1/B1/B2/A2=2894/2906/2904/2891 of2910, non-OK0,
+one map, exit0. All four fail complete-input acceptance. Mean peak VmSwap
+A236.42/B176.41MiB; P99 bins overlap and no stable tail improvement is proved.
+About265k retired MPs remain live; object reclamation is not implemented.
+Save-to-exit still incurred31.9k–33.1k major faults. All four map hashes verified;
+only B2 received an actual board reload/localization test. At1x it processed
+313/334, while the explicitly functional0.5x repeat processed334/334, non-OK0,
+one map, relocalized with290 inliers. The slower repeat is excluded from ABBA.
+Full tables, samples and exact limits: `../../memory/REPORT.md`, board_report.json,
+and board_runs/*/pressure_1s.csv. The user has no additional known loop/GBA/merge
+bag and explicitly requested these real paths remain marked unverified.
+
+Complete-core ASan/LSan is NOT passed. Mono global/local BA and real replay fail
+on a pre-existing Eigen temporary-expression lifetime bug; actual replay stopped
+after28 completed frames. Loaded Pinhole cleanup exposes an uninitialized `tvr`;
+the final save fixtures retain that camera and LSan reports64 bytes. Stereo/body
+BA, retirement and empty-map sanitizer fixtures pass within their stated scope.
+See `../../memory/SANITIZERS.md`; none of these failures is suppressed or called
+third-party noise. No ThreadSanitizer, delayed-reader/GBA, full merge or physical
+reclamation acceptance. Features therefore remain blocked at their unmet gates,
+not marked passing merely because paired builds and ordinary probes succeeded.
+
+
+## MEM05–MEM08 continuation with the supplied loop bag (2026-09-18)
+
+The earlier MEM01–MEM04 results above are historical. See
+[CONTINUATION.md](../../memory/CONTINUATION.md) for current frozen builds, failed
+runs and gates. Input955 exact RGB-D pairs, source identity and frames preserved.
+MEM05 fixes Eigen temporary lifetime and archive-camera initialization; MEM06
+owns/cancels/joins GBA and uses atomic optimizer cancellation. Native loop,
+GBA-reset and GBA-shutdown execute real paths. Full MEM06 ASan:955/955, non-OK0,
+no runtime access error; LSan still fails55090111 bytes/181860 allocations.
+
+MEM07 migrates all MP readers to shared handles, preserves raw-pointer archive
+format through an Atlas-wide adoption table, drops retired-KF point slots and
+releases quiescent save snapshots. Delayed-reader, cycle, reset, transfer and
+cache-reset tests pass with ASan/LSan. Native full loop physically destroys74512
+retired points in the first version. KF/Map collection is explicitly disabled.
+Shared MP entries cost16 rather than8 bytes; BA statistics append element widths.
+
+Do not hide the failed full MEM07 ASan replay:35 non-OK frames, then automatic
+map creation/merge; heap-buffer-overflow at490 flushed frames in the merge BA
+stereo diagnostic loop. This is a pre-existing wrong companion-vector index,
+also present in global BA's large-correction branch. MEM08's three regression
+fixtures reproduce failures before repair. After the two-index fix,24 native
+and24 ASan/LSan fixtures pass; six pre-existing graph outputs remain identical.
+Current real-loop/merge/saved-map replays and ARM verification are recorded in
+`../../memory/evidence/continuation/`, never substituted for the failed evidence.
+Both control and candidate controlled-merge runs warn about a reference KF from
+another map; path execution alone is not complete merge-quality acceptance.
+
+
+Current MEM09 closeout: see ../../memory/MEM09_STAGE_REPORT.md and
+../../memory/evidence/continuation/board_archive_arm/results.json. Native original
+2910/2910 allOK, actual955 loop/reset/load/controlled-merge and26+26 fixtures pass
+their scoped gates. Complete ASan controlled merge has one known injected-new-map
+LOST frame and3,841,727 bytes reported leaked; not all sanitizer gates pass.
+Board formal loop B2 has35 nonOK and3 missing; both long candidates lose inputs
+and regress P99. All8 archives load with unique object/control-block identity,
+while alias/orphan/reciprocal warnings remain on controls and candidates.
+A short diagnostic accounting error was corrected from header to record-time
+bounds:40s means444 pairs here, both controls complete; full-bag results unchanged.
+MEM10 copy-cost optimization is now under separate validation; do not infer
+passing status from compilation or from MEM09 evidence.
+
+
+MEM10 measured closeout: three runtime files only, no changes to point ownership,
+selection thresholds or queues.26 native+26 ASan/LSan+26 ARM scoped fixtures pass,
+six graph numeric texts unchanged per architecture/compiler. Native exact parity
+6000/49344/96/96 passes; five955-frame loop/merge/reset/load runs complete allOK.
+Full ASan955 executes GBA/merge without access error but repeats the exact known
+new-map BoW defect atordinal702/seq758/state4; LSan fails39,024bytes/959 allocations.
+The smaller unreachable-leak report does not establish full System cleanup.
+Strict functional failure and narrow access-stage exception are separate records.
+
+Eight quiet-host1x X5 incremental runs use A=MEM09/B=MEM10, A1/B1/B2/A2 per bag.
+Loop A1/A2 P99[101,102)/[102,103), nonOK3/0; B1/B2 P99[94,95)/[90,91), nonOK0/0;
+all955 inputs. Long A1/A2 processed2703/2707, B1/B2 processed2772/2780 of2910,
+all processed framesOK; P99 A[144,145)/[141,142), B[135,136)/[132,133).
+This is repeated relative improvement, not complete-input or production acceptance.
+See ../../memory/MEM10_STAGE_REPORT.md, versioned JSONs and raw board_runs/mem10_*.
+
+
+MEM10 board reload closeout: loop archive1x955/955, zero nonOK, relocalized/map1.
+Long archive first30s1x269/334 and nonOK3;0.5x334/334 and zero nonOK. Both
+relocalize with one map. The half-rate result is functional only; failed1x remains
+in mem10_board_reload.json and MEM10_STAGE_REPORT.md. Six board production/library
+hashes match pre-test capture and no own test nodes/probes remain. Final identity
+and original-worktree checks are separate from acceptance in
+../../memory/evidence/continuation/mem10_final_verification.json.
+
+
+MEM11 joint acceptance review (tooling only): user requires memory improvement
+and no real-time degradation. Added ../../memory/tools/realtime_guard.py and
+REALTIME_ACCEPTANCE.md. Seven specification scenarios cover complete improvement,
+dropped-input false speedup, cross-batch mismatch, worst-callback regression,
+a worse repeat hidden by a better mean, overlapping histogram uncertainty, and
+tracking failure. All behaved as required. Five actual reviews (MEM09->MEM10 for
+both bags; historical MEM06->MEM10 for both; initial baseline->MEM10 long bag)
+return1/REJECTED; those are expected gate failures, not failed tool execution.
+Evidence: ../../memory/evidence/realtime_gate_v1/. No source/binary change or new
+board trial; historical comparisons cannot attribute all observed differences
+to ownership or constitute a new ABBA. Existing complete-input failures already
+prevent current acceptance. Prioritize MP overhead before expanding KF deletion.
+
+
+MEM12 evidence review: analyze_tracking_latency.py reconciles16 formal board runs
+and283 common diagnostic frames. Exact source-loss partitions, histogram counts,
+source SHA256 and80 unchanged runtime/build source files verified. MEM09 loop B2
+has lower P95 than B1 yet35nonOK, max989ms and map counts1->2->1. MEM10 long B1
+has fewer total gaps but six consecutive missing pairs (seq7540-7545),630ms max
+source gap; all processed states remainOK. About45-47% of MEM10 long callbacks
+are>=90ms. No full pipeline per-frame timing exists for those formal failures.
+Correction: the generic Fail-to-track-local-map log can be printed when upstream
+bOK is alreadyfalse and TrackLocalMap did not run. Earlier prose using this as
+a specific failing-stage label is not supported. First trigger remainsunknown.
+See ../../memory/TRACKING_LATENCY_ANALYSIS.md; no runtime change or new replay.

@@ -1,5 +1,56 @@
 # Session Handoff
 
+## 2026-09-23 8GB X5 source attribution / realtime optimization
+
+Continues the same active MEM17 memory/realtime scope; no commits, reset, clean,
+push or merge. Original MEM18 `memory/build-arm` and existing board delivery are
+unchanged. Current source candidate is experimental perf20, not production.
+
+- Read actual delivery source (outer18ba684/core4d6df6a) versus frozen uncommitted
+  MEM18, not just branch tips. Four build snapshots pass79/79/80/81 input hashes.
+- Added Local Map substage diagnostics, weak-slot identity hints, retained-point
+  gather, bounded32768-entry non-owning cache, two const-reference changes and
+  feature-only `isBad` read lock. No feature/queue/KF/BA threshold changes.
+- Full paired ARM builds: `memory/build-arm-profile19`, `build-arm-perf19`,
+  `build-arm-perf20`; separate board packages in
+  `/userdata/rgbd_memory_lifecycle_8g_20260923/`. SHA/file/ldd/loaded paths checked.
+- Both candidates pass27 board fixtures; five fixed graph outputs exact, one
+  merge_local differs by at most7.1e-15 (no graph CSV available for that mode).
+  Both full-core ASan/LSan builds pass26 fixtures+local_gather. Independent cache
+  collisions/ordered gather/lifetime/address-reuse pass ASan/UBSan/LSan.
+- First perf20 official timing-off long run:2859/2910,nonOK0,map1,
+  callback P50/P95/P99/max84.5/106.5/121.5/153.057ms,peakPSS1097246KiB,VmSwap0.
+  Original MEM18 baseline2740/2910,P95123.5ms.100ms target not yet met.
+- perf20 timing diagnostic has35nonOK after five consecutive missing inputs;
+  max1046.8ms includes992.2ms reset. Do not hide this failed quality gate.
+- Loop955 candidate test:955/955,nonOK0,map1,Loop/GBA0/2/3/5/4,save/exit0.
+- Completed interleaved repeat: original MEM18 2730/2910,P95123.5ms; perf20
+  2855/2910,P95108.5ms; both nonOK0/map1. Second perf20 timing diagnostic
+  2862/2910,nonOK0/map1,P95106.154ms; the first35nonOK failure remains recorded.
+  This optimization attempt is delivered;100ms/no-drop joint gates remain failed.
+
+Detailed Chinese report, JSON/CSV, failure analysis and run evidence:
+`/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rdk_x5_8g_20260923/OPTIMIZATION_REPORT.md`.
+Source snapshots, patch, tests, build logs: `memory/performance_20260923/`.
+Use `PROGRESS.md` there for the latest state. Whole-System LSan, KF/Map physical
+deletion, no-drop joint realtime acceptance and ground-truth accuracy remain
+open. Scoped sanitizer fixtures must not be described as passing these gates.
+
+Latest memory-task state: [current session summary](../../memory/SESSION_SUMMARY_20260920_MEM18.md).
+Current frozen/source candidate is the active MEM17/MEM18 repair worktree; see [current progress](../../memory/MEM17_CANDIDATE_SCORE_PROGRESS.md).
+Native/ASan paired builds and106 source/14 binary hashes pass. Real candidate API
+regression changes history-dependent B/A to A/A while preserving3 positive
+controls.26+26 legal checks and normal native955 allOK/save/GBA join pass.
+Old-map native330 still fails305(map9<10), recovering306; this cause remains open.
+MEM16→MEM17 ASan330 observed101→1 nonOK; MEM18 retains only305 nonOK in the
+fixed-map330 replay, with LSan3,379,036B/7,205 allocations still failing.
+Full ARM17 build/hash verification is complete; direct board link is unavailable.
+No realtime/board runtime acceptance yet.
+MP physical release exists; MLPnPsolver RAII is now applied and passes targeted
+native/ASan fixtures, while full-System LSan remains failed at3,379,036B/7,205
+allocations. KF/Map deletion remains disabled. Joint memory, tracking and realtime
+acceptance remains open; no repair commit/production update.
+
 ## RD47 completed — 2026-09-12
 
 Wrapper now preserves ROS MessageEvent receipt time, callback wall/steady, input
@@ -1048,3 +1099,178 @@ RD51的ABBA CPU数值仅为历史证据，不作为RD52新增字段的开销验�
 驱动SDK边界、三路原始身份、左右转换/publish、深度转换/publish、release阶段通过固定共享数字区交给SLAM记录器；默认关闭，无图像引用/驱动写盘线程，原core与Recorder不变。真实相机最终开启1024帧、关闭358帧均OK；成功关联168帧，能够分解驱动发布差和发布后新增错位。完整实现/限制见外层diagnostics/camera_delivery/design.md、validation.md、README.md。ARM64满记录区保守组件预算1708KiB，CPU完整ABBA尚未验收。SDK内部和ROS队列/反序列化细分仍未知，不声称严重迟到根因已复现。
 
 RD53补充：默认不限时运行，Ctrl+C/stop_board.sh正常保存；补齐未初始化RGB-D地图的保存保护。node e07edfde...，core不变。验证与失败修复记录见外层diagnostics/camera_delivery/manual_validation。
+
+## 2026-09-18 RGB-D memory implementation, isolated worktree
+
+- Selected field core rather than XFeat/FIFO: original outer18ba684/core4d6df6a
+  plus reviewed RD51–RD53 edits. Authorized snapshots: outer
+  d564b679fe5322a332feb45c873c3c7a7cf085ab, core
+  7ebb5193e8717829171bd467792bc17be29ad446. Both original branches remain
+  feature/rgbd-field-recorder. Independent new worktrees at
+  /home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle and core/,
+  both fix/rgbd-memory-lifecycle. Repair changes intentionally uncommitted.
+- Original raw artifacts, frozen packages and unrelated top-level YAML/handoff
+  edits preserved. Snapshot included explicit reviewed paths only; exact inventory
+  and remaining original files in outer memory/evidence/baseline.json.
+- MEM01 bounded optional lifetime/BA/save counters implemented and native tested.
+  sizeof KF4640 unchanged, MP672→680 on host; full core/node rebuilt.
+- MEM02 Cartesian reserves removed in five BA builders, replaced with checked
+  lazy per-type triplet growth. Four actual visual BA probes preserve graph and
+  optimized poses/points; inertial/real merge and live GBA not accepted yet.
+- MEM03 repeated PreSave fixed; empty active maps retained; PostLoad tolerates
+  legacy duplicate pointers (previously second restoration erased observations).
+  Atomic staged output preserves old file on failure and returns false from SaveMap;
+  retry/Shutdown save retained. Quiescent save/load/localization probes pass.
+- Concrete ownership/retirement audit: outer memory/LIFECYCLE_DESIGN.md. No physical
+  reclamation enabled. Detached GBA, raw getter users, history chains and reset/
+  merge ownership still require coordinated migration. Do not add immediate delete.
+- All local commands, generated evidence and known failures are in outer memory/.
+  Subsequent verification results should be appended here, not inferred from exit0.
+
+### Final results and continuation gates
+
+- Native and ARM64 core/node were fully rebuilt as paired artifacts. ARM fixed
+  node11ec5e74/core543ee737, baseline node830f2826/core0cc56077; complete SHA256,
+  commands, dependency mappings and source hashes are under outer memory/.
+  The final repair is still uncommitted; both branch HEADs remain the snapshots.
+- Native formal ABBA: 2910/2910 all four, non-OK0/map1; mean peak PSS falls
+  51.94MiB but mean P99 rises26.19→30.79ms. Board formal ABBA processed
+  2894/2906/2904/2891 of2910; non-OK0/map1/exit0, all incomplete inputs.
+  Board mean peak Swap236.42→176.41MiB; no stable P99 or long-term growth pass.
+  The candidate combines BA and save changes, so do not assign all gains to BA.
+- The full B2 map reload relocalizes at KF0 with290 inliers. Original-speed
+  short test313/334; functional0.5x repeat334/334, both non-OK0/map1.
+  Controlled native failure preserves old map hash and retry succeeds.
+- Full-core ASan exposes the snapshot's mono Jacobian Eigen temporary lifetime
+  bug and loaded Pinhole uninitialized `tvr`; LSan save fixtures retain64bytes.
+  See memory/SANITIZERS.md. These are unresolved project defects, not passes.
+- User explicitly authorized isolated board deployment/testing; initial upload
+  approval rejection is resolved. Stage `/userdata/rgbd_memory_lifecycle_20260918`
+  and checked local results remain; production/field hashes match preflight,
+  own node/probe/master stopped. No user workload was interrupted.
+- User has no further known loop/GBA/merge bag and requested unverified markers
+  remain. Do not substitute fixed graph optimizers for those real paths.
+- Read memory/REPORT.md first for all final tables, scopes and archive paths.
+  MEM01 misses some participating-object/classification fields and ARM overhead
+  acceptance; MEM02 misses sanitizer/real-loop/merge/inertial gates; MEM03 lacks
+  general online consistency and safe loaded-camera teardown. MEM04 is design
+  only, not an implemented ownership migration. Fix the concrete sanitizer
+  defects, migrate all readers/history/GBA join/reset/merge/load ownership per
+  memory/LIFECYCLE_DESIGN.md, then validate before enabling physical reclamation.
+  No immediate delete, detached-reader assumption, or unconditional skip-save.
+
+
+## Active memory continuation after new loop bag (2026-09-18)
+
+Implementation remains in this isolated worktree, no repair commit/push and no
+production replacement. User explicitly authorized independent board deployment
+under `/userdata/rgbd_memory_lifecycle_20260918`; no renewed confirmation needed.
+Actual955-pair input and current stage boundaries are in
+`../../memory/CONTINUATION.md` and `../../memory/MP_OWNERSHIP.md`.
+
+MEM07 now physically reclaims MP objects on host. KF/Map physical collection
+remains disabled. MEM08 fixes two real stereo BA wrong-vector accesses, reproduced
+under ASan before the fix.24 native/ASan-LSan fixtures pass; current final native
+loop and controlled merge complete955/955, non-OK0, GBA commit/join. Full final
+merge-ASan and paired ARM builds are in progress; do not deploy collection before
+the current host gates are reviewed. `frozen-mem06` is the noncollecting control;
+`frozen-mem08` has MP ownership plus the two-index fix. ARM build directory
+`build-arm-mem07` is expected to contain the final MEM08 sources; verify every hash
+with `memory/tools/verify_continuation_arm.py`, never infer revision from its name.
+
+Important failed evidence: `runs/loop_mem07_asan` aborted in real merge at490
+flushed frames after35 non-OK states. `mem08_regression_before` reproduces it and
+the related global-BA branch. Do not summarize those runs as passing. Actual
+controlled merge warns about cross-map reference KFs in both MEM06/MEM07; quality
+acceptance remains separate. General online-save consistency, full System/Frame
+cleanup, lightweight historical KF relations and bad-map ownership remain open.
+
+
+## Current continuation: MEM09 measured; MEM10 build/validation active
+
+This section supersedes the earlier in-progress MEM07/MEM08 notes above.
+Read ../../memory/MEM09_STAGE_REPORT.md for complete measured failures and wins.
+MEM09 matching native/ARM builds,26+26 sanitizer/native fixtures, actual loop/GBA,
+reset, controlled merge and saved-map replay completed. All8 formal board maps
+also passed matching ARM archive identity checks with legacy association warnings.
+MP physical release is now observed on the board; KF/Map release stays disabled.
+Full-System LSan and board functional/real-time acceptance remain failed; long
+candidate runs miss171/193 of2910 and regress P99 despite much lower Swap.
+
+MEM10 is a separate narrow copy-cost change: const handle references within
+already-owned immutable traversal snapshots and Frame frustum arguments only.
+It changes3 runtime files; mem10_incremental.patch records the exact delta from
+frozen MEM09. Never mix its ABI with a MEM09 node. Full native/sanitizer/ARM builds
+and the newly versioned host/board scripts are in progress. The immutable MEM09
+runner/evidence stay unchanged; MEM10 uses board_replay_mem10_frozen.sh.
+No claim that this change fixes all latency or weak-slot semantic effects.
+
+
+## Latest: MEM10 implemented and measured (supersedes earlier active-build notes)
+
+MEM10 removes redundant shared-handle copies from two Tracking loops and the two
+Frame frustum signatures. Full matching native/ASan/ARM builds frozen as mem10;
+ARM core65a1979ac03ab1f156e4ed81ddafe4f30705b59005710cb0685517456bf473f5.
+Node/probe were rebuilt and happen to equal their MEM09 hashes.26 native+26
+ASan/LSan+26 ARM fixtures pass; native loop/merge/reset/both reloads955/955 allOK.
+Full ASan repeats only the known injected-new-map BoW frame702 failure and LSan
+39024bytes/959 allocations; no access error. Strict failure remains, the same
+narrow access-stage scope as MEM09 permits independent board evaluation only.
+
+Eight formal MEM09/MEM10 ABBA runs complete. Loop candidates both955/allOK,
+P99[94,95)/[90,91) versus controls[101,102)/[102,103). Long candidates miss138/130
+versus controls207/203, P99 also improves; **complete input still fails**.
+Do not replace production or present the overall memory task as accepted.
+Reports: ../../memory/MEM09_STAGE_REPORT.md and MEM10_STAGE_REPORT.md; exact
+provenance and raw failures are retained. KF/Map/history migration remains design
+only, with concrete source consumers in KF_HISTORY_PLAN.md. The supplied bag and
+existing independent-deployment authorization are sufficient; no new bag or
+reconfirmation is needed. Original worktrees and baseline commits remain intact;
+no repair commit, push or merge is authorized by this continuation itself.
+
+
+Final MEM10 reloads: loop1x955/955 allOK; long30s1x269/334/nonOK3, then
+functional0.5x334/334 allOK. Both archives relocalize with one map. Keep the failed
+1x result visible. Formal tests and reloads are stopped; board production hashes
+unchanged. Source manifest: memory/evidence/continuation/final_mem10/; final
+identity/preservation check: mem10_final_verification.json in that evidence parent.
+No further runtime changes are included beyond the frozen three-file MEM10 delta.
+
+
+## Latest user constraint: preserve real-time performance while fixing memory
+
+MEM11 evaluation tooling passes its seven specification checks; current runtime
+acceptance is still blocked. See ../../memory/REALTIME_ACCEPTANCE.md and tools/
+realtime_guard.py. Five reviews all reject current evidence; outputs in memory/
+evidence/realtime_gate_v1/. Cross-batch MEM06 and initial baseline comparisons
+are clearly labeled historical. Improving over MEM09 alone is insufficient.
+
+Next implementation priority is reducing existing MP ownership/snapshot cost
+with measured cause and unchanged graph/quality behavior, before expanding KF/
+Map reclamation. Current candidate requires full1x input and repeated non-worse
+tails against appropriate references; do not relax thresholds/queues, slow the
+bag or defer reclamation without bound. End-to-end delay is not covered by old
+callback-only histograms. Runtime sources/binaries remain frozen MEM10; this
+turn changed only evaluation tools/docs and created new evidence. No board tests
+were rerun merely to obtain better samples; no new deployment or repair commit.
+
+
+## Latest: analysis of lower P95 with dropped input / tracking failures
+
+User clarified the question concerns prior reported drops/nonOK/new maps, not a
+new field run. MEM12 analysis complete in ../../memory/TRACKING_LATENCY_ANALYSIS.md.
+Repro: python3 memory/tools/analyze_tracking_latency.py --output NEW_JSON (new path
+required); measured output and validation in memory/evidence/tracking_latency_v1/.
+16 formal runs and283 source-matched diagnostic frames reconciled. No runtime
+changes, new deployment, board execution or commits in this analysis turn.
+
+First MEM09 loop B2 failure is stillunattributed: generic failure print does not
+prove local-map tracking executed. Subsequent recovery/new map is explained by
+the existing3s visual lost-state transition, finalone map hides an interimtwo.
+The later3 missing inputs do not explain its firstfailure; no explicit empty-BoW
+signature there. MEM10 formal runs have zero nonOK, but long inputstillmisses;
+total gaps improve while worst burst reaches6/630ms.45-47%callbacks>=90ms shows
+little throughput margin. Weak-slot expiry has confirmed source-level semantic
+differences in triangulation/fusion; causation of real failure remainsunproven.
+Next diagnostic must preserve per-frame first-departure stages, source gaps and
+map-support/slot-expiry behavior; do not change thresholds to hide regressions.

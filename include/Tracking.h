@@ -22,6 +22,7 @@
 #ifndef TRACKING_H
 #define TRACKING_H
 
+#include "MapPointHandle.h"
 #include "Atlas.h"
 #include "Frame.h"
 #include "RgbdTiming.h"
@@ -196,7 +197,7 @@ public:
   double t0IMU; // time-stamp of IMU initialization
   bool mFastInit = false;
 
-  vector<MapPoint *> GetLocalMapMPS();
+  vector<MapPointPtr > GetLocalMapMPS();
 
   bool mbWriteStats;
 
@@ -315,7 +316,7 @@ protected:
   // Local Map
   KeyFrame *mpReferenceKF;
   std::vector<KeyFrame *> mvpLocalKeyFrames;
-  std::vector<MapPoint *> mvpLocalMapPoints;
+  std::vector<MapPointPtr > mvpLocalMapPoints;
 
   // System
   System *mpSystem;
@@ -382,7 +383,7 @@ protected:
   // Color order (true RGB, false BGR, ignored if grayscale)
   bool mbRGB;
 
-  list<MapPoint *> mlpTemporalPoints;
+  list<MapPointPtr > mlpTemporalPoints;
 
   // int nMapChangeIndex;
 
@@ -397,6 +398,7 @@ protected:
   double mTime_NewKF_Dec;
 
   RgbdTimingRecord *mpCurrentRgbdTiming = nullptr;
+  RetainedPointCache mLocalPointIdentities;
 
   GeometricCamera *mpCamera, *mpCamera2;
 

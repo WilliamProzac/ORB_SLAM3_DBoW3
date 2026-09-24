@@ -20,6 +20,7 @@
  */
 
 #include "Atlas.h"
+#include "MemoryStats.h"
 #include "Viewer.h"
 
 #include "GeometricCamera.h"
@@ -97,7 +98,7 @@ void Atlas::AddKeyFrame(KeyFrame *pKF) {
   pMapKF->AddKeyFrame(pKF);
 }
 
-void Atlas::AddMapPoint(MapPoint *pMP) {
+void Atlas::AddMapPoint(MapPointPtr pMP) {
   Map *pMapMP = pMP->GetMap();
   pMapMP->AddMapPoint(pMP);
 }
@@ -138,7 +139,7 @@ GeometricCamera *Atlas::AddCamera(GeometricCamera *pCam) {
 
 std::vector<GeometricCamera *> Atlas::GetAllCameras() { return mvpCameras; }
 
-void Atlas::SetReferenceMapPoints(const std::vector<MapPoint *> &vpMPs) {
+void Atlas::SetReferenceMapPoints(const std::vector<MapPointPtr > &vpMPs) {
   unique_lock<mutex> lock(mMutexAtlas);
   mpCurrentMap->SetReferenceMapPoints(vpMPs);
 }
@@ -168,12 +169,12 @@ std::vector<KeyFrame *> Atlas::GetAllKeyFrames() {
   return mpCurrentMap->GetAllKeyFrames();
 }
 
-std::vector<MapPoint *> Atlas::GetAllMapPoints() {
+std::vector<MapPointPtr > Atlas::GetAllMapPoints() {
   unique_lock<mutex> lock(mMutexAtlas);
   return mpCurrentMap->GetAllMapPoints();
 }
 
-std::vector<MapPoint *> Atlas::GetReferenceMapPoints() {
+std::vector<MapPointPtr > Atlas::GetReferenceMapPoints() {
   unique_lock<mutex> lock(mMutexAtlas);
   return mpCurrentMap->GetReferenceMapPoints();
 }
@@ -202,12 +203,9 @@ void Atlas::clearMap() {
 
 void Atlas::clearAtlas() {
   unique_lock<mutex> lock(mMutexAtlas);
-  /*for(std::set<Map*>::iterator it=mspMaps.begin(), send=mspMaps.end();
-  it!=send; it++)
-  {
-      (*it)->clear();
-      delete *it;
-  }*/
+  // Reset has joined the loop/GBA worker. Release point owners while keeping
+  // Map/KF allocations alive for the still-raw historical references.
+  for (Map* map : mspMaps) if (map) map->clear();
   mspMaps.clear();
   mpCurrentMap = static_cast<Map *>(NULL);
   mnLastInitKFidMap = 0;
@@ -279,8 +277,16 @@ void Atlas::PreSave() {
   };
 
   cout << "Atlas::PreSave: mspMaps.size()=" << mspMaps.size() << endl;
-  std::copy(mspMaps.begin(), mspMaps.end(), std::back_inserter(mvpBackupMaps));
+  // Rebuild the archive index every time. Empty active maps must remain usable
+  // for subsequent initialization; preparing a save does not retire them.
+  mvpBackupMaps.clear();
+  mvpBackupMaps.reserve(mspMaps.size());
+  for (Map *map : mspMaps) {
+    if (map && !map->IsBad() && map->KeyFramesInMap() != 0)
+      mvpBackupMaps.push_back(map);
+  }
   sort(mvpBackupMaps.begin(), mvpBackupMaps.end(), compFunctor());
+  MemoryStats::Save(mspMaps.size(), mvpBackupMaps.size());
 
   std::set<GeometricCamera *> spCams(mvpCameras.begin(), mvpCameras.end());
   cout << "Atlas::PreSave: Processing " << mvpBackupMaps.size() << " maps"
@@ -304,9 +310,8 @@ void Atlas::PreSave() {
     cout << " has " << numKFs << " KFs" << flush;
 
     if (numKFs == 0) {
-      // Empty map, erase before of save it.
-      cout << " - marking as bad" << endl;
-      SetMapBad(pMi);
+      // A save caller must quiesce mutators; still never retire the active map.
+      cout << " - empty, skipping" << endl;
       mapIdx++;
       continue;
     }
@@ -321,7 +326,12 @@ void Atlas::PreSave() {
   cout << "Atlas::PreSave: Complete" << endl;
 }
 
+void Atlas::ReleaseSaveSnapshot() {
+  for (Map* map : mvpBackupMaps) if (map) map->ReleaseSaveSnapshot();
+}
+
 void Atlas::PostLoad() {
+  LoadedMapPointOwners pointOwners;
   map<unsigned int, GeometricCamera *> mpCams;
   for (GeometricCamera *pCam : mvpCameras) {
     mpCams[pCam->GetId()] = pCam;
@@ -330,8 +340,11 @@ void Atlas::PostLoad() {
   mspMaps.clear();
   unsigned long int numKF = 0, numMP = 0;
   for (Map *pMi : mvpBackupMaps) {
-    mspMaps.insert(pMi);
-    pMi->PostLoad(mpKeyFrameDB, mpORBVocabulary, mpCams);
+    // Legacy files may serialize the same map pointer multiple times. PostLoad
+    // consumes backup IDs, so a second call would erase restored observations.
+    if (!pMi || pMi->IsBad() || !mspMaps.insert(pMi).second)
+      continue;
+    pMi->PostLoad(mpKeyFrameDB, mpORBVocabulary, mpCams, pointOwners);
     numKF += pMi->GetAllKeyFrames().size();
     numMP += pMi->GetAllMapPoints().size();
   }

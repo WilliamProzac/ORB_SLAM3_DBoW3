@@ -72,13 +72,13 @@ int main() {
       }
       Map map(0);
       KeyFrame key(base,&map,nullptr);
-      std::vector<std::unique_ptr<MapPoint>> owned;
-      std::vector<MapPoint*> points;
+      std::vector<MapPointPtr> owned;
+      std::vector<MapPointPtr> points;
       for(int i=0;i<base.N;++i) {
         Eigen::Vector3f position;
         require(base.UnprojectStereo(i,position),"unprojection failed");
-        owned.emplace_back(new MapPoint(position,&map,&base,i));
-        MapPoint *p=owned.back().get();p->AddObservation(&key,i);
+        owned.emplace_back(MapPoint::Create(position,&map,&base,i));
+        MapPointPtr p=owned.back();p->AddObservation(&key,i);
         p->mbTrackInView=true;p->mbTrackInViewR=false;
         p->mTrackProjX=base.mvKeysUn[i].pt.x;p->mTrackProjY=base.mvKeysUn[i].pt.y;
         p->mTrackProjXR=base.mvuRight[i];p->mnTrackScaleLevel=base.mvKeysUn[i].octave;

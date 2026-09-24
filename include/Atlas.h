@@ -22,6 +22,7 @@
 #ifndef ATLAS_H
 #define ATLAS_H
 
+#include "MapPointHandle.h"
 #include "GeometricCamera.h"
 #include "KannalaBrandt8.h"
 #include "KeyFrame.h"
@@ -86,15 +87,15 @@ public:
 
   // Method for change components in the current map
   void AddKeyFrame(KeyFrame *pKF);
-  void AddMapPoint(MapPoint *pMP);
-  // void EraseMapPoint(MapPoint* pMP);
+  void AddMapPoint(MapPointPtr pMP);
+  // void EraseMapPoint(MapPointPtr  pMP);
   // void EraseKeyFrame(KeyFrame* pKF);
 
   GeometricCamera *AddCamera(GeometricCamera *pCam);
   std::vector<GeometricCamera *> GetAllCameras();
 
   /* All methods without Map pointer work on current map */
-  void SetReferenceMapPoints(const std::vector<MapPoint *> &vpMPs);
+  void SetReferenceMapPoints(const std::vector<MapPointPtr > &vpMPs);
   void InformNewBigChange();
   int GetLastBigChangeIdx();
 
@@ -103,8 +104,8 @@ public:
 
   // Method for get data in current map
   std::vector<KeyFrame *> GetAllKeyFrames();
-  std::vector<MapPoint *> GetAllMapPoints();
-  std::vector<MapPoint *> GetReferenceMapPoints();
+  std::vector<MapPointPtr > GetAllMapPoints();
+  std::vector<MapPointPtr > GetReferenceMapPoints();
 
   vector<Map *> GetAllMaps();
 
@@ -126,6 +127,7 @@ public:
 
   // Function for garantee the correction of serialization of this object
   void PreSave();
+  void ReleaseSaveSnapshot();
   void PostLoad();
 
   map<long unsigned int, KeyFrame *> GetAtlasKeyframes();

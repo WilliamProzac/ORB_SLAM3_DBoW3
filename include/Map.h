@@ -22,6 +22,7 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "MapPointHandle.h"
 #include "KeyFrame.h"
 #include "MapPoint.h"
 
@@ -74,16 +75,16 @@ public:
   ~Map();
 
   void AddKeyFrame(KeyFrame *pKF);
-  void AddMapPoint(MapPoint *pMP);
-  void EraseMapPoint(MapPoint *pMP);
+  void AddMapPoint(MapPointPtr pMP);
+  void EraseMapPoint(MapPointPtr pMP);
   void EraseKeyFrame(KeyFrame *pKF);
-  void SetReferenceMapPoints(const std::vector<MapPoint *> &vpMPs);
+  void SetReferenceMapPoints(const std::vector<MapPointPtr > &vpMPs);
   void InformNewBigChange();
   int GetLastBigChangeIdx();
 
   std::vector<KeyFrame *> GetAllKeyFrames();
-  std::vector<MapPoint *> GetAllMapPoints();
-  std::vector<MapPoint *> GetReferenceMapPoints();
+  std::vector<MapPointPtr > GetAllMapPoints();
+  std::vector<MapPointPtr > GetReferenceMapPoints();
 
   long unsigned int MapPointsInMap();
   long unsigned KeyFramesInMap();
@@ -132,11 +133,13 @@ public:
   unsigned int GetLowerKFID();
 
   void PreSave(std::set<GeometricCamera *> &spCams);
+  void ReleaseSaveSnapshot();
   void
   PostLoad(KeyFrameDatabase *pKFDB,
            ORBVocabulary
                *pORBVoc /*, map<long unsigned int, KeyFrame*>& mpKeyFrameId*/,
-           map<unsigned int, GeometricCamera *> &mpCams);
+           map<unsigned int, GeometricCamera *> &mpCams,
+           LoadedMapPointOwners& owners);
 
   void printReprojectionError(list<KeyFrame *> &lpLocalWindowKFs,
                               KeyFrame *mpCurrentKF, string &name,
@@ -166,12 +169,13 @@ public:
 protected:
   long unsigned int mnId;
 
-  std::set<MapPoint *> mspMapPoints;
+  std::set<MapPointPtr > mspMapPoints;
   std::set<KeyFrame *> mspKeyFrames;
 
   // Save/load, the set structure is broken in libboost 1.58 for ubuntu 16.04, a
   // vector is serializated
-  std::vector<MapPoint *> mvpBackupMapPoints;
+  std::vector<MapPoint*> mvpBackupMapPoints; // archive compatibility only
+  std::vector<MapPointPtr> mvpSavePointOwners; // released after archive closes
   std::vector<KeyFrame *> mvpBackupKeyFrames;
 
   KeyFrame *mpKFinitial;
@@ -180,7 +184,7 @@ protected:
   unsigned long int mnBackupKFinitialID;
   unsigned long int mnBackupKFlowerID;
 
-  std::vector<MapPoint *> mvpReferenceMapPoints;
+  std::vector<MapPointPtr > mvpReferenceMapPoints;
 
   bool mbImuInitialized;
 
