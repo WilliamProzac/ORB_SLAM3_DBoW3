@@ -29,18 +29,35 @@ LocalTrackingAttempt::LocalTrackingAttempt(const LocalTrackingInput& entry,
   // Frame's visual writable fields (pose/derived matrices, vectors, display
   // maps, reference) are independent. IMU pointers are copied but never used.
   // Commit explicitly transfers only the local-tracking write set.
+  deltas.reserve(frame.N);
+  point_index_.reserve(frame.N);
+}
+
+const LocalPointDelta& LocalTrackingAttempt::ExistingPoint(MapPoint* point) const {
+  return deltas.at(point_index_.at(point));
+}
+
+LocalPointDelta& LocalTrackingAttempt::RememberPoint(const MapPointPtr& point) {
+  auto it = point_index_.find(point.get());
+  if (it == point_index_.end()) {
+    if (snapshots_sealed_) throw std::logic_error("new point after projection snapshot sealing");
+    LocalPointDelta value;
+    value.snapshot.owner = point;
+    it = point_index_.emplace(point.get(), deltas.size()).first;
+    deltas.emplace_back(std::move(value));
+  }
+  return deltas[it->second];
 }
 
 LocalPointDelta& LocalTrackingAttempt::Point(const MapPointPtr& point) {
-  auto it = deltas.find(point.get());
-  if (it == deltas.end()) {
-    const auto start = Clock::now();
-    LocalPointDelta value;
-    value.snapshot = point->SnapshotLocalTracking();
-    it = deltas.emplace(point.get(), std::move(value)).first;
-    snapshot_ms += Milliseconds(start);
+  auto& state=RememberPoint(point);
+  if (!state.captured) {
+    const auto start=Clock::now();
+    state.snapshot=point->SnapshotLocalTracking();
+    state.captured=true;
+    snapshot_ms+=Milliseconds(start);
   }
-  return it->second;
+  return state;
 }
 
 void LocalTrackingAttempt::BuildLocalMap() {
@@ -90,22 +107,39 @@ void LocalTrackingAttempt::BuildLocalMap() {
 
 void LocalTrackingAttempt::SearchAndOptimize() {
   auto start = Clock::now();
-  std::set<MapPoint*> visited;
-  // Snapshot slots, release the KF feature lock, then read MP state. No MP/KF
-  // callback nesting and no shared deduplication marker writes in an attempt.
+  const size_t estimate=std::max(deltas.size(),std::min<size_t>(16384,keyframes.size()*size_t(frame.N)));
+  deltas.reserve(estimate); point_index_.reserve(estimate); points.reserve(estimate);
+  // Keep MEM18's cheap identity-before-weak-lock collection. All ownership
+  // hints and exact collision resolution are private to this attempt. MP
+  // metadata is read only after the KF slot locks have been released.
+  RetainedPointCache hints;
+  std::unordered_set<std::uintptr_t> identities;
+  identities.reserve(estimate);
   for (auto it = keyframes.rbegin(); it != keyframes.rend(); ++it) {
-    const auto slots = (*it)->GetMapPointMatches();
-    for (const auto& point : slots) {
-      if (!point || !visited.insert(point.get()).second) continue;
-      auto& state = Point(point);
-      if (!state.snapshot.valid || state.snapshot.map != input.map ||
-          state.snapshot.entry_reference == frame.mnId) continue;
-      state.mark_reference = true;
-      points.push_back(point);
+    (*it)->AppendLocalMapCandidates(points,hints,identities);
+  }
+  // Capture the gathered batch once. Avoid two clock reads and a separately
+  // allocated tree node for every scanned point. No projection pointers exist
+  // until this vector has reached its final size and is sealed below.
+  const auto capture_start=Clock::now();
+  for (const auto& point : points) {
+    auto& state=RememberPoint(point);
+    if (!state.captured) {
+      state.snapshot=point->SnapshotLocalTracking();
+      state.captured=true;
     }
   }
+  snapshot_ms+=Milliseconds(capture_start);
+  points.erase(std::remove_if(points.begin(),points.end(),[&](const MapPointPtr& point) {
+    auto& state=deltas[point_index_.at(point.get())];
+    if (!state.snapshot.valid || state.snapshot.map!=input.map ||
+        state.snapshot.entry_reference==frame.mnId) return true;
+    state.mark_reference=true;
+    return false;
+  }),points.end());
   gather_ms = Milliseconds(start);
   build_ms += gather_ms;
+  snapshots_sealed_=true;
   start = Clock::now();
   for (auto& point : frame.mvpMapPoints) {
     if (!point) continue;
@@ -137,7 +171,7 @@ void LocalTrackingAttempt::SearchAndOptimize() {
   new_matches = matcher.SearchLocalProjection(frame, candidates, input.search_threshold);
   if (statistics == LocalStatistics::Attempted)
     for (const auto& candidate : candidates)
-      if (candidate.queried) deltas.at(candidate.snapshot->owner.get()).visible = 1;
+      if (candidate.queried) Point(candidate.snapshot->owner).visible = 1;
   search_ms += Milliseconds(start);
   start = Clock::now();
   std::map<MapPoint*, Eigen::Vector3f> positions;
@@ -187,12 +221,10 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     if (key->isBad() || key->GetMap() != input.map) return fail("keyframe_invalidated");
   }
   std::vector<LocalPointDelta*> ordered;
-  std::set<MapPoint*> constraints;
-  for (size_t i=0;i<frame.mvpMapPoints.size();++i)
-    if (frame.mvpMapPoints[i] && !frame.mvbOutlier[i]) constraints.insert(frame.mvpMapPoints[i].get());
-  std::set<MapPoint*> discarded;
-  for (auto& entry : deltas) {
-    auto& state = entry.second;
+  ordered.reserve(deltas.size());
+  bool any_discarded=false;
+  for (auto& state : deltas) {
+    state.discarded=false;
     if (state.mark_reference || state.mark_seen || state.write_projection || state.found)
       ordered.push_back(&state);
   }
@@ -200,19 +232,21 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     return a->snapshot.id < b->snapshot.id;
   });
   std::vector<std::unique_lock<std::mutex>> point_locks;
-  point_locks.reserve(3 * ordered.size());
+  point_locks.reserve(2 * ordered.size());
   for (auto* state : ordered) {
     auto& point = *state->snapshot.owner;
     point_locks.emplace_back(point.mMutexFeatures);
     point_locks.emplace_back(point.mMutexPos);
-    point_locks.emplace_back(point.mMutexMap);
+    // UpdateMap is serialized by the identity barrier already held here.
+    // Snapshot callers still take the map mutex because they need not hold
+    // that barrier. Commit need not acquire a redundant third lock per MP.
     const auto& snapshot = state->snapshot;
     if (point.mbBad || point.mpReplaced || point.mpMap != input.map) {
-      if (constraints.count(&point)) return fail("point_invalidated");
+      if (state->found>0) return fail("point_invalidated");
       // Mapping can retire an unused candidate while matching. Its scratch
       // result has no pose constraint to invalidate: discard that point's
       // entire write set instead of manufacturing a tracking failure.
-      discarded.insert(&point);
+      state->discarded=any_discarded=true;
       continue;
     }
     // ProcessNewKeyFrame legitimately changes observation count, descriptor,
@@ -222,8 +256,8 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     // Position and identity must still match; the observed/non-observed class
     // used by the original Tracking inlier threshold must also remain valid.
     if ((point.nObs>0)!=(snapshot.observations>0) || point.mWorldPos != snapshot.geometry.position) {
-      if (constraints.count(&point)) return fail("point_constraint_changed");
-      discarded.insert(&point);
+      if (state->found>0) return fail("point_constraint_changed");
+      state->discarded=any_discarded=true;
       continue;
     }
     if (statistics == LocalStatistics::Attempted &&
@@ -234,7 +268,7 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
   // lookups. All MP counters remain protected until the complete batch lands.
   for (auto* state : ordered) {
     auto& point = *state->snapshot.owner;
-    if (discarded.count(&point)) continue;
+    if (state->discarded) continue;
     point.mnVisible += state->visible;
     point.mnFound += state->found;
     if (state->mark_reference) point.mnTrackReferenceForFrame = frame.mnId;
@@ -245,11 +279,13 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     if (state->write_projection) Frame::ApplyLocalProjection(point, state->projection);
   }
   for (auto* key : keyframes) key->mnTrackReferenceForFrame = frame.mnId;
-  points.erase(std::remove_if(points.begin(),points.end(),[&](const MapPointPtr& point) {
-    return discarded.count(point.get());
-  }),points.end());
-  for (auto& point : frame.mvpMapPoints)
-    if (point && discarded.count(point.get())) point.reset();
+  if (any_discarded) {
+    points.erase(std::remove_if(points.begin(),points.end(),[&](const MapPointPtr& point) {
+      return ExistingPoint(point.get()).discarded;
+    }),points.end());
+    for (auto& point : frame.mvpMapPoints)
+      if (point && ExistingPoint(point.get()).discarded) point.reset();
+  }
   destination.SetPose(frame.GetPose());
   destination.mvpMapPoints.swap(frame.mvpMapPoints);
   destination.mvbOutlier.swap(frame.mvbOutlier);

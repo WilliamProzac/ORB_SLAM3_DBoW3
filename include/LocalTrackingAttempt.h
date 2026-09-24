@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <unordered_map>
 
 namespace ORB_SLAM3 {
 class KeyFrame;
@@ -29,6 +30,7 @@ struct LocalPointDelta {
   LocalProjection projection;
   int visible = 0, found = 0;
   bool write_projection = false, mark_seen = false, mark_reference = false;
+  bool captured = false, gathered = false, discarded = false;
 };
 
 // One disposable attempt. No shared marker/cache/counter writes before Commit.
@@ -43,6 +45,7 @@ class LocalTrackingAttempt {
   void SearchAndOptimize();
   bool Commit(Frame& destination);
   LocalPointDelta& Point(const MapPointPtr& point);
+  const LocalPointDelta& ExistingPoint(MapPoint* point) const;
   bool TrackingSucceeded() const;
 
   LocalTrackingInput input;
@@ -53,7 +56,9 @@ class LocalTrackingAttempt {
   std::map<KeyFrame*, int> votes;
   std::vector<KeyFrame*> keyframes;
   std::vector<MapPointPtr> points;
-  std::map<MapPoint*, LocalPointDelta> deltas;
+  // Contiguous write set. Projection pointers are created only after gathering
+  // seals it; adding a new snapshot after that boundary is a contract error.
+  std::vector<LocalPointDelta> deltas;
   int inliers = 0, new_matches = 0, visible_candidates = 0;
   int pre_associations = 0, pre_outliers = 0, pose_inliers = 0;
   int associated_slots = 0;
@@ -61,5 +66,9 @@ class LocalTrackingAttempt {
   std::string rejection;
   double build_ms = 0, search_ms = 0, optimize_ms = 0, commit_ms = 0;
   double keyframes_ms = 0, gather_ms = 0, snapshot_ms = 0;
+ private:
+  LocalPointDelta& RememberPoint(const MapPointPtr& point);
+  std::unordered_map<MapPoint*, size_t> point_index_;
+  bool snapshots_sealed_ = false;
 };
 } // namespace ORB_SLAM3

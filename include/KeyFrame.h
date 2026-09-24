@@ -38,6 +38,7 @@
 
 #include <mutex>
 #include "RetainedPointCache.h"
+#include <unordered_set>
 
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/map.hpp>
@@ -204,6 +205,10 @@ public:
   void AppendLocalMapPoints(unsigned long frame_id,
       std::vector<MapPointPtr>& output,
       RetainedPointCache& identities);
+  // Disposable attempt collection: deduplicate only against retained owners;
+  // never read MP state or write frame markers under the KF slot lock.
+  void AppendLocalMapCandidates(std::vector<MapPointPtr>& output,
+      RetainedPointCache& hints, std::unordered_set<std::uintptr_t>& identities);
   KeyFrame();
   KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB);
 

@@ -1211,3 +1211,28 @@ C2.1 transaction overhead reduction, then C3 event-based controller, C4 selector
 comparison, C5 MP/statistics/cohorts and C6 formal matrix. Preserve all failures.
 Evidence: IDE artifacts/local_map_budget_20260924/c2/checks.json and runs/.
 Runtime memory/LM01.md specifies the refined synchronization contract.
+
+
+## LM01 C2.1 — reduce transaction collection overhead (2026-09-24)
+
+Replace per-KF repeated weak ownership promotions with attempt-private identity
+hint/exact deduplication and retained owners. Snapshot deltas use a reserved
+contiguous vector and an identity index; projection pointers are sealed only
+after all candidates are known. Batched snapshot timing removes per-point clock
+calls. Commit avoids redundant map locks under the existing identity barrier,
+but retains all-before-any-write feature/position validation and counter semantics.
+
+Native full/KF80/shadow 120-frame tests, 27 original ARM probes, new frozen
+parity/cap/competition/invalidation fixtures, TSan race/small-lock fixtures and
+ASan/UBSan/LSan fixture pass with previously documented dependency exceptions.
+The private collector fixture evicts hints and checks exact dedup/order without
+shared marker writes. Board full/KF80 short tests both process120/120, non-OK0;
+Callback P95 is100.200/99.795ms, Local Map P95 is43.001/41.127ms. This improves
+C2's112.448/115.138ms callback, but DOES NOT meet90ms and is not a promotion.
+Long2910 screening is running; its results are not included in this commit gate.
+Default staysOFF. C3–C6 remain required. Evidence: IDE
+artifacts/local_map_budget_20260924/c21/r2/checks.json and immutable runs/.
+
+Tools now freeze native binary pairs before replay, record governor/frequency,
+CPU time and temperature, report full-path residence including budget recovery,
+and provide a TUM PNG replay driver (20/20 reader smoke only, no precision claim).

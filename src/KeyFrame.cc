@@ -399,6 +399,20 @@ void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
   }
 }
 
+void KeyFrame::AppendLocalMapCandidates(std::vector<MapPointPtr>& output,
+    RetainedPointCache& hints, std::unordered_set<std::uintptr_t>& identities) {
+  unique_lock<mutex> lock(mMutexFeatures);
+  for (const auto& slot : mvpMapPoints) {
+    const auto identity=slot.identity();
+    if (!identity || hints.count(identity) || identities.count(identity)) continue;
+    auto point=slot.lock();
+    if (!point) continue;
+    output.push_back(std::move(point));
+    identities.insert(identity);
+    hints.insert(identity);
+  }
+}
+
 MapPointPtr KeyFrame::GetMapPoint(const size_t &idx) {
   unique_lock<mutex> lock(mMutexFeatures);
   return mvpMapPoints[idx].lock();
