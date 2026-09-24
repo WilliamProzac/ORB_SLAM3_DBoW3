@@ -1,0 +1,486 @@
+{
+  "96": {
+    "processed": 2495,
+    "missing": 415,
+    "non_ok": 70,
+    "new_maps": 3,
+    "callback": {
+      "count": 2495,
+      "mean": 99.65373801442887,
+      "min": 39.245576,
+      "max": 232.960222,
+      "p50": 97.799275,
+      "p95": 143.66040339999998,
+      "p99": 166.33176377999996
+    },
+    "last25_callback": {
+      "count": 588,
+      "mean": 108.74360887414966,
+      "min": 46.126614,
+      "max": 232.960222,
+      "p50": 104.744959,
+      "p95": 162.40217364999998,
+      "p99": 169.86115761999997
+    },
+    "last25_usage": {
+      "local_tracking_frames": 552,
+      "full_frames": 40,
+      "full_fraction": 0.07246376811594203,
+      "longest_full_local_frame_run": 20,
+      "ordinary_ok_frames": 532,
+      "ordinary_ok_full_or_retry_fraction": 0.03759398496240601,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "1": 113,
+        "0": 284,
+        "3": 48,
+        "2": 107
+      }
+    },
+    "localmap": {
+      "frames": 2423,
+      "bounded_attempts": 2176,
+      "retries": 3,
+      "commit_failures": 0,
+      "tracking_failures": 1,
+      "reasons": {
+        "recovery": 247,
+        "votes": 2173,
+        "full_retry": 3
+      },
+      "cap_violation_frames": [],
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2423,
+        "full_frames": 250,
+        "full_fraction": 0.10317787866281469,
+        "longest_full_local_frame_run": 30,
+        "ordinary_ok_frames": 2362,
+        "ordinary_ok_full_or_retry_fraction": 0.08001693480101608,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 305,
+          "2": 462,
+          "1": 424,
+          "0": 1232
+        }
+      },
+      "controller": {
+        "probe_frames": 217,
+        "budget_low_frames": 40,
+        "budget_failure_reasons": {
+          "probe_health": 3
+        },
+        "retry_final_successes": 3,
+        "event_epochs": 3,
+        "event_kinds": {
+          "0": 2423
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 552,
+          "full_frames": 40,
+          "full_fraction": 0.07246376811594203,
+          "longest_full_local_frame_run": 20,
+          "ordinary_ok_frames": 532,
+          "ordinary_ok_full_or_retry_fraction": 0.03759398496240601,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "1": 113,
+            "0": 284,
+            "3": 48,
+            "2": 107
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.198832,
+          "p95": 0.5222044,
+          "p99": 0.7779314800000002
+        },
+        "snapshot_ms": {
+          "p50": 12.1297,
+          "p95": 25.683090000000004,
+          "p99": 30.571244000000082
+        },
+        "update_ms": {
+          "p50": 19.5305,
+          "p95": 41.65193000000001,
+          "p99": 51.202540000000035
+        },
+        "search_ms": {
+          "p50": 3.83968,
+          "p95": 6.1196530000000005,
+          "p99": 7.563207600000009
+        },
+        "pose_ms": {
+          "p50": 8.49561,
+          "p95": 14.175,
+          "p99": 17.021036000000002
+        },
+        "commit_ms": {
+          "p50": 8.78307,
+          "p95": 20.11122,
+          "p99": 25.503450000000022
+        },
+        "trial_ms": {
+          "p50": 33.2823,
+          "p95": 57.76631,
+          "p99": 68.850598
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001,
+          "p95": 0.001459,
+          "p99": 0.30464898000001317
+        },
+        "health_ms": {
+          "p50": 0.03825,
+          "p95": 0.06398750000000002,
+          "p99": 0.1006070200000001
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      }
+    }
+  },
+  "80": {
+    "processed": 2450,
+    "missing": 460,
+    "non_ok": 0,
+    "new_maps": 1,
+    "callback": {
+      "count": 2450,
+      "mean": 105.70245145632653,
+      "min": 63.54075,
+      "max": 229.661577,
+      "p50": 104.948665,
+      "p95": 136.28529744999992,
+      "p99": 155.07966281999967
+    },
+    "last25_callback": {
+      "count": 547,
+      "mean": 118.88487957769654,
+      "min": 70.216081,
+      "max": 191.571368,
+      "p50": 117.025607,
+      "p95": 145.49017919999997,
+      "p99": 164.16567461999992
+    },
+    "last25_usage": {
+      "local_tracking_frames": 547,
+      "full_frames": 104,
+      "full_fraction": 0.19012797074954296,
+      "longest_full_local_frame_run": 38,
+      "ordinary_ok_frames": 547,
+      "ordinary_ok_full_or_retry_fraction": 0.19012797074954296,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "2": 120,
+        "1": 107,
+        "3": 122,
+        "0": 198
+      }
+    },
+    "localmap": {
+      "frames": 2449,
+      "bounded_attempts": 2108,
+      "retries": 8,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 341,
+        "votes": 2100,
+        "full_retry": 8
+      },
+      "cap_violation_frames": [],
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2449,
+        "full_frames": 349,
+        "full_fraction": 0.14250714577378523,
+        "longest_full_local_frame_run": 38,
+        "ordinary_ok_frames": 2429,
+        "ordinary_ok_full_or_retry_fraction": 0.13544668587896252,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 415,
+          "2": 382,
+          "1": 517,
+          "0": 1135
+        }
+      },
+      "controller": {
+        "probe_frames": 224,
+        "budget_low_frames": 42,
+        "budget_failure_reasons": {
+          "probe_health": 8
+        },
+        "retry_final_successes": 8,
+        "event_epochs": 1,
+        "event_kinds": {
+          "0": 2449
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 547,
+          "full_frames": 104,
+          "full_fraction": 0.19012797074954296,
+          "longest_full_local_frame_run": 38,
+          "ordinary_ok_frames": 547,
+          "ordinary_ok_full_or_retry_fraction": 0.19012797074954296,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "2": 120,
+            "1": 107,
+            "3": 122,
+            "0": 198
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.226416,
+          "p95": 0.5474796,
+          "p99": 0.6874359999999999
+        },
+        "snapshot_ms": {
+          "p50": 14.1069,
+          "p95": 21.366819999999997,
+          "p99": 25.808251999999996
+        },
+        "update_ms": {
+          "p50": 22.5177,
+          "p95": 35.7542,
+          "p99": 48.482652
+        },
+        "search_ms": {
+          "p50": 4.15901,
+          "p95": 5.905741999999999,
+          "p99": 6.9054107999999985
+        },
+        "pose_ms": {
+          "p50": 8.42857,
+          "p95": 13.962279999999996,
+          "p99": 17.27586
+        },
+        "commit_ms": {
+          "p50": 10.1387,
+          "p95": 17.646599999999996,
+          "p99": 25.450188
+        },
+        "trial_ms": {
+          "p50": 37.601,
+          "p95": 51.88552,
+          "p99": 62.94185999999999
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001,
+          "p95": 0.0015,
+          "p99": 0.5286069999999989
+        },
+        "health_ms": {
+          "p50": 0.038542,
+          "p95": 0.07494939999999999,
+          "p99": 0.11039599999999997
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      }
+    }
+  },
+  "64": {
+    "processed": 2577,
+    "missing": 333,
+    "non_ok": 35,
+    "new_maps": 2,
+    "callback": {
+      "count": 2577,
+      "mean": 96.59837059487778,
+      "min": 48.453766,
+      "max": 196.549669,
+      "p50": 97.312195,
+      "p95": 129.5352082,
+      "p99": 146.88463492
+    },
+    "last25_callback": {
+      "count": 602,
+      "mean": 107.66860810631229,
+      "min": 79.48552,
+      "max": 149.129938,
+      "p50": 106.7063205,
+      "p95": 129.56469025,
+      "p99": 140.33793817000003
+    },
+    "last25_usage": {
+      "local_tracking_frames": 602,
+      "full_frames": 0,
+      "full_fraction": 0.0,
+      "longest_full_local_frame_run": 0,
+      "ordinary_ok_frames": 602,
+      "ordinary_ok_full_or_retry_fraction": 0.0,
+      "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+      "controller_states": {
+        "2": 83,
+        "1": 152,
+        "0": 367
+      }
+    },
+    "localmap": {
+      "frames": 2540,
+      "bounded_attempts": 2233,
+      "retries": 5,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 307,
+        "votes": 2228,
+        "full_retry": 5
+      },
+      "cap_violation_frames": [],
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2540,
+        "full_frames": 312,
+        "full_fraction": 0.12283464566929134,
+        "longest_full_local_frame_run": 36,
+        "ordinary_ok_frames": 2500,
+        "ordinary_ok_full_or_retry_fraction": 0.1088,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 373,
+          "2": 309,
+          "1": 408,
+          "0": 1450
+        }
+      },
+      "controller": {
+        "probe_frames": 192,
+        "budget_low_frames": 34,
+        "budget_failure_reasons": {
+          "probe_health": 5
+        },
+        "retry_final_successes": 5,
+        "event_epochs": 2,
+        "event_kinds": {
+          "0": 2540
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 602,
+          "full_frames": 0,
+          "full_fraction": 0.0,
+          "longest_full_local_frame_run": 0,
+          "ordinary_ok_frames": 602,
+          "ordinary_ok_full_or_retry_fraction": 0.0,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "2": 83,
+            "1": 152,
+            "0": 367
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.2164355,
+          "p95": 0.5631018999999999,
+          "p99": 0.6929370100000001
+        },
+        "snapshot_ms": {
+          "p50": 11.703299999999999,
+          "p95": 20.456135,
+          "p99": 25.217234000000005
+        },
+        "update_ms": {
+          "p50": 18.7848,
+          "p95": 33.66545999999999,
+          "p99": 44.525063000000024
+        },
+        "search_ms": {
+          "p50": 3.76045,
+          "p95": 5.5879195,
+          "p99": 7.044419300000003
+        },
+        "pose_ms": {
+          "p50": 8.453945000000001,
+          "p95": 14.22956,
+          "p99": 18.024384000000016
+        },
+        "commit_ms": {
+          "p50": 8.22145,
+          "p95": 16.384744999999967,
+          "p99": 21.325277000000007
+        },
+        "trial_ms": {
+          "p50": 32.800399999999996,
+          "p95": 48.932354999999994,
+          "p99": 59.69108500000003
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001,
+          "p95": 0.001459,
+          "p99": 0.40460699000000044
+        },
+        "health_ms": {
+          "p50": 0.03825,
+          "p95": 0.073041,
+          "p99": 0.10137627000000003
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "lm01_c4_coverage80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "recovery": 19,
+      "coverage": 100
+    }
+  },
+  "lm01_c4_shadow_coverage80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "coverage": 119
+    }
+  }
+}
