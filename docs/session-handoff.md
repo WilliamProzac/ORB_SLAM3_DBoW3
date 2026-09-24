@@ -1294,3 +1294,21 @@ little throughput margin. Weak-slot expiry has confirmed source-level semantic
 differences in triangulation/fusion; causation of real failure remainsunproven.
 Next diagnostic must preserve per-frame first-departure stages, source gaps and
 map-support/slot-expiry behavior; do not change thresholds to hide regressions.
+
+
+## LM01 C2 — functional gate only (2026-09-24)
+
+Runtime RGB-D full/KF/shadow transaction integration, true KF cap and legacy
+counters now pass native full/KF80/shadow 120-frame tests, original 27 ARM probes,
+new cap/competition/invalidation fixtures, TSan races/small-lock checks and
+ASan/UBSan/LSan fixture with the recorded C1 dependency exceptions. A narrow
+recursive identity barrier serializes retirement/fusion/transfer with active
+transactions; ordinary metadata updates remain concurrent. This fixes actual
+extra non-OK frames found during integration. Full-System LSan remains open.
+
+Board full and KF80 short runs are 120/120 OK, but P95 112.448/115.138 ms
+versus perf20 prefix 90.928 ms: performance FAIL, feature default OFF. Next is
+C2.1 transaction overhead reduction, then C3 event-based controller, C4 selector
+comparison, C5 MP/statistics/cohorts and C6 formal matrix. Preserve all failures.
+Evidence: IDE artifacts/local_map_budget_20260924/c2/checks.json and runs/.
+Runtime memory/LM01.md specifies the refined synchronization contract.

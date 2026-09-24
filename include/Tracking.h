@@ -45,6 +45,7 @@
 #include <mutex>
 #include <memory>
 #include <unordered_set>
+#include <fstream>
 using namespace std;
 
 namespace ORB_SLAM3 {
@@ -67,6 +68,7 @@ public:
            const string &_nameSeq = std::string());
 
   ~Tracking();
+  void FinishLocalMapDiagnostics();
 
   // Parse the config file
   bool ParseCamParamFile(cv::FileStorage &fSettings);
@@ -242,7 +244,7 @@ protected:
   void UpdateLocalPoints();
   void UpdateLocalKeyFrames();
 
-  bool TrackLocalMap();
+  bool TrackLocalMap(Map* locked_map);
   void SearchLocalPoints();
 
   bool NeedNewKeyFrame();
@@ -322,6 +324,16 @@ protected:
   System *mpSystem;
 
   int mRgbdOptimizationLevel = 0;
+  // LM01: off=0, full transaction=1, KF budget=2, shadow=3. Default off.
+  int mLocalMapMode = 0;
+  size_t mLocalMapKeyFrameBudget = 80;
+  std::ofstream mLocalMapLog;
+  std::mutex mLocalMapLogMutex;
+  std::vector<KeyFrame*> mLocalMapTemporal;
+  Map* mpLocalBudgetMap = nullptr;
+  KeyFrame* mpLocalBudgetRelocation = nullptr;
+  bool TrackLocalMapBudgeted(Map* locked_map);
+  void ResetLocalMapBudgetHistory();
 
   // Drawers
   Viewer *mpViewer;

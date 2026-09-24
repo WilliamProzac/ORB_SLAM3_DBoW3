@@ -20,6 +20,7 @@
  */
 
 #include "KeyFrame.h"
+#include "LocalTrackingIdentity.h"
 #include "Converter.h"
 #include "ImuTypes.h"
 #include <mutex>
@@ -590,6 +591,7 @@ void KeyFrame::SetErase() {
 }
 
 void KeyFrame::SetBadFlag() {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   {
     unique_lock<mutex> lock(mMutexConnections);
     if (mnId == mpMap->GetInitKFid()) {
@@ -844,6 +846,7 @@ Map *KeyFrame::GetMap() {
 }
 
 void KeyFrame::UpdateMap(Map *pMap) {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   unique_lock<mutex> lock(mMutexMap);
   mpMap = pMap;
 }

@@ -55,8 +55,11 @@ class LocalTrackingAttempt {
   std::vector<MapPointPtr> points;
   std::map<MapPoint*, LocalPointDelta> deltas;
   int inliers = 0, new_matches = 0, visible_candidates = 0;
+  int pre_associations = 0, pre_outliers = 0, pose_inliers = 0;
+  int associated_slots = 0;
   bool committed = false;
   std::string rejection;
   double build_ms = 0, search_ms = 0, optimize_ms = 0, commit_ms = 0;
+  double keyframes_ms = 0, gather_ms = 0, snapshot_ms = 0;
 };
 } // namespace ORB_SLAM3

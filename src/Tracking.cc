@@ -233,6 +233,29 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
     }
     std::cout << "RGB-D exact optimization level: " << mRgbdOptimizationLevel
               << " (0=reference,1=grid,2=distance,3=snapshot,4=headless)" << std::endl;
+    const auto local_mode = options["RGBD.LocalMapMode"];
+    if (!local_mode.empty()) {
+      if (!local_mode.isString()) throw std::invalid_argument("RGBD.LocalMapMode must be a string");
+      const std::string name = static_cast<std::string>(local_mode);
+      if (name == "off") mLocalMapMode = 0;
+      else if (name == "full") mLocalMapMode = 1;
+      else if (name == "kf") mLocalMapMode = 2;
+      else if (name == "shadow") mLocalMapMode = 3;
+      else throw std::invalid_argument("RGBD.LocalMapMode must be off/full/kf/shadow");
+    }
+    const auto local_limit = options["RGBD.LocalMapKFs"];
+    if (!local_limit.empty()) {
+      if (!local_limit.isInt() || int(local_limit)<1 || int(local_limit)>512)
+        throw std::invalid_argument("RGBD.LocalMapKFs must be integer 1..512");
+      mLocalMapKeyFrameBudget = int(local_limit);
+    }
+    const auto local_log = options["RGBD.LocalMapLog"];
+    if (mLocalMapMode && !local_log.empty()) {
+      if (!local_log.isString()) throw std::invalid_argument("RGBD.LocalMapLog must be a path string");
+      mLocalMapLog.open(static_cast<std::string>(local_log));
+      if (!mLocalMapLog) throw std::runtime_error("cannot open RGBD.LocalMapLog");
+      mLocalMapLog << "frame_id,map_id,mode,budget_kf,active_kf,active_mp,mandatory,candidate_kf,budget_attempt,budget_inliers,final_inliers,tracking_ok,retry,commit_ok,reason,selection_ms,snapshot_ms,update_ms,search_ms,pose_ms,commit_ms,trial_ms,full_ms,selected_inliers,total_inliers,selected_new_inliers,total_new_inliers,association_inliers,trial_kf,trial_mp,identity_wait_ms\n";
+    }
   }
 
   initID = 0;
@@ -1680,7 +1703,7 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
         Frame(mImGray, imDepth, timestamp, mpORBextractorLeft, mpORBVocabulary,
               mK, mDistCoef, mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
   mCurrentFrame.mRgbdOptimizationLevel = mRgbdOptimizationLevel;
-  mCurrentFrame.mPureRgbd = mSensor == System::RGBD;
+  mCurrentFrame.mUseLocalMapProjection = mSensor == System::RGBD && mLocalMapMode != 0;
   if (timing) {
     timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
     timing->frame_id = mCurrentFrame.mnId;
@@ -2373,7 +2396,7 @@ void Tracking::Track() {
     // the local map.
     if (!mbOnlyTracking) {
       if (bOK) {
-        bOK = TrackLocalMap();
+        bOK = TrackLocalMap(pCurrentMap);
       }
       if (!bOK)
         cout << "Fail to track local map!" << endl;
@@ -2383,7 +2406,7 @@ void Tracking::Track() {
       // TrackLocalMap(). Once the system relocalizes the camera we will use the
       // local map again.
       if (bOK && !mbVO)
-        bOK = TrackLocalMap();
+        bOK = TrackLocalMap(pCurrentMap);
     }
 
     if (bOK)
@@ -2955,6 +2978,7 @@ void Tracking::CreateInitialMapMonocular() {
 }
 
 void Tracking::CreateMapInAtlas() {
+  ResetLocalMapBudgetHistory();
   // In localization mode, don't create new maps - use the loaded map
   if (mbOnlyTracking) {
     // cout << "CreateMapInAtlas: Skipping in localization mode" << endl;
@@ -3410,10 +3434,13 @@ bool Tracking::TrackWithMotionModel() {
         FieldDecisionRule::MotionMapMatchesMin10);
 }
 
-bool Tracking::TrackLocalMap() {
+bool Tracking::TrackLocalMap(Map* locked_map) {
   FieldStage field_stage(mCurrentFrame.mnId,3);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_map_ms : nullptr);
+  if (mLocalMapMode && mSensor == System::RGBD && mCurrentFrame.Nleft == -1 &&
+      !mCurrentFrame.mpCamera2 && mCurrentFrame.mDescriptors.type() == CV_8UC1)
+    return field_stage.Result(TrackLocalMapBudgeted(locked_map),__LINE__);
 
   // We have an estimation of the camera pose and some map points tracked in the
   // frame. We retrieve the local map and try to find matches to points in the
@@ -4329,6 +4356,7 @@ bool Tracking::Relocalization() {
     return field_stage.Result(false,__LINE__);
   } else {
     mnLastRelocFrameId = mCurrentFrame.mnId;
+    mpLocalBudgetRelocation = pMatchedRelocKF;
     if (pMatchedRelocKF && !pMatchedRelocKF->isBad()) {
       mpReferenceKF = pMatchedRelocKF;
       mpLastKeyFrame = pMatchedRelocKF;
@@ -4372,6 +4400,7 @@ bool Tracking::Relocalization() {
 }
 
 void Tracking::Reset(bool bLocMap) {
+  ResetLocalMapBudgetHistory();
   Verbose::PrintMess("System Reseting", Verbose::VERBOSITY_NORMAL);
 
   if (mpViewer) {
@@ -4430,6 +4459,7 @@ void Tracking::Reset(bool bLocMap) {
 }
 
 void Tracking::ResetActiveMap(bool bLocMap) {
+  ResetLocalMapBudgetHistory();
   Verbose::PrintMess("Active map Reseting", Verbose::VERBOSITY_NORMAL);
   if (mpViewer) {
     mpViewer->RequestStop();

@@ -148,7 +148,7 @@ public:
                          int maxLevel = -1, bool bRight = false) const;
   // Pure RGB-D opt-in only. Copied with the frame; other sensors stay at zero.
   int mRgbdOptimizationLevel = 0;
-  bool mPureRgbd = false;
+  bool mUseLocalMapProjection = false;
 
   // Apply subpixel temporal refinements and rebuild the search grid. For
   // pinhole stereo, shift mvuRight by the same x delta to preserve disparity.

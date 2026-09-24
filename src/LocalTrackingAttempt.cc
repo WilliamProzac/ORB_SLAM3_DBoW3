@@ -1,4 +1,5 @@
 #include "LocalTrackingAttempt.h"
+#include "LocalTrackingIdentity.h"
 #include "KeyFrame.h"
 #include "MapPoint.h"
 #include "Map.h"
@@ -9,6 +10,10 @@
 #include <stdexcept>
 
 namespace ORB_SLAM3 {
+std::recursive_mutex& LocalTrackingIdentityMutex() {
+  static std::recursive_mutex mutex;
+  return mutex;
+}
 namespace {
 using Clock = std::chrono::steady_clock;
 double Milliseconds(Clock::time_point start) {
@@ -29,9 +34,11 @@ LocalTrackingAttempt::LocalTrackingAttempt(const LocalTrackingInput& entry,
 LocalPointDelta& LocalTrackingAttempt::Point(const MapPointPtr& point) {
   auto it = deltas.find(point.get());
   if (it == deltas.end()) {
+    const auto start = Clock::now();
     LocalPointDelta value;
     value.snapshot = point->SnapshotLocalTracking();
     it = deltas.emplace(point.get(), std::move(value)).first;
+    snapshot_ms += Milliseconds(start);
   }
   return it->second;
 }
@@ -77,7 +84,8 @@ void LocalTrackingAttempt::BuildLocalMap() {
     if (unseen(parent)) { visited.insert(parent); keyframes.push_back(parent); break; }
   }
   if (vote_winner) { reference = vote_winner; frame.mpReferenceKF = reference; }
-  build_ms += Milliseconds(start);
+  keyframes_ms = Milliseconds(start);
+  build_ms += keyframes_ms;
 }
 
 void LocalTrackingAttempt::SearchAndOptimize() {
@@ -96,7 +104,8 @@ void LocalTrackingAttempt::SearchAndOptimize() {
       points.push_back(point);
     }
   }
-  build_ms += Milliseconds(start);
+  gather_ms = Milliseconds(start);
+  build_ms += gather_ms;
   start = Clock::now();
   for (auto& point : frame.mvpMapPoints) {
     if (!point) continue;
@@ -105,6 +114,7 @@ void LocalTrackingAttempt::SearchAndOptimize() {
     if (statistics == LocalStatistics::Legacy) ++state.visible;
     else state.visible = 1;
     state.mark_seen = true;
+    ++associated_slots;
   }
   std::vector<LocalProjectedPoint> candidates;
   candidates.reserve(points.size());
@@ -131,9 +141,15 @@ void LocalTrackingAttempt::SearchAndOptimize() {
   search_ms += Milliseconds(start);
   start = Clock::now();
   std::map<MapPoint*, Eigen::Vector3f> positions;
-  for (const auto& point : frame.mvpMapPoints)
-    if (point) positions.emplace(point.get(), Point(point).snapshot.geometry.position);
-  Optimizer::PoseOptimization(&frame, &positions);
+  for (size_t i=0;i<frame.mvpMapPoints.size();++i) {
+    const auto& point=frame.mvpMapPoints[i];
+    if (point) {
+      positions.emplace(point.get(), Point(point).snapshot.geometry.position);
+      ++pre_associations;
+      if (frame.mvbOutlier[i]) ++pre_outliers;
+    }
+  }
+  pose_inliers = Optimizer::PoseOptimization(&frame, &positions);
   optimize_ms += Milliseconds(start);
   for (int i = 0; i < frame.N; ++i) {
     const auto& point = frame.mvpMapPoints[i];
@@ -153,26 +169,28 @@ bool LocalTrackingAttempt::TrackingSucceeded() const {
 
 bool LocalTrackingAttempt::Commit(Frame& destination) {
   const auto start = Clock::now();
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   auto fail = [&](const char* reason) {
     rejection = reason; commit_ms += Milliseconds(start); return false;
   };
   if (committed) return fail("duplicate_commit");
+  if (input.map->IsBad()) return fail("map_invalidated");
   std::vector<KeyFrame*> keys = keyframes;
   if (reference) keys.push_back(reference);
   std::sort(keys.begin(), keys.end(), std::less<KeyFrame*>());
   keys.erase(std::unique(keys.begin(), keys.end()), keys.end());
-  std::vector<std::unique_lock<std::mutex>> key_locks;
-  // KF retirement takes nested connection locks during spanning-tree updates.
-  // Never block while collecting multiple connection locks: failure is wholly
-  // before any write, so an attempt can be discarded without lock inversion.
+  // The identity barrier prevents retirement/transfer through commit. Validate
+  // one KF at a time; collecting connection locks would invert the ordinary
+  // UpdateConnections child->parent lock order. Brief metadata readers must
+  // not manufacture failed frames merely because try_lock observed them.
   for (auto* key : keys) {
-    key_locks.emplace_back(key->mMutexConnections, std::try_to_lock);
-    if (!key_locks.back().owns_lock()) return fail("keyframe_busy");
-    key_locks.emplace_back(key->mMutexMap, std::try_to_lock);
-    if (!key_locks.back().owns_lock()) return fail("keyframe_map_busy");
-    if (key->mbBad || key->mpMap != input.map) return fail("keyframe_invalidated");
+    if (key->isBad() || key->GetMap() != input.map) return fail("keyframe_invalidated");
   }
   std::vector<LocalPointDelta*> ordered;
+  std::set<MapPoint*> constraints;
+  for (size_t i=0;i<frame.mvpMapPoints.size();++i)
+    if (frame.mvpMapPoints[i] && !frame.mvbOutlier[i]) constraints.insert(frame.mvpMapPoints[i].get());
+  std::set<MapPoint*> discarded;
   for (auto& entry : deltas) {
     auto& state = entry.second;
     if (state.mark_reference || state.mark_seen || state.write_projection || state.found)
@@ -189,15 +207,25 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     point_locks.emplace_back(point.mMutexPos);
     point_locks.emplace_back(point.mMutexMap);
     const auto& snapshot = state->snapshot;
-    if (point.mbBad || point.mpReplaced || point.mpMap != input.map ||
-        point.nObs != snapshot.observations ||
-        point.mWorldPos != snapshot.geometry.position ||
-        point.mNormalVector != snapshot.geometry.normal ||
-        point.mfMinDistance != snapshot.geometry.min_distance ||
-        point.mfMaxDistance != snapshot.geometry.max_distance ||
-        point.mDescriptor.type() != CV_8UC1 || point.mDescriptor.rows != 1 || point.mDescriptor.cols != 32 ||
-        !std::equal(snapshot.descriptor.begin(), snapshot.descriptor.end(), point.mDescriptor.ptr<unsigned char>()))
-      return fail("point_invalidated");
+    if (point.mbBad || point.mpReplaced || point.mpMap != input.map) {
+      if (constraints.count(&point)) return fail("point_invalidated");
+      // Mapping can retire an unused candidate while matching. Its scratch
+      // result has no pose constraint to invalidate: discard that point's
+      // entire write set instead of manufacturing a tracking failure.
+      discarded.insert(&point);
+      continue;
+    }
+    // ProcessNewKeyFrame legitimately changes observation count, descriptor,
+    // normal and distance bounds outside the map update lock. This attempt
+    // used immutable copies, as legacy matching may use a descriptor/normal
+    // captured before that update. Do not manufacture tracking loss for it.
+    // Position and identity must still match; the observed/non-observed class
+    // used by the original Tracking inlier threshold must also remain valid.
+    if ((point.nObs>0)!=(snapshot.observations>0) || point.mWorldPos != snapshot.geometry.position) {
+      if (constraints.count(&point)) return fail("point_constraint_changed");
+      discarded.insert(&point);
+      continue;
+    }
     if (statistics == LocalStatistics::Attempted &&
         (state->found < 0 || state->found > state->visible || state->visible > 1))
       return fail("opportunity_invariant");
@@ -206,6 +234,7 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
   // lookups. All MP counters remain protected until the complete batch lands.
   for (auto* state : ordered) {
     auto& point = *state->snapshot.owner;
+    if (discarded.count(&point)) continue;
     point.mnVisible += state->visible;
     point.mnFound += state->found;
     if (state->mark_reference) point.mnTrackReferenceForFrame = frame.mnId;
@@ -216,6 +245,11 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     if (state->write_projection) Frame::ApplyLocalProjection(point, state->projection);
   }
   for (auto* key : keyframes) key->mnTrackReferenceForFrame = frame.mnId;
+  points.erase(std::remove_if(points.begin(),points.end(),[&](const MapPointPtr& point) {
+    return discarded.count(point.get());
+  }),points.end());
+  for (auto& point : frame.mvpMapPoints)
+    if (point && discarded.count(point.get())) point.reset();
   destination.SetPose(frame.GetPose());
   destination.mvpMapPoints.swap(frame.mvpMapPoints);
   destination.mvbOutlier.swap(frame.mvbOutlier);

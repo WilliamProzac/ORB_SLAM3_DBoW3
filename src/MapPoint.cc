@@ -20,6 +20,7 @@
  */
 
 #include "MapPoint.h"
+#include "LocalTrackingIdentity.h"
 #include <stdexcept>
 #include "FeatureDescriptor.h"
 #include "ORBmatcher.h"
@@ -210,6 +211,7 @@ void MapPoint::AddObservation(KeyFrame *pKF, int idx) {
 }
 
 void MapPoint::EraseObservation(KeyFrame *pKF) {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   const auto keepAlive = shared_from_this();
   bool bBad = false;
   {
@@ -254,6 +256,7 @@ int MapPoint::Observations() {
 }
 
 void MapPoint::SetBadFlag() {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   const auto keepAlive = shared_from_this();
   map<KeyFrame *, tuple<int, int>> obs;
   {
@@ -288,6 +291,7 @@ MapPointPtr MapPoint::GetReplaced() {
 }
 
 void MapPoint::Replace(MapPointPtr pMP) {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   const auto keepAlive = shared_from_this();
   // Serialize replacement edges so opposite concurrent replacements cannot
   // create a strong cycle. A retired source never changes its published edge.
@@ -581,6 +585,7 @@ Map *MapPoint::GetMap() {
 }
 
 void MapPoint::UpdateMap(Map *pMap) {
+  LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   unique_lock<mutex> lock(mMutexMap);
   mpMap = pMap;
 }

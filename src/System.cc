@@ -662,6 +662,7 @@ void System::Shutdown() {
     usleep(5000);
   }
   cout << "Shutdown: All threads finished." << endl;
+  if (mpTracker) mpTracker->FinishLocalMapDiagnostics();
 
   // Extra wait to ensure all resources are released
   cout << "Shutdown: Waiting 100ms..." << flush;

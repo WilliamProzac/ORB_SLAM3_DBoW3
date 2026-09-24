@@ -99,7 +99,7 @@ Frame::Frame(const Frame &frame)
     }
 
     mRgbdOptimizationLevel = frame.mRgbdOptimizationLevel;
-    mPureRgbd = frame.mPureRgbd;
+    mUseLocalMapProjection = frame.mUseLocalMapProjection;
     mmProjectPoints = frame.mmProjectPoints;
     mmMatchedInImage = frame.mmMatchedInImage;
 
@@ -698,7 +698,7 @@ void Frame::ApplyLocalProjection(MapPoint& point, const LocalProjection& p) {
 
 bool Frame::isInFrustum(const MapPointPtr& pMP, float viewingCosLimit)
 {
-    if (mPureRgbd && Nleft == -1 && mDescriptors.type() == CV_8UC1) {
+    if (mUseLocalMapProjection && Nleft == -1 && mDescriptors.type() == CV_8UC1) {
         const auto projection = ProjectLocalPoint(pMP->GetLocalTrackingGeometry(), viewingCosLimit);
         ApplyLocalProjection(*pMP, projection);
         return projection.visible;
