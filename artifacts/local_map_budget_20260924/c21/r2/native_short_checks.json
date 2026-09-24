@@ -1,0 +1,34 @@
+{
+  "lm01_c2_full": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "protection": 19,
+      "full": 100
+    }
+  },
+  "lm01_c2_kf80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "protection": 19,
+      "votes": 100
+    }
+  },
+  "lm01_c2_shadow80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "votes": 119
+    }
+  }
+}
