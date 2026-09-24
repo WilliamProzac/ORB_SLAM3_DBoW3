@@ -1,0 +1,10 @@
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+First KF:0; Map init KF:0
+Starting Global Bundle Adjustment
+BA: End of the optimization
+Global Bundle Adjustment finished
+Updating map ...
+Map updated!
+GBA_TASK_PASS gba_join
+PROBE_PASS gba_join

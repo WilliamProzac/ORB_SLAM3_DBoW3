@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "events": 1170,
+  "counts": {
+    "kf_add": 7,
+    "mp_birth": 120,
+    "observation_add": 820,
+    "retire_found_ratio": 1,
+    "retire_low_observation_age": 1,
+    "mp_replace": 1,
+    "observation_erase": 100,
+    "mp_transfer": 1,
+    "kf_transfer": 1,
+    "kf_erase": 1,
+    "retire_reset": 117
+  }
+}

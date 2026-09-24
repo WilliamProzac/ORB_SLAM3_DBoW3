@@ -1,0 +1,5 @@
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+First KF:0; Map init KF:0
+LOCAL_GATHER_PARITY_LIFETIME_PASS slots=720 unique=120
+PROBE_PASS local_gather

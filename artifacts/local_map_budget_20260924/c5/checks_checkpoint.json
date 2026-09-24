@@ -1,0 +1,19 @@
+{
+  "implementation_fixture_pass": true,
+  "native_long_variants": 4,
+  "each_native_long_pairs": 2910,
+  "all_native_states_ok": true,
+  "arm_inherited_probes": 27,
+  "arm_graph_max_delta": 7.10000000722636e-15,
+  "asan_ubsan_lsan_fixture": "PASS",
+  "tsan_race_full_and_lifetime": "PASS",
+  "tsan_lock_small": "PASS; existing GDAL startup deadlock exceptions only",
+  "limitations": [
+    "Full-System LSan remains inherited open",
+    "Full TSan fixture disables Clang10 limited deadlock detector, race checking remains enabled",
+    "Boost1.71 UBSan compile-only exceptions remain",
+    "C5 board long ablations and C6 formal matrix still running",
+    "C5 MP6500 cap never bound in native long (max1439 eligible); no MP-cut performance gain demonstrated"
+  ],
+  "production_acceptance": "NOT PASSED; default off"
+}

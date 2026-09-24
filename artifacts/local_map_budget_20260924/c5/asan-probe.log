@@ -1,0 +1,20 @@
+First KF:0; Map init KF:0
+LM01_CONCURRENCY_ROUNDS accepted=24 rejected=16
+LM01_TRANSACTION_PARITY_PASS policies=2 legacy_match=1 invalidation=1 commit_once=1
+First KF:6; Map init KF:0
+First KF:12; Map init KF:0
+First KF:18; Map init KF:0
+LM01_MP_CAP_OPPORTUNITY_MARGINALS_PASS
+First KF:24; Map init KF:0
+LM01_MP_SCORE_GRID_DEPTH_YOUNG_PASS
+LM01_CONTROLLER_EVENT_GRID_PASS
+First KF:32; Map init KF:0
+LM01_COVERAGE_SATURATION_PASS
+First KF:158; Map init KF:0
+First KF:164; Map init KF:0
+First KF:170; Map init KF:0
+First KF:176; Map init KF:0
+First KF:182; Map init KF:0
+First KF:188; Map init KF:0
+First KF:194; Map init KF:0
+LM01_KF_CAP_COMPETITION_INVALIDATION_PASS kf_candidates=126

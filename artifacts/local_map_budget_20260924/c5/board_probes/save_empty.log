@@ -1,0 +1,15 @@
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+Atlas::PreSave: Start
+Atlas::PreSave: mpCurrentMap exists, id=0
+Atlas::PreSave: mspMaps.size()=1
+Atlas::PreSave: Processing 0 maps
+Atlas::PreSave: RemoveBadMaps
+Atlas::PreSave: Complete
+Atlas::PreSave: Start
+Atlas::PreSave: mpCurrentMap exists, id=0
+Atlas::PreSave: mspMaps.size()=1
+Atlas::PreSave: Processing 0 maps
+Atlas::PreSave: RemoveBadMaps
+Atlas::PreSave: Complete
+EMPTY_SAVE_PASS

@@ -1,0 +1,35 @@
+{
+  "binaries": {
+    "local_map_budget_probe": "493440874df9647950a08093201f230d50c781f97e6268999cc7e915c4c8c733",
+    "memory_replay": "5e726570801b5ebd566a8b649256c2984fa54c926be7fe058671c3e55337c1d0",
+    "liborb_slam3_ros.so": "353ef13f3724d959d5fdd11e9e2e016784626ebf5ec7df45e7ac02e399e5906c"
+  },
+  "plan": [
+    {
+      "name": "legacy",
+      "config": "memory/config/lm01_c5_legacy80.yaml"
+    },
+    {
+      "name": "attempted",
+      "config": "memory/config/lm01_c5_attempted80.yaml"
+    },
+    {
+      "name": "mp",
+      "config": "memory/config/lm01_c5_mp80.yaml"
+    },
+    {
+      "name": "shadow",
+      "config": "memory/config/lm01_c5_shadow80.yaml"
+    }
+  ],
+  "frames": 2910,
+  "rate": 1.0,
+  "lifetime": true,
+  "configs": {
+    "legacy": "4873ac8b8a67ac5d5f3f2a2def9383112d26db924d1ed333e76c3fe3e5e514e4",
+    "attempted": "80b6c5e0db273106ffaa95162a1f601aa266bac793b022018686deac6bf954bf",
+    "mp": "62a05b60412332e98b2d383211990afcbc32bfa1a6fda6cd6d9fd73656fb3441",
+    "shadow": "94ecb4ff5babf54712192cacad9fd7dfdd7e5af93dfe2e805869da28ecec7e15"
+  },
+  "runner_sha256": "e7c3d2065c1b32f1e95f1e11594e0217caeeeb11c3e111e0f0735f38a32ef82c"
+}

@@ -1,0 +1,75 @@
+Creation of new map with id: 0
+Creation of new map with last KF id: 0
+First KF:0; Map init KF:0
+Atlas::PreSave: Start
+Atlas::PreSave: mpCurrentMap exists, id=0
+Atlas::PreSave: mspMaps.size()=1
+Atlas::PreSave: Processing 1 maps
+Atlas::PreSave: Map 0 has 6 KFs - calling PreSave...Map::PreSave: Start, MPs=120, KFs=6
+Map::PreSave: Processed 120 MapPoints
+Map::PreSave: Saved 0 KF origins
+Map::PreSave: Backed up 120 MapPoints
+Map::PreSave: Backed up 6 KeyFrames
+Map::PreSave: Complete
+ done
+Atlas::PreSave: RemoveBadMaps
+Atlas::PreSave: Complete
+Atlas::PreSave: Start
+Atlas::PreSave: mpCurrentMap exists, id=0
+Atlas::PreSave: mspMaps.size()=1
+Atlas::PreSave: Processing 1 maps
+Atlas::PreSave: Map 0 has 6 KFs - calling PreSave...Map::PreSave: Start, MPs=120, KFs=6
+Map::PreSave: Processed 120 MapPoints
+Map::PreSave: Saved 0 KF origins
+Map::PreSave: Backed up 120 MapPoints
+Map::PreSave: Backed up 6 KeyFrames
+Map::PreSave: Complete
+ done
+Atlas::PreSave: RemoveBadMaps
+Atlas::PreSave: Complete
+Creation of new map with id: 1
+Stored map with ID: 0
+Creation of new map with last KF id: 6
+First KF:6; Map init KF:6
+Atlas::PreSave: Start
+Atlas::PreSave: mpCurrentMap exists, id=1
+Atlas::PreSave: mspMaps.size()=2
+Atlas::PreSave: Processing 2 maps
+Atlas::PreSave: Map 0 has 6 KFs - calling PreSave...Map::PreSave: Start, MPs=120, KFs=6
+Map::PreSave: Processed 120 MapPoints
+Map::PreSave: Saved 0 KF origins
+Map::PreSave: Backed up 120 MapPoints
+Map::PreSave: Backed up 6 KeyFrames
+Map::PreSave: Complete
+ done
+Atlas::PreSave: Map 1 has 1 KFs - calling PreSave...Map::PreSave: Start, MPs=0, KFs=1
+Map::PreSave: Processed 0 MapPoints
+Map::PreSave: Saved 0 KF origins
+Map::PreSave: Backed up 0 MapPoints
+Map::PreSave: Backed up 1 KeyFrames
+Map::PreSave: Complete
+ done
+Atlas::PreSave: RemoveBadMaps
+Atlas::PreSave: Complete
+PostLoad KF 0: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 0: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 0: BoW computed, BowVec.size=0
+PostLoad KF 1: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 1: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 1: BoW computed, BowVec.size=0
+PostLoad KF 2: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 2: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 2: BoW computed, BowVec.size=0
+PostLoad KF 3: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 3: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 3: BoW computed, BowVec.size=0
+PostLoad KF 4: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 4: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 4: BoW computed, BowVec.size=0
+PostLoad KF 5: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=120
+KeyFrame 5: Computing BoW (BowVec empty=1, FeatVec empty=1, Desc rows=120)
+PostLoad KF 5: BoW computed, BowVec.size=0
+PostLoad KF 6: mpORBvocabulary=0xffffe065bc10, mDescriptors.rows=0
+PostLoad KF 6: Cannot compute BoW!
+SAVE_LOAD_PASS bytes=310219
+PROBE_PASS save_multi

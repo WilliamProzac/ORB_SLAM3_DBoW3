@@ -1,0 +1,45 @@
+{
+  "lm01_c5_legacy80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "recovery": 19,
+      "votes": 100
+    }
+  },
+  "lm01_c5_attempted80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "recovery": 19,
+      "votes": 100
+    }
+  },
+  "lm01_c5_mp80": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "recovery": 19,
+      "votes": 100
+    }
+  },
+  "lm01_c5_shadow_stress64": {
+    "processed": 120,
+    "states": {
+      "2": 120
+    },
+    "local_attempts": 119,
+    "reasons": {
+      "votes": 119
+    }
+  }
+}
