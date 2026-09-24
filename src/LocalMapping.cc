@@ -28,6 +28,7 @@
 #include "Optimizer.h"
 
 #include <chrono>
+#include <ctime>
 #include <fstream>
 #include <iomanip>
 #include <mutex>
@@ -36,6 +37,14 @@ using namespace std;
 namespace ORB_SLAM3 {
 
 namespace {
+double LocalMappingThreadCpuMilliseconds() {
+#if defined(CLOCK_THREAD_CPUTIME_ID)
+  timespec time;
+  if(clock_gettime(CLOCK_THREAD_CPUTIME_ID,&time)==0)
+    return double(time.tv_sec)*1000.+double(time.tv_nsec)/1e6;
+#endif
+  return -1.;
+}
 double LocalMappingMillisecondsSince(
     const std::chrono::steady_clock::time_point &start) {
   return std::chrono::duration_cast<
@@ -165,6 +174,7 @@ void LocalMapping::Run() {
         if (mpAtlas->KeyFramesInMap() > 2) {
           const std::chrono::steady_clock::time_point detailed_lba_start =
               std::chrono::steady_clock::now();
+          const double lba_cpu_start=LocalMappingThreadCpuMilliseconds();
 
           if (mbInertial && mpCurrentKeyFrame->GetMap()->isImuInitialized()) {
             float dist =
@@ -210,6 +220,9 @@ void LocalMapping::Run() {
 
             b_doneLBA = true;
           }
+          const double lba_cpu_end=LocalMappingThreadCpuMilliseconds();
+          if(lba_cpu_start>=0 && lba_cpu_end>=lba_cpu_start)
+            mCurrentTiming.local_ba_cpu_ms=lba_cpu_end-lba_cpu_start;
           mCurrentTiming.local_ba_ms =
               LocalMappingMillisecondsSince(detailed_lba_start);
         }
@@ -1580,7 +1593,7 @@ bool LocalMapping::WriteDetailedTimingCsv(
             "bow_ms,process_keyframe_ms,map_point_culling_ms,"
             "map_point_creation_ms,local_ba_ms,keyframe_culling_ms,total_ms,"
             "lba_executed,lba_aborted,lba_edges,lba_optimized_keyframes,"
-            "lba_fixed_keyframes,lba_map_points\n";
+            "lba_fixed_keyframes,lba_map_points,local_ba_cpu_ms\n";
   output << fixed << setprecision(6);
   for (const LocalMappingTimingRecord &record : mvDetailedTimings) {
     output << record.keyframe_id << ',' << record.image_timestamp << ','
@@ -1591,7 +1604,7 @@ bool LocalMapping::WriteDetailedTimingCsv(
            << record.keyframe_culling_ms << ',' << record.total_ms << ','
            << record.lba_executed << ',' << record.lba_aborted << ','
            << record.lba_edges << ',' << record.lba_optimized_keyframes << ','
-           << record.lba_fixed_keyframes << ',' << record.lba_map_points
+           << record.lba_fixed_keyframes << ',' << record.lba_map_points << ',' << record.local_ba_cpu_ms
            << '\n';
   }
   return output.good();

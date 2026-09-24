@@ -88,6 +88,7 @@ struct LocalMappingTimingRecord {
   double map_point_culling_ms = 0.0;
   double map_point_creation_ms = 0.0;
   double local_ba_ms = 0.0;
+  double local_ba_cpu_ms = -1.0; // calling-thread CPU; -1 when unavailable/not run
   double keyframe_culling_ms = 0.0;
   double total_ms = 0.0;
   int lba_executed = 0;

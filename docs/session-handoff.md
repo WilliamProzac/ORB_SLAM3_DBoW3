@@ -1426,3 +1426,25 @@ and C6 formal/TUM/fault/save-reload matrix remain. DefaultOFF, votes default,
 coverage experimental. See memory/LM01_C5_CONTRACT.md and IDE artifacts/c5.
 Parent core64d073fd / outerc0ddab1 / IDE39ccbf6c; manifests archive dirty-build
 source hashes and paired binaries. This is functional acceptance only.
+
+## LM01 C6 diagnostics and formal matrix
+
+Local BA now appends calling-thread CPU milliseconds to its existing timing
+CSV, using CLOCK_THREAD_CPUTIME_ID (unknown=-1). Algorithm, graph selection,
+iterations, thresholds and queue limits are unchanged. Native replay drivers
+accept LM01_DETAILED_TIMING=1 to export the same backend timing after shutdown.
+Resource sampling additionally records the system OOM-kill counter; reporting
+separates process CPU, callback-span CPU, BA CPU/wall time and queue occupancy.
+Native off/candidate120 both allOK,64 BAs each, CPU positive and<=wall; full
+transaction probe passes. ARM node/core/probes completely rebuilt in c6cpu.
+The ARM manifest now records the new MP fixture header; the intervening c6
+rebuild is byte-identical to c5 in all four binaries, confirming provenance.
+
+Initial TUM5057 six runs are archived as initial_tum, not discarded: candidate
+runs1/3 split maps; off has one isolated nonOK in run2. Initial blackout/gap
+fixture: candidate15 intentional nonOK then relocalized, single map; off
+recovered but split map. Reset and map-switch regressions recovered in both.
+Ground truth contains a129.865s gap; typical20ms associations are1227/5057.
+
+The final CPU-instrumented native and ARM pairs are running the required
+matrices. No candidate has passed admission. Final C6 evidence remains pending.
