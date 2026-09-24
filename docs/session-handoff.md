@@ -763,3 +763,550 @@
   validate a targeted fix on the complete first lawn bag before acquiring and
   running the formal EuRoC five-run gate. Do not lower the 30-inlier tracking
   gate or mark F23 passing from the 8-second smoke alone.
+
+2026-09-07: RGB-D keyframe policy research (analysis only)
+
+- Scope: literature/source review and historical-log analysis, not a new
+  implementation feature. Existing feature states were not changed.
+- Audited runtime core `fc1c50c8cf1c096725126d88510ed4c626bdddd3` in
+  `/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_track_timing/core`;
+  compared the relevant source lineage against F27 commit `84a964b`.
+- Recomputed insertion intervals and same-map relative motion from
+  `handheld_oom_runs/handheld_20260904_154857/`: 966/1396 insertion gaps were
+  one input frame; 816/1390 valid consecutive KF pairs were below 5 cm and
+  3 degrees. These are online-pose statistics, not ground-truth accuracy.
+- Corrected the prior interpretation of LBA logging: 281/287 stop flags at
+  the end of LM cycles do not establish only six effective BA updates.
+  The flag is sampled after optimization/culling; an interrupted optimizer
+  can still write estimates. Actual iterations/writeback need instrumentation.
+- Evidence and proposed policy: local generated report
+  `evaluation/artifacts/keyframe_policy_study_20260907/report.md`, including
+  primary literature/official-code links, exact local source references,
+  initial parameter ranges and replay/accuracy verification design.
+- Recommended policy: lightweight visual novelty and risk signals, ordinary
+  insertion budget with explicit turn/near-point exceptions, and nonblocking
+  backend feedback before `InterruptBA`. Actual enqueue success commits the
+  budget. Map/reset events invalidate geometry history. Map-object reclamation
+  is a separate requirement for bounded long-term memory.
+- Touched: this handoff and the generated report only; no algorithm, board,
+  configuration, dataset or process state changed. Runtime worktree clean.
+- Validation: read-only source/log checks, CSV calculations and documentation
+  whitespace/link checks. Builds and ROS replay not run because no runtime
+  implementation was requested or produced.
+- TODO: exact production compile commit/dirty diff is unavailable; no raw
+  images or ground truth were recorded for this handheld run. Shadow-policy
+  logs, real BA progress telemetry, same-bag 1.0x repeats and outdoor turn
+  accuracy tests remain necessary before claiming a best operating point.
+
+2026-09-08: bag integrity audit (analysis only)
+
+- Scope: inspect `2026-09-08-09-56-57.bag`; no implementation feature was
+  selected or changed. Existing user YAML and earlier handoff content preserved.
+- Result: original is truncated, 5,188,853,760 bytes with header index pointer
+  6,370,758,821; 4257 complete chunks, one partial, 969 absent relative to
+  header declaration. Original left in place; independent reindexed copy
+  contains 4257 readable image/depth messages spanning 191.524 seconds.
+- Verification: original `rosbag info --yaml` fails unindexed; physical record
+  scan and 4257 local index checks pass up to truncated tail; output reindex
+  and info pass; full message deserialization, payload checks and timestamp
+  analysis completed. Retained raw chunk/index byte region hashes identical.
+- Evidence and touched generated outputs:
+  `evaluation/artifacts/bag_integrity_20260908_095657/` (report, JSON, NPZ,
+  logs, scripts and recovered bag). This handoff was appended.
+- Not run: builds, ROS publishing replay or SLAM; this task only audits data.
+- TODO: compare original recording-device file size/hash and recopy full bag;
+  source checksum and original end time unavailable. Depth units, outlier
+  conventions, camera calibration and geometric alignment not verified.
+
+2026-09-08: recovered bag playback follow-up
+
+- User playback error: connection refused / failed to contact master at
+  localhost:11311. Advised starting roscore before replay.
+- Actual full-file `rosbag play --immediate --quiet` passed with exit code 0
+  and Done, using isolated localhost master port 11329; test master stopped.
+- Evidence: bag integrity artifact directory `play_check.log`,
+  `play_check.json`, `play_check_roscore.log`, `verify_play.py`; report updated.
+- No bag, SLAM source, camera YAML, or feature-state changes. Fast publishing
+  verified, but subscriber delivery rate and 1x real-time playback untested.
+
+2026-09-08: recovered bag RDK-X5 1.0x mapping baseline
+
+- Scope: one RGB-D baseline replay under the existing F27 production behavior;
+  no algorithm implementation or feature-state changes. Preserved user YAML
+  and all prior handoff content. Bag stayed on the laptop.
+- Ran isolated host ROS master 192.168.1.3:11332 and board production_w3,
+  frozen 700 features / 5 levels / 3 workers, with namespaced RGB/depth.
+  Generated run_once.sh adapts F33 with owned PID handling and persistent
+  logs. Corrected its preflight because rosnode info returns zero for an
+  unknown node; that rejected preflight never started SLAM or playback.
+- Replay and SLAM exits 0; 2105/2128 paired inputs processed, 23 missing
+  callbacks; 2070 OK, 34 RECENTLY_LOST and one new-map state0. One interruption
+  at source 126.720 s, restored by new map after 3.150 s. No loop or merge.
+- Atlas has 2 actual maps, 1288 KFs and 49770 MPs. No OOM/crash/reboot evidence.
+  Full-process sampled RSS peak 1009.45 MiB, Swap peak 257.39 MiB,
+  same-sample sum peak 1232.51 MiB; saving contributes additional memory.
+- Save service and board collector exited 0. SCP directory '/.' collection
+  failed (controller exit 1); rsync recovery copied all 41 regular files,
+  175620425 bytes. Preserved failure evidence; matching host/board SHA256
+  verified for Atlas and both timing CSVs. Test processes/master stopped.
+- Found PreSave appends to mvpBackupMaps without clearing; second save reports
+  4 backup entries while live-map set remains 2. Do not double-count map/KF/MP
+  totals. No core fix was made. TUM KF export covers only active map; frame
+  TUM mixes map references and includes RECENTLY_LOST, so not ground truth.
+- Evidence/touched generated outputs:
+  evaluation/artifacts/board_recovered_20260908_095657/ (run/analysis scripts,
+  logs, summary.json, report.md, three plots, recovered board results).
+  This handoff was appended; no SLAM source, binary or camera settings edited.
+- Validation: bash -n, actual 1.0x board replay, exact source seq/stamp matching,
+  CSV analysis, plot inspection, map/timing transfer hash checks, clean stop.
+  Builds not run: frozen binary baseline, no source changes. Atlas reload,
+  ground-truth accuracy, failure-image review and longer/full-bag OOM testing
+  remain TODO. Original bag tail is missing; source only lasts 191.524 s.
+
+2026-09-08: failure-image follow-up for recovered-bag baseline
+
+- Analysis-only continuation of the F27 baseline; no feature-state or SLAM
+  changes. Extracted 151 exact RGB/depth pairs (seq1350-1500, 121.500-135.000s)
+  from host recovered bag, including the five locally missing callbacks.
+- Added RGB PNGs, lossless float32 depth NPZ, previews, HTML gallery, phase
+  montages, timing detail plot and evidence report under the run's
+  failure_images/ directory. Compiled a standalone host ORBextractor helper;
+  146/146 delivered-frame keypoint counts agree with board CSV (not a
+  byte-identical descriptor claim across OpenCV versions).
+- Evidence supports right turn plus missing intermediate observations:
+  source1403->1408 spans450ms, host-runtime ORB mutual/H-inliers45/30,
+  compared with81-156 H-inliers in each omitted adjacent pair. Surviving
+  jump H-inliers all lie in upper half; near floor features are numerous
+  but poorly persistent at that span. No blackout/depth-wide dropout seen.
+- First failure executes motion-model and reference-KF paths, not LocalMap;
+  shared failure text is misleading. KF856 is last OK seq1403, so this is
+  not sparse KF insertion. Pure RGB-D relocalizes unsuccessfully for3s,
+  then seq1443 initializes new map/KF857. Stale inliers99 hidden in plots.
+- OOM/Swap not observed at loss. Input backlog/queue loss specific layer is
+  still TODO; no full-delivery counterfactual replay, internal MapPoint
+  correspondence replay or metric ground truth. Preliminary OpenCV-ORB
+  PnP fields are unvalidated/degenerate and explicitly excluded from claims.
+- Validation: source pair count, timing/seq alignment, host extractor build
+  and run, offline matching, PNG/NPZ generation and visual inspection.
+  Preserved existing user YAML changes. No board process actions this turn.
+
+2026-09-08: missing-input queue forensic follow-up
+
+- Read-only board ELF disassembly verified frozen production_w3 subscribers
+  use queue_size1 each and TimeSynchronizer10, with single-thread ros::spin.
+  SHA256 matches baseline a41fd835...; current source20/20/20 is NOT the
+  frozen deployment. Outer runtime a28ac28 has1/1/10; a71c1b1 changed20/20/20.
+- Source interval90ms versus observed callback interval101-104ms accumulates
+  ~350ms relative age;1403->1408 skips450ms source time in101.407ms wall time.
+  Combined with depth/RGB independent size1 queues, ROS oldest-message eviction
+  plus exact-sync incomplete-pair cleanup is now the leading explanation.
+- Do not overclaim: raw arrival/drop events absent, so exact per-message
+  eviction sequence and which stream dropped remain TODO. INFO-only logs do
+  not exclude queue overflow (roscpp reports it atDEBUG).
+- Evidence: run/input_drop_forensics/report.md and production_main_disassembly.txt;
+  failure_images/report.md linked update. No source/config/deployment changes,
+  no new replay. Future diagnostic should preserve core and instrument queues.
+
+## 2026-09-08: Docker source provenance follow-up (analysis only)
+
+- Verified archived August 17 production_w3/ros_rgbd SHA-256 is exactly
+  a41fd8359313a0c78bb690743c08b964a18491b94c21d797019986666a99cc7b,
+  matching the board replay. Current runtime devel node is 4962aece...1f684,
+  a different artifact; do not infer its queue values from source alone.
+- Docker bind-mounts WORKSPACE to /ros1_project/orb_slam and CORE_SOURCE to
+  /ros1_project/orb_slam3_core. Generated build.make explicitly compiles
+  WORKSPACE/src/orb_slam3_ros-master/src/ros_rgbd.cc; queue constants belong
+  to this executable, not the core shared library or Docker image.
+- Outer a28ac28 versus a71c1b1 ros_rgbd.cc diff is exclusively 1/1/10 to
+  20/20/20. September 7 commit preserves pre-existing changes; it does not
+  establish their original edit date. Original top-level RDK workspace still
+  has 1/1/10. Runtime script now defaults to its own workspace/core; historical
+  DEBUG_BRANCH.md documents explicit overrides for that same isolated tree.
+- Checked historical/current build scripts, CMakeCache/build.make, deployment
+  README, archived hashes and both Git histories. Historical full build env
+  and immutable source manifest remain unverified; source baseline similarity
+  must not be represented as byte-exact provenance of every compiled file.
+- No compilation, Docker execution, replay, deployment or source changes.
+  Only this handoff was appended; unrelated user YAML changes preserved.
+
+2026-09-12: RDK X5 RGB-D map-memory research (analysis only)
+
+- User confirmed 2 GB RAM, 2–4 GB swap, RGB-D, and substantial swap use
+  around 1400 keyframes. Historical Linux-visible RAM was about 1307.55 MiB;
+  current board memory/other workloads were not remeasured.
+- Reviewed primary papers, author repositories, a firsthand Quanser blog,
+  upstream ORB-SLAM memory issues, current/runtime source, and prior X5 reports.
+- Report: docs/map-memory-research-20260912.md. Proposes measured attribution,
+  observation-based GBA capacity, idempotent save preparation, safe retirement,
+  compact feature grids, quality-aware sparsification and disk-backed submaps.
+- Verified runtime source still has nine KF×MP vector reserves, pointer-only
+  Map erasure, disabled bad-map deletion, and PreSave backup-list appending.
+  Capacity estimates are not measured RSS or a diagnosis of prior OOM.
+- No implementation feature selected or feature states changed. Only the
+  research document and this appended handoff were written; existing user
+  YAML and prior handoff changes preserved.
+- Validation: read-only source/report checks, static arithmetic, and document
+  link/whitespace checks. No builds, replay, SSH, deployment or runtime tests:
+  this request was for research and a plan, not an implementation.
+- TODO: current memory budget, per-object lifetime telemetry, target ABI,
+  loop/GBA long-run data, independent accuracy/area evidence and storage I/O.
+- Next step: P0 attribution in the runtime core with frozen binary/config
+  provenance, then implement and validate one optimization at a time.
+
+2026-09-12: Map-object reclamation clarification (analysis only)
+
+- Clarified that delete and shared_ptr are both usable with a complete
+  lifetime protocol; immediate deletion and all-strong pointer replacement
+  are the problematic shortcuts.
+- Read stella_vslam map/keyframe/landmark/graph/frame-statistics source:
+  explicit shared ownership, weak reverse/graph links, retirement cleanup,
+  and historical frame-reference migration provide a concrete reference.
+- Read Buffalo thesis sections 4.3/4.4 on custom counting and deferred
+  collection; no verified drop-in author patch was found in this review.
+- Extended docs/map-memory-research-20260912.md with evidence, proposed
+  ORB-SLAM3 ownership roles, trajectory rebinding and staged migration.
+- Validation: source reading and document whitespace checks only. No build,
+  runtime test, source implementation or deployment; feature states unchanged.
+- TODO: complete lifetime audit, map-merge/serialization contracts and ARM
+  runtime overhead before enabling physical reclamation.
+
+2026-09-14: MS-SLAM omission correction (analysis only)
+
+- User identified missing MS-SLAM (JFR, online 2024-09-04, 2025 issue).
+  Acknowledged incomplete candidate coverage, missing author-followup search
+  and failure to inspect the already available local MS-SLAM checkout.
+- Read publication method/evaluation sections, official README and local
+  MS-SLAM 51142b3 sparsification, KF/MP retirement, descriptor compaction and
+  historical reference migration paths.
+- Corrected docs/map-memory-research-20260912.md at the top and in the source
+  table; added concrete local references and revised prioritization.
+- MS-SLAM uses shared_ptr with explicit relation teardown; weak_ptr is an
+  alternative design, not a mandatory condition for reclaiming cyclic graphs.
+- Prioritize MS-SLAM implementation review and separate lifetime, payload and
+  selection ablations; retain stella_vslam as an ownership-design comparison.
+- No source/build/deployment changes. Existing MS-SLAM build-file changes,
+  compare_results/, current-repo YAML changes and artifacts/ were preserved.
+- Validation: online and local source checks, document whitespace checks.
+  No compilation/replay: scope is correcting research and candidate ranking.
+- TODO: full concurrency/reset/merge audit, RGB-D, ARM solver feasibility,
+  DBoW3/serialization integration, same-data memory and accuracy experiments.
+
+2026-09-14: camera_field_03 transfer and save-stall analysis
+
+- Analysis only; feature states unchanged. Copied the user-specified board run
+  `/userdata/rd53_camera_delivery_20260914/camera_field_03` to local
+  `artifacts/save_stall_20260914/camera_field_03`; board data retained.
+- All 31 source regular files (239278752 bytes) match fresh remote SHA-256.
+  Final status complete, camera/slam/control/log exit codes zero. Earlier
+  first-save snapshot is also preserved separately; no map reload performed.
+- First save service 351.715 s; shutdown to final map mtime about 903.986 s.
+  Logs prove repeated SaveAtlas and duplicate PreSave map processing (1 -> 2
+  backup entries). Swap peak 1842.1 MiB; available minimum 13.8 MiB. Runtime
+  source corroborates uncleared backup list and shutdown save filename reuse.
+- Existing diagnostic analyzer and local summarize.py generated report.md,
+  evidence.json and memory.png under artifacts/save_stall_20260914/analysis.
+  Chart visually checked; 1706 memory samples, 2 parsed diagnostic events.
+  Recorder dropped 92; event_1 prewindow only 8.446 s; event_2 triggered after
+  normal camera shutdown, so it is not an independent camera-failure event.
+- Benchmark has 4559 paired callbacks, max 23.393 s, 265 unobserved seq IDs
+  within 0..4823. Loop, lost tracking/new map and merge are logged; their
+  precise causal relationship to memory pressure remains unverified.
+- No code build, deployment, board cleanup or process interruption. Existing
+  YAML changes preserved. TODO: save idempotence and atomic replacement,
+  thread-consistent snapshot, reload/accuracy validation and memory attribution.
+
+2026-09-14: camera_field_03 map visualization
+
+- Generated local standalone read-only Atlas exporter and PNG/HTML/PLY views
+  under artifacts/save_stall_20260914/visualization; original map unchanged.
+- Native archive v18 header/ABI validated explicitly; host Boost 1.71 uses
+  headerless decoding with input library version18. Full237410143-byte consume,
+  2 backup entries/1 unique map,73953 points/1801 KFs, finite coordinates.
+  KF positions match saved TUM to max6.07e-6m; timestamps within5.01e-6s.
+- Main view displays72994 points,959 outside crop retained in full view and
+  HTML/PLY.18 points beyond100m from origin; farthest3185m. Do not infer real
+  site extent or metric accuracy from outliers. Display -Y is not gravity up.
+- Exporter compiled/ran; Python plots generated; local headless Chrome page
+  rendering and static/browser screenshots inspected. Initial compiler flags
+  and old Matplotlib3D import issues resolved; commands recorded in README.
+- No main runtime rebuild/deployment or board changes. Atlas PostLoad and
+  localization replay not performed; this validates geometric extraction,
+  not all map references or tracking accuracy. Existing user changes retained.
+
+2026-09-14: 500m² mower memory sizing (analysis only)
+
+- User confirmed0.5m lane spacing and0.3m/s speed for estimates; with assumed
+  10% turning overhead gives1100m and61.1min. Actual KF trajectory161.757m XZ,
+  1801KFs/422.008s; single-run density11.134KF/m,4.27KF/s.
+- Fit318 pre-late-transient samples: RSS+swap MiB=523.631+0.459593×KF,
+  R²0.9953. This includes correlated map/history costs, not per-object size.
+  Distance/time extrapolations yield12.2–15.6kKFs and roughly6–8GiB steady
+  process footprint. A separately labeled linear peak stress scenario gives
+  16–20GiB; neither is a verified physical-RAM requirement or upper bound.
+- Report: artifacts/save_stall_20260914/analysis/lawn_500m2_memory_estimate.md.
+  Current2GB insufficiently supported;8GB optimization target,32GB baseline
+  test host suggestion conditional on current growth. No purchase or deployment.
+- Primary ORB-SLAM paper checked for redundant map selection principle;
+  exact lawn memory depends on overlap/culling/reclamation and global peaks.
+  Feature states unchanged; no new runtime tests or algorithm changes.
+
+
+2026-09-14: MS-SLAM reuse audit for RDK X5 RGB-D
+
+- Analysis/docs only; no coding feature selected and no feature state changed.
+- Reviewed MS-SLAM51142b3, timing outerc6acc9e/core705c710, then latest field
+  outer18ba684/core4d6df6a including existing worktree changes and delivery
+  provenance. Preserve all existing user/source/artifact changes.
+- Report: /home/ywl/Project/RDK_X5_orb_slam/reviews/ms_slam_reuse_20260914/README.md.
+  source-audit.json records52 source/evidence fingerprints, ownership/API/build
+  inventory and timing/field map-core equality. review-validation.json:52
+  hashes unchanged,49 local links valid. Updated research document with link.
+- Findings: pure RGB-D sparsification enters via LocalMapping; Tracking still
+  retains an unused shared KF candidate list in that mode. Explicit graph
+  teardown incomplete on clear/reset; Replace clears replacement reference
+  while Tracking still reads it. KF compaction requires index/DB consistency.
+  Gurobi has no resource/status controls; shutdown batches all remaining KFs
+  of CURRENT map (Atlas getter is current-map only), before other workers stop.
+  Save/load and ROS API integration missing. ARM64 Gurobi is officially
+  supported; locally inspected MS/Gurobi libraries are x86-64 only.
+- Latest field delivery is direct8/8/10, not archived FIFO16. Its incremental
+  cross build replaces Tracking/LocalMapping objects and assumes unchanged
+  class layout; ownership/payload port requires full core/node rebuild.
+  Existing camera_field_03 evidence confirms long-run/save pressure and
+  repeated PreSave entries; it is not a new replay from this session.
+- Verification: rg/sed and lexical inventories, file architecture inspection,
+  local hash/link validation, primary paper/repo/Gurobi documentation checks.
+  Initial one-off inventory emitter had a parenthesis syntax error, fixed
+  before artifact generation; final inventory/validation completed.
+- Not run: new build, Gurobi/license initialization, sanitizers, RGB-D replay,
+  board experiment/deployment or map reload. This audit does not certify
+  runtime correctness. Next: full field-source build baseline and solver/model
+  budget probe, then ownership, payload/persistence and bounded sparsification
+  as separate validated implementation stages.
+
+
+2026-09-14: Gurobi commercial licensing correction
+
+- User identified a missing deployment consideration. Earlier audit mentioned
+  license initialization but incorrectly retained Gurobi as the default P0.
+- Verified official commercial/academic licensing descriptions, Academic WLS
+  restrictions, Gurobi standard EULA deployment scope, and HiGHS MIT license.
+- Rewrote report summary, dependency assessment and P0: default evaluation is
+  HiGHS MILP model port plus bounded greedy; Gurobi is optional only with an
+  applicable license. No license pricing or device entitlement inferred.
+- Updated docs/map-memory-research-20260912.md and the RDK audit report and
+  review-validation.json. Existing runtime sources and source fingerprints
+  unchanged by this docs-only correction. All local report links valid.
+- No license credentials read, software installed, build, solver benchmark,
+  board connection or deployment. Replacement performance remains unverified.
+
+
+2026-09-14: MS-SLAM native RGB-D bag memory validation
+
+- User requested actual MS-SLAM validation with the previous bag. Evaluation
+  lane lives outside this repo at /home/ywl/Project/MS-SLAM/evaluation/bag_memory_20260914;
+  no ORB_SLAM3_DBoW3 feature state or runtime source changed. Preserve existing edits.
+- Losslessly extracted all 2910 RGB8/32FC1 exact-stamp pairs from
+  2026-09-10-11-35-57.bag. Same 700-feature/5-level YAML, native 1x timestamps,
+  no ROS/viewer, DBoW2, isolated full rebuild of MS51142b3 and ORB4452a3c.
+  Actual loaded libraries and input/source/binary hashes captured.
+- Gurobi initialized in host environment; sandbox host identity failed.
+  Existing installation/license unchanged; no commercial entitlement inferred.
+- Completed orb_1, ms_1, ms_2, orb_2: each2910 frames, all state2, single map,
+  no logged loop/merge, swap0. Mean pre-shutdown PSS1226.90 ->985.98MiB (-19.64%);
+  baseline-subtracted growth773.29 ->529.92MiB (-31.47%). Full-lifetime peak
+ 1227.06 ->1256.29MiB (+2.38%); shutdown batches569/602KFs, solve1.96/2.14s.
+- Online MS destructed327137/324420 MapPoints; liveMP36897/39026 versus
+  ORB370137/372063. Descriptor rows roughly halved. Candidate KF strong refs
+  still1407/1410; no KF destruction observed. Not a bounded-memory guarantee.
+- Optional keep_1 ablation skips only solver-result SetBadFlag, still solves
+  and compacts KFs. Stalled after last complete statistics at frame2136;
+  three futex-wait threads. Ptrace denied and sudo -n required password;
+  no system setting changed. Terminated only this owned process after176s
+  without progress; exit-15 and partial buffers preserved. Excluded from
+  complete comparisons; contribution of MIP-only deletion remains unresolved.
+- Commands: extraction/prepare scripts; cmake configure and full -j2 build;
+  run_suite.py --smoke, run_suite.py, --diagnose, --stop-stalled-keep,
+  --finish-repeats; analyze.py, compare_trajectories.py, verify_results.py,
+  probe_sizes.py. Initial hook compilation issue fixed in isolated sources;
+  full build passed. Postprocessing handled truncated failed-run output;
+  size probe linked required Pangolin support. Four main evidence checks pass;
+  ablation explicitly unusable. Counter adds8 bytes/MP,0 bytes/KF in both cores.
+- Report, plot, CSV, manifests, patches, logs, verification and size probes
+  retained in the evaluation directory. RDK reuse report links new evidence.
+- Not run: X5/ARM/DBoW3 integration, alternative solver, sanitizers, Atlas
+  save/reload/reset or larger new area. No truth in bag: pairwise SE3 pose
+  disagreement is not ATE. No deployed runtime files modified.
+- Next: independent reclamation/payload controls, diagnose ablation stall,
+  fix lifecycle and shutdown budgets, then open-source solver and X5 validation.
+
+2026-09-18: REC01 standalone S316 RGB-D recording — passing
+
+- Added laptop entrypoint `record_rgbd_loop.sh`, worker/checker
+  `evaluation/rgbd_recorder.py`, offline regression
+  `evaluation/test_rgbd_recorder.py`, and `docs/rgbd-loop-recording.md`.
+  Updated README, repo map, validation, feature list and the narrow docs
+  ignore exception. No SLAM/ROS C++ node or driver source was modified.
+- Board inspection confirmed `root@192.168.1.10`, Noetic,
+  `/ros1_project/camera_ws/install/setup.bash`, and `/home/metoak/mo_init.sh`.
+  `/home/mo` does not exist. Source initialization in the camera's shell,
+  retaining SDK paths and skipping only already-loaded kernel modules.
+- Flow: isolated board-local ROS master, live RGB-D preflight, local board
+  LZ4 recording, explicit recording notification, Enter/Ctrl+C stop, recorder
+  flush before camera shutdown, resumable rsync, SHA-256 and full bag reads.
+  Board originals and logs are retained. `--fetch` retries without opening
+  the camera. Disk reserve and control heartbeat trigger cleanup.
+- Passed `bash -n record_rgbd_loop.sh`, Python compilation, `--help`, and
+  `/usr/bin/python3 evaluation/test_rgbd_recorder.py` after sourcing Noetic.
+  Offline cases cover healthy, absent depth, all-zero depth, non-monotonic
+  timestamps, malformed payload, unsynchronized streams, truncated and active bags.
+- Hardware command: `./record_rgbd_loop.sh --duration 6 --output
+  artifacts/rgbd_recorder_validation`; run `rgbd_loop_20260918_145800_5dc9d3`
+  returned 134217703 bytes, 1311 messages, 65 RGB / 66 depth frames, 65 pairs.
+- Manual Ctrl+C command: `./record_rgbd_loop.sh --output
+  artifacts/rgbd_recorder_validation`; run `rgbd_loop_20260918_150021_125c59`
+  returned 172202854 bytes, 1688 messages, 84/84 exact-stamp pairs at 11.11 Hz.
+  Both board results and local bag checks passed; second initialization
+  confirmed all four previously loaded modules were handled successfully.
+- `--fetch rgbd_loop_20260918_145800_5dc9d3 --output
+  artifacts/rgbd_recorder_validation` passed. Evidence under that directory:
+  per-run logs, snapshots, board_result.json, stream_check.json, bag_check.json,
+  fetch_test.log, and empty final_board_processes.txt (no camera/ROS leftovers).
+- Existing user's S316_stereo.yaml trailing blank line and prior handoff
+  additions were preserved. Whole-repo `git diff --check` reports that
+  pre-existing YAML whitespace; the task's changed files pass scoped checks.
+- Not run: C++ builds (no compiled source change), real connection loss,
+  disk exhaustion, power loss or physical closed-loop SLAM evaluation.
+  TODO: user records the actual route; basic integrity/pairing checks cannot
+  establish geometric calibration or successful SLAM loop detection.
+
+2026-09-18: REC01 follow-up — delete board bag after verified transfer (passing)
+
+- User requested automatic board-space reclamation. `verify_download` now
+  gates deletion on matching SHA-256, full bag/RGB-D validation and successful
+  recording/SSH status. Fsync the local bag/directory, then recheck the remote
+  hash and delete only that session's `rgbd.bag`. Preserve logs, configuration,
+  other sessions and `.active` files; failures keep the source for retry.
+- Updated `evaluation/rgbd_recorder.py`, `evaluation/test_rgbd_recorder.py`,
+  README, recording guide, feature list, validation notes and this handoff.
+  Existing user changes remain untouched.
+- Passed shell syntax, Python compilation and all 6 offline test groups.
+  New cases cover successful cleanup/retry, failed validation/recording/SSH,
+  changed remote contents, and unfinished recording protection.
+- Real command: `./record_rgbd_loop.sh --fetch
+  rgbd_loop_20260918_145800_5dc9d3 --output artifacts/rgbd_recorder_validation`.
+  Revalidated 1311 messages and deleted only its 134217703-byte board bag;
+  the matching local bag, board logs, and second session bag remain.
+  Evidence: `fetch_cleanup_test.log` and `remote_cleanup_check.txt` under
+  `artifacts/rgbd_recorder_validation/`.
+- No camera restart or C++ build needed for this post-transfer change.
+  TODO: actual network loss during deletion and storage hardware failure were
+  not induced; cleanup errors report uncertainty and allow --fetch retry.
+
+2026-09-18: F17 follow-up — ignore root artifacts (passing)
+
+- Added `/artifacts/` to `.gitignore` after user approval. The 45,683
+  untracked delivery/evaluation files no longer appear in Git status;
+  local artifacts and existing user edits are preserved.
+- Verified `git check-ignore -v` on delivery and recorder evidence paths,
+  `git status --short --untracked-files=all` (10 remaining changes), and
+  representative local file existence. Scoped `git diff --check` passed.
+- Touched `.gitignore` and this handoff only. No builds or hardware tests
+  were needed for this ignore-rule change; no commit, push or Git cleanup ran.
+- Next: review the remaining 10 changes before committing. TODO: remote
+  status remains unrefreshed; this check used local Git metadata only.
+
+2026-09-24: REC02 D435i synchronized 10 FPS bag recorder — passing
+
+- Added laptop entrypoint `record_d435i_10fps_bag.sh` and
+  `docs/d435i-10fps-recording.md`. It connects to `sunrise@192.168.1.11`, starts
+  `/userdata/ros1_realsense_ws/start_rgbd10.sh`, validates the exact-pair
+  `/camera_10fps` RGB/aligned-depth streams, records those images plus their
+  CameraInfo and TF, then reuses REC01 finalization, transfer, full-read,
+  SHA-256 and verified remote cleanup logic.
+- Generalized `evaluation/rgbd_recorder.py` with an optional camera start
+  script, busy-process guards, configurable CameraInfo topics, snapshots,
+  run prefix and retry wrapper while retaining S316 defaults. Added a
+  configurable preflight warmup; D435i discards two startup seconds before its
+  independent five-second stability sample.
+- Passed shell syntax, Python compilation, scoped diff checks, `--help`, and
+  all 6 existing offline regression groups. No ORB-SLAM C++ build was needed.
+- Real command: `./record_d435i_10fps_bag.sh --duration 8 --output
+  artifacts/d435i_10fps_recorder_validation`. Passing run
+  `d435i10_20260924_111100_130a26` preflighted at 9.99 Hz/100% pairing and
+  produced a 48,284,291-byte indexed LZ4 bag with 317 fully read messages:
+  79 each of RGB, aligned depth and both CameraInfo streams, plus one TF static.
+  RGB/depth were both 9.9929 Hz and paired 79/79 within 0.1 ms. SHA-256:
+  `e34f0df7f7583f7da17c51f254a59cbeb6cf14867c57e4205a1a79f41343f1c4`.
+- The verified board bag was removed; board logs remain and no RealSense,
+  adapter, rosbag, roscore or roslaunch process remained. Evidence is under
+  `artifacts/d435i_10fps_recorder_validation/d435i10_20260924_111100_130a26/`.
+- Initial directory creation required one-time ownership setup for
+  `/userdata/d435i_10fps_bags`. An earlier attempt correctly rejected the
+  startup-transient 9.477 Hz window before recording; its logs are retained.
+  TODO: the user still needs to record the physical closed-loop route. Network
+  loss, disk exhaustion and power loss were not induced.
+
+2026-09-24: RGBD01 D435i + MEM18/perf20 adaptation — implemented, tracking blocked by scene
+
+- User requested adaptation and real joint validation, choosing static scene first.
+  Added `run_d435i_slam.sh`, `evaluation/d435i_slam.py`,
+  `evaluation/test_d435i_slam.py`, `evaluation/summarize_d435i_slam.py`, and
+  `docs/d435i-slam.md`; updated README, docs routing/validation/features, and
+  added only the new guide to the existing .gitignore whitelist.
+- Live CameraInfo generates 640x480/10 FPS PinHole settings with measured K/D,
+  rgb8 ordering and 16UC1 millimetre scale 1000. Input subscribes directly to
+  `/camera_10fps/color/image_raw` and aligned depth. No C++ change or rebuild.
+  Pinned perf20 node/core hashes, file/ldd and loaded core path were verified;
+  existing deployments, YAMLs, Swap and governors were unchanged.
+- Ran `./run_d435i_slam.sh 120 off` and `./run_d435i_slam.sh 60 on`.
+  Final off run `20260924_114152_off_3817` processed all 1200 measurement-window
+  pairs; on run `20260924_113803_on_730` processed all 600. About 9.99 Hz,
+  exact pairing, no input-window loss, graceful stop. Off peak PSS 487.03 MiB,
+  VmSwap=0, pswpin/out deltas=0; all transferred off files passed SHA256 checks.
+- Tracking did NOT pass: all callbacks non-OK, no keyframe/map point/valid pose.
+  On run reports state=1 throughout, keypoints 268–320 (median 292), against
+  existing `Tracking::StereoInitialization` >500 gate. Image points mainly at
+  ceiling/light/plain walls. Asked user to aim at textured objects and hold
+  still; no completed adjustment confirmation yet. Do not lower the gate.
+  TODO: re-run off/on after scene adjustment; motion/loop/accuracy/navigation
+  TF remain unvalidated. Low callback times are uninitialized-path cost only.
+- Fixed validation harness issues: use actual ROS subscriptions rather than
+  buffered stdout for readiness; separate resource stderr and allow natural
+  sampler exit; generate remote SHA manifest after process/rospy atexit ends.
+  Initial failed runs and their stale manifests remain documented; separate
+  `analysis_review.json` reanalyses preserve original results.
+- Checks: 6 adaptation tests and all 6 prior recorder regression groups pass;
+  bash/Python syntax and scoped diff checks pass. Global diff-check still
+  flags pre-existing S316_stereo.yaml line 87 whitespace, left untouched.
+  No git commit/reset/cleanup/push/merge. Final board check shows no camera,
+  adapter, SLAM, roslaunch or ROS master remaining; new board outputs ~2.9 MiB.
+- Evidence/report/JSON/CSV/log index and final archive checksum manifest:
+  `artifacts/d435i_slam_20260924/`. Active feature RGBD01 is `blocked` only for
+  actual initialized tracking validation, not for input/config adaptation.
+
+2026-09-24: RGBD02 laptop live launcher — passing (launcher, not tracking gate)
+
+- Added executable `start_rdk_rgbd_slam.sh` and `evaluation/rdk_rgbd_live.py`.
+  Laptop needs only Python3 and ssh/scp; starts a unique board-local ROS master,
+  D435i exact-pair 10 FPS input and pinned MEM18/perf20 with live CameraInfo YAML.
+  Reuses existing calibration/process helpers without modifying finite validation.
+- SLAM stdout/stderr uses stdbuf line buffering and is forwarded immediately to
+  the terminal with [SLAM] prefix; original node log stays on board and combined
+  terminal output is saved locally. Latest tracking status is shown every 5 s.
+  Default runs until Ctrl+C; optional `--duration N` stops after N ready seconds.
+  No unbounded Python per-frame statistics, timing, benchmark, bag or atlas save.
+- Host 2-second heartbeats plus board EOF/stop/15-second timeout control stop only
+  owned process groups; busy camera/SLAM and lock guards reject double starts.
+- Real run `live_20260924_131622_eb6ff1`: actual settings/vocabulary/subscription
+  output appeared while process was live; sent host terminal Ctrl+C after 232
+  tracking-status messages. camera/SLAM exited 0, all cleanup checks true, final
+  board process scan empty. Evidence `logs/rdk_rgbd/live_20260924_131622_eb6ff1/`.
+  Tracking was false in the same low-texture scene: RGBD01 remains blocked.
+- 4 new offline tests passed (live line forwarding before EOF, control EOF,
+  timeout, explicit stop); previous 6 calibration tests passed. Shell/Python
+  syntax, help and scoped diff checks passed. No C++ rebuild required.
+- Updated README, docs/d435i-slam.md, local repo-map, features and validation.
+  No existing deployment or system setting modified. TODO: real network-fault
+  injection/power loss not tested; successful initialized tracking still needs
+  a textured scene, independently of the launcher feature.

@@ -84,3 +84,4 @@ PoseCorrection.CorrectionHorizonFrames: 10
 # static enable flag is 0. If 0: correction only starts when
 # `PoseCorrection.EnableCorrectedMapPose` is set.
 PoseCorrection.AutoEnableOnMapEvent: 1
+ 

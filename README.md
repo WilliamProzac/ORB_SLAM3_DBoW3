@@ -4,6 +4,14 @@
 
 本项目在原有的 ORB-SLAM3 基础上进行了多项定制化修改，主要针对工程实用性、性能监控、快速启动与测试流程进行了优化。
 
+板卡相机独立录包：在笔记本执行 `./record_rgbd_loop.sh`，自动初始化 S316、检查 RGB-D、录制、停止后回传并校验 bag，校验通过后删除板卡对应 bag；用法见 [闭环录制说明](docs/rgbd-loop-recording.md)。
+
+D435i 10 FPS RGB-D 录包：执行 `./record_d435i_10fps_bag.sh`，板卡以 30 FPS 采集并录制严格同步的 10 FPS RGB/对齐深度，停止后回传、完整校验并安全清理板卡 bag；用法见 [D435i 10 FPS 录制说明](docs/d435i-10fps-recording.md)。
+
+D435i + MEM18/perf20 联合验证：执行 `./run_d435i_slam.sh 120 off`，自动读取实机标定并在独立目录运行；用法及验收边界见 [D435i SLAM 适配说明](docs/d435i-slam.md)。
+
+本机一键启动板卡 RGB-D SLAM：执行 `./start_rdk_rgbd_slam.sh`，实时显示板端 SLAM 输出，Ctrl+C 停止；可加 `--duration 60` 自动停止。日志保存在 `logs/rdk_rgbd/`。
+
 ## 本项目主要修改内容 (Modifications)
 
 ### 1. 词袋库替换 (DBoW3 Support)

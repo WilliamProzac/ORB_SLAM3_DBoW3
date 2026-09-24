@@ -94,7 +94,10 @@ borrar/*
 
 # Governance files kept local on master
 /AGENTS.md
-/docs/
+/docs/*
+!/docs/rgbd-loop-recording.md
+!/docs/d435i-10fps-recording.md
+!/docs/d435i-slam.md
 
 # Local ROS recordings and runtime output
 *.bag
@@ -107,6 +110,7 @@ borrar/*
 /KeyFrameTrajectory_TUM_Format.txt
 
 # Local tool state and generated reports
+/artifacts/
 /.cache/
 /.codex
 /compare_results/

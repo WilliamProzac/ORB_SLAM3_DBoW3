@@ -10,6 +10,93 @@ Source basis: `README.md`, `build.sh`, `build_ros.sh`,
 - `./run_stereo_inertial.sh <mode> <sensor> [--log]`
 - `./collect_slam_debug.sh [attach|launch-slam] [options]` for collecting
   board-side ROS runtime evidence from the RDK X5 catkin deployment.
+- `./record_rgbd_loop.sh` for standalone S316 RGB-D capture from the laptop;
+  see `docs/rgbd-loop-recording.md`.
+- `./record_d435i_10fps_bag.sh` for ROS1 D435i 30 FPS capture and synchronized
+  10 FPS RGB-D recording; see `docs/d435i-10fps-recording.md`.
+
+## REC01 Standalone RGB-D Recording
+
+- Syntax: `bash -n record_rgbd_loop.sh` and
+  `/usr/bin/python3 -m py_compile evaluation/rgbd_recorder.py evaluation/test_rgbd_recorder.py`.
+- Offline checks: source `/opt/ros/noetic/setup.bash`, then run
+  `/usr/bin/python3 evaluation/test_rgbd_recorder.py`. Uses real LZ4 bags to
+  cover valid data, missing depth, zero depth, non-monotonic stamps, malformed
+  payloads, mismatched RGB-D stamps, truncation and unfinished `.active` files.
+- Board: `./record_rgbd_loop.sh --duration 6 --output artifacts/rgbd_recorder_validation`;
+  repeat without `--duration` and press Ctrl+C after recording begins. Require
+  successful preflight, finalized bag, matching SHA-256, a full message read,
+  valid RGB-D pairs and no remaining session camera/ROS processes.
+- Retry: use `--fetch <run_id>` with the same `--output`, and require another
+  successful verification without starting camera processes. After the
+  user-requested cleanup extension, successful verification deletes only the
+  corresponding board `rgbd.bag`; verify the local copy and board logs remain.
+- Cleanup regression: the same offline test script now has 6 test groups,
+  including successful deletion/retry, failure preservation for mismatched
+  hashes or invalid data/recording status, and refusal to delete changed
+  remote files or sessions with `.active` bags.
+- Passed on 2026-09-18: runs `rgbd_loop_20260918_145800_5dc9d3` and
+  `rgbd_loop_20260918_150021_125c59` under
+  `artifacts/rgbd_recorder_validation/`. The latter manually stopped via Ctrl+C:
+  84 exact-stamp RGB-D pairs at 11.11 Hz, 1688 total messages, 172202854 bytes.
+  `board_result.json` and `bag_check.json` record completion and validation;
+  `fetch_test.log` records recovery and `final_board_processes.txt` is empty.
+- Cleanup extension passed real `--fetch` on the first run: local 134217703-byte
+  bag and 1311-message full read remained valid, the selected board bag was
+  removed, and its logs plus the other session's bag remained. Evidence:
+  `fetch_cleanup_test.log` and `remote_cleanup_check.txt` in the same directory.
+- Not exercised: actual network failure, disk exhaustion, power loss, or a
+  physical closed-loop walk. Basic data checks do not establish SLAM loop
+  detection or geometric calibration accuracy. No C++ build is needed.
+
+## REC02 D435i 10 FPS RGB-D Recording
+
+- Syntax/regression: run `bash -n record_d435i_10fps_bag.sh`, compile
+  `evaluation/rgbd_recorder.py`, and run
+  `/usr/bin/python3 evaluation/test_rgbd_recorder.py` after sourcing Noetic.
+- Hardware: run `./record_d435i_10fps_bag.sh --duration 8 --output
+  artifacts/d435i_10fps_recorder_validation`. Require a stable post-warmup
+  preflight above 9.5 Hz, exact RGB/depth pairing, finalized LZ4 bag, matching
+  SHA-256, complete sequential read, verified board-bag cleanup, retained logs,
+  and no remaining camera/ROS/recorder process.
+- Passed 2026-09-24 with `d435i10_20260924_111100_130a26`: preflight RGB and
+  depth were both 9.99 Hz with 100% pairing. The 7.906-second, 48,284,291-byte
+  bag contains 79 RGB, 79 aligned-depth, 79 color-info, 79 depth-info and one
+  TF-static message. Full read covered all 317 indexed messages; both image
+  streams were 9.9929 Hz, 79/79 paired within 0.1 ms, with 87.94% sampled valid
+  depth. SHA-256 is `e34f0df7f7583f7da17c51f254a59cbeb6cf14867c57e4205a1a79f41343f1c4`.
+- The first hardware attempt correctly stopped before recording because the
+  initial five-second header-rate window was 9.477 Hz. The recorder now waits
+  for both topics, discards a configurable two-second D435i startup warmup,
+  then measures a fresh five-second window. Entire recorded bags remain fully
+  checked without discarding startup frames.
+- Evidence is under `artifacts/d435i_10fps_recorder_validation/`. Physical
+  closed-loop coverage, network failure, disk exhaustion and power loss were
+  not exercised.
+
+## RGBD01 D435i + MEM18/perf20 Integration
+
+- Syntax: `bash -n run_d435i_slam.sh`; compile `evaluation/d435i_slam.py`.
+- Offline: `/usr/bin/python3 evaluation/test_d435i_slam.py -v` checks calibration,
+  depth units, rejected models, sequence gaps and histogram summaries.
+- Hardware: `./run_d435i_slam.sh 120 off`, then `./run_d435i_slam.sh 60 on`.
+  Require live CameraInfo, matched binary SHA256/file/ldd/loaded core, complete
+  10 FPS input, initialized and valid tracking, no resets, latency distribution,
+  memory/paging evidence, graceful owned-process cleanup and transfer hashes.
+- Static-only scope. Do not mark tracking passed when the scene fails the
+  unchanged initialization requirements. Timing-on is diagnostic only.
+- Instructions: `docs/d435i-slam.md`; evidence: `artifacts/d435i_slam_20260924/`.
+
+## RGBD02 host live launcher
+
+- Run `bash -n start_rdk_rgbd_slam.sh` and
+  `/usr/bin/python3 evaluation/test_rdk_rgbd_live.py -v`.
+- Launch `./start_rdk_rgbd_slam.sh`, verify actual SLAM stdout/stderr appears
+  before shutdown, then press Ctrl+C. Require owned camera/SLAM/master cleanup,
+  host log preservation and board-log fetch. Optional `--duration 60` is a
+  convenience timeout; this launcher is not a tracking acceptance test.
+- EOF, explicit stop and heartbeat timeout have offline control tests. Actual
+  LAN packet loss, power failure and forced process kills are not asserted tested.
 
 ## Build Validation
 
