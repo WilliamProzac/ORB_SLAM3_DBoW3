@@ -1347,3 +1347,57 @@ Ground truth contains a129.865s gap; typical20ms associations are1227/5057.
 
 The final CPU-instrumented native and ARM pairs are running the required
 matrices. No candidate has passed admission. Final C6 evidence remains pending.
+
+
+## LM01 C6 final — implemented, production gate blocked
+
+All planned experiment groups were executed and negative outcomes retained.
+Final ARM/core/node/probe sources are the126-file snapshot for core05e83e55
+and outer9feff3c; later changes are analysis/tools/docs. Full six-binary native
+reproduction freeze matches the tested manifest. Default LocalMapMode remains off.
+
+Formal long A-B/B-A/A-B: A processed2752/2825/2831, P95=113.661/110.157/108.010ms;
+B processed2282/2316/2431, P95=148.547/146.167/146.365ms, nonOK=0/36/111.
+Fixed-tail B P95=153.786/172.585/148.022ms; ordinary tail full/retry=18.51/12.38/7.41%.
+Formal loop: A953/955/955, B900/930/907 of955; B P95=123.417/110.799/116.878ms.
+All six candidate board rounds fail input/P95/P99. All six loop rounds retain
+one known loop and complete GBA writeback/finish/join. Pose topic integrity
+checks pass for all processed OK callbacks, not ground-truth accuracy.
+
+Final TUM: six attempts; five5057-pair completions, off1 interrupted after
+merge cleanup stalled (4693 complete flushed rows). candidate1/3 allOK;
+candidate2 and off2/3 split maps, corrected trajectory timestamps invalid.
+No valid three-run ATE/RPE comparison; precision gate FAIL. Initial six TUM
+runs are also retained. GT has129.865s gap; typically1227/5057 associations.
+Final blackout+5-pair gap: both recover but split maps, candidate295 inputs
+with52 nonOK; reset and intentional map-switch A/B240 each allOK. Save120/120
+OK, loaded existing map101/120 OK; reload input-completeness FAIL. The8914885B
+map was fetched/SHA-verified before manifest-owned deletion. Final board free
+9775378432B; no experiment SLAM process or registered map remains.
+
+Scoped transaction/statistics/KF/MP/controller/concurrency fixtures,27 ARM
+probes and numeric max7.1e-15 remain PASS. C5 sanitizer exceptions/limits apply;
+whole-System LSan remains inherited open. A merge progress failure is open,
+not fixed or attributed solely to this feature. C5/C6 MP caps never bind;
+no MP-cut speedup claim. All newborn gates within5pp. Coverage not promoted.
+
+Analyzer audits: relative callback timestamps cannot align exactly to absolute
+resource CPU samples; report whole-process and BA thread CPU. The inherited
+visual BA num_MPs output is unpopulated; use separately scoped MemoryStats
+candidate MPs and actual graph vertices/edges, never interpret timer zeros as
+zero landmarks. No raw evidence was rewritten. Runtime algorithms were frozen
+throughout formal testing. Follow-up MIH/BA and diagnostic-overhead work remains
+conditional and unimplemented; see memory/LM01_FOLLOWUP.md.
+
+Primary delivery: /home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/local_map_budget_20260924/REPORT.md
+Machine gates: c6/acceptance.json (production_pass=false); full data:
+c6/formal_details.json, c6/final_tum, c6/final_faults, c6/save_reload,
+c6/pose_sidecars/analysis.json, c6/board_final_audit.json.
+
+Reproduction: memory/tools/build_localmap_host.sh + freeze_localmap_host_build.py,
+memory/tools/build_arm.sh --localmap, run_localmap_board_matrix.py,
+run_localmap_tum_matrix.py (bounded timeout/resume preserves failures),
+run_localmap_fault_matrix.py, run_localmap_save_reload.py. Final evaluation:
+evaluate_localmap_acceptance.py BOARD TUM OUT --supplementary EVIDENCE.json.
+collect_localmap_delivery.py and analyze_localmap_pose_monitor.py reproduce
+cost/resource/pose summaries; actual final datasets exercise the analyzers.
