@@ -1,0 +1,8 @@
+{
+  "core/include/LocalMapController.h": "7f6a574f99600028a961e8f5f70c480fb9a41ec6023f218b058066612350e470",
+  "core/include/LocalMapEvents.h": "f3a2182a457180639ab3549865d007eff63277b600536616aae1db6eb037bbb4",
+  "core/include/LocalMapGrid.h": "940ae61d47c73abfa1ccf09f78747b063850627531f377cff8c0db5419bb0880",
+  "core/src/LocalMapEvents.cc": "57f487e06e3f6ccd8e5842da0488888e45aa7f76c74a8b86d9f54d8db99e74c7",
+  "memory/tools/local_map_controller_fixture.h": "5bb741373ccd98ccf9e7ceb6de6b8b62c6eaba823997486754b283b219883ae1",
+  "memory/tools/local_map_controller_probe.cc": "377a78bf814818667d66e27a10023b611242e300bdc25add0b43a7e9cf6bf623"
+}

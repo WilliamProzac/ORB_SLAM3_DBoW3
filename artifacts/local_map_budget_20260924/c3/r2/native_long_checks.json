@@ -1,0 +1,13 @@
+{
+  "lm01_c3_kf80": {
+    "processed": 2910,
+    "states": {
+      "2": 2910
+    },
+    "local_attempts": 2909,
+    "reasons": {
+      "recovery": 58,
+      "votes": 2851
+    }
+  }
+}

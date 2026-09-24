@@ -1,0 +1,57 @@
+{
+  "stage": "C3 r2",
+  "native_long": {
+    "lm01_c3_kf80": {
+      "processed": 2910,
+      "states": {
+        "2": 2910
+      },
+      "local_attempts": 2909,
+      "reasons": {
+        "recovery": 58,
+        "votes": 2851
+      }
+    }
+  },
+  "board_kf80": {
+    "processed": 2450,
+    "missing": 460,
+    "non_ok": 0
+  },
+  "board_callback_p95_ms": 136.28529744999992,
+  "board_last25_p95_ms": 145.49017919999997,
+  "board_usage": {
+    "local_tracking_frames": 2449,
+    "full_frames": 349,
+    "full_fraction": 0.14250714577378523,
+    "longest_full_local_frame_run": 38,
+    "ordinary_ok_frames": 2429,
+    "ordinary_ok_full_or_retry_fraction": 0.13544668587896252,
+    "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+    "controller_states": {
+      "3": 415,
+      "2": 382,
+      "1": 517,
+      "0": 1135
+    }
+  },
+  "board_last25_usage": {
+    "local_tracking_frames": 547,
+    "full_frames": 104,
+    "full_fraction": 0.19012797074954296,
+    "longest_full_local_frame_run": 38,
+    "ordinary_ok_frames": 547,
+    "ordinary_ok_full_or_retry_fraction": 0.19012797074954296,
+    "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+    "controller_states": {
+      "2": 120,
+      "1": 107,
+      "3": 122,
+      "0": 198
+    }
+  },
+  "arm_original_probes": 27,
+  "controller_tsan_asan_ubsan_lsan": "pass without suppressions",
+  "promotion": false,
+  "pending": "KF96/KF64 board screening running; C4-C6 pending"
+}
