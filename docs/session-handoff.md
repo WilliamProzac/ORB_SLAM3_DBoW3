@@ -1,3 +1,24 @@
+# LM01 current handoff — 2026-09-24
+
+Active work: implement approved active local-map plan in runtime outer/core at
+`/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle`.
+This IDE checkout holds evidence/docs; its XFeat core is not the board baseline.
+C0 snapshots: IDE 4aabed58, core d80009e9, outer 3d38e37 (+ eb05fe4 sanitizer recipe).
+Both runtime repositories are on `perf/tracking-local-map-budget`.
+
+C1 transaction foundation passes native/ARM fixtures and the original 27 probes.
+Native short replay: 120/120 OK. Sanitizer results and precise exceptions are
+in `artifacts/local_map_budget_20260924/c1/checks.json` and runtime `memory/LM01.md`.
+The transaction is fixture-only until C2 integrates it with Tracking. No budget
+or realtime acceptance has been enabled/claimed. Valid long baseline bridge
+rounds are in progress; the first runner-error round is explicitly invalid.
+
+Continue C2–C6 per the approved plan; preserve map lifetime, original thresholds,
+feature count/queues and frozen perf20. Use frozen per-round launch helpers and
+manifest-based artifact ownership. Keep inherited full-System LSan separate.
+
+Prior handoff follows unchanged below.
+
 # Session Handoff
 
 ## Summary

@@ -679,3 +679,12 @@ The descriptor test passed, 9 shell scripts and 10 Python modules passed syntax
 checks, and build defaults/overrides, feature ownership and ignore rules passed.
 The new local branch commit IDs and clean statuses are recorded in the archive
 after committing. Original branch refs are retained.
+
+## LM01 Active local map (runtime worktree)
+
+The implementation lives in `/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/core`,
+not this IDE checkout's XFeat core. Run `bash memory/tools/build_localmap_host.sh c1`
+from the runtime outer repository; the fixture is `memory/devel-host-lm01-c1/lib/orb_slam3_ros/local_map_budget_probe`.
+The runtime `memory/LM01.md` records contracts, stage gates and board artifact ownership.
+Source/binary provenance and results are archived here under `artifacts/local_map_budget_20260924`.
+C1 native/ARM probes and transaction fixtures pass; sanitizer qualifications are recorded in c1/checks.json. Production integration and later quality/realtime gates remain in progress.
