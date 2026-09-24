@@ -1,0 +1,58 @@
+{
+  "plan": [
+    {
+      "stage": "c5_legacy80",
+      "name": "c5_legacy80_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_legacy80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11954
+    },
+    {
+      "stage": "c5_attempted80",
+      "name": "c5_attempted80_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_attempted80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11955
+    },
+    {
+      "stage": "c5_mp80",
+      "name": "c5_mp80_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_mp80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11956
+    },
+    {
+      "stage": "c5_adaptive96",
+      "name": "c5_adaptive96_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive96.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11957
+    },
+    {
+      "stage": "c5_adaptive80",
+      "name": "c5_adaptive80_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11958
+    },
+    {
+      "stage": "c5_adaptive64",
+      "name": "c5_adaptive64_long2910_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive64.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11959
+    }
+  ],
+  "build": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/build-arm-lm01-c5",
+  "lifetime": true,
+  "manifest_sha256": "c7afe00dd33da65c9d22cdd08996cff27b2e8c2571950c7edea729a013683df6",
+  "config_sha256": {
+    "c5_legacy80": "4873ac8b8a67ac5d5f3f2a2def9383112d26db924d1ed333e76c3fe3e5e514e4",
+    "c5_attempted80": "80b6c5e0db273106ffaa95162a1f601aa266bac793b022018686deac6bf954bf",
+    "c5_mp80": "62a05b60412332e98b2d383211990afcbc32bfa1a6fda6cd6d9fd73656fb3441",
+    "c5_adaptive96": "9e8443c6f8caf39e3f7c30f0f5830cf0af429d373a3ff0c7a1e0995042c9466f",
+    "c5_adaptive80": "235b45fb01a887cf3c49c85d3855c691afcc70681d7af1bad1536ef5293c5b80",
+    "c5_adaptive64": "e41a510d0561cc422f68bac0be304402d6eb8ff48c1dbd6d567d84b08dbbe5bf"
+  },
+  "runner_sha256": "f78e30cd542e8a825f86eb00597e16b7e6783c701815bd2151179b092e65d6bb"
+}

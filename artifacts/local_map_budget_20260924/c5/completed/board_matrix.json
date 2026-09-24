@@ -1,0 +1,2482 @@
+{
+  "c5_adaptive64_long2910_1": {
+    "processed": 2434,
+    "expected": 2910,
+    "non_ok": 0,
+    "callback": {
+      "count": 2434,
+      "mean": 106.62932021733772,
+      "min": 69.054755,
+      "max": 355.990497,
+      "p50": 102.456223,
+      "p95": 137.7108256,
+      "p99": 169.7418922400002
+    },
+    "tail_callback": {
+      "count": 567,
+      "mean": 114.55097329982362,
+      "min": 80.461181,
+      "max": 220.684927,
+      "p50": 112.725302,
+      "p95": 155.17655239999976,
+      "p99": 185.12762270000002
+    },
+    "localmap": {
+      "frames": 2433,
+      "bounded_attempts": 2180,
+      "retries": 6,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 253,
+        "votes": 2174,
+        "full_retry": 6
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 2180,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": 0.0,
+        "young_reserved_total": 0,
+        "statistics": {
+          "1": 2433
+        },
+        "eligible_mp": {
+          "p50": 989.0,
+          "p95": 1530.4,
+          "p99": 1646.6799999999998,
+          "max": 2025
+        },
+        "selected_mp": {
+          "p50": 989.0,
+          "p95": 1530.4,
+          "p99": 1646.6799999999998,
+          "max": 2025
+        },
+        "protected_mp": {
+          "p50": 101.0,
+          "p95": 205.0,
+          "p99": 278.0,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 4529.0,
+          "p95": 7389.4000000000015,
+          "p99": 10520.399999999994,
+          "max": 12316
+        },
+        "frustum_rejected": {
+          "p50": 3586.0,
+          "p95": 6135.8,
+          "p99": 9182.719999999996,
+          "max": 10573
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2433,
+        "full_frames": 259,
+        "full_fraction": 0.10645293875873407,
+        "longest_full_local_frame_run": 24,
+        "ordinary_ok_frames": 2413,
+        "ordinary_ok_full_or_retry_fraction": 0.09904682967260671,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 317,
+          "2": 349,
+          "1": 427,
+          "0": 1340
+        }
+      },
+      "controller": {
+        "probe_frames": 208,
+        "budget_low_frames": 39,
+        "budget_failure_reasons": {
+          "probe_health": 6
+        },
+        "retry_final_successes": 6,
+        "event_epochs": 1,
+        "event_kinds": {
+          "0": 2433
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 567,
+          "full_frames": 26,
+          "full_fraction": 0.04585537918871252,
+          "longest_full_local_frame_run": 24,
+          "ordinary_ok_frames": 567,
+          "ordinary_ok_full_or_retry_fraction": 0.04585537918871252,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "0": 407,
+            "1": 108,
+            "2": 23,
+            "3": 29
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.228915,
+          "p95": 0.4923384,
+          "p99": 0.7214685599999991
+        },
+        "snapshot_ms": {
+          "p50": 11.8805,
+          "p95": 19.23732,
+          "p99": 28.717719999999908
+        },
+        "update_ms": {
+          "p50": 19.2957,
+          "p95": 33.17434,
+          "p99": 46.636808
+        },
+        "search_ms": {
+          "p50": 4.74005,
+          "p95": 7.516564000000001,
+          "p99": 8.963098399999993
+        },
+        "pose_ms": {
+          "p50": 8.41078,
+          "p95": 13.292580000000001,
+          "p99": 17.21881999999998
+        },
+        "commit_ms": {
+          "p50": 9.11632,
+          "p95": 16.600280000000005,
+          "p99": 24.01487999999997
+        },
+        "trial_ms": {
+          "p50": 35.5066,
+          "p95": 49.24640000000001,
+          "p99": 63.38635599999999
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001208,
+          "p95": 0.0017499999999999998,
+          "p99": 0.3857411199999997
+        },
+        "health_ms": {
+          "p50": 0.038167,
+          "p95": 0.05918280000000001,
+          "p99": 0.09394655999999997
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.00025,
+          "p95": 0.000583,
+          "p99": 0.00075
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 299411,
+      "survival": {
+        "2": {
+          "eligible": 299112,
+          "alive": 70254,
+          "censored": 299,
+          "fraction": 0.23487523068282115
+        },
+        "3": {
+          "eligible": 299083,
+          "alive": 66541,
+          "censored": 328,
+          "fraction": 0.22248339089817876
+        },
+        "5": {
+          "eligible": 299024,
+          "alive": 65591,
+          "censored": 387,
+          "fraction": 0.21935028626464764
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 299024,
+          "reached": 88609,
+          "fraction": 0.29632738509283535,
+          "censored": 387,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.1799938678741455,
+          "wait_wall_s_median": 0.2555808649999989
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 299024,
+          "reached": 38661,
+          "fraction": 0.12929062550163198,
+          "censored": 387,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.3599982261657715,
+          "wait_wall_s_median": 0.4349963119999991
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 70884,
+        "retire_low_observation_age": 149150,
+        "mp_replace": 13400,
+        "retire_observation_removal": 6657
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": -0.2789665236854283,
+      "survival_3": -0.2574847385352741,
+      "survival_5": -0.19562065701617115,
+      "unique_valid_kf_observations_2": -0.051334852059026215,
+      "unique_valid_kf_observations_3": -0.16709911077736062
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 274,
+        "sum": 660.3415066749101,
+        "max": 3.194290188725256,
+        "p50": 2.6748956744030163,
+        "p95": 3.0631803511023783,
+        "p99": 3.1626223451821587
+      },
+      "system_oom_kill_delta": 0,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 691.1,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2434,
+          "sum": 2152.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2434,
+          "sum": 2201.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1163,
+          "sum": 1613.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1163,
+          "sum": 145653.08277399995,
+          "max": 1693.982301,
+          "p50": 28.037775,
+          "p95": 502.09247659999954,
+          "p99": 599.8731765799997
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 275,
+        "sum": 411000000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 275,
+        "sum": 13707.827999999998,
+        "max": 51.058,
+        "p50": 50.227,
+        "p95": 50.765,
+        "p99": 51.009
+      },
+      "local_ba": {
+        "executed": 128,
+        "completed": 5,
+        "aborted": 123,
+        "completion_fraction": 0.0390625,
+        "wall_ms": {
+          "all": {
+            "count": 128,
+            "sum": 45340.57136300001,
+            "max": 2684.220804,
+            "p50": 201.810197,
+            "p95": 1274.522413799999,
+            "p99": 1995.5119957900008
+          },
+          "completed": {
+            "count": 5,
+            "sum": 7133.277777,
+            "max": 2042.569222,
+            "p50": 1709.759656,
+            "p95": 2007.7120174000001,
+            "p99": 2035.59778108
+          },
+          "aborted": {
+            "count": 123,
+            "sum": 38207.29358600001,
+            "max": 2684.220804,
+            "p50": 184.677247,
+            "p95": 852.2707031999996,
+            "p99": 1443.3017621600002
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 128,
+            "sum": 1779046.0,
+            "max": 52965,
+            "p50": 10923.5,
+            "p95": 39432.049999999996,
+            "p99": 47159.48000000001
+          },
+          "lba_optimized_keyframes": {
+            "count": 128,
+            "sum": 4939.0,
+            "max": 116,
+            "p50": 39.0,
+            "p95": 86.64999999999999,
+            "p99": 100.38000000000002
+          },
+          "lba_fixed_keyframes": {
+            "count": 128,
+            "sum": 15127.0,
+            "max": 337,
+            "p50": 63.5,
+            "p95": 311.99999999999983,
+            "p99": 336.0
+          },
+          "lba_map_points": {
+            "count": 128,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  },
+  "c5_adaptive80_long2910_1": {
+    "processed": 2446,
+    "expected": 2910,
+    "non_ok": 70,
+    "callback": {
+      "count": 2446,
+      "mean": 104.35977870237122,
+      "min": 50.320003,
+      "max": 333.849976,
+      "p50": 103.1764895,
+      "p95": 136.9462165,
+      "p99": 147.50246750000002
+    },
+    "tail_callback": {
+      "count": 534,
+      "mean": 121.89697841011235,
+      "min": 78.352778,
+      "max": 333.849976,
+      "p50": 121.799826,
+      "p95": 144.2538806,
+      "p99": 160.2041463399999
+    },
+    "localmap": {
+      "frames": 2373,
+      "bounded_attempts": 2245,
+      "retries": 1,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 128,
+        "votes": 2244,
+        "full_retry": 1
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 2245,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": 0.0,
+        "young_reserved_total": 0,
+        "statistics": {
+          "1": 2373
+        },
+        "eligible_mp": {
+          "p50": 957.0,
+          "p95": 1567.2000000000003,
+          "p99": 1703.0,
+          "max": 1849
+        },
+        "selected_mp": {
+          "p50": 957.0,
+          "p95": 1567.2000000000003,
+          "p99": 1703.0,
+          "max": 1849
+        },
+        "protected_mp": {
+          "p50": 105.0,
+          "p95": 236.4000000000001,
+          "p99": 297.0,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 4816.0,
+          "p95": 7532.8,
+          "p99": 8113.0,
+          "max": 9475
+        },
+        "frustum_rejected": {
+          "p50": 3596.0,
+          "p95": 6282.800000000001,
+          "p99": 6932.4000000000015,
+          "max": 8239
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2373,
+        "full_frames": 129,
+        "full_fraction": 0.05436156763590392,
+        "longest_full_local_frame_run": 30,
+        "ordinary_ok_frames": 2313,
+        "ordinary_ok_full_or_retry_fraction": 0.029831387808041506,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 155,
+          "2": 241,
+          "1": 459,
+          "0": 1518
+        }
+      },
+      "controller": {
+        "probe_frames": 180,
+        "budget_low_frames": 26,
+        "budget_failure_reasons": {
+          "probe_health": 1
+        },
+        "retry_final_successes": 1,
+        "event_epochs": 3,
+        "event_kinds": {
+          "0": 2373
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 534,
+          "full_frames": 0,
+          "full_fraction": 0.0,
+          "longest_full_local_frame_run": 0,
+          "ordinary_ok_frames": 534,
+          "ordinary_ok_full_or_retry_fraction": 0.0,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "1": 133,
+            "0": 361,
+            "2": 40
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.226207,
+          "p95": 0.487914,
+          "p99": 0.7089442400000027
+        },
+        "snapshot_ms": {
+          "p50": 12.4012,
+          "p95": 19.81748,
+          "p99": 21.565896000000006
+        },
+        "update_ms": {
+          "p50": 19.9593,
+          "p95": 32.22952,
+          "p99": 38.912220000000005
+        },
+        "search_ms": {
+          "p50": 4.82997,
+          "p95": 7.5611640000000016,
+          "p99": 8.547230000000003
+        },
+        "pose_ms": {
+          "p50": 8.65403,
+          "p95": 14.431540000000002,
+          "p99": 17.677504
+        },
+        "commit_ms": {
+          "p50": 9.50794,
+          "p95": 16.55314,
+          "p99": 19.02251200000002
+        },
+        "trial_ms": {
+          "p50": 36.3292,
+          "p95": 49.276520000000005,
+          "p99": 57.44813200000005
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001208,
+          "p95": 0.0017499999999999998,
+          "p99": 0.6335307200000063
+        },
+        "health_ms": {
+          "p50": 0.038375,
+          "p95": 0.06668300000000002,
+          "p99": 0.10209800000000009
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.00025,
+          "p95": 0.000542,
+          "p99": 0.00075
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 295506,
+      "survival": {
+        "2": {
+          "eligible": 295192,
+          "alive": 70729,
+          "censored": 314,
+          "fraction": 0.23960337678527874
+        },
+        "3": {
+          "eligible": 295072,
+          "alive": 66825,
+          "censored": 434,
+          "fraction": 0.22647014965838846
+        },
+        "5": {
+          "eligible": 294818,
+          "alive": 65478,
+          "censored": 688,
+          "fraction": 0.22209634418522614
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 294818,
+          "reached": 88621,
+          "fraction": 0.3005956217055946,
+          "censored": 688,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.1799907684326172,
+          "wait_wall_s_median": 0.23814164599998833
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 294818,
+          "reached": 39541,
+          "fraction": 0.1341200333765238,
+          "censored": 688,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.35999608039855957,
+          "wait_wall_s_median": 0.4142912399999972
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 64816,
+        "retire_low_observation_age": 150327,
+        "retire_observation_removal": 6067,
+        "mp_replace": 13658
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": 0.19384808656033037,
+      "survival_3": 0.14119113748569667,
+      "survival_5": 0.0789851350416787,
+      "unique_valid_kf_observations_2": 0.37548880921690064,
+      "unique_valid_kf_observations_3": 0.3158416767118227
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 275,
+        "sum": 672.2720739615861,
+        "max": 3.3253321819084167,
+        "p50": 2.685316321856775,
+        "p95": 3.1821219335884905,
+        "p99": 3.289040161360476
+      },
+      "system_oom_kill_delta": 0,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 703.4899999999999,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2446,
+          "sum": 1950.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2446,
+          "sum": 2023.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1148,
+          "sum": 1531.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1148,
+          "sum": 126530.32059499998,
+          "max": 833.832863,
+          "p50": 23.864093500000003,
+          "p95": 506.21444114999963,
+          "p99": 610.16463976
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 276,
+        "sum": 413100000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 276,
+        "sum": 13786.342000000004,
+        "max": 51.302,
+        "p50": 50.276,
+        "p95": 50.862,
+        "p99": 51.058
+      },
+      "local_ba": {
+        "executed": 160,
+        "completed": 6,
+        "aborted": 154,
+        "completion_fraction": 0.0375,
+        "wall_ms": {
+          "all": {
+            "count": 160,
+            "sum": 56471.886863,
+            "max": 12385.354191,
+            "p50": 162.78603600000002,
+            "p95": 993.0949936999993,
+            "p99": 1864.0871174099984
+          },
+          "completed": {
+            "count": 6,
+            "sum": 15956.503466,
+            "max": 12385.354191,
+            "p50": 727.7954325000001,
+            "p95": 9678.127892,
+            "p99": 11843.908931200001
+          },
+          "aborted": {
+            "count": 154,
+            "sum": 40515.38339700001,
+            "max": 2161.488359,
+            "p50": 156.5744305,
+            "p95": 825.7973149499994,
+            "p99": 1541.2689691299997
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 160,
+            "sum": 1850467.0,
+            "max": 58754,
+            "p50": 6720.5,
+            "p95": 39909.79999999998,
+            "p99": 50823.35999999998
+          },
+          "lba_optimized_keyframes": {
+            "count": 160,
+            "sum": 5400.0,
+            "max": 131,
+            "p50": 28.5,
+            "p95": 82.04999999999998,
+            "p99": 112.09999999999997
+          },
+          "lba_fixed_keyframes": {
+            "count": 160,
+            "sum": 10138.0,
+            "max": 289,
+            "p50": 35.0,
+            "p95": 279.04999999999995,
+            "p99": 285.40999999999997
+          },
+          "lba_map_points": {
+            "count": 160,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  },
+  "c5_adaptive96_long2910_1": {
+    "processed": 2158,
+    "expected": 2910,
+    "non_ok": 0,
+    "callback": {
+      "count": 2158,
+      "mean": 120.45969220203892,
+      "min": 65.559779,
+      "max": 286.606786,
+      "p50": 118.85172,
+      "p95": 155.71348060000003,
+      "p99": 177.04614720999993
+    },
+    "tail_callback": {
+      "count": 491,
+      "mean": 132.8941670610998,
+      "min": 81.3253,
+      "max": 228.869582,
+      "p50": 132.787004,
+      "p95": 161.387316,
+      "p99": 171.03241460000004
+    },
+    "localmap": {
+      "frames": 2157,
+      "bounded_attempts": 1737,
+      "retries": 6,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 420,
+        "votes": 1731,
+        "full_retry": 6
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 1737,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": 0.0,
+        "young_reserved_total": 0,
+        "statistics": {
+          "1": 2157
+        },
+        "eligible_mp": {
+          "p50": 1045.0,
+          "p95": 1493.1999999999998,
+          "p99": 1649.44,
+          "max": 1777
+        },
+        "selected_mp": {
+          "p50": 1045.0,
+          "p95": 1493.1999999999998,
+          "p99": 1649.44,
+          "max": 1777
+        },
+        "protected_mp": {
+          "p50": 97.0,
+          "p95": 199.0,
+          "p99": 283.0800000000004,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 6480.0,
+          "p95": 9286.2,
+          "p99": 11326.960000000008,
+          "max": 16559
+        },
+        "frustum_rejected": {
+          "p50": 5330.0,
+          "p95": 8101.4,
+          "p99": 10085.320000000003,
+          "max": 15279
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2157,
+        "full_frames": 426,
+        "full_fraction": 0.19749652294853964,
+        "longest_full_local_frame_run": 48,
+        "ordinary_ok_frames": 2137,
+        "ordinary_ok_full_or_retry_fraction": 0.1899859616284511,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 511,
+          "2": 407,
+          "1": 439,
+          "0": 800
+        }
+      },
+      "controller": {
+        "probe_frames": 252,
+        "budget_low_frames": 47,
+        "budget_failure_reasons": {
+          "probe_health": 6
+        },
+        "retry_final_successes": 6,
+        "event_epochs": 1,
+        "event_kinds": {
+          "0": 2157
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 491,
+          "full_frames": 147,
+          "full_fraction": 0.29938900203665986,
+          "longest_full_local_frame_run": 26,
+          "ordinary_ok_frames": 491,
+          "ordinary_ok_full_or_retry_fraction": 0.29938900203665986,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "0": 106,
+            "1": 102,
+            "2": 106,
+            "3": 177
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.23454,
+          "p95": 0.5967463999999997,
+          "p99": 0.7364800000000004
+        },
+        "snapshot_ms": {
+          "p50": 16.9217,
+          "p95": 24.922479999999993,
+          "p99": 32.88132
+        },
+        "update_ms": {
+          "p50": 26.8309,
+          "p95": 43.08641999999998,
+          "p99": 56.30974400000002
+        },
+        "search_ms": {
+          "p50": 5.70725,
+          "p95": 8.29152,
+          "p99": 10.113768000000004
+        },
+        "pose_ms": {
+          "p50": 8.21445,
+          "p95": 12.893199999999997,
+          "p99": 16.776776000000005
+        },
+        "commit_ms": {
+          "p50": 13.6457,
+          "p95": 23.294799999999984,
+          "p99": 34.09046000000003
+        },
+        "trial_ms": {
+          "p50": 43.63,
+          "p95": 60.952179999999984,
+          "p99": 74.10201600000003
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001291,
+          "p95": 0.001833,
+          "p99": 0.6246689600000006
+        },
+        "health_ms": {
+          "p50": 0.038125,
+          "p95": 0.05975819999999999,
+          "p99": 0.09333596000000008
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.00025,
+          "p95": 0.0005,
+          "p99": 0.00075
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 285003,
+      "survival": {
+        "2": {
+          "eligible": 284758,
+          "alive": 67103,
+          "censored": 245,
+          "fraction": 0.2356492179324198
+        },
+        "3": {
+          "eligible": 284720,
+          "alive": 63986,
+          "censored": 283,
+          "fraction": 0.2247330710873841
+        },
+        "5": {
+          "eligible": 284659,
+          "alive": 63264,
+          "censored": 344,
+          "fraction": 0.2222448613955645
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 284659,
+          "reached": 82183,
+          "fraction": 0.28870683870877084,
+          "censored": 344,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.17999577522277832,
+          "wait_wall_s_median": 0.2828050189999942
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 284659,
+          "reached": 35421,
+          "fraction": 0.1244330936313273,
+          "censored": 344,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.3600027561187744,
+          "wait_wall_s_median": 0.47023387299999975
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 62339,
+        "retire_low_observation_age": 149080,
+        "mp_replace": 10996,
+        "retire_observation_removal": 3064
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": -0.20156779872556319,
+      "survival_3": -0.03251671961473912,
+      "survival_5": 0.09383685607551595,
+      "unique_valid_kf_observations_2": -0.813389490465477,
+      "unique_valid_kf_observations_3": -0.6528522978078279
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 275,
+        "sum": 648.2647227766208,
+        "max": 3.2074697522255797,
+        "p50": 2.589405742553641,
+        "p95": 2.988680370383447,
+        "p99": 3.1275021330443846
+      },
+      "system_oom_kill_delta": null,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 677.67,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2158,
+          "sum": 1817.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2158,
+          "sum": 1894.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1102,
+          "sum": 1470.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1102,
+          "sum": 130880.96110499998,
+          "max": 787.125627,
+          "p50": 25.9510385,
+          "p95": 504.5694241,
+          "p99": 631.0298761600001
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 276,
+        "sum": 413100000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 276,
+        "sum": 13755.95299999999,
+        "max": 51.009,
+        "p50": 50.13,
+        "p95": 50.67925,
+        "p99": 50.862
+      },
+      "local_ba": {
+        "executed": 107,
+        "completed": 6,
+        "aborted": 101,
+        "completion_fraction": 0.056074766355140186,
+        "wall_ms": {
+          "all": {
+            "count": 107,
+            "sum": 46289.891932,
+            "max": 7888.639446,
+            "p50": 233.444719,
+            "p95": 1395.601263699996,
+            "p99": 2288.8637157399985
+          },
+          "completed": {
+            "count": 6,
+            "sum": 13892.076888,
+            "max": 7888.639446,
+            "p50": 1364.6095255,
+            "p95": 6500.0958279999995,
+            "p99": 7610.9307224
+          },
+          "aborted": {
+            "count": 101,
+            "sum": 32397.815043999995,
+            "max": 1563.322451,
+            "p50": 206.836185,
+            "p95": 837.569338,
+            "p99": 1502.148352
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 107,
+            "sum": 1886460.0,
+            "max": 59926,
+            "p50": 13930.0,
+            "p95": 48337.09999999994,
+            "p99": 59149.15999999999
+          },
+          "lba_optimized_keyframes": {
+            "count": 107,
+            "sum": 4582.0,
+            "max": 147,
+            "p50": 40.0,
+            "p95": 96.0,
+            "p99": 141.49999999999994
+          },
+          "lba_fixed_keyframes": {
+            "count": 107,
+            "sum": 15301.0,
+            "max": 371,
+            "p50": 113.0,
+            "p95": 363.49999999999994,
+            "p99": 365.94
+          },
+          "lba_map_points": {
+            "count": 107,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  },
+  "c5_attempted80_long2910_1": {
+    "processed": 2358,
+    "expected": 2910,
+    "non_ok": 35,
+    "callback": {
+      "count": 2358,
+      "mean": 109.63766820737914,
+      "min": 53.587148,
+      "max": 298.71304,
+      "p50": 109.10686749999999,
+      "p95": 134.13406990000001,
+      "p99": 145.68967250999995
+    },
+    "tail_callback": {
+      "count": 592,
+      "mean": 108.01145416216218,
+      "min": 53.587148,
+      "max": 176.716091,
+      "p50": 108.5596835,
+      "p95": 138.263834,
+      "p99": 151.07863367000007
+    },
+    "localmap": {
+      "frames": 2321,
+      "bounded_attempts": 2284,
+      "retries": 0,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 37,
+        "votes": 2284
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 0,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": null,
+        "young_reserved_total": 0,
+        "statistics": {
+          "1": 2321
+        },
+        "eligible_mp": {
+          "p50": 1010.0,
+          "p95": 1551.0,
+          "p99": 1702.4000000000005,
+          "max": 1903
+        },
+        "selected_mp": {
+          "p50": 1010.0,
+          "p95": 1551.0,
+          "p99": 1702.4000000000005,
+          "max": 1903
+        },
+        "protected_mp": {
+          "p50": 101.0,
+          "p95": 190.0,
+          "p99": 276.0000000000009,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 5663.0,
+          "p95": 7149.0,
+          "p99": 7842.000000000001,
+          "max": 8482
+        },
+        "frustum_rejected": {
+          "p50": 4459.0,
+          "p95": 5985.0,
+          "p99": 6741.200000000001,
+          "max": 7372
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2321,
+        "full_frames": 37,
+        "full_fraction": 0.015941404566996983,
+        "longest_full_local_frame_run": 19,
+        "ordinary_ok_frames": 2321,
+        "ordinary_ok_full_or_retry_fraction": 0.015941404566996983,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 2321
+        }
+      },
+      "controller": {
+        "probe_frames": 0,
+        "budget_low_frames": 3,
+        "budget_failure_reasons": {},
+        "retry_final_successes": 0,
+        "event_epochs": 2,
+        "event_kinds": {
+          "0": 2321
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 556,
+          "full_frames": 18,
+          "full_fraction": 0.03237410071942446,
+          "longest_full_local_frame_run": 18,
+          "ordinary_ok_frames": 556,
+          "ordinary_ok_full_or_retry_fraction": 0.03237410071942446,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "3": 556
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.257207,
+          "p95": 0.547204,
+          "p99": 0.7658942000000067
+        },
+        "snapshot_ms": {
+          "p50": 14.6786,
+          "p95": 18.9832,
+          "p99": 20.646600000000007
+        },
+        "update_ms": {
+          "p50": 23.2173,
+          "p95": 30.6518,
+          "p99": 38.85308
+        },
+        "search_ms": {
+          "p50": 5.04405,
+          "p95": 7.12962,
+          "p99": 8.039164000000007
+        },
+        "pose_ms": {
+          "p50": 8.47028,
+          "p95": 12.3273,
+          "p99": 15.038380000000007
+        },
+        "commit_ms": {
+          "p50": 11.5126,
+          "p95": 15.83,
+          "p99": 18.750180000000015
+        },
+        "trial_ms": {
+          "p50": 39.1567,
+          "p95": 48.1355,
+          "p99": 54.80544
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001208,
+          "p95": 0.00175,
+          "p99": 0.43995540000000166
+        },
+        "health_ms": {
+          "p50": 0.038416,
+          "p95": 0.062958,
+          "p99": 0.09828260000000001
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.00033360000000007587
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 292941,
+      "survival": {
+        "2": {
+          "eligible": 292589,
+          "alive": 69238,
+          "censored": 352,
+          "fraction": 0.23663910810044123
+        },
+        "3": {
+          "eligible": 292505,
+          "alive": 65327,
+          "censored": 436,
+          "fraction": 0.2233363532247312
+        },
+        "5": {
+          "eligible": 292341,
+          "alive": 64172,
+          "censored": 600,
+          "fraction": 0.21951077679832798
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 292341,
+          "reached": 86690,
+          "fraction": 0.29653726299082234,
+          "censored": 600,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.1799933910369873,
+          "wait_wall_s_median": 0.2530078605000057
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 292341,
+          "reached": 37916,
+          "fraction": 0.12969785284992527,
+          "censored": 600,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.3599982261657715,
+          "wait_wall_s_median": 0.426244724
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 65007,
+        "retire_low_observation_age": 149956,
+        "mp_replace": 12961,
+        "retire_observation_removal": 5850
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": -0.10257878192342085,
+      "survival_3": -0.17218850588003043,
+      "survival_5": -0.17957160364813762,
+      "unique_valid_kf_observations_2": -0.030347062260327462,
+      "unique_valid_kf_observations_3": -0.1263763759480313
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 274,
+        "sum": 659.5945623084855,
+        "max": 3.2247210716329944,
+        "p50": 2.619693988128642,
+        "p95": 3.072634268676228,
+        "p99": 3.2107109164674106
+      },
+      "system_oom_kill_delta": null,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 687.93,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2358,
+          "sum": 1973.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2358,
+          "sum": 2040.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1132,
+          "sum": 1528.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1132,
+          "sum": 133905.42879299997,
+          "max": 698.765999,
+          "p50": 26.659221000000002,
+          "p95": 530.1437211500001,
+          "p99": 596.0116127100003
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 275,
+        "sum": 410400000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 275,
+        "sum": 13718.08,
+        "max": 51.009,
+        "p50": 50.13,
+        "p95": 50.681700000000006,
+        "p99": 50.79022
+      },
+      "local_ba": {
+        "executed": 134,
+        "completed": 6,
+        "aborted": 128,
+        "completion_fraction": 0.04477611940298507,
+        "wall_ms": {
+          "all": {
+            "count": 134,
+            "sum": 51255.47977099999,
+            "max": 11419.494362,
+            "p50": 194.1207265,
+            "p95": 985.8853562999998,
+            "p99": 1578.3231246199969
+          },
+          "completed": {
+            "count": 6,
+            "sum": 15997.569822,
+            "max": 11419.494362,
+            "p50": 1032.2657475,
+            "p95": 8978.867918,
+            "p99": 10931.369073200001
+          },
+          "aborted": {
+            "count": 128,
+            "sum": 35257.90994899999,
+            "max": 1418.6084,
+            "p50": 178.04981049999998,
+            "p95": 744.4160488499999,
+            "p99": 1220.9092642000012
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 134,
+            "sum": 1872225.0,
+            "max": 56956,
+            "p50": 9187.5,
+            "p95": 43170.54999999999,
+            "p99": 55621.10999999997
+          },
+          "lba_optimized_keyframes": {
+            "count": 134,
+            "sum": 5065.0,
+            "max": 138,
+            "p50": 31.0,
+            "p95": 94.35,
+            "p99": 111.02999999999989
+          },
+          "lba_fixed_keyframes": {
+            "count": 134,
+            "sum": 15199.0,
+            "max": 386,
+            "p50": 127.5,
+            "p95": 320.0,
+            "p99": 379.66999999999996
+          },
+          "lba_map_points": {
+            "count": 134,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  },
+  "c5_legacy80_long2910_1": {
+    "processed": 2436,
+    "expected": 2910,
+    "non_ok": 35,
+    "callback": {
+      "count": 2436,
+      "mean": 105.5451420361248,
+      "min": 54.38806,
+      "max": 243.882191,
+      "p50": 105.91990899999999,
+      "p95": 133.02746050000002,
+      "p99": 143.05663450000003
+    },
+    "tail_callback": {
+      "count": 552,
+      "mean": 118.06700417391305,
+      "min": 76.545164,
+      "max": 212.608772,
+      "p50": 119.0473025,
+      "p95": 137.41223394999994,
+      "p99": 153.27943904000003
+    },
+    "localmap": {
+      "frames": 2399,
+      "bounded_attempts": 2362,
+      "retries": 0,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 37,
+        "votes": 2362
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 0,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": null,
+        "young_reserved_total": 0,
+        "statistics": {
+          "0": 2399
+        },
+        "eligible_mp": {
+          "p50": 963.0,
+          "p95": 1563.3999999999996,
+          "p99": 1662.1399999999999,
+          "max": 1885
+        },
+        "selected_mp": {
+          "p50": 963.0,
+          "p95": 1563.3999999999996,
+          "p99": 1662.1399999999999,
+          "max": 1885
+        },
+        "protected_mp": {
+          "p50": 103.0,
+          "p95": 215.0999999999999,
+          "p99": 292.02,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 4962.0,
+          "p95": 6994.1,
+          "p99": 7502.02,
+          "max": 8115
+        },
+        "frustum_rejected": {
+          "p50": 3701.0,
+          "p95": 5766.1,
+          "p99": 6419.18,
+          "max": 6998
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2399,
+        "full_frames": 37,
+        "full_fraction": 0.015423092955398083,
+        "longest_full_local_frame_run": 19,
+        "ordinary_ok_frames": 2399,
+        "ordinary_ok_full_or_retry_fraction": 0.015423092955398083,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 2399
+        }
+      },
+      "controller": {
+        "probe_frames": 0,
+        "budget_low_frames": 5,
+        "budget_failure_reasons": {},
+        "retry_final_successes": 0,
+        "event_epochs": 2,
+        "event_kinds": {
+          "0": 2399
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 552,
+          "full_frames": 0,
+          "full_fraction": 0.0,
+          "longest_full_local_frame_run": 0,
+          "ordinary_ok_frames": 552,
+          "ordinary_ok_full_or_retry_fraction": 0.0,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "3": 552
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.226373,
+          "p95": 0.5261091,
+          "p99": 0.76502666
+        },
+        "snapshot_ms": {
+          "p50": 12.8672,
+          "p95": 18.44827,
+          "p99": 20.018246
+        },
+        "update_ms": {
+          "p50": 20.6182,
+          "p95": 29.62082,
+          "p99": 33.965146
+        },
+        "search_ms": {
+          "p50": 4.76272,
+          "p95": 7.118028,
+          "p99": 8.0542226
+        },
+        "pose_ms": {
+          "p50": 8.57703,
+          "p95": 14.236729999999993,
+          "p99": 17.812689999999996
+        },
+        "commit_ms": {
+          "p50": 9.78744,
+          "p95": 15.20708,
+          "p99": 18.384242
+        },
+        "trial_ms": {
+          "p50": 36.9366,
+          "p95": 46.748929999999994,
+          "p99": 51.255458
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001208,
+          "p95": 0.0017129999999999962,
+          "p99": 0.5239671599999999
+        },
+        "health_ms": {
+          "p50": 0.038458,
+          "p95": 0.06343679999999999,
+          "p99": 0.10012734
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 298390,
+      "survival": {
+        "2": {
+          "eligible": 297991,
+          "alive": 70822,
+          "censored": 399,
+          "fraction": 0.23766489591967543
+        },
+        "3": {
+          "eligible": 297914,
+          "alive": 67048,
+          "censored": 476,
+          "fraction": 0.2250582382835315
+        },
+        "5": {
+          "eligible": 297759,
+          "alive": 65896,
+          "censored": 631,
+          "fraction": 0.22130649283480935
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 297759,
+          "reached": 88387,
+          "fraction": 0.2968407336134256,
+          "censored": 631,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.1799941062927246,
+          "wait_wall_s_median": 0.24581455400000607
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 297759,
+          "reached": 38995,
+          "fraction": 0.13096161660940558,
+          "censored": 631,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.3599982261657715,
+          "wait_wall_s_median": 0.42719819700000006
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 66192,
+        "retire_low_observation_age": 152174,
+        "retire_observation_removal": 7616,
+        "mp_replace": 13194
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": 0.0,
+      "survival_3": 0.0,
+      "survival_5": 0.0,
+      "unique_valid_kf_observations_2": 0.0,
+      "unique_valid_kf_observations_3": 0.0
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 276,
+        "sum": 680.4977348486879,
+        "max": 3.4426519880138615,
+        "p50": 2.6791458001744255,
+        "p95": 3.1757297513826783,
+        "p99": 3.3021053347881466
+      },
+      "system_oom_kill_delta": null,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 709.59,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2436,
+          "sum": 1953.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2436,
+          "sum": 2017.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1157,
+          "sum": 1524.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1157,
+          "sum": 125328.2140690001,
+          "max": 908.977161,
+          "p50": 24.156633,
+          "p95": 480.44497220000034,
+          "p99": 578.6136002400001
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 277,
+        "sum": 414000000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 277,
+        "sum": 13780.979000000001,
+        "max": 51.156,
+        "p50": 50.032,
+        "p95": 50.814,
+        "p99": 51.009
+      },
+      "local_ba": {
+        "executed": 149,
+        "completed": 8,
+        "aborted": 141,
+        "completion_fraction": 0.053691275167785234,
+        "wall_ms": {
+          "all": {
+            "count": 149,
+            "sum": 57810.618301,
+            "max": 14395.413169,
+            "p50": 162.512475,
+            "p95": 1176.3167899999992,
+            "p99": 1998.5931210400013
+          },
+          "completed": {
+            "count": 8,
+            "sum": 20954.842671,
+            "max": 14395.413169,
+            "p50": 790.7662905,
+            "p95": 10081.866209949992,
+            "p99": 13532.703777189996
+          },
+          "aborted": {
+            "count": 141,
+            "sum": 36855.77563,
+            "max": 1725.012431,
+            "p50": 158.950874,
+            "p95": 836.213263,
+            "p99": 1387.3068887999993
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 149,
+            "sum": 1689851.0,
+            "max": 59291,
+            "p50": 7002.0,
+            "p95": 36353.19999999997,
+            "p99": 55025.760000000024
+          },
+          "lba_optimized_keyframes": {
+            "count": 149,
+            "sum": 5146.0,
+            "max": 147,
+            "p50": 27.0,
+            "p95": 81.99999999999994,
+            "p99": 118.84000000000017
+          },
+          "lba_fixed_keyframes": {
+            "count": 149,
+            "sum": 10894.0,
+            "max": 298,
+            "p50": 37.0,
+            "p95": 264.6,
+            "p99": 286.2400000000001
+          },
+          "lba_map_points": {
+            "count": 149,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  },
+  "c5_mp80_long2910_1": {
+    "processed": 2443,
+    "expected": 2910,
+    "non_ok": 0,
+    "callback": {
+      "count": 2443,
+      "mean": 106.22038628448628,
+      "min": 67.62864,
+      "max": 356.114997,
+      "p50": 105.340392,
+      "p95": 133.63260640000001,
+      "p99": 145.20367179999994
+    },
+    "tail_callback": {
+      "count": 546,
+      "mean": 119.14937976007326,
+      "min": 75.589671,
+      "max": 356.114997,
+      "p50": 119.2233635,
+      "p95": 139.11731625000002,
+      "p99": 154.0321041
+    },
+    "localmap": {
+      "frames": 2442,
+      "bounded_attempts": 2423,
+      "retries": 0,
+      "commit_failures": 0,
+      "tracking_failures": 0,
+      "reasons": {
+        "recovery": 19,
+        "votes": 2423
+      },
+      "cap_violation_frames": [],
+      "mp_budget": {
+        "bounded_attempts": 2423,
+        "cap_violation_frames": [],
+        "partition_failures": 0,
+        "binding_fraction": 0.0,
+        "young_reserved_total": 0,
+        "statistics": {
+          "1": 2442
+        },
+        "eligible_mp": {
+          "p50": 955.5,
+          "p95": 1489.9499999999998,
+          "p99": 1680.5900000000001,
+          "max": 1883
+        },
+        "selected_mp": {
+          "p50": 955.5,
+          "p95": 1489.9499999999998,
+          "p99": 1680.5900000000001,
+          "max": 1883
+        },
+        "protected_mp": {
+          "p50": 100.0,
+          "p95": 215.0,
+          "p99": 288.0,
+          "max": 334
+        },
+        "trial_mp": {
+          "p50": 4863.0,
+          "p95": 6768.549999999998,
+          "p99": 7467.9000000000015,
+          "max": 7965
+        },
+        "frustum_rejected": {
+          "p50": 3722.0,
+          "p95": 5523.849999999999,
+          "p99": 6148.1600000000035,
+          "max": 7051
+        }
+      },
+      "shadow": {
+        "frames": 0,
+        "weighted_overall_recall": null,
+        "weighted_new_recall": null,
+        "weighted_association_recall": null,
+        "new_recall_p5": null
+      },
+      "usage": {
+        "local_tracking_frames": 2442,
+        "full_frames": 19,
+        "full_fraction": 0.007780507780507781,
+        "longest_full_local_frame_run": 19,
+        "ordinary_ok_frames": 2442,
+        "ordinary_ok_full_or_retry_fraction": 0.007780507780507781,
+        "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+        "controller_states": {
+          "3": 2442
+        }
+      },
+      "controller": {
+        "probe_frames": 0,
+        "budget_low_frames": 1,
+        "budget_failure_reasons": {},
+        "retry_final_successes": 0,
+        "event_epochs": 1,
+        "event_kinds": {
+          "0": 2442
+        }
+      },
+      "fixed_input_last25": {
+        "usage": {
+          "local_tracking_frames": 546,
+          "full_frames": 0,
+          "full_fraction": 0.0,
+          "longest_full_local_frame_run": 0,
+          "ordinary_ok_frames": 546,
+          "ordinary_ok_full_or_retry_fraction": 0.0,
+          "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+          "controller_states": {
+            "3": 546
+          }
+        },
+        "shadow": {
+          "frames": 0,
+          "weighted_overall_recall": null,
+          "weighted_new_recall": null,
+          "new_recall_p5": null
+        }
+      },
+      "costs_ms": {
+        "selection_ms": {
+          "p50": 0.2270395,
+          "p95": 0.6064858999999999,
+          "p99": 0.8024855000000002
+        },
+        "snapshot_ms": {
+          "p50": 12.6045,
+          "p95": 17.907434999999996,
+          "p99": 19.674318000000017
+        },
+        "update_ms": {
+          "p50": 20.36185,
+          "p95": 29.920294999999996,
+          "p99": 38.763708
+        },
+        "search_ms": {
+          "p50": 4.807824999999999,
+          "p95": 7.1309695,
+          "p99": 8.30023190000001
+        },
+        "pose_ms": {
+          "p50": 8.302675,
+          "p95": 14.177119999999997,
+          "p99": 17.478548000000004
+        },
+        "commit_ms": {
+          "p50": 9.713349999999998,
+          "p95": 15.187339999999999,
+          "p99": 18.745963000000007
+        },
+        "trial_ms": {
+          "p50": 35.4715,
+          "p95": 46.97181499999999,
+          "p99": 55.344305000000006
+        },
+        "full_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "identity_wait_ms": {
+          "p50": 0.001208,
+          "p95": 0.001709,
+          "p99": 0.38561394000000493
+        },
+        "health_ms": {
+          "p50": 0.038458,
+          "p95": 0.07378474999999998,
+          "p99": 0.10772384000000013
+        },
+        "diagnostic_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "mp_selection_ms": {
+          "p50": 0.00025,
+          "p95": 0.000584,
+          "p99": 0.000791
+        },
+        "mp_observation_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "commit_lock_wait_ms": {
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "overlap_note": "snapshot_ms is a subset of other stage times; callback_total_ms is authoritative"
+      },
+      "coverage": {
+        "frames": 0,
+        "saturated_frames": 0,
+        "mandatory_saturated_frames": 0,
+        "post_saturation_slots": 0,
+        "decisions": {
+          "votes": 0,
+          "diversity": 0,
+          "ties": 0
+        }
+      }
+    },
+    "newborn": {
+      "born": 293572,
+      "survival": {
+        "2": {
+          "eligible": 293341,
+          "alive": 67513,
+          "censored": 231,
+          "fraction": 0.23015193921067972
+        },
+        "3": {
+          "eligible": 293304,
+          "alive": 63883,
+          "censored": 268,
+          "fraction": 0.21780473501895645
+        },
+        "5": {
+          "eligible": 293246,
+          "alive": 62909,
+          "censored": 326,
+          "fraction": 0.21452637035117272
+        }
+      },
+      "unique_valid_kf_observations": {
+        "2": {
+          "window_same_map_kfs": 5,
+          "eligible": 293246,
+          "reached": 84993,
+          "fraction": 0.2898351554667412,
+          "censored": 326,
+          "wait_kfs_median": 1.0,
+          "wait_dataset_s_median": 0.17999553680419922,
+          "wait_wall_s_median": 0.2925986629999926
+        },
+        "3": {
+          "window_same_map_kfs": 5,
+          "eligible": 293246,
+          "reached": 36751,
+          "fraction": 0.12532481261466483,
+          "censored": 326,
+          "wait_kfs_median": 2.0,
+          "wait_dataset_s_median": 0.3599991798400879,
+          "wait_wall_s_median": 0.46176163699999506
+        }
+      },
+      "exits": {
+        "retire_found_ratio": 71670,
+        "retire_low_observation_age": 145833,
+        "retire_observation_removal": 7101,
+        "mp_replace": 12275
+      },
+      "map_transfer_censored": 0
+    },
+    "newborn_delta_pp_vs_legacy80": {
+      "survival_2": -0.751295670899571,
+      "survival_3": -0.7253503264575051,
+      "survival_5": -0.678012248363663,
+      "unique_valid_kf_observations_2": -0.7005578146684399,
+      "unique_valid_kf_observations_3": -0.5636803994740758
+    },
+    "resources": {
+      "process_cpu_equivalent_cores": {
+        "count": 274,
+        "sum": 672.537553692675,
+        "max": 3.243666522734987,
+        "p50": 2.687295093051345,
+        "p95": 3.0620068567768923,
+        "p99": 3.194141186999067
+      },
+      "system_oom_kill_delta": null,
+      "cpu_during_callback_span_cores": {
+        "count": 0
+      },
+      "process_cpu_total_s": 702.6899999999999,
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "queues": {
+        "lm_queue_before": {
+          "count": 2443,
+          "sum": 2130.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "lm_queue_after": {
+          "count": 2443,
+          "sum": 2210.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        }
+      },
+      "mapping_queue": {
+        "queue_depth_before_pop": {
+          "count": 1145,
+          "sum": 1623.0,
+          "max": 3.0,
+          "p50": 1.0,
+          "p95": 3.0,
+          "p99": 3.0
+        },
+        "queue_wait_ms": {
+          "count": 1145,
+          "sum": 156261.7711160001,
+          "max": 944.770259,
+          "p50": 56.656753,
+          "p95": 517.7070194,
+          "p99": 621.8294568399997
+        }
+      },
+      "cpu_frequency_khz": {
+        "count": 275,
+        "sum": 411300000.0,
+        "max": 1500000.0,
+        "p50": 1500000.0,
+        "p95": 1500000.0,
+        "p99": 1500000.0
+      },
+      "temperature_c": {
+        "count": 275,
+        "sum": 13736.990000000009,
+        "max": 51.156,
+        "p50": 50.276,
+        "p95": 50.765,
+        "p99": 50.97274
+      },
+      "local_ba": {
+        "executed": 133,
+        "completed": 4,
+        "aborted": 129,
+        "completion_fraction": 0.03007518796992481,
+        "wall_ms": {
+          "all": {
+            "count": 133,
+            "sum": 55567.93518,
+            "max": 11945.779784,
+            "p50": 197.729744,
+            "p95": 968.9889581999965,
+            "p99": 2727.1529893200113
+          },
+          "completed": {
+            "count": 4,
+            "sum": 14892.356742,
+            "max": 11945.779784,
+            "p50": 1216.266457,
+            "p95": 10397.684098249996,
+            "p99": 11636.160646849998
+          },
+          "aborted": {
+            "count": 129,
+            "sum": 40675.578438,
+            "max": 3245.746453,
+            "p50": 195.159969,
+            "p95": 763.6295223999998,
+            "p99": 1455.50624576
+          }
+        },
+        "graph": {
+          "lba_edges": {
+            "count": 133,
+            "sum": 1836659.0,
+            "max": 57480,
+            "p50": 10305.0,
+            "p95": 44545.399999999994,
+            "p99": 56640.16000000002
+          },
+          "lba_optimized_keyframes": {
+            "count": 133,
+            "sum": 5240.0,
+            "max": 138,
+            "p50": 36.0,
+            "p95": 89.0,
+            "p99": 122.08000000000004
+          },
+          "lba_fixed_keyframes": {
+            "count": 133,
+            "sum": 15345.0,
+            "max": 362,
+            "p50": 53.0,
+            "p95": 302.4,
+            "p99": 361.68
+          },
+          "lba_map_points": {
+            "count": 133,
+            "sum": 0.0,
+            "max": 0,
+            "p50": 0.0,
+            "p95": 0.0,
+            "p99": 0.0
+          }
+        },
+        "calling_thread_cpu_ms": {
+          "count": 0
+        },
+        "share_of_process_cpu": null,
+        "cpu_measurement_available": false,
+        "cpu_note": "CLOCK_THREAD_CPUTIME_ID delta around Local BA, excludes scheduling/lock waits and any helper-thread CPU; older builds record only wall time"
+      }
+    },
+    "gate": "FAIL",
+    "wait_dataset_definition": "max(observing KF timestamp, latest committed same-map KF timestamp) minus origin KF timestamp; wall wait is measured independently from event times"
+  }
+}
