@@ -47,6 +47,7 @@ void Tracking::ResetLocalMapBudgetHistory() {
 void Tracking::FinishLocalMapDiagnostics() {
   std::lock_guard<std::mutex> lock(mLocalMapLogMutex);
   if(mLocalMapLog.is_open()) mLocalMapLog.close();
+  if(mLocalMapSelectionLog.is_open()) mLocalMapSelectionLog.close();
 }
 
 bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
@@ -60,6 +61,7 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   input.recently_lost=mState==RECENTLY_LOST;
   input.last_relocation=mnLastRelocFrameId; input.max_frames=mMaxFrames;
   input.far_points=mpLocalMapper->mbFarPoints; input.far_distance=mpLocalMapper->mThFarPoints;
+  input.record_selection=mLocalMapSelectionEnabled;
   input.record_projections=mRgbdOptimizationLevel<4 || mpViewer;
   input.search_threshold=mCurrentFrame.mnId<mnLastRelocFrameId+2 ? 5.f : 3.f;
   if(mState==LOST || mState==RECENTLY_LOST) input.search_threshold=15.f;
@@ -119,8 +121,10 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   auto measure=[&](const LocalTrackingAttempt& attempt) {
     const auto start=Clock::now(); auto health=MeasureHealth(attempt); health_ms+=elapsed(start); return health;
   };
+  const auto statistics=mLocalMapAttempted?LocalStatistics::Attempted:LocalStatistics::Legacy;
+  const size_t point_limit=decision.Bounded()?size_t(std::ceil(mLocalMapPointBudget*decision.Scale())):0;
   auto start=Clock::now();
-  std::unique_ptr<LocalTrackingAttempt> trial(new LocalTrackingAttempt(input));
+  std::unique_ptr<LocalTrackingAttempt> trial(new LocalTrackingAttempt(input,statistics));
   trial->BuildLocalMap();
   if(budget_attempt) {
     selection=SelectLocalKeyFrames(*trial,current_limit,temporal,
@@ -128,15 +132,16 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
     budget_attempt=selection.bounded;
     reason=selection.reason;
   }
-  trial->SearchAndOptimize();
+  trial->SearchAndOptimize(budget_attempt?point_limit:0,mLocalMapReserveYoung);
   const double trial_ms=elapsed(start);
   const int budget_inliers=budget_attempt?trial->inliers:-1;
   const size_t trial_keyframes=trial->keyframes.size(), trial_points=trial->points.size();
   const auto trial_health=measure(*trial);
   auto final_health=trial_health;
   const bool budget_low=trial_health.Low(mLocalMapController.HealthyReference());
-  bool retry=budget_attempt && (shadow || mLocalMapController.ShouldRetry(decision,trial_health));
-  if(budget_attempt && !trial_health.tracking) budget_failure="tracking_gate";
+  bool retry=budget_attempt && (shadow || !trial->point_selection.valid || mLocalMapController.ShouldRetry(decision,trial_health));
+  if(budget_attempt && !trial->point_selection.valid) budget_failure="point_partition_invalid";
+  else if(budget_attempt && !trial_health.tracking) budget_failure="tracking_gate";
   else if(budget_attempt && trial_health.Severe()) budget_failure="severe_coverage";
   else if(budget_attempt && decision.probe && retry) budget_failure="probe_health";
   if(wanted_budget && !budget_attempt) budget_failure=selection.reason;
@@ -154,7 +159,7 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   LocalGeometryDiagnostics trial_geometry,full_geometry;
   if(retry) {
     start=Clock::now();
-    full.reset(new LocalTrackingAttempt(input));
+    full.reset(new LocalTrackingAttempt(input,statistics));
     full->BuildLocalMap(); full->SearchAndOptimize(); full_ms=elapsed(start);
     final=full.get();
     final_health=measure(*full);
@@ -175,7 +180,7 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
       // Trial membership was fixed before the full match/optimization. Count
       // unique retained MP identities separately from actual feature matches.
       std::set<MapPoint*> selected,existing,seen;
-      for(const auto& point:trial->points) selected.insert(point.get());
+      for(const auto& point:(point_limit?trial->search_points:trial->points)) selected.insert(point.get());
       for(const auto& point:input.frame.mvpMapPoints)
         if(point) { selected.insert(point.get()); existing.insert(point.get()); }
       for(int i=0;i<full->frame.N;++i) {
@@ -232,6 +237,10 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
   }
   {
   std::lock_guard<std::mutex> log_lock(mLocalMapLogMutex);
+  if(mLocalMapSelectionLog.is_open()) {
+    if(full) trial->WriteSelectionDiagnostics(mLocalMapSelectionLog,event.generation,"discarded_trial");
+    if(committed) final->WriteSelectionDiagnostics(mLocalMapSelectionLog,event.generation,"final");
+  }
   if(mLocalMapLog.is_open())
     mLocalMapLog<<mCurrentFrame.mnId<<','<<input.map->GetId()<<','<<mLocalMapMode<<','
       <<current_limit<<','<<mvpLocalKeyFrames.size()<<','<<mvpLocalMapPoints.size()<<','
@@ -251,7 +260,12 @@ bool Tracking::TrackLocalMapBudgeted(Map* locked_map) {
       <<association_lost<<','<<association_changed<<','<<association_added<<','<<pose_delta_m<<','<<pose_delta_deg<<','
       <<trial_geometry.residual_rms<<','<<full_geometry.residual_rms<<','<<trial_geometry.residual_p95<<','<<full_geometry.residual_p95<<','
       <<trial_geometry.information_min<<','<<trial_geometry.information_max<<','<<full_geometry.information_min<<','<<full_geometry.information_max<<','
-      <<trial_geometry.rank<<','<<full_geometry.rank<<','<<diagnostic_ms<<'\n';
+      <<trial_geometry.rank<<','<<full_geometry.rank<<','<<diagnostic_ms<<','<<mLocalMapAttempted<<','<<point_limit<<','
+      <<trial->point_selection.eligible<<','<<trial->point_selection.selected<<','<<trial->point_selection.protected_points<<','
+      <<trial->point_selection.truncated<<','<<trial->point_selection.valid<<','<<trial->point_selection.young_reserved<<','
+      <<trial->point_selection.milliseconds<<','<<trial->point_selection.observation_ms<<','
+      <<trial->entry_skipped<<','<<trial->frustum_rejected<<','<<trial->far_excluded<<','<<trial->visible_candidates<<','
+      <<trial->commit_lock_wait_ms+(full?full->commit_lock_wait_ms:0)<<'\n';
   }
   if(FieldEnabled()) {
     FieldEmit(13,mCurrentFrame.mnId,3,1,mnMatchesInliers);

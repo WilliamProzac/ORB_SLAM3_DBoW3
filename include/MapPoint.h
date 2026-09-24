@@ -24,6 +24,7 @@
 
 #include "MapPointHandle.h"
 #include "LocalMapProjection.h"
+#include "LocalMapLifetime.h"
 #include "Converter.h"
 #include "Frame.h"
 #include "KeyFrame.h"
@@ -112,7 +113,9 @@ public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   template<class... Args> static MapPointPtr Create(Args&&... args) {
     // Preserve Eigen alignment instead of relying on C++14 make_shared.
-    return MapPointPtr(new MapPoint(std::forward<Args>(args)...));
+    MapPointPtr point(new MapPoint(std::forward<Args>(args)...));
+    point->RecordLocalBirth();
+    return point;
   }
   MapPoint();
 
@@ -141,7 +144,8 @@ public:
   std::tuple<int, int> GetIndexInKeyFrame(KeyFrame *pKF);
   bool IsInKeyFrame(KeyFrame *pKF);
 
-  void SetBadFlag();
+  void SetBadFlag(LocalPointExit reason=LocalPointExit::Other, unsigned long cull_key=static_cast<unsigned long>(-1));
+  void RecordLocalBirth();
   bool isBad();
 
   void Replace(MapPointPtr pMP);
@@ -243,6 +247,8 @@ protected:
   // Tracking counters
   int mnVisible;
   int mnFound;
+  unsigned long mnLocalAssociationFrame = 0;
+  bool mbLocalAssociationKnown = false;
 
   // Bad flag (we do not currently erase MapPoint from memory)
   bool mbBad;
@@ -254,7 +260,7 @@ protected:
   float mfMinDistance;
   float mfMaxDistance;
 
-  Map *mpMap;
+  Map *mpMap = nullptr;
 
   // Mutex
   std::mutex mMutexPos;

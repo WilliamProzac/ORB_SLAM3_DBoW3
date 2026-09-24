@@ -60,6 +60,8 @@ src/MemoryStats.cc
 src/Tracking.cc
 src/LocalTrackingAttempt.cc
 src/LocalMapBudget.cc
+src/LocalMapPointBudget.cc
+src/LocalMapLifetime.cc
 src/LocalMapDiagnostics.cc
 src/LocalMapEvents.cc
 src/TrackingLocalMap.cc

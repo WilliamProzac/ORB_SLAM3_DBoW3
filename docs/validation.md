@@ -1311,3 +1311,17 @@ Ordinary rounds generated no Atlas files; manifests and SHA checks were retained
 C5 implementation/validation is in progress, C6 remains.
 Evidence: artifacts/local_map_budget_20260924/c4/{board,native}_comparison.json.
 Core implementation b7ebd840; outer 6c495b5; evidence checkpoint bf514150.
+
+## LM01 C5a — MP budgets/statistics/lifetime checkpoint
+
+KF/MP transaction fixtures, normalized unique-KF scoring, grid/depth allocation,
+young-reservation tests, lifetime concurrency and27 ARM probes pass.
+ASan/UBSan/LSan fixtures and TSan full/lifetime/small-lock checks pass with
+previously documented Boost/GDAL exceptions; inherited full-SystemLSan open.
+Four native2910 runs are complete/allOK. MP6500 never binds (eligible max1439);
+shadow new recall99.877%, association99.936%. Newborn gate worst drop0.122pp.
+First boardC5legacy80 fails2436/2910,nonOK35,P95133.027ms. Six board ablations
+and C6 formal/TUM/fault/save-reload matrix remain. DefaultOFF, votes default,
+coverage experimental. See memory/LM01_C5_CONTRACT.md and IDE artifacts/c5.
+Parent core64d073fd / outerc0ddab1 / IDE39ccbf6c; manifests archive dirty-build
+source hashes and paired binaries. This is functional acceptance only.

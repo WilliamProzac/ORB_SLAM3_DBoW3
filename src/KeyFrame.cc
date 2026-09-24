@@ -862,6 +862,8 @@ Map *KeyFrame::GetMap() {
 void KeyFrame::UpdateMap(Map *pMap) {
   LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   unique_lock<mutex> lock(mMutexMap);
+  if(mpMap!=pMap && LocalLifetime::Enabled())
+    LocalLifetime::Event(mpMap,"kf_transfer",0,mnId,pMap?pMap->GetLocalTrackingEvent().generation:0,0,mTimeStamp);
   mpMap = pMap;
 }
 

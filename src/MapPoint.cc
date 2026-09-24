@@ -170,6 +170,8 @@ LocalPointSnapshot MapPoint::SnapshotLocalTracking() {
   result.observations = nObs;
   result.visible = mnVisible;
   result.found = mnFound;
+  result.association_frame = mnLocalAssociationFrame;
+  result.association_known = mbLocalAssociationKnown;
   result.geometry.position = mWorldPos;
   result.geometry.normal = mNormalVector;
   result.geometry.min_distance = mfMinDistance;
@@ -203,6 +205,10 @@ void MapPoint::AddObservation(KeyFrame *pKF, int idx) {
   }
 
   mObservations[pKF] = indexes;
+  if(LocalLifetime::Enabled()) {
+    unique_lock<mutex> map_lock(mMutexMap);
+    LocalLifetime::Event(mpMap,"observation_add",mnId,pKF->mnId,0,0,pKF->mTimeStamp);
+  }
 
   if (!pKF->mpCamera2 && pKF->mvuRight[idx] >= 0)
     nObs += 2;
@@ -231,6 +237,10 @@ void MapPoint::EraseObservation(KeyFrame *pKF) {
       }
 
       mObservations.erase(pKF);
+      if(LocalLifetime::Enabled()) {
+        unique_lock<mutex> map_lock(mMutexMap);
+        LocalLifetime::Event(mpMap,"observation_erase",mnId,pKF->mnId,0,0,pKF->mTimeStamp);
+      }
 
       if (mpRefKF == pKF)
         mpRefKF = mObservations.empty() ? nullptr : mObservations.begin()->first;
@@ -242,7 +252,7 @@ void MapPoint::EraseObservation(KeyFrame *pKF) {
   }
 
   if (bBad)
-    SetBadFlag();
+    SetBadFlag(LocalPointExit::ObservationRemoval);
 }
 
 std::map<KeyFrame *, std::tuple<int, int>> MapPoint::GetObservations() {
@@ -255,7 +265,16 @@ int MapPoint::Observations() {
   return nObs;
 }
 
-void MapPoint::SetBadFlag() {
+void MapPoint::RecordLocalBirth() {
+  if(!LocalLifetime::Enabled()) return;
+  const auto map=GetMap();
+  if(!map) return;
+  const auto reference=GetReferenceKeyFrame();
+  LocalLifetime::Event(map,"mp_birth",mnId,static_cast<uint64_t>(mnFirstKFid),
+                       mnFirstFrame,0,reference?reference->mTimeStamp:0);
+}
+
+void MapPoint::SetBadFlag(LocalPointExit reason, unsigned long cull_key) {
   LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   const auto keepAlive = shared_from_this();
   map<KeyFrame *, tuple<int, int>> obs;
@@ -263,6 +282,14 @@ void MapPoint::SetBadFlag() {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
     if (mbBad) return;
+    if(LocalLifetime::Enabled()) {
+      static const char* names[]={"retire_other","retire_found_ratio","retire_low_observation_age",
+                                  "retire_observation_removal","retire_reset"};
+      const int64_t age=cull_key!=static_cast<unsigned long>(-1) && mnFirstKFid>=0 &&
+                         cull_key>=static_cast<unsigned long>(mnFirstKFid) ?
+                         int64_t(cull_key-static_cast<unsigned long>(mnFirstKFid)):-1;
+      LocalLifetime::Event(mpMap,names[static_cast<unsigned>(reason)],mnId,cull_key,age,nObs);
+    }
     mMemoryLifetime.Retire();
     mbBad = true;
     obs = mObservations;
@@ -319,6 +346,7 @@ void MapPoint::Replace(MapPointPtr pMP) {
     nvisible = mnVisible;
     nfound = mnFound;
     mpReplaced = pMP;
+    if(LocalLifetime::Enabled()) LocalLifetime::Event(mpMap,"mp_replace",mnId,0,pMP->mnId);
   }
 
   for (map<KeyFrame *, tuple<int, int>>::iterator mit = obs.begin(),
@@ -587,6 +615,8 @@ Map *MapPoint::GetMap() {
 void MapPoint::UpdateMap(Map *pMap) {
   LocalTrackingIdentityGuard identity(LocalTrackingIdentityMutex());
   unique_lock<mutex> lock(mMutexMap);
+  if(mpMap!=pMap && LocalLifetime::Enabled())
+    LocalLifetime::Event(mpMap,"mp_transfer",mnId,0,pMap?pMap->GetLocalTrackingEvent().generation:0);
   mpMap = pMap;
 }
 

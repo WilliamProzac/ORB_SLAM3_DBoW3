@@ -34,6 +34,8 @@ struct LocalPointSnapshot {
   std::array<unsigned char, 32> descriptor{};
   unsigned long id = 0, entry_seen = 0, entry_reference = 0;
   int observations = 0, visible = 0, found = 0;
+  unsigned long association_frame = 0;
+  bool association_known = false;
   bool valid = false;
 };
 

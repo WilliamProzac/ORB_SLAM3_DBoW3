@@ -511,7 +511,7 @@ protected:
 
   float mHalfBaseline; // Only for visualization
 
-  Map *mpMap;
+  Map *mpMap = nullptr;
 
   // Backup variables for inertial
   long long int mBackupPrevKFId;

@@ -330,8 +330,11 @@ protected:
   size_t mLocalMapKeyFrameBudget = 80;
   bool mLocalMapAdaptive = true;
   bool mLocalMapCoverage = false, mLocalMapDetailed = false;
+  bool mLocalMapAttempted = false,mLocalMapReserveYoung = false;
+  size_t mLocalMapPointBudget = 0;
   LocalMapController mLocalMapController;
-  std::ofstream mLocalMapLog;
+  std::ofstream mLocalMapLog,mLocalMapSelectionLog;
+  bool mLocalMapSelectionEnabled = false;
   std::mutex mLocalMapLogMutex;
   std::vector<KeyFrame*> mLocalMapTemporal;
   Map* mpLocalBudgetMap = nullptr;

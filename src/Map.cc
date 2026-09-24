@@ -71,7 +71,9 @@ void Map::AddKeyFrame(KeyFrame *pKF) {
     mpKFinitial = pKF;
     mpKFlowerID = pKF;
   }
-  mspKeyFrames.insert(pKF);
+  const bool newly_inserted=mspKeyFrames.insert(pKF).second;
+  if(newly_inserted && LocalLifetime::Enabled())
+    LocalLifetime::Event(this,"kf_add",0,pKF->mnId,pKF->mnFrameId,0,pKF->mTimeStamp);
   if (pKF->mnId > mnMaxKFid) {
     mnMaxKFid = pKF->mnId;
   }
@@ -104,7 +106,9 @@ void Map::EraseMapPoint(MapPointPtr pMP) {
 
 void Map::EraseKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexMap);
-  mspKeyFrames.erase(pKF);
+  const bool removed=mspKeyFrames.erase(pKF)!=0;
+  if(removed && LocalLifetime::Enabled())
+    LocalLifetime::Event(this,"kf_erase",0,pKF->mnId,0,0,pKF->mTimeStamp);
   if (mspKeyFrames.size() > 0) {
     if (pKF->mnId == mpKFlowerID->mnId) {
       vector<KeyFrame *> vpKFs =
@@ -188,7 +192,7 @@ void Map::clear() {
   const auto points = GetAllMapPoints();
   const auto keys = GetAllKeyFrames();
   for (const auto& point : points)
-    if (point && point->GetMap() == this) point->SetBadFlag();
+    if (point && point->GetMap() == this) point->SetBadFlag(LocalPointExit::Reset);
   for (auto* key : keys) {
     key->ClearMapPointMatches();
     key->UpdateMap(nullptr);
