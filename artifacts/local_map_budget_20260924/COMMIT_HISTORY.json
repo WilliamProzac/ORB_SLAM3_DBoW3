@@ -1,0 +1,136 @@
+{
+  "core": [
+    {
+      "sha": "d80009e92639b5598a8efde33878a919bb67dcd9",
+      "subject": "chore: preserve pre-LM01 source and validation baseline"
+    },
+    {
+      "sha": "9e100300f5253f9b4432203eafbe68afa002370a",
+      "subject": "feat(lm01): isolate RGB-D local tracking attempts and projection state"
+    },
+    {
+      "sha": "6f1d6cf3dba09731401ad28d51bf896c178b60e6",
+      "subject": "feat(lm01): integrate transactional KF budgets and serialize identity mutations"
+    },
+    {
+      "sha": "185ed790f9710b554f729699353d20bae0ddd60b",
+      "subject": "perf(LM01): deduplicate local candidates before ownership promotion"
+    },
+    {
+      "sha": "dfb2f9768cef346f9f9570f95febdeb51b61f052",
+      "subject": "feat(LM01): add typed recovery events and bounded budget probes"
+    },
+    {
+      "sha": "b7ebd840ed1d5eb4f66b2cc905d97415e9ebe86b",
+      "subject": "feat(LM01): add experimental coverage selection and geometry diagnostics"
+    },
+    {
+      "sha": "64d073fdc59adfd501fafc6c92994af976ab09ec",
+      "subject": "docs(LM01): keep votes after completed C4 comparisons"
+    },
+    {
+      "sha": "906d870f69b44f0dba2128c6975d378d4793aa71",
+      "subject": "feat(LM01): add opportunity-based MP budgets and lifetime diagnostics"
+    },
+    {
+      "sha": "05e83e55df7de6f5631e9e1dbebaf40edee1df47",
+      "subject": "perf(LM01): measure local BA thread CPU alongside wall time"
+    },
+    {
+      "sha": "0f735dd984007a277929abd8ff5515ebef5b1541",
+      "subject": "docs(LM01): reject all completed C5 board tiers"
+    },
+    {
+      "sha": "be52247f9bedb9e275f0ed0baf4d97e9ffdca66e",
+      "subject": "docs(LM01): close formal validation with production gate blocked"
+    }
+  ],
+  "outer": [
+    {
+      "sha": "3d38e3734130215b0cddc97b602f2da007cc9653",
+      "subject": "chore: preserve pre-LM01 source and validation baseline"
+    },
+    {
+      "sha": "eb05fe47cbf8e3e5a346d95d99bd7f43b5b92d00",
+      "subject": "chore: retain existing sanitizer build recipe in baseline"
+    },
+    {
+      "sha": "774641e7bea09228885a1075476989f48082db9d",
+      "subject": "test(lm01): add isolated transaction validation and board artifact protocol"
+    },
+    {
+      "sha": "3b51d770f9b6d3cfe504f9a2ab2865eedd56b86c",
+      "subject": "test(lm01): validate C2 KF budgets and preserve failed realtime gate"
+    },
+    {
+      "sha": "cf93c461d58df8714c28c3c63194e9ca4c6202cc",
+      "subject": "test(LM01): freeze paired replays and verify private candidate collection"
+    },
+    {
+      "sha": "0eb0c1faffbdd4348ec13cafc1300e02ba319089",
+      "subject": "test(LM01): validate recovery epochs, real probes and ordinary BA isolation"
+    },
+    {
+      "sha": "6c495b5cc40c7ddc3a358da2befa00bff4d16096",
+      "subject": "test(LM01): freeze coverage matrices and validate saturation and geometry"
+    },
+    {
+      "sha": "c0ddab18d5b8bcce297133f3f31a35941b971023",
+      "subject": "docs(LM01): record C4 votes selection decision"
+    },
+    {
+      "sha": "918841325c2ae428aa6b1783b1efcc17e57f00e4",
+      "subject": "test(LM01): validate C5 budgets and prepare formal regression matrix"
+    },
+    {
+      "sha": "9feff3c41c76e058412f20abecb849eb7a98b2d4",
+      "subject": "test(LM01): freeze formal CPU diagnostics and acceptance reporting"
+    },
+    {
+      "sha": "d61522ac7feb00badd49baa5e19ef90f922f70b3",
+      "subject": "test(LM01): close C5 screens and distinguish cohort waiting clocks"
+    },
+    {
+      "sha": "9c43a6c329697e369f78ef22c7775b835007bdea",
+      "subject": "test(LM01): deliver complete failed acceptance matrix and cleanup evidence"
+    }
+  ],
+  "ide": [
+    {
+      "sha": "4aabed586b08787b4843c9e4360db9fd59326ce9",
+      "subject": "chore: preserve pre-LM01 source and validation baseline"
+    },
+    {
+      "sha": "e9327e2c3b906598c32fdecb98b36475f69f17e9",
+      "subject": "docs(lm01): record runtime implementation and C1 validation scope"
+    },
+    {
+      "sha": "61cfb92d66089b88e33b539dfcf31e1260566c61",
+      "subject": "docs(lm01): record C2 functional verification and transaction overhead regression"
+    },
+    {
+      "sha": "8da78978c5a7290fb1faa5b57e3830a5eb8efd82",
+      "subject": "docs(LM01): archive C2.1 regression and overhead measurements"
+    },
+    {
+      "sha": "243989eebbeab7b56b68c02bf5425e190f180b97",
+      "subject": "docs(LM01): record C3 functional passes and board screening failures"
+    },
+    {
+      "sha": "bf514150319884214110a2207fe34cb9a180d4d4",
+      "subject": "docs(LM01): archive C4a evidence and completed C3 tier failures"
+    },
+    {
+      "sha": "39ccbf6ca2e36e89c5323afd2f8f79d5ab7c6230",
+      "subject": "docs(LM01): retain votes and archive completed C4 comparisons"
+    },
+    {
+      "sha": "7a706461534bc2a5da72dec17a6b11cad7808e6b",
+      "subject": "docs(LM01): archive C5 functional evidence and failed first board screen"
+    },
+    {
+      "sha": "bac56687827fbbcd8feac55a409a3d5b27f7f0fb",
+      "subject": "docs(LM01): archive completed C5 rejection and follow-up options"
+    }
+  ]
+}

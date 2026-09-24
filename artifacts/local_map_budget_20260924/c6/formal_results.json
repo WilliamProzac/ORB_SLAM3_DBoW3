@@ -1,0 +1,110 @@
+{
+  "c6_long2910_off_1": {
+    "processed": 2752,
+    "non_ok": 35,
+    "expected_pairs": 2910,
+    "new_maps": 2,
+    "callback_p95": 113.66078334999997,
+    "tail_callback_p95": 117.3274096,
+    "input_complete": false
+  },
+  "c6_long2910_candidate_1": {
+    "processed": 2282,
+    "non_ok": 0,
+    "expected_pairs": 2910,
+    "new_maps": 1,
+    "callback_p95": 148.54659794999998,
+    "tail_callback_p95": 153.7862241,
+    "input_complete": false
+  },
+  "c6_long2910_candidate_2": {
+    "processed": 2316,
+    "non_ok": 36,
+    "expected_pairs": 2910,
+    "new_maps": 2,
+    "callback_p95": 146.16706125,
+    "tail_callback_p95": 172.58542559999995,
+    "input_complete": false
+  },
+  "c6_long2910_off_2": {
+    "processed": 2825,
+    "non_ok": 0,
+    "expected_pairs": 2910,
+    "new_maps": 1,
+    "callback_p95": 110.15665200000001,
+    "tail_callback_p95": 118.274516,
+    "input_complete": false
+  },
+  "c6_long2910_off_3": {
+    "processed": 2831,
+    "non_ok": 0,
+    "expected_pairs": 2910,
+    "new_maps": 1,
+    "callback_p95": 108.010187,
+    "tail_callback_p95": 117.0387113,
+    "input_complete": false
+  },
+  "c6_long2910_candidate_3": {
+    "processed": 2431,
+    "non_ok": 111,
+    "expected_pairs": 2910,
+    "new_maps": 4,
+    "callback_p95": 146.36510249999998,
+    "tail_callback_p95": 148.02198699999997,
+    "input_complete": false
+  },
+  "c6_loop955_off_1": {
+    "processed": 953,
+    "non_ok": 0,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 88.7302598,
+    "tail_callback_p95": 86.55699625,
+    "input_complete": false
+  },
+  "c6_loop955_candidate_1": {
+    "processed": 900,
+    "non_ok": 0,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 123.41669859999999,
+    "tail_callback_p95": 113.6930041,
+    "input_complete": false
+  },
+  "c6_loop955_candidate_2": {
+    "processed": 930,
+    "non_ok": 0,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 110.79856295,
+    "tail_callback_p95": 104.41994,
+    "input_complete": false
+  },
+  "c6_loop955_off_2": {
+    "processed": 955,
+    "non_ok": 0,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 92.30027759999999,
+    "tail_callback_p95": 88.80972959999997,
+    "input_complete": true
+  },
+  "c6_loop955_off_3": {
+    "processed": 955,
+    "non_ok": 0,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 87.95973140000001,
+    "tail_callback_p95": 87.74355369999999,
+    "input_complete": true
+  },
+  "c6_loop955_candidate_3": {
+    "processed": 907,
+    "non_ok": 1,
+    "expected_pairs": 955,
+    "new_maps": 1,
+    "callback_p95": 116.87840379999999,
+    "tail_callback_p95": 108.72227565,
+    "input_complete": false
+  }
+}

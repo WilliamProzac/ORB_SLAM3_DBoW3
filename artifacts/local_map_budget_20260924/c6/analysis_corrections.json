@@ -1,0 +1,17 @@
+{
+  "raw_runtime_data_changed": false,
+  "acceptance_outcomes_changed": false,
+  "corrections": [
+    "CPU callback_start_ms uses a relative epoch; no exact callback-span CPU inferred",
+    "Local BA timer MP count is unpopulated; MemoryStats candidate MPs and actual graph vertices/edges reported separately",
+    "Final plots use installed matplotlib compatible API"
+  ],
+  "c5_resource_summaries_refreshed": [
+    "c5_adaptive64_long2910_1",
+    "c5_adaptive80_long2910_1",
+    "c5_adaptive96_long2910_1",
+    "c5_attempted80_long2910_1",
+    "c5_legacy80_long2910_1",
+    "c5_mp80_long2910_1"
+  ]
+}

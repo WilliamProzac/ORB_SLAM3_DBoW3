@@ -1,0 +1,14 @@
+{
+  "name": "c6_save_reload_load_run",
+  "bag": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/data/lm01_short120.bag",
+  "timing_enabled": true,
+  "rate": 1.0,
+  "rgb_queue": 8,
+  "depth_queue": 8,
+  "sync_queue": 10,
+  "port": 11973,
+  "instrumentation": "full",
+  "package": "/userdata/rgbd_localmap_budget_20260924/c6_save_reload_load",
+  "lifetime": true,
+  "registered_map_file": ""
+}

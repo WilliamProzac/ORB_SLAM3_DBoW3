@@ -1,0 +1,7 @@
+{
+  "active_lm01_slam_processes": [],
+  "remaining_registered_maps": [],
+  "free_bytes": 9775378432,
+  "scope": "read-only audit of /userdata/rgbd_localmap_budget_20260924; frozen MEM18/perf20 not modified",
+  "observed_utc_minute": "2026-09-24 12:46 UTC"
+}

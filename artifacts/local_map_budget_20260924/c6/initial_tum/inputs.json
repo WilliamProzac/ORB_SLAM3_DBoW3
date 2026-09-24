@@ -1,0 +1,29 @@
+{
+  "binaries": {
+    "ros_rgbd": "eb51491c1021ea6ea069fc1775ccd5366040e969d22e2169c73acde4d0fefa00",
+    "local_map_budget_probe": "93f10c20b9ab77024bb5554c7cee8aa5d17c8045f5ba1e9c6b7d405348080018",
+    "tum_localmap_replay": "4bfb1eb9136f0fa14e40cf6f4bb588dece9cba7c40f8e46c4c9302b20697f641",
+    "memory_probe": "e9581441178bf70247cc940f6fce024ebf46267ee78fed993ecd7387389073e8",
+    "memory_replay": "5e726570801b5ebd566a8b649256c2984fa54c926be7fe058671c3e55337c1d0",
+    "liborb_slam3_ros.so": "353ef13f3724d959d5fdd11e9e2e016784626ebf5ec7df45e7ac02e399e5906c"
+  },
+  "pairs": 5057,
+  "rate": 1.0,
+  "data": "/home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop",
+  "associations": "/home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/associate.txt",
+  "association_sha256": "8e1d1940f5bec350971667683848342445ea37c36b91efe2aa5c1c080c28cbbd",
+  "groundtruth_sha256": "38001ca39d7e3d130899d231fc99acabd3b165d819f2ae3afc1226b576ad2973",
+  "runner_sha256": "fd1945ef8d57fd114ed129a09587a64061558d3b529ea9237cf99bb60b1e91a2",
+  "config_sha256": {
+    "off": "2f63f3108946d7050361abd7a71abf86bbc06c98cfc92636177ae713d1f735a2",
+    "candidate": "6a22082be6c8ec2e1417af456e91afaaf9668a4d11ea742b0defb49f58a3044a"
+  },
+  "order": [
+    "off_1",
+    "candidate_1",
+    "candidate_2",
+    "off_2",
+    "off_3",
+    "candidate_3"
+  ]
+}

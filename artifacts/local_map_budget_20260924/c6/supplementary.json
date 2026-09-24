@@ -1,0 +1,66 @@
+{
+  "transactions_and_concurrency": {
+    "pass": true,
+    "evidence": [
+      "c5/checks_checkpoint.json",
+      "c6/board_transaction_probe.log"
+    ],
+    "scope": "scoped fixtures only; documented Boost/GDAL exceptions and TSan deadlock-check size limit; full-System LSan/merge progress remain open"
+  },
+  "legacy_probes": {
+    "pass": true,
+    "evidence": [
+      "c6/board_probe_verification.json",
+      "c6/board_numeric_comparison.json"
+    ]
+  },
+  "shadow_recall": {
+    "pass": true,
+    "evidence": [
+      "c5/completed/native_analysis_v2.json"
+    ],
+    "scope": "measured native shadow selection/association; no promotion from recall alone"
+  },
+  "newborn": {
+    "pass": true,
+    "evidence": [
+      "c5/completed/native_analysis_v2.json",
+      "c5/completed/board_matrix.json",
+      "c6/cohort_comparison.json"
+    ]
+  },
+  "fault_regressions": {
+    "pass": false,
+    "gates": {
+      "blackout_gap_candidate": false,
+      "reset_candidate": true,
+      "map_switch_candidate": true
+    },
+    "evidence": [
+      "c6/final_faults/results.json"
+    ],
+    "scope": "reset/switch recover; blackout requires recovery without unintended map split to claim relocalization preservation"
+  },
+  "save_reload": {
+    "pass": false,
+    "evidence": [
+      "c6/save_reload/results.json"
+    ],
+    "note": "save120/120 OK; load101/120 OK, missing19 inputs; map fetch/hash/cleanup completed"
+  },
+  "loop_trajectory_checks": {
+    "pass": true,
+    "evidence": [
+      "c6/pose_sidecars/analysis.json"
+    ],
+    "scope": "online output integrity and distribution only; no S316 truth or post-GBA full-frame trajectory; precision is a separate failed TUM gate"
+  },
+  "artifact_integrity": {
+    "pass": true,
+    "evidence": [
+      "c6/formal_details.json",
+      "c6/save_reload/results.json",
+      "c6/board_final_audit.json"
+    ]
+  }
+}

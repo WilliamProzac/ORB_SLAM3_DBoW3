@@ -1,0 +1,110 @@
+[
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "long2910",
+    "name": "c6_long2910_off_1",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11960
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "long2910",
+    "name": "c6_long2910_candidate_1",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11961
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "long2910",
+    "name": "c6_long2910_candidate_2",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11962
+  },
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "long2910",
+    "name": "c6_long2910_off_2",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11963
+  },
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "long2910",
+    "name": "c6_long2910_off_3",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11964
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "long2910",
+    "name": "c6_long2910_candidate_3",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+    "port": 11965
+  },
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "loop955",
+    "name": "c6_loop955_off_1",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11966
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "loop955",
+    "name": "c6_loop955_candidate_1",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11967
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "loop955",
+    "name": "c6_loop955_candidate_2",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11968
+  },
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "loop955",
+    "name": "c6_loop955_off_2",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11969
+  },
+  {
+    "stage": "c6_off",
+    "variant": "off",
+    "dataset": "loop955",
+    "name": "c6_loop955_off_3",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11970
+  },
+  {
+    "stage": "c6_candidate",
+    "variant": "candidate",
+    "dataset": "loop955",
+    "name": "c6_loop955_candidate_3",
+    "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+    "port": 11971
+  }
+]

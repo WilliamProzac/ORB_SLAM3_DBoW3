@@ -1,0 +1,120 @@
+{
+  "plan": [
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "long2910",
+      "name": "c6_long2910_off_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11960
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "long2910",
+      "name": "c6_long2910_candidate_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11961
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "long2910",
+      "name": "c6_long2910_candidate_2",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11962
+    },
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "long2910",
+      "name": "c6_long2910_off_2",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11963
+    },
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "long2910",
+      "name": "c6_long2910_off_3",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11964
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "long2910",
+      "name": "c6_long2910_candidate_3",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/2026-09-10-11-35-57.bag",
+      "port": 11965
+    },
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "loop955",
+      "name": "c6_loop955_off_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11966
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "loop955",
+      "name": "c6_loop955_candidate_1",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11967
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "loop955",
+      "name": "c6_loop955_candidate_2",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11968
+    },
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "loop955",
+      "name": "c6_loop955_off_2",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11969
+    },
+    {
+      "stage": "c6_off",
+      "variant": "off",
+      "dataset": "loop955",
+      "name": "c6_loop955_off_3",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c6_off.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11970
+    },
+    {
+      "stage": "c6_candidate",
+      "variant": "candidate",
+      "dataset": "loop955",
+      "name": "c6_loop955_candidate_3",
+      "config": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/config/lm01_c5_adaptive80.yaml",
+      "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/rgbd_loop_20260918_150702_9af2e1/rgbd.bag",
+      "port": 11971
+    }
+  ],
+  "build": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/build-arm-lm01-c6cpu",
+  "lifetime": true,
+  "manifest_sha256": "bca0af809540865fd7c3181fcfcb22b00e1d95d2293d1a4b12d003fe0194371d",
+  "config_sha256": {
+    "c6_off": "a6736839b7ddb147eccdddf5b13c8bf706d3674558563b6defdf8de207c1d988",
+    "c6_candidate": "235b45fb01a887cf3c49c85d3855c691afcc70681d7af1bad1536ef5293c5b80"
+  },
+  "runner_sha256": "f78e30cd542e8a825f86eb00597e16b7e6783c701815bd2151179b092e65d6bb"
+}

@@ -1,0 +1,12 @@
+{
+  "off": {
+    "lba_count": 64,
+    "positive_cpu_count": 64,
+    "pass": true
+  },
+  "candidate": {
+    "lba_count": 64,
+    "positive_cpu_count": 64,
+    "pass": true
+  }
+}

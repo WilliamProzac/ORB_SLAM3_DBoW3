@@ -1,0 +1,170 @@
+{
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/frames.csv": {
+    "bytes": 258896,
+    "sha256": "b432f999110389c3133d684556b53d2d5bc6ade372263accf7da39924f3ea83e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/trajectory_corrected.tum": {
+    "bytes": 533719,
+    "sha256": "a80771ea96c10f5534d9dd961a5a8ad8a776f4aca1596f16654565cbb34051a5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/keyframes.tum": {
+    "bytes": 106101,
+    "sha256": "d7842f4ddde4507d3d4811266b3ce2f560ee526bce5cd15ef674f014e1a3f043"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/poses_online.tum": {
+    "bytes": 549432,
+    "sha256": "30aa9d98d57a81566ceef5b5634af87ff1862bba5ef5fa6f40d99cb2b292bd33"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/lifetime.csv": {
+    "bytes": 95810993,
+    "sha256": "fa33b3d3b432a4008eaef2967e79f28ca93b21f6d46d18f34c89218d6a239f9d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_3/replay.log": {
+    "bytes": 109297,
+    "sha256": "8730253a732a611a494e7ec089dc121aa37b46489480b824b11c77277c18b096"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/frames.csv": {
+    "bytes": 258734,
+    "sha256": "0fb95b04d9244c69e35c6aa73b0a3cfbd768bcf8ceaa237594e993edb2b0321b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/trajectory_corrected.tum": {
+    "bytes": 533823,
+    "sha256": "4242d51f813e51968604b2cab9d884a40f50cb6f31e528156af3c27a8b21a098"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/keyframes.tum": {
+    "bytes": 104252,
+    "sha256": "61cf2b35fc8574433e57b85b7946353e1f3463610f762996820229e707a504f7"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/poses_online.tum": {
+    "bytes": 549412,
+    "sha256": "abf11cc59af6122ef334e9be56689fa7333c3989be712f9f9c55008ad711ad40"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/lifetime.csv": {
+    "bytes": 100339640,
+    "sha256": "4fa852886bfac559e3d31603890db44f041b3bbb0c316cd1f2d31fb24cdc30ba"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_2/replay.log": {
+    "bytes": 112435,
+    "sha256": "8e8e3315d59a421952caaa4abd7b88f34b5d4d2500954ba3a1259cd33d2e9bcd"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/frames.csv": {
+    "bytes": 258953,
+    "sha256": "77778adac770b3d91e8d7b6b9c4b143056d7327313797c411e978cce88a2ffd2"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/trajectory_corrected.tum": {
+    "bytes": 533766,
+    "sha256": "c2fcd15a9f3ed625ecc70be25380283e47340ab01a41898e20f847429121b8ca"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/keyframes.tum": {
+    "bytes": 104607,
+    "sha256": "b05cf219c77c8b1afdbf6fb034fa92bd652618c9979f46fbd1e78547fd736225"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/poses_online.tum": {
+    "bytes": 549712,
+    "sha256": "80b5eb37dd1e5cfc781c982b8fc7f7549c005dddeea21a1facad650ed8db1f06"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/lifetime.csv": {
+    "bytes": 103899215,
+    "sha256": "50d8f9e17b65d865687bdc60dc993463db20f5d02fc44b8236fa17bac5b6eda5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/replay.log": {
+    "bytes": 112666,
+    "sha256": "5dc80072eaf7c7d334f7001c086acb6e3886edb01d4f33943695bbfe4b2e05aa"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/localmap.csv": {
+    "bytes": 1536017,
+    "sha256": "6960e90141c573e71ef9d3b70e86f6f119b0ed927d773223354586ecb2970778"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_2/selection.csv": {
+    "bytes": 26363332,
+    "sha256": "a29e3b62bf0e313a7a6476564941e0b6dcc18b306573ed4829cf43d4d43d854e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/frames.csv": {
+    "bytes": 255761,
+    "sha256": "61b33b4e3a5be05557080cf454eccf39fb730254e552878efd0cc1fa0f42adc8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/trajectory_corrected.tum": {
+    "bytes": 531780,
+    "sha256": "7afe3ec2d769b97635c2f4a63fb7ad982a0495e29f9a054d1425ebf59c19f4e8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/keyframes.tum": {
+    "bytes": 641,
+    "sha256": "27310fd407958abb53f337d797f488102090cfcf2350a78744896d326689590d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/poses_online.tum": {
+    "bytes": 515614,
+    "sha256": "b16501b6a1bc2d73a5fb04249c035a090baad03be3963948badea803f42c8b90"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/lifetime.csv": {
+    "bytes": 97189551,
+    "sha256": "fb80c91021b58b14374d61d3ae6a2b1449b64c18f63ed77a7983c77684bd0256"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/replay.log": {
+    "bytes": 160634,
+    "sha256": "777cd655f6b40416e369cb64dd11502e99de5955444e1a051f7f31becd2d17ee"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/localmap.csv": {
+    "bytes": 1470945,
+    "sha256": "232ab49f54dc594e7f5fbef79d1051135b4295f283a0b535ba6c83ac26869287"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_1/selection.csv": {
+    "bytes": 23735392,
+    "sha256": "eae71cee21805f5b3c2515e478c5457b85d0d2f0e44efdb37496e354ed48d59d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/frames.csv": {
+    "bytes": 256936,
+    "sha256": "d4118f3e6f7da8ef3b8fb5f1becc2d9ea968c769e636e5fdac9f60e1ad5c0980"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/trajectory_corrected.tum": {
+    "bytes": 527412,
+    "sha256": "1f7c9db8748b4b800d939c6347db2425088b60367866b9978719c963905af8b2"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/keyframes.tum": {
+    "bytes": 101837,
+    "sha256": "0da4356e4e964f4ef867ff086f74b88da0341ee7d255784f834cf74f757afa82"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/poses_online.tum": {
+    "bytes": 531224,
+    "sha256": "791e611204de8afb85e42164ccb1656a397f0ffc95a9fd69af7c4db4654aab2a"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/lifetime.csv": {
+    "bytes": 93346639,
+    "sha256": "53e4c2fa479ef5a37c7f5e68ca7362704976ea666d129a2abfb989b58045f6da"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/replay.log": {
+    "bytes": 139661,
+    "sha256": "23a7f1026aa4f47a03d53828cd2c9b5b8730d18e45361f84d7ee0109a9e5813f"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/localmap.csv": {
+    "bytes": 1486399,
+    "sha256": "d2b30beac80e84462e94898800bc1685d249f228ceaf8d0be083be0049c1a6a5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/candidate_3/selection.csv": {
+    "bytes": 25435428,
+    "sha256": "bc0cd036712343e336c540574559c8bfc0ee94f0869539a08a21f765e800d55a"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/frames.csv": {
+    "bytes": 258647,
+    "sha256": "edeae38497fccd0588768f0af9a0a4e7de8f3c301eafc8c5f82ac3c5f8931498"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/trajectory_corrected.tum": {
+    "bytes": 533501,
+    "sha256": "960d3a0a5d80343c8f131a2787638b9cba38a7649b3ca086f695687bafc27d27"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/keyframes.tum": {
+    "bytes": 98379,
+    "sha256": "b2211715ed599853f180922ea910b13c13a22797dd900750dc81421bb26e864d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/poses_online.tum": {
+    "bytes": 549041,
+    "sha256": "770279f0917c46185366266aaa79c658af886eca3a5c8b1b36bf07a3cd8f1580"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/lifetime.csv": {
+    "bytes": 98789798,
+    "sha256": "cf0fb17729e893302b18352d5888c6d16f7b4de0747686a9b1c161d3831af28c"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6-tum-matrix/off_1/replay.log": {
+    "bytes": 105928,
+    "sha256": "cc65b49c813b74fdd13db4d62de5c987903b6a3300a0925908e5558148411baa"
+  }
+}

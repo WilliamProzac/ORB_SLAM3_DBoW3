@@ -1,0 +1,42 @@
+{
+  "c6_save_reload_save": {
+    "processed": 120,
+    "non_ok": 0,
+    "map_events": {
+      "loop_detected": 0,
+      "merge_detected": 0,
+      "new_maps": 1,
+      "active_map_resets": 0
+    },
+    "node_exit": "0"
+  },
+  "saved_map": {
+    "path": "lm01_saved.osa",
+    "bytes": 8914885,
+    "sha256": "d861ec4024c290b9aaa0cbfa9e2980a2cf9740963725e5effae10dd7181d9c88",
+    "map": true
+  },
+  "c6_save_reload_load": {
+    "processed": 101,
+    "non_ok": 0,
+    "map_events": {
+      "loop_detected": 0,
+      "merge_detected": 0,
+      "new_maps": 0,
+      "active_map_resets": 0
+    },
+    "node_exit": "0"
+  },
+  "reload_log_confirmed": true,
+  "reload_first_ok_index": 0,
+  "reload_non_ok_after_first": 0,
+  "cleanup": {
+    "deleted": [
+      "lm01_saved.osa"
+    ],
+    "free_after": 9775386624,
+    "free_before": 9766469632,
+    "verified_manifest_sha256": "0fe2aac51ffc828cf06eed47d643c4f24c70a1883b44e0a3397508e36a47f2fc"
+  },
+  "functional_pass": false
+}

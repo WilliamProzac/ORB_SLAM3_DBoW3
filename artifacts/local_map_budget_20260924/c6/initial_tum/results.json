@@ -1,0 +1,452 @@
+{
+  "off_1": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 5057
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9834212185944653,
+          0.04158153090554606,
+          0.17650405974291
+        ],
+        [
+          -0.16572831613985448,
+          0.18896122572386287,
+          -0.9678986415954847
+        ],
+        [
+          -0.07359913075319692,
+          -0.9811037822068,
+          -0.1789372417689714
+        ]
+      ],
+      "alignment_translation": [
+        0.26889304303981354,
+        -0.948822234179619,
+        1.241532690104742
+      ],
+      "ate_rmse_m": 0.2510179142065814,
+      "ate_median_m": 0.22807541179243146,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.1183068893811053,
+      "rpe_rotation_rmse_deg": 1.7288949907676925,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9774775363164895,
+          0.03417252563426902,
+          0.20825442249426868
+        ],
+        [
+          -0.1976605244415638,
+          0.1975207299777277,
+          -0.9601645058564451
+        ],
+        [
+          -0.07394581174165267,
+          -0.9797029140105894,
+          -0.1863175171717016
+        ]
+      ],
+      "alignment_translation": [
+        0.19975027744310492,
+        -1.0524966562075644,
+        1.2427442112966802
+      ],
+      "ate_rmse_m": 0.16775959576301666,
+      "ate_median_m": 0.15533380287412837,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.08381026186463762,
+      "rpe_rotation_rmse_deg": 0.9912895646976716,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  },
+  "candidate_1": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 4764,
+      "3": 291,
+      "0": 2
+    },
+    "max_maps": 2,
+    "poses_online": {
+      "estimated_poses": 4764,
+      "associated_poses": 1027,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.18543166070605407,
+          -0.20160236294004324,
+          0.9617544314765518
+        ],
+        [
+          0.9647713424327603,
+          -0.22323622038257873,
+          0.13921870107780038
+        ],
+        [
+          0.18663160511629323,
+          0.9536886688884858,
+          0.23589524540656656
+        ]
+      ],
+      "alignment_translation": [
+        0.2079571069529872,
+        -5.159305446266927,
+        1.9157282796041202
+      ],
+      "ate_rmse_m": 5.079935870396646,
+      "ate_median_m": 4.708704988547086,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 896,
+      "rpe_translation_rmse_m": 0.10299349421044436,
+      "rpe_rotation_rmse_deg": 1.2415221324435104,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0040459632873535
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "timestamps must increase"
+    }
+  },
+  "candidate_2": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 5057
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9876078261401546,
+          0.050461633927579484,
+          0.14860822739026364
+        ],
+        [
+          -0.14140381363065876,
+          0.12468705848632203,
+          -0.9820682761074883
+        ],
+        [
+          -0.06808629258098353,
+          -0.990912085377601,
+          -0.11600644730009282
+        ]
+      ],
+      "alignment_translation": [
+        0.4007778418861656,
+        -1.002947111163809,
+        1.1974427488273305
+      ],
+      "ate_rmse_m": 0.23035414792482614,
+      "ate_median_m": 0.21074938036070645,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.13284727247321518,
+      "rpe_rotation_rmse_deg": 1.6893534229026224,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9818424225664208,
+          0.06003160301745878,
+          0.17994905914746312
+        ],
+        [
+          -0.16521944052561366,
+          0.19548594973056133,
+          -0.9666890813132961
+        ],
+        [
+          -0.09320940790127458,
+          -0.9788674323406097,
+          -0.18201801059675152
+        ]
+      ],
+      "alignment_translation": [
+        0.3607199123083149,
+        -1.0462575007165822,
+        1.2159583992387268
+      ],
+      "ate_rmse_m": 0.17285764007702342,
+      "ate_median_m": 0.14911966542701624,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.11178659536639021,
+      "rpe_rotation_rmse_deg": 1.0629659978691048,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  },
+  "off_2": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 5056,
+      "3": 1
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5056,
+      "associated_poses": 1226,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9926896450678616,
+          0.04078600818786216,
+          0.11359476269240192
+        ],
+        [
+          -0.11094739318636007,
+          0.06217746645601698,
+          -0.9918793468009416
+        ],
+        [
+          -0.047517833706880654,
+          -0.9972313995263147,
+          -0.05719782582052163
+        ]
+      ],
+      "alignment_translation": [
+        0.43667304297185716,
+        -0.8287978254332717,
+        1.194387799125258
+      ],
+      "ate_rmse_m": 0.45584599302581763,
+      "ate_median_m": 0.41450055236414335,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1129,
+      "rpe_translation_rmse_m": 0.19066615966425993,
+      "rpe_rotation_rmse_deg": 1.653965253397412,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9821403855560543,
+          0.04218521776127015,
+          0.18335940243750773
+        ],
+        [
+          -0.17113101166217248,
+          0.2047301269248417,
+          -0.9637425755754587
+        ],
+        [
+          -0.07819488415035213,
+          -0.9779089847893677,
+          -0.19385452680022888
+        ]
+      ],
+      "alignment_translation": [
+        0.3532749197391939,
+        -1.0692999030192805,
+        1.25236462335919
+      ],
+      "ate_rmse_m": 0.1450429080884349,
+      "ate_median_m": 0.1431179919965755,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.08761390859424621,
+      "rpe_rotation_rmse_deg": 1.0212920428846655,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  },
+  "off_3": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 5057
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9907472325619865,
+          0.05619988585838756,
+          0.12353741943342098
+        ],
+        [
+          -0.11593415463514507,
+          0.12280291215812279,
+          -0.9856361988860384
+        ],
+        [
+          -0.07056339674221396,
+          -0.9908385426470798,
+          -0.11515115911362905
+        ]
+      ],
+      "alignment_translation": [
+        0.36254720219249803,
+        -0.8367017528765914,
+        1.2359025719905243
+      ],
+      "ate_rmse_m": 0.3733546002709428,
+      "ate_median_m": 0.37819037381712595,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.155006463674694,
+      "rpe_rotation_rmse_deg": 1.3791799134236515,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9773173493028461,
+          0.04547338067456013,
+          0.20684044672569651
+        ],
+        [
+          -0.19499521838006476,
+          0.18784942382573394,
+          -0.9626471102004363
+        ],
+        [
+          -0.0826296772386892,
+          -0.9811446201342422,
+          -0.17472140916631793
+        ]
+      ],
+      "alignment_translation": [
+        0.2764148785208146,
+        -1.071789945925703,
+        1.2736693819550973
+      ],
+      "ate_rmse_m": 0.14719672113198387,
+      "ate_median_m": 0.144987768723753,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.07843719407220912,
+      "rpe_rotation_rmse_deg": 0.8834710047199573,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  },
+  "candidate_3": {
+    "exit": 0,
+    "processed": 5057,
+    "states": {
+      "2": 4856,
+      "3": 199,
+      "4": 1,
+      "0": 1
+    },
+    "max_maps": 2,
+    "poses_online": {
+      "estimated_poses": 4856,
+      "associated_poses": 1129,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.8084876863020862,
+          -0.08815180431033165,
+          -0.5818736293171679
+        ],
+        [
+          -0.5136744537723535,
+          -0.3768095785750159,
+          0.7708132698882353
+        ],
+        [
+          -0.28720413757391183,
+          0.9220866558469183,
+          0.25936457443042177
+        ]
+      ],
+      "alignment_translation": [
+        -0.6236204461265715,
+        -0.8873240929474422,
+        1.4754162943889575
+      ],
+      "ate_rmse_m": 1.3046345574246183,
+      "ate_median_m": 1.0081579907748668,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1012,
+      "rpe_translation_rmse_m": 0.6885684396507143,
+      "rpe_rotation_rmse_deg": 10.625501698997981,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "timestamps must increase"
+    }
+  }
+}

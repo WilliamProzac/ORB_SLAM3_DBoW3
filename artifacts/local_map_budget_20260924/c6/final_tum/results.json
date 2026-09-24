@@ -1,0 +1,435 @@
+{
+  "off_1": {
+    "exit": -15,
+    "process": {
+      "returncode": -15,
+      "failure_reason": "recorded_external_interruption",
+      "interruption": {
+        "reason": "no frame output progress for over 10 minutes; merge graph reference cleanup loop sampled; tracking waits on map mutex",
+        "signal": "SIGTERM",
+        "pid": 1045923,
+        "command": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-final-frozen/tum_localmap_replay /home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/orbvoc.dbow3 /home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off.yaml /home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop /home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/associate.txt /home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1 5057 1 ",
+        "preserve_as_failed_round": true,
+        "debugger_attached": true
+      }
+    },
+    "processed": 4693,
+    "partial_terminal_rows": 1,
+    "states": {
+      "2": 4513,
+      "3": 178,
+      "0": 2
+    },
+    "max_maps": 3,
+    "poses_online": {
+      "estimated_poses": 4611,
+      "associated_poses": 873,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.6029287286015426,
+          0.014473790567369752,
+          -0.7976637497175987
+        ],
+        [
+          0.7879520003443419,
+          0.167377310158127,
+          -0.5925508258348645
+        ],
+        [
+          0.12493435628472122,
+          -0.9857866632445583,
+          -0.11232124104050945
+        ]
+      ],
+      "alignment_translation": [
+        -0.7414240915638072,
+        -2.0230988519585664,
+        1.6583936011308222
+      ],
+      "ate_rmse_m": 1.0721544113267334,
+      "ate_median_m": 0.8518396718457448,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 762,
+      "rpe_translation_rmse_m": 0.6354923294884377,
+      "rpe_rotation_rmse_deg": 15.153699932777997,
+      "rpe_actual_interval_range_s": [
+        0.996920108795166,
+        1.004044771194458
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/trajectory_corrected.tum not found."
+    }
+  },
+  "candidate_1": {
+    "exit": 0,
+    "process": {
+      "returncode": 0,
+      "elapsed_s": 184.16865958482958,
+      "failure_reason": null,
+      "total_timeout_s": 900,
+      "frame_idle_timeout_s": 300
+    },
+    "processed": 5057,
+    "partial_terminal_rows": 0,
+    "states": {
+      "2": 5057
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9862901671112811,
+          0.04323767121686287,
+          0.15925517274909018
+        ],
+        [
+          -0.15728982645483838,
+          0.04560086386573053,
+          -0.9864990986861089
+        ],
+        [
+          -0.049916097137166306,
+          -0.9980235793819906,
+          -0.03817483784053884
+        ]
+      ],
+      "alignment_translation": [
+        0.3399872270761318,
+        -0.9123983366635262,
+        1.1916752529731056
+      ],
+      "ate_rmse_m": 0.355575220967864,
+      "ate_median_m": 0.33776418578987333,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.14233996879425925,
+      "rpe_rotation_rmse_deg": 1.6004143613544448,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9718595821563091,
+          0.04328172102414906,
+          0.23155052406797005
+        ],
+        [
+          -0.21755941811219176,
+          0.21195547522820168,
+          -0.9527553600539183
+        ],
+        [
+          -0.09031529306628208,
+          -0.9763204233989854,
+          -0.19657461355011396
+        ]
+      ],
+      "alignment_translation": [
+        0.25529388280758714,
+        -1.0408780906123507,
+        1.269223737840702
+      ],
+      "ate_rmse_m": 0.12226823771893854,
+      "ate_median_m": 0.11389039918264364,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.08818698164850113,
+      "rpe_rotation_rmse_deg": 1.009497617209949,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  },
+  "candidate_2": {
+    "exit": 0,
+    "process": {
+      "returncode": 0,
+      "elapsed_s": 174.15786758600734,
+      "failure_reason": null,
+      "total_timeout_s": 900,
+      "frame_idle_timeout_s": 300
+    },
+    "processed": 5057,
+    "partial_terminal_rows": 0,
+    "states": {
+      "2": 4835,
+      "3": 220,
+      "0": 2
+    },
+    "max_maps": 2,
+    "poses_online": {
+      "estimated_poses": 4835,
+      "associated_poses": 1096,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.16230960823525017,
+          -0.030400724125399195,
+          0.9862714570782075
+        ],
+        [
+          0.9817266463860519,
+          -0.10560213334610173,
+          0.15830660506860514
+        ],
+        [
+          0.09933973449790776,
+          0.9939436530334115,
+          0.04698544183554815
+        ]
+      ],
+      "alignment_translation": [
+        0.40889461480704925,
+        -4.877729858930589,
+        1.9592659599622537
+      ],
+      "ate_rmse_m": 5.105281510698205,
+      "ate_median_m": 4.3256943855961865,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 958,
+      "rpe_translation_rmse_m": 0.0924727303582145,
+      "rpe_rotation_rmse_deg": 1.1139177813558954,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0040459632873535
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "timestamps must increase"
+    }
+  },
+  "off_2": {
+    "exit": 0,
+    "process": {
+      "returncode": 0,
+      "elapsed_s": 174.1500149720814,
+      "failure_reason": null,
+      "total_timeout_s": 900,
+      "frame_idle_timeout_s": 300
+    },
+    "processed": 5057,
+    "partial_terminal_rows": 0,
+    "states": {
+      "2": 4965,
+      "3": 91,
+      "0": 1
+    },
+    "max_maps": 2,
+    "poses_online": {
+      "estimated_poses": 4965,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.23624085702426328,
+          0.02011287365201528,
+          0.9714863507975289
+        ],
+        [
+          0.9681427644837415,
+          -0.08053270880724885,
+          0.23709506614424747
+        ],
+        [
+          0.08300509050786958,
+          0.9965490229414831,
+          -0.00044701695206440795
+        ]
+      ],
+      "alignment_translation": [
+        0.5180984938441057,
+        -3.634481028097577,
+        2.0230643119909404
+      ],
+      "ate_rmse_m": 5.049790297246573,
+      "ate_median_m": 4.3104596444799,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 2.2181871086391403,
+      "rpe_rotation_rmse_deg": 13.40369962005541,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "timestamps must increase"
+    }
+  },
+  "off_3": {
+    "exit": 0,
+    "process": {
+      "returncode": 0,
+      "elapsed_s": 174.15053708199412,
+      "failure_reason": null,
+      "total_timeout_s": 900,
+      "frame_idle_timeout_s": 300
+    },
+    "processed": 5057,
+    "partial_terminal_rows": 0,
+    "states": {
+      "2": 4965,
+      "3": 91,
+      "0": 1
+    },
+    "max_maps": 2,
+    "poses_online": {
+      "estimated_poses": 4965,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.42656685538530714,
+          0.30558538790528916,
+          0.8512686347948362
+        ],
+        [
+          -0.8916271751477634,
+          -0.30003906844505457,
+          -0.33908337904510005
+        ],
+        [
+          0.15179492226260297,
+          -0.903655978846705,
+          0.4004549581037702
+        ]
+      ],
+      "alignment_translation": [
+        0.19667923384396224,
+        -1.7265702142640162,
+        1.188904793568512
+      ],
+      "ate_rmse_m": 1.4040586579048586,
+      "ate_median_m": 1.2541817614313395,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.6653033292978205,
+      "rpe_rotation_rmse_deg": 24.899868773101844,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "error": "timestamps must increase"
+    }
+  },
+  "candidate_3": {
+    "exit": 0,
+    "process": {
+      "returncode": 0,
+      "elapsed_s": 188.15899391309358,
+      "failure_reason": null,
+      "total_timeout_s": 900,
+      "frame_idle_timeout_s": 300
+    },
+    "processed": 5057,
+    "partial_terminal_rows": 0,
+    "states": {
+      "2": 5057
+    },
+    "max_maps": 1,
+    "poses_online": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9910445748362371,
+          0.04910926721759327,
+          0.1241729864383226
+        ],
+        [
+          -0.11943761769668737,
+          0.0898131033653457,
+          -0.9887710867247407
+        ],
+        [
+          -0.059710184781163994,
+          -0.9947471469359602,
+          -0.0831432949561329
+        ]
+      ],
+      "alignment_translation": [
+        0.40995875392515213,
+        -0.9101137969403833,
+        1.1924017500220003
+      ],
+      "ate_rmse_m": 0.3492695026091354,
+      "ate_median_m": 0.34093331456307757,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.15451279613395502,
+      "rpe_rotation_rmse_deg": 1.7074701508027568,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    },
+    "trajectory_corrected": {
+      "estimated_poses": 5057,
+      "associated_poses": 1227,
+      "timestamp_tolerance_s": 0.02,
+      "alignment": "SE3 (scale fixed at 1)",
+      "alignment_rotation": [
+        [
+          -0.9774464915626011,
+          0.04828925216619267,
+          0.20558819094780603
+        ],
+        [
+          -0.19389602607399425,
+          0.1805474596119531,
+          -0.9642649770163708
+        ],
+        [
+          -0.08368206023201502,
+          -0.9823801519538652,
+          -0.16711238686113458
+        ]
+      ],
+      "alignment_translation": [
+        0.31923280004972754,
+        -1.0862532198503292,
+        1.221855956206999
+      ],
+      "ate_rmse_m": 0.14054384547613524,
+      "ate_median_m": 0.127113330510324,
+      "rpe_interval_s": 1.0,
+      "rpe_interval_tolerance_s": 0.02,
+      "rpe_pairs": 1130,
+      "rpe_translation_rmse_m": 0.07506593478805916,
+      "rpe_rotation_rmse_deg": 0.9158252159396908,
+      "rpe_actual_interval_range_s": [
+        0.9959890842437744,
+        1.0054240226745605
+      ]
+    }
+  }
+}

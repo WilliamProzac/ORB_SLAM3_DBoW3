@@ -285,10 +285,11 @@
       },
       "system_oom_kill_delta": 0,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 691.1,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2434,
@@ -396,8 +397,12 @@
             "p50": 63.5,
             "p95": 311.99999999999983,
             "p99": 336.0
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 128,
             "sum": 0.0,
             "max": 0,
@@ -405,6 +410,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 128,
+          "candidate_kfs": {
+            "count": 128,
+            "sum": 20050.0,
+            "max": 373,
+            "p50": 109.0,
+            "p95": 356.1499999999999,
+            "p99": 371.73
+          },
+          "candidate_mps": {
+            "count": 128,
+            "sum": 373596.0,
+            "max": 7789,
+            "p50": 2797.5,
+            "p95": 5812.749999999997,
+            "p99": 7363.160000000002
+          },
+          "actual_vertices": {
+            "count": 128,
+            "sum": 393646.0,
+            "max": 8081,
+            "p50": 2979.0,
+            "p95": 6010.499999999997,
+            "p99": 7503.560000000001
+          },
+          "actual_edges": {
+            "count": 128,
+            "sum": 1779046.0,
+            "max": 52965,
+            "p50": 10923.5,
+            "p95": 39432.049999999996,
+            "p99": 47159.48000000001
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0
@@ -702,10 +743,11 @@
       },
       "system_oom_kill_delta": 0,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 703.4899999999999,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2446,
@@ -813,8 +855,12 @@
             "p50": 35.0,
             "p95": 279.04999999999995,
             "p99": 285.40999999999997
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 160,
             "sum": 0.0,
             "max": 0,
@@ -822,6 +868,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 160,
+          "candidate_kfs": {
+            "count": 160,
+            "sum": 15479.0,
+            "max": 372,
+            "p50": 57.5,
+            "p95": 337.05,
+            "p99": 365.04999999999995
+          },
+          "candidate_mps": {
+            "count": 160,
+            "sum": 404945.0,
+            "max": 8327,
+            "p50": 1975.0,
+            "p95": 5422.45,
+            "p99": 7839.409999999998
+          },
+          "actual_vertices": {
+            "count": 160,
+            "sum": 420424.0,
+            "max": 8663,
+            "p50": 2006.0,
+            "p95": 5627.55,
+            "p99": 7995.309999999998
+          },
+          "actual_edges": {
+            "count": 160,
+            "sum": 1850467.0,
+            "max": 58754,
+            "p50": 6720.5,
+            "p95": 39909.79999999998,
+            "p99": 50823.35999999998
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0
@@ -1120,10 +1202,11 @@
       },
       "system_oom_kill_delta": null,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 677.67,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2158,
@@ -1231,8 +1314,12 @@
             "p50": 113.0,
             "p95": 363.49999999999994,
             "p99": 365.94
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 107,
             "sum": 0.0,
             "max": 0,
@@ -1240,6 +1327,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 107,
+          "candidate_kfs": {
+            "count": 107,
+            "sum": 19867.0,
+            "max": 409,
+            "p50": 166.0,
+            "p95": 396.6999999999999,
+            "p99": 407.94
+          },
+          "candidate_mps": {
+            "count": 107,
+            "sum": 356536.0,
+            "max": 9136,
+            "p50": 3205.0,
+            "p95": 6807.799999999992,
+            "p99": 9053.579999999998
+          },
+          "actual_vertices": {
+            "count": 107,
+            "sum": 376403.0,
+            "max": 9494,
+            "p50": 3406.0,
+            "p95": 7076.199999999992,
+            "p99": 9397.399999999998
+          },
+          "actual_edges": {
+            "count": 107,
+            "sum": 1886460.0,
+            "max": 59926,
+            "p50": 13930.0,
+            "p95": 48337.09999999994,
+            "p99": 59149.15999999999
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0
@@ -1529,10 +1652,11 @@
       },
       "system_oom_kill_delta": null,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 687.93,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2358,
@@ -1640,8 +1764,12 @@
             "p50": 127.5,
             "p95": 320.0,
             "p99": 379.66999999999996
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 134,
             "sum": 0.0,
             "max": 0,
@@ -1649,6 +1777,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 134,
+          "candidate_kfs": {
+            "count": 134,
+            "sum": 20221.0,
+            "max": 418,
+            "p50": 158.5,
+            "p95": 365.09999999999997,
+            "p99": 416.00999999999993
+          },
+          "candidate_mps": {
+            "count": 134,
+            "sum": 385370.0,
+            "max": 8890,
+            "p50": 2503.0,
+            "p95": 6463.0999999999985,
+            "p99": 7449.579999999993
+          },
+          "actual_vertices": {
+            "count": 134,
+            "sum": 405591.0,
+            "max": 9210,
+            "p50": 2744.0,
+            "p95": 6831.149999999999,
+            "p99": 7752.769999999995
+          },
+          "actual_edges": {
+            "count": 134,
+            "sum": 1872225.0,
+            "max": 56956,
+            "p50": 9187.5,
+            "p95": 43170.54999999999,
+            "p99": 55621.10999999997
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0
@@ -1938,10 +2102,11 @@
       },
       "system_oom_kill_delta": null,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 709.59,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2436,
@@ -2049,8 +2214,12 @@
             "p50": 37.0,
             "p95": 264.6,
             "p99": 286.2400000000001
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 149,
             "sum": 0.0,
             "max": 0,
@@ -2058,6 +2227,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 149,
+          "candidate_kfs": {
+            "count": 149,
+            "sum": 15990.0,
+            "max": 366,
+            "p50": 69.0,
+            "p95": 311.2,
+            "p99": 348.1600000000001
+          },
+          "candidate_mps": {
+            "count": 149,
+            "sum": 387006.0,
+            "max": 8652,
+            "p50": 2045.0,
+            "p95": 5586.0,
+            "p99": 8358.760000000006
+          },
+          "actual_vertices": {
+            "count": 149,
+            "sum": 402996.0,
+            "max": 8965,
+            "p50": 2119.0,
+            "p95": 5758.4,
+            "p99": 8579.400000000007
+          },
+          "actual_edges": {
+            "count": 149,
+            "sum": 1689851.0,
+            "max": 59291,
+            "p50": 7002.0,
+            "p95": 36353.19999999997,
+            "p99": 55025.760000000024
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0
@@ -2347,10 +2552,11 @@
       },
       "system_oom_kill_delta": null,
       "cpu_during_callback_span_cores": {
-        "count": 0
+        "count": 0,
+        "unavailable_reason": "callback_start_ms is relative to first callback; sampler steady_s is absolute monotonic. No common epoch recorded, so exact span alignment is unavailable."
       },
       "process_cpu_total_s": 702.6899999999999,
-      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking and backend; whole-process and callback-span samples reported separately",
+      "cpu_note": "process user+system CPU / elapsed wall time; includes Tracking, backend, startup and shutdown; exact callback-span CPU cannot be recovered from these clock fields",
       "queues": {
         "lm_queue_before": {
           "count": 2443,
@@ -2458,8 +2664,12 @@
             "p50": 53.0,
             "p95": 302.4,
             "p99": 361.68
-          },
-          "lba_map_points": {
+          }
+        },
+        "timing_map_point_count": {
+          "available": false,
+          "reason": "visual LocalBundleAdjustment does not populate num_MPs; use separately scoped MemoryStats records",
+          "raw_column": {
             "count": 133,
             "sum": 0.0,
             "max": 0,
@@ -2467,6 +2677,42 @@
             "p95": 0.0,
             "p99": 0.0
           }
+        },
+        "memory_graph_records": {
+          "rows": 133,
+          "candidate_kfs": {
+            "count": 133,
+            "sum": 20569.0,
+            "max": 399,
+            "p50": 103.0,
+            "p95": 357.4,
+            "p99": 388.1600000000001
+          },
+          "candidate_mps": {
+            "count": 133,
+            "sum": 381896.0,
+            "max": 8695,
+            "p50": 2477.0,
+            "p95": 6603.199999999998,
+            "p99": 8340.240000000002
+          },
+          "actual_vertices": {
+            "count": 133,
+            "sum": 402465.0,
+            "max": 9047,
+            "p50": 2660.0,
+            "p95": 6910.5999999999985,
+            "p99": 8541.32
+          },
+          "actual_edges": {
+            "count": 133,
+            "sum": 1836659.0,
+            "max": 57480,
+            "p50": 10305.0,
+            "p95": 44545.399999999994,
+            "p99": 56640.16000000002
+          },
+          "scope": "MemoryStats::BA local graph-build records; candidate lists versus actual optimizer graph distinguished; early-return timer calls may lack a graph record; no inferred per-call CPU join"
         },
         "calling_thread_cpu_ms": {
           "count": 0

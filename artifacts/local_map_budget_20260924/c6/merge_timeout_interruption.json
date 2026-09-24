@@ -1,0 +1,8 @@
+{
+  "reason": "no frame output progress for over 10 minutes; merge graph reference cleanup loop sampled; tracking waits on map mutex",
+  "signal": "SIGTERM",
+  "pid": 1045923,
+  "command": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-final-frozen/tum_localmap_replay /home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/orbvoc.dbow3 /home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off.yaml /home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop /home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/associate.txt /home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1 5057 1 ",
+  "preserve_as_failed_round": true,
+  "debugger_attached": true
+}

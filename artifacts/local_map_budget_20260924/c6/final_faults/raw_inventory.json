@@ -1,0 +1,206 @@
+{
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/frames.csv": {
+    "bytes": 17499,
+    "sha256": "a5cc9ce0817313faf03e9bcdb3957d592e436b7daf4e6a017055a0274c894322"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/trajectory_corrected.tum": {
+    "bytes": 30811,
+    "sha256": "cf46ccb5c04ff6c7334b500de0810fcf4df7e915f748f4b4da403d5700564b80"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/keyframes.tum": {
+    "bytes": 9493,
+    "sha256": "9d5f41d8e06809f3576171f6cacc8eac5d330e819998ac22407763867fa46e40"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/lifetime.csv": {
+    "bytes": 11386100,
+    "sha256": "3fee9a9f0e0b04723f5f93e6eb3a5125043e364f7ae3124715f738651cf972cc"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/replay.log": {
+    "bytes": 33809,
+    "sha256": "bc52fe1e69f7325f25c285a3135510f26853ba8295fcc44808b0460e7f026d90"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/localmap.csv": {
+    "bytes": 73715,
+    "sha256": "3dec93fcc347dc204348d91ec4158df97237467a45ba794bc5da62b206682cd1"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/poses.tum": {
+    "bytes": 26269,
+    "sha256": "c03b5b090a149f0c71c3b8b459e3a70668de5f16ad51860577aac43896fbd2e5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/local_mapping_timing.csv": {
+    "bytes": 16045,
+    "sha256": "2b28e78d1c1da9085b3384430ab217dc46a4e65d30e9422961018ff0cb9b5327"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_candidate/selection.csv": {
+    "bytes": 1860269,
+    "sha256": "130aecfe6b0bb5ade5c6cf4a4678a0de58439524fc4b1b0ced272f74599d9a6c"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/frames.csv": {
+    "bytes": 17497,
+    "sha256": "0be0bd2767b74df47af97903b689f37a06adeeec95e14e826f93c198270ab4d8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/trajectory_corrected.tum": {
+    "bytes": 30797,
+    "sha256": "66bbc512a35cfae3dad495f81fd0eef6358c3c410eb4ac59b55997b9d8c82f0e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/keyframes.tum": {
+    "bytes": 9471,
+    "sha256": "485ff25fd5810838f355239d4c033c3240adbede430e7f96e1aad3fe519d33aa"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/lifetime.csv": {
+    "bytes": 11457004,
+    "sha256": "92f3cfe3c0ebb035190d3b594f3ac091f9c904763ede10050b367b266f9f65c8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/replay.log": {
+    "bytes": 21856,
+    "sha256": "742cbd54e0e66f2a6a9c259f7c2fcd60f385ded0540b61a4b7bc59639a560454"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/poses.tum": {
+    "bytes": 25910,
+    "sha256": "091ef93931954f67e5259e3ccc039610ca6424116592848f51577b2b9f269e7b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/local_mapping_timing.csv": {
+    "bytes": 16033,
+    "sha256": "d6304556632801a963403e5b55e475a45153511b2687cfda6f238ceccd1c77b8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/blackout_gap_off/selection.csv": {
+    "bytes": 66,
+    "sha256": "4cee35dd70a749785a6c877de6e64db1e8fba4ac13522d0a3ff1a92836f5ea83"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/frames.csv": {
+    "bytes": 14212,
+    "sha256": "1e91f2780a25bf45e72e06dbe091397a978943ae7ebdefb7a8c24166b646656a"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/trajectory_corrected.tum": {
+    "bytes": 14683,
+    "sha256": "ebe74964887299c17996d853da796c9b42fe7e738ea919cfe272559400b0e1a1"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/keyframes.tum": {
+    "bytes": 9354,
+    "sha256": "a177217608910d0a54b5772e13fa2e36c20bb4c6a413e40f2d884400eab935ba"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/lifetime.csv": {
+    "bytes": 14482883,
+    "sha256": "638b12e3c7d24ebe1df0bd6c8f7910833a3e42647c4e0d70a05a92b1b133fdd1"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/replay.log": {
+    "bytes": 13939,
+    "sha256": "fb301238b3b02acd80a8dcc8d3c9bdfb1fc135b4b1ac5eed966a5807b670e1db"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/localmap.csv": {
+    "bytes": 72482,
+    "sha256": "9605100ea4dfa7dced5dd513bb43f6a8bd30005d1bc9c0fb06056b34d070527e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/poses.tum": {
+    "bytes": 25854,
+    "sha256": "60367374b75274121e72659a001f6e0ddaa3ce48a13e03a7f5fb2563eb1a07ea"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/local_mapping_timing.csv": {
+    "bytes": 19306,
+    "sha256": "cebc70839aada10956dd860d0b19626ab5de73ef25a6c4de1229903c65d8e966"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_candidate/selection.csv": {
+    "bytes": 1881613,
+    "sha256": "383ae6e2fa17323392fe57cbb0b5cc090f5a88a407024d46aeb4d6aded6ce940"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/frames.csv": {
+    "bytes": 14221,
+    "sha256": "fa41f8857693f9d992bf19a3be7d856aa52d2ed5cffd34af6019cec5f2f5486b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/trajectory_corrected.tum": {
+    "bytes": 25128,
+    "sha256": "813a3ac950abbf0a573d014f0044f856910e640bb4773ce21924cca1059e039d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/keyframes.tum": {
+    "bytes": 9443,
+    "sha256": "425501d3d9ca780e5101b9c7a35c8915d1513cf5a9d45a809ae8f71b722d21b0"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/lifetime.csv": {
+    "bytes": 14298214,
+    "sha256": "ea2034674b10f50200125a3104482a4371181f3daf902dffb92d842f3ca5ba0b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/replay.log": {
+    "bytes": 14010,
+    "sha256": "eef7d64323793342e3db7d7c8958063f37de0c41a9f37b9c25ff8453a0cf7427"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/poses.tum": {
+    "bytes": 25853,
+    "sha256": "0b612bfaee35da057b7b2c1d2be1309177e33b01385531720ca39467b375774e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/local_mapping_timing.csv": {
+    "bytes": 19279,
+    "sha256": "d6e50049f84fda77d5c3a6f361cd9292baf7f758aade682bb407a991127445f1"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_off/selection.csv": {
+    "bytes": 66,
+    "sha256": "4cee35dd70a749785a6c877de6e64db1e8fba4ac13522d0a3ff1a92836f5ea83"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/frames.csv": {
+    "bytes": 14224,
+    "sha256": "dd2eabbdcfd32e5dfe83a5b058999e5c8cd64c175fe1ac28a59be543c253f96f"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/trajectory_corrected.tum": {
+    "bytes": 25131,
+    "sha256": "9807bce61a1d5cf21f44eef8d0f458f1e708a20e5fb87c9d047157b451402ac8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/keyframes.tum": {
+    "bytes": 9626,
+    "sha256": "d91f38aeaa31dee84085dd4fbe8d902ac3233b497abade811b39694311a5ceca"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/lifetime.csv": {
+    "bytes": 14558923,
+    "sha256": "cad32ca70a293e0b285328f4361031a66f946e166f4c1b31cf9e09f391b60f6d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/replay.log": {
+    "bytes": 14182,
+    "sha256": "2817e756d8629de07a9d8f5c94e4e1dee543ef8a900b7d483ce8dca9a6b28813"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/localmap.csv": {
+    "bytes": 72177,
+    "sha256": "8ac9182c4291baac6b4fa2ea60ff1d8f4d4d201b82dfcb5afe9ac05fea07bb35"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/poses.tum": {
+    "bytes": 25855,
+    "sha256": "fd04b8b0d605b5ce533f3531198990f3160db58399225d09c82e8f81f50fc1ae"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/local_mapping_timing.csv": {
+    "bytes": 19543,
+    "sha256": "d48f92e2399674873b159dca9a17df55a9adf885c1e7b0ef563a7140f3be199d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/map_switch_candidate/selection.csv": {
+    "bytes": 1881537,
+    "sha256": "85efccbd13c2477c0000d6e5e086fa17b0d1b26301d134ddc988fed0cd0fc265"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/frames.csv": {
+    "bytes": 14221,
+    "sha256": "0ddb3f406d66123935922627b4b567194ec4405188b9c95f217c89a6f0a4c2af"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/trajectory_corrected.tum": {
+    "bytes": 14686,
+    "sha256": "7120c5764462a4b93604b2cfde5cd856a3319fbdf05fa3c8c8316cd3e04195c5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/keyframes.tum": {
+    "bytes": 9443,
+    "sha256": "c9b63176d8d523e0125674e615f90b2ebea442aaaed8f4b8fc1e69819e66c48f"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/lifetime.csv": {
+    "bytes": 14062722,
+    "sha256": "7bb0c7ebfa9338b83ced73994ddc1703b3023253665633be1e483b2ab01871a5"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/replay.log": {
+    "bytes": 13921,
+    "sha256": "1db394405099418a45916561f11877a53604888f26ed4697674c558be59122b3"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/poses.tum": {
+    "bytes": 25852,
+    "sha256": "089afcf09d034371e0d89c6ca593392398092c1c2337a8a7505967eae0fbbdde"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/local_mapping_timing.csv": {
+    "bytes": 19305,
+    "sha256": "5854ef1c45461691a199873973b0929f505d17a6f86d048a2224ef9a19c8a38e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-fault-matrix/reset_off/selection.csv": {
+    "bytes": 66,
+    "sha256": "4cee35dd70a749785a6c877de6e64db1e8fba4ac13522d0a3ff1a92836f5ea83"
+  }
+}

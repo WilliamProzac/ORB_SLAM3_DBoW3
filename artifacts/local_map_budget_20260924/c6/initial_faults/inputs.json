@@ -1,0 +1,76 @@
+{
+  "binaries": {
+    "ros_rgbd": "eb51491c1021ea6ea069fc1775ccd5366040e969d22e2169c73acde4d0fefa00",
+    "local_map_budget_probe": "93f10c20b9ab77024bb5554c7cee8aa5d17c8045f5ba1e9c6b7d405348080018",
+    "tum_localmap_replay": "4bfb1eb9136f0fa14e40cf6f4bb588dece9cba7c40f8e46c4c9302b20697f641",
+    "memory_probe": "e9581441178bf70247cc940f6fce024ebf46267ee78fed993ecd7387389073e8",
+    "memory_replay": "5e726570801b5ebd566a8b649256c2984fa54c926be7fe058671c3e55337c1d0",
+    "liborb_slam3_ros.so": "353ef13f3724d959d5fdd11e9e2e016784626ebf5ec7df45e7ac02e399e5906c"
+  },
+  "fault_manifest": {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/data",
+    "source_index_sha256": "72ec0bff086d086ca2e7a47dd48d985ee840dd3816de9986af32fd9edf7a2160",
+    "source_manifest_sha256": "437c6574223a20f8fe62cab3502e1bc4713756fb45a66d90adf5d77afe65b693",
+    "source_first_pairs": 300,
+    "output_pairs": 295,
+    "blackout_source_ordinals": [
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84
+    ],
+    "gap_source_ordinals": [
+      150,
+      151,
+      152,
+      153,
+      154
+    ],
+    "blackout_rgb": "all zero; depth unchanged",
+    "format": "640x544 RGB8 + float32 depth metres, packed row-major",
+    "output_sha256": {
+      "frames.bin": "2908e1fde360957987cd4bfa438c99dddc51af6f4278a2d022fecf136e36f689",
+      "frames.tsv": "5833313ec3abf27909579feb1ea013cef1eeca77b046d8d148e34bafba4a73b9"
+    },
+    "bytes": 718950400
+  },
+  "definitions": [
+    [
+      "blackout_gap",
+      "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/data/lm01_fault300",
+      295,
+      {}
+    ],
+    [
+      "reset",
+      "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/data",
+      240,
+      {
+        "MEMORY_RESET_AT_FRAME": "100"
+      }
+    ],
+    [
+      "map_switch",
+      "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/data",
+      240,
+      {
+        "MEMORY_NEW_MAP_AT_FRAME": "100"
+      }
+    ]
+  ],
+  "configs": {
+    "off": "a6736839b7ddb147eccdddf5b13c8bf706d3674558563b6defdf8de207c1d988",
+    "candidate": "235b45fb01a887cf3c49c85d3855c691afcc70681d7af1bad1536ef5293c5b80"
+  }
+}

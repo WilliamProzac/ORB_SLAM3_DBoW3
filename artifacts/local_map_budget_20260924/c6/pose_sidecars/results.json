@@ -1,0 +1,86 @@
+{
+  "c6_loop955_off_1": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 173201,
+        "sha256": "1fd3c0c014b464ca8f56f1ca19c5644ffe6a0b053987a98745b9c03f6e441be6"
+      },
+      "raw.csv": {
+        "bytes": 177928,
+        "sha256": "e8441488cccc2f2110d0c9ef3168bc845b8115e5a2db8e3fc568dcc56324721d"
+      }
+    }
+  },
+  "c6_loop955_candidate_1": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 163606,
+        "sha256": "097656096f6830d547d653a872ab0ebeb38c49378e0674b47996f684410b4a93"
+      },
+      "raw.csv": {
+        "bytes": 168085,
+        "sha256": "23e8db5d36f39feb2824566ce8840a1264f8de7d373d5627d99db07ee4b1bb7a"
+      }
+    }
+  },
+  "c6_loop955_candidate_2": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 169073,
+        "sha256": "b9ba5889bbbea156da4929c6fb3095ecc2c5b58b8de07b0ba0e7714b3ac16ab3"
+      },
+      "raw.csv": {
+        "bytes": 173707,
+        "sha256": "0ffb400944bc546ef9918b856e8dde1c97e910d1c1b1e608439ce3d01688dbee"
+      }
+    }
+  },
+  "c6_loop955_off_2": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 173575,
+        "sha256": "55a0bd5c0f1a56eef23d5cb83833872c40cba1d7d188a1c852a1123455a47984"
+      },
+      "raw.csv": {
+        "bytes": 178331,
+        "sha256": "4ce25b38a91d210bbe55aadfa8f5b9f56e9dfc12d16620140012fa1d2fee03ca"
+      }
+    }
+  },
+  "c6_loop955_off_3": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 173580,
+        "sha256": "6848775d566c07fe2dc48deb5cd3a56cf4b1fd732119d8bce03160598059931f"
+      },
+      "raw.csv": {
+        "bytes": 178353,
+        "sha256": "2bb389a0a7f96fe3acf4b110987c796586db60f30b0c785e9f2d49f23b6ff4cc"
+      }
+    }
+  },
+  "c6_loop955_candidate_3": {
+    "exit": 0,
+    "round_exit_observed": true,
+    "files": {
+      "continuous.csv": {
+        "bytes": 164844,
+        "sha256": "3bb4d744f6d9edfd9468b0f534d16184e41f78042fd71fc18c6204cd96a8c945"
+      },
+      "raw.csv": {
+        "bytes": 169387,
+        "sha256": "4cfaf567c40218b7a8afb69bbe283f1fdb7c677c0e0b760bc1efac67ac2175c7"
+      }
+    }
+  }
+}

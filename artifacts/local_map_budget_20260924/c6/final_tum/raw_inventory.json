@@ -1,0 +1,214 @@
+{
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/frames.csv": {
+    "bytes": 257338,
+    "sha256": "a57fce4b16e63b543f76379349780ca82393a31da0d53c6e585c633787c7aa53"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/trajectory_corrected.tum": {
+    "bytes": 535383,
+    "sha256": "069931acb62b3e39af237a517e27180ed02a84353fbc3335eb1083758e14dfaf"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/process.json": {
+    "bytes": 140,
+    "sha256": "02142b0f2e8afdf30f3b566d26cd0cfa043d99a31ff13140c2f2c2d01417d439"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/keyframes.tum": {
+    "bytes": 108832,
+    "sha256": "40cc0a5dd605504566263f59dc5958e7a8f66a9328414f6cde2cf16e024581a0"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/poses_online.tum": {
+    "bytes": 540217,
+    "sha256": "e856a55a3086b0f4a824413626ed4018c169d7a1ed68c6219d7c8e9c6bdc8bfe"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/lifetime.csv": {
+    "bytes": 101342993,
+    "sha256": "9450bda24934a58e9d2f5b30cf5abfaaa64ae8d79bdeccbc827695b452b38581"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/replay.log": {
+    "bytes": 134431,
+    "sha256": "3e63aee5925a5330a184d9e3b2b694c7f4ad203b680d9398d22ad3dd8e13c391"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_3/local_mapping_timing.csv": {
+    "bytes": 183489,
+    "sha256": "6260c033e6cdb22269d86d7a38d1193838d774ba85001df47e0caa048979fd30"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/frames.csv": {
+    "bytes": 255980,
+    "sha256": "79960af8246be919a28f097cbd1cfecc1ecc521eead832adfbefe2c1c46e7f38"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/trajectory_corrected.tum": {
+    "bytes": 531592,
+    "sha256": "68699c36b1496b50d12cd9e0fa5191a032928f7117efebc985478066ccda244b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/process.json": {
+    "bytes": 139,
+    "sha256": "d9b233ad1b90cb2ae9470cc2101b712ff4255ea5f38bcd4dacb2e808129ede26"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/keyframes.tum": {
+    "bytes": 107223,
+    "sha256": "35018f48fabdbda232b398384851910e56652af48b65d05cb0600565feacf76e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/poses_online.tum": {
+    "bytes": 537015,
+    "sha256": "d29ea34eb606b5649229fed3d14e1ccfb78f753b9282527ecbb40d0cd3c5625d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/lifetime.csv": {
+    "bytes": 101572652,
+    "sha256": "fd44f86a1eefc559fb0512a32ab2611339cf6ce77bb86bc07ee6c1f1738c7722"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/replay.log": {
+    "bytes": 124594,
+    "sha256": "0a60afcba9b4f74671519f4683920399ca1923be0f0e2a1caa6dd22106018fba"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_2/local_mapping_timing.csv": {
+    "bytes": 180213,
+    "sha256": "51d71259b5bb022c2e11b989371716514ce4c60eccfc797a9e730e57e78b7074"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/frames.csv": {
+    "bytes": 255627,
+    "sha256": "59074f6bcc884e79e52769565bdedc474b28319c4122fd43d3ec0ec36d957892"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/trajectory_corrected.tum": {
+    "bytes": 531424,
+    "sha256": "99b78c549a8ea04650f95bf9c725c025040d7c8e14cb52ddd4b90668ec1e2bb7"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/process.json": {
+    "bytes": 140,
+    "sha256": "12713cc0bf266efbdf311e1884681d65c057520f2b518494661f611ee40d123d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/keyframes.tum": {
+    "bytes": 914,
+    "sha256": "77c4db5374992b323934b1b9881d99958ec9e3cc44431eb00b7c5a31b7b47342"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/poses_online.tum": {
+    "bytes": 523263,
+    "sha256": "18d213dcc8b07084958ae9652812fc3174f52ed426b1c6997693b68b92825f35"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/lifetime.csv": {
+    "bytes": 101939283,
+    "sha256": "061a941a3251ed56446568b536c59ea5a200c6656ed8046fff01c9a4f125d991"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/replay.log": {
+    "bytes": 151911,
+    "sha256": "6d26e31b25aaab3771ee03e26c30ad4f558fcb46e83a48455b178af64603446b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/localmap.csv": {
+    "bytes": 1490025,
+    "sha256": "624b442e8b7007baed6df12a423c4956145ac936f3e1086c07c27e585c70c142"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/local_mapping_timing.csv": {
+    "bytes": 178346,
+    "sha256": "efd8be1792010dba0ca911f744e64b2a4dba54c359a9cdd158a380a5f7937b8b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_2/selection.csv": {
+    "bytes": 24048597,
+    "sha256": "218ef4695ea93a15264c92730797db4fe7458753c4b8c819b77181e1557569a8"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/frames.csv": {
+    "bytes": 259021,
+    "sha256": "7efdb8c52f55e8e455822a0cdcc8019435cde9583dbf793a4c89cb253790d1ee"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/trajectory_corrected.tum": {
+    "bytes": 533704,
+    "sha256": "cf9e961fffe09bf42c8eb9cc42287224f6220a9b9cda9c7d326bdb9c418bfa50"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/process.json": {
+    "bytes": 140,
+    "sha256": "245d6f106610319eb742423b4e6cf8be060586473fde0f7e55353c31997e6eb9"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/keyframes.tum": {
+    "bytes": 108655,
+    "sha256": "e04d0c46e2d66194cfe6d341d0e961d99b7e2102ed48d9c570da98b572893657"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/poses_online.tum": {
+    "bytes": 549917,
+    "sha256": "b4c69b11cd54d258769a7cfe96f1212c48e31ea65ea5dc53b6c11de18eaaae8a"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/lifetime.csv": {
+    "bytes": 104072079,
+    "sha256": "b496c14056a094da4133e092818223f6d9b81667c19162c60fc0e6e87ebebd8b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/replay.log": {
+    "bytes": 113986,
+    "sha256": "013c849d99e381275565086c8df9e22b65f805ca6426c4bad544711a555c56d3"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/localmap.csv": {
+    "bytes": 1541285,
+    "sha256": "ae3e2a718fc96e70f3773bd4f13563e40442a8c0f8e0d6deef5c575ee84c3129"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/local_mapping_timing.csv": {
+    "bytes": 182045,
+    "sha256": "cf49ab9d8808f4fec791cd4ecdb3e5749acbafc580b475e87b88b5a3f3610bca"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_1/selection.csv": {
+    "bytes": 26776465,
+    "sha256": "0caa757c8a119536f7c270be1bd7d510db67181c53db87cbd085a6ac302a25fa"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/frames.csv": {
+    "bytes": 259056,
+    "sha256": "07e7fcb4d5bf65822aac552b0602a4d6c6bd3d0dd0f221e0f62f9cafa8fab89b"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/trajectory_corrected.tum": {
+    "bytes": 533782,
+    "sha256": "40d6360f2583c0e4d508bc271517dacc752c6f8e512b7171e95a9e549c09c07d"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/process.json": {
+    "bytes": 140,
+    "sha256": "c3363b59e8e80ae8a5a45efb4e1543aa410757cdb4630c8019bb53249df322ca"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/keyframes.tum": {
+    "bytes": 106800,
+    "sha256": "2fdf30b94b04d378f622d971592911d97048b07e3e525daa76a6ccff86b3bb78"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/poses_online.tum": {
+    "bytes": 549592,
+    "sha256": "61835d426f66e4387cc8a7383d9e4a266da42bbb70918b60afcd92251e6ce6cd"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/lifetime.csv": {
+    "bytes": 101461104,
+    "sha256": "c5ab4dcfd4e00d68f3797faeb1366b96c5709ebdd6670f500c1f9526cfe6e4c1"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/replay.log": {
+    "bytes": 113845,
+    "sha256": "20a64d4bf4dddc983045bcdcadaf02f2189864ca233aa18e767b71d6494b0967"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/localmap.csv": {
+    "bytes": 1538241,
+    "sha256": "6ebf1c175e984cbda75f1b5a4fe09f0c2a48f3715e33a0cb24bd0de70c6b277e"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/local_mapping_timing.csv": {
+    "bytes": 182572,
+    "sha256": "c1046c7352fe89ad1eb496d03426e83d9f57270a1c85681c9e57f71b5ba9b652"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/candidate_3/selection.csv": {
+    "bytes": 26879829,
+    "sha256": "07845463fdb9330e78d78c85721373f2f56dfddfbc703b1baccd9cbaabb5159c"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/frames.csv": {
+    "bytes": 237598,
+    "sha256": "ab5da92e44cc8f6531fceeb8a19d767f7f445e63f158f17168cb5e0885425cd9"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/hang_stack.txt": {
+    "bytes": 1953,
+    "sha256": "0c4489459bfd4410d90d251e4891a05f2f172f414584810068155d62b79b2f2a"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/poses_online.tum": {
+    "bytes": 499989,
+    "sha256": "3646c6e3d8db446cf9d24353049da9e629ca0b6cd7fba6f01cd604057e576e68"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/lifetime.csv": {
+    "bytes": 100241408,
+    "sha256": "1e2d1a24cadad5cf01c65c7cacc871b099909414f527f36be19831a29b58edbf"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/replay.log": {
+    "bytes": 128275,
+    "sha256": "d3c60b296e6ca264b8a52724be4f843575bf52e90740be0560ab839259d84ff9"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/interruption.json": {
+    "bytes": 789,
+    "sha256": "24a8ff9d75ef53aa36acc38dfa5ebc7ffe91680966088b94f00b54941e8dec0c"
+  },
+  "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/memory/lm01-c6cpu-tum-matrix/off_1/hang_stack_symbols.txt": {
+    "bytes": 24362,
+    "sha256": "082739fdd6028e885a68322515a11b3edef50434e0b7078efc02a2e965c7efb9"
+  }
+}

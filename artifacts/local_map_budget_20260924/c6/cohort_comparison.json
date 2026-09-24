@@ -1,0 +1,198 @@
+{
+  "reference": "c5_legacy80_long2910_1",
+  "note": "C6 adaptive/loop histories differ from the C5 fixed-KF long baseline; descriptive gate, not single-change causal isolation",
+  "comparisons": {
+    "c6_long2910_candidate_1": {
+      "survival_2": {
+        "delta_pp": -0.44107194160995233,
+        "pass": true,
+        "candidate": 0.2332541765035759,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": -0.2629839456430194,
+        "pass": true,
+        "candidate": 0.2224283988271013,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": -0.21153186557374415,
+        "pass": true,
+        "candidate": 0.2191911741790719,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": -0.5382263934871345,
+        "pass": true,
+        "candidate": 0.29145846967855427,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": -0.439862425166343,
+        "pass": true,
+        "candidate": 0.12656299235774215,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    },
+    "c6_long2910_candidate_2": {
+      "survival_2": {
+        "delta_pp": -0.4045130373575706,
+        "pass": true,
+        "candidate": 0.23361976554609973,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": -0.38969648690924674,
+        "pass": true,
+        "candidate": 0.22116127341443903,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": -0.4183864508255919,
+        "pass": true,
+        "candidate": 0.21712262832655344,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": -0.1809559844246078,
+        "pass": true,
+        "candidate": 0.29503117376917953,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": -0.29921727687696187,
+        "pass": true,
+        "candidate": 0.12796944384063597,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    },
+    "c6_long2910_candidate_3": {
+      "survival_2": {
+        "delta_pp": 0.06341080451248704,
+        "pass": true,
+        "candidate": 0.2382990039648003,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": -0.03831694268122132,
+        "pass": true,
+        "candidate": 0.22467506885671928,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": -0.13714870033304516,
+        "pass": true,
+        "candidate": 0.2199350058314789,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": 0.5717849389111185,
+        "pass": true,
+        "candidate": 0.3025585830025368,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": 0.2587902509885359,
+        "pass": true,
+        "candidate": 0.13354951911929094,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    },
+    "c6_loop955_candidate_1": {
+      "survival_2": {
+        "delta_pp": 1.094706235305326,
+        "pass": true,
+        "candidate": 0.2486119582727287,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": 0.2693362348894418,
+        "pass": true,
+        "candidate": 0.22775160063242592,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": -0.1695332113529735,
+        "pass": true,
+        "candidate": 0.21961116072127962,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": 10.467263763252072,
+        "pass": true,
+        "candidate": 0.4015133712459463,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": 7.256018314306578,
+        "pass": true,
+        "candidate": 0.20352179975247137,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    },
+    "c6_loop955_candidate_2": {
+      "survival_2": {
+        "delta_pp": 1.9809229587988642,
+        "pass": true,
+        "candidate": 0.2574741255076641,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": 1.0573568995915938,
+        "pass": true,
+        "candidate": 0.23563180727944744,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": 0.559142407765903,
+        "pass": true,
+        "candidate": 0.22689791691246838,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": 11.374643750389064,
+        "pass": true,
+        "candidate": 0.41058717111731624,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": 7.425331240306149,
+        "pass": true,
+        "candidate": 0.20521492901246707,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    },
+    "c6_loop955_candidate_3": {
+      "survival_2": {
+        "delta_pp": 1.021082817798749,
+        "pass": true,
+        "candidate": 0.24787572409766293,
+        "kf_legacy_base": 0.23766489591967543
+      },
+      "survival_3": {
+        "delta_pp": 0.04768828875842679,
+        "pass": true,
+        "candidate": 0.22553512117111577,
+        "kf_legacy_base": 0.2250582382835315
+      },
+      "survival_5": {
+        "delta_pp": -0.3808801237394771,
+        "pass": true,
+        "candidate": 0.21749769159741458,
+        "kf_legacy_base": 0.22130649283480935
+      },
+      "unique_valid_kf_observations_2": {
+        "delta_pp": 10.986902323483537,
+        "pass": true,
+        "candidate": 0.406709756848261,
+        "kf_legacy_base": 0.2968407336134256
+      },
+      "unique_valid_kf_observations_3": {
+        "delta_pp": 7.388602881995729,
+        "pass": true,
+        "candidate": 0.20484764542936287,
+        "kf_legacy_base": 0.13096161660940558
+      }
+    }
+  }
+}

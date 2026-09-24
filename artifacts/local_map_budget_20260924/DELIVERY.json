@@ -1,0 +1,50 @@
+{
+  "status": "implementation and experiment delivery complete; production acceptance FAILED; default OFF",
+  "runtime_core": {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/core",
+    "branch": "perf/tracking-local-map-budget",
+    "head": "be52247f9bedb9e275f0ed0baf4d97e9ffdca66e",
+    "tested_code_commit": "05e83e55"
+  },
+  "runtime_outer": {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle",
+    "branch": "perf/tracking-local-map-budget",
+    "head": "9c43a6c329697e369f78ef22c7775b835007bdea",
+    "tested_build_commit": "9feff3c"
+  },
+  "ide_evidence": {
+    "path": "/home/ywl/Project/ORB_SLAM3_DBoW3",
+    "pre_final_head": "bac56687827fbbcd8feac55a409a3d5b27f7f0fb",
+    "final_commit": "the commit containing this manifest"
+  },
+  "baselines": {
+    "core": "d80009e92639b5598a8efde33878a919bb67dcd9",
+    "outer": "3d38e3734130215b0cddc97b602f2da007cc9653",
+    "ide": "4aabed586b08787b4843c9e4360db9fd59326ce9"
+  },
+  "arm_manifest": "c6/arm_manifest.json",
+  "native_manifest": "c6/native_manifest.json",
+  "source_manifest": "c6/source_manifest.json",
+  "source_recheck": "c6/final_source_verification.json",
+  "results": "c6/acceptance.json",
+  "report": "REPORT.md",
+  "followup": "FOLLOWUP.md",
+  "board_cleanup": "c6/save_reload/results.json",
+  "raw_artifacts": "runs/ and outer memory/lm01-*; large logs, datasets, builds and fetched map remain local, hashes archived",
+  "preexisting_untracked_preserved": [
+    "memory/tools/mem14_board/review.json"
+  ],
+  "rollback": {
+    "flag": "RGBD.LocalMapMode: off",
+    "full_pair": "/userdata/rgbd_memory_lifecycle_8g_20260923/mem18_perf20; preserve paired node/core/config/vocab"
+  },
+  "scope_limits": [
+    "pure RGB-D binary ORB only",
+    "whole-System LSan remains inherited open",
+    "merge cleanup progress failure not fixed",
+    "TUM truth gap129.865s",
+    "no production enablement",
+    "MIH and budgeted BA are unimplemented conditional follow-ups"
+  ],
+  "versioned_artifact_index": "ARTIFACT_INDEX.json"
+}

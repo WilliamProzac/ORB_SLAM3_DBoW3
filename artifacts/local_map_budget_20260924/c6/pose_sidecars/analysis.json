@@ -1,0 +1,818 @@
+{
+  "c6_loop955_off_1": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 953,
+        "expected_ok_callbacks": 953,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 952,
+          "p50": 0.04221259027454531,
+          "p95": 0.05546599230462264,
+          "p99": 0.059752400519980084,
+          "max": 0.35958960472094575
+        },
+        "rotation_step_deg": {
+          "count": 952,
+          "p50": 1.2212750493258437,
+          "p95": 3.249293276998981,
+          "p99": 4.063753737683153,
+          "max": 4.743999473227626
+        },
+        "path_length_m": 33.84476057642805,
+        "endpoint_distance_m": 0.10519366511754186,
+        "position_extent_m": [
+          5.697859287261963,
+          4.031319499015808,
+          0.9215211346745491
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715283.1388319,
+            "dt_s": 0.08997941017150879,
+            "translation_m": 0.35958960472094575,
+            "rotation_deg": 1.8051713822293058
+          },
+          {
+            "timestamp": 1789715300.0587473,
+            "dt_s": 0.2700002193450928,
+            "translation_m": 0.1443618956086362,
+            "rotation_deg": 4.679492659620933
+          },
+          {
+            "timestamp": 1789715309.3286974,
+            "dt_s": 0.0899956226348877,
+            "translation_m": 0.10665754242401763,
+            "rotation_deg": 0.6100418643454314
+          },
+          {
+            "timestamp": 1789715306.2687209,
+            "dt_s": 0.09000110626220703,
+            "translation_m": 0.07995266034892079,
+            "rotation_deg": 4.047209146489354
+          },
+          {
+            "timestamp": 1789715258.478961,
+            "dt_s": 0.09000587463378906,
+            "translation_m": 0.06730017979563603,
+            "rotation_deg": 2.489079928653742
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 953,
+        "expected_ok_callbacks": 953,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 952,
+          "p50": 0.04221259027454531,
+          "p95": 0.05546599230462264,
+          "p99": 0.059752400519980084,
+          "max": 0.35958960472094575
+        },
+        "rotation_step_deg": {
+          "count": 952,
+          "p50": 1.2212745842690897,
+          "p95": 3.249301942661641,
+          "p99": 4.063755359501235,
+          "max": 4.743999342702431
+        },
+        "path_length_m": 33.84476057642805,
+        "endpoint_distance_m": 0.10519366511754186,
+        "position_extent_m": [
+          5.697859287261963,
+          4.031319499015808,
+          0.9215211346745491
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715283.1388319,
+            "dt_s": 0.08997941017150879,
+            "translation_m": 0.35958960472094575,
+            "rotation_deg": 1.8051713822293058
+          },
+          {
+            "timestamp": 1789715300.0587473,
+            "dt_s": 0.2700002193450928,
+            "translation_m": 0.1443618956086362,
+            "rotation_deg": 4.6794926590113874
+          },
+          {
+            "timestamp": 1789715309.3286974,
+            "dt_s": 0.0899956226348877,
+            "translation_m": 0.10665754242401763,
+            "rotation_deg": 0.6100391055247418
+          },
+          {
+            "timestamp": 1789715306.2687209,
+            "dt_s": 0.09000110626220703,
+            "translation_m": 0.07995266034892079,
+            "rotation_deg": 4.047209146489354
+          },
+          {
+            "timestamp": 1789715258.478961,
+            "dt_s": 0.09000587463378906,
+            "translation_m": 0.06730017979563603,
+            "rotation_deg": 2.4890553007665703
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "c6_loop955_candidate_1": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 900,
+        "expected_ok_callbacks": 900,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 899,
+          "p50": 0.04249376761104266,
+          "p95": 0.07996822302588853,
+          "p99": 0.10280131011699435,
+          "max": 0.14732440493117355
+        },
+        "rotation_step_deg": {
+          "count": 899,
+          "p50": 1.2708186810128699,
+          "p95": 3.5507903524310973,
+          "p99": 4.58575761272127,
+          "max": 7.072878339925947
+        },
+        "path_length_m": 33.772105556189054,
+        "endpoint_distance_m": 0.10075714595055484,
+        "position_extent_m": [
+          5.733727216720581,
+          3.9829103350639343,
+          0.9225147748365998
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715301.6787372,
+            "dt_s": 0.26999902725219727,
+            "translation_m": 0.14732440493117355,
+            "rotation_deg": 4.852774821962875
+          },
+          {
+            "timestamp": 1789715298.348771,
+            "dt_s": 0.17999267578125,
+            "translation_m": 0.13946536601026724,
+            "rotation_deg": 3.049242158752195
+          },
+          {
+            "timestamp": 1789715287.0088117,
+            "dt_s": 0.18000054359436035,
+            "translation_m": 0.114917088373566,
+            "rotation_deg": 3.7033844410491445
+          },
+          {
+            "timestamp": 1789715304.5587368,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11124280492378173,
+            "rotation_deg": 6.142849134139759
+          },
+          {
+            "timestamp": 1789715309.4186993,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11041709248131241,
+            "rotation_deg": 3.01830000801394
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 900,
+        "expected_ok_callbacks": 900,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 899,
+          "p50": 0.04249376761104266,
+          "p95": 0.07996822302588853,
+          "p99": 0.10280131011699435,
+          "max": 0.14732440493117355
+        },
+        "rotation_step_deg": {
+          "count": 899,
+          "p50": 1.2708186810128699,
+          "p95": 3.550792792524848,
+          "p99": 4.585757690811106,
+          "max": 7.072878339925947
+        },
+        "path_length_m": 33.772105556189054,
+        "endpoint_distance_m": 0.10075714595055484,
+        "position_extent_m": [
+          5.733727216720581,
+          3.9829103350639343,
+          0.9225147748365998
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715301.6787372,
+            "dt_s": 0.26999902725219727,
+            "translation_m": 0.14732440493117355,
+            "rotation_deg": 4.852774821962875
+          },
+          {
+            "timestamp": 1789715298.348771,
+            "dt_s": 0.17999267578125,
+            "translation_m": 0.13946536601026724,
+            "rotation_deg": 3.0492417288297715
+          },
+          {
+            "timestamp": 1789715287.0088117,
+            "dt_s": 0.18000054359436035,
+            "translation_m": 0.114917088373566,
+            "rotation_deg": 3.7033844410491445
+          },
+          {
+            "timestamp": 1789715304.5587368,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11124280492378173,
+            "rotation_deg": 6.142765972209381
+          },
+          {
+            "timestamp": 1789715309.4186993,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11041709248131241,
+            "rotation_deg": 3.018305201486086
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "c6_loop955_candidate_2": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 930,
+        "expected_ok_callbacks": 930,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 929,
+          "p50": 0.04266352786177726,
+          "p95": 0.0577735900479692,
+          "p99": 0.09302089492052788,
+          "max": 0.20818881818794022
+        },
+        "rotation_step_deg": {
+          "count": 929,
+          "p50": 1.2484919689293659,
+          "p95": 3.2805296453347164,
+          "p99": 4.1493660625930575,
+          "max": 7.31997144157066
+        },
+        "path_length_m": 33.78506225014924,
+        "endpoint_distance_m": 0.2597321091316888,
+        "position_extent_m": [
+          5.721132516860962,
+          3.9434292316436768,
+          0.9038038635626435
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.4188297,
+            "dt_s": 0.08998799324035645,
+            "translation_m": 0.20818881818794022,
+            "rotation_deg": 2.1092641559050183
+          },
+          {
+            "timestamp": 1789715298.9787853,
+            "dt_s": 0.08998370170593262,
+            "translation_m": 0.13924518853420845,
+            "rotation_deg": 2.052954190593033
+          },
+          {
+            "timestamp": 1789715301.4087381,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11589328584644867,
+            "rotation_deg": 2.047749590500382
+          },
+          {
+            "timestamp": 1789715299.6987634,
+            "dt_s": 0.18001651763916016,
+            "translation_m": 0.10389128900226564,
+            "rotation_deg": 3.4507667496028507
+          },
+          {
+            "timestamp": 1789715310.948693,
+            "dt_s": 0.17999649047851562,
+            "translation_m": 0.10186464731546621,
+            "rotation_deg": 5.078685639508059
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 930,
+        "expected_ok_callbacks": 930,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 929,
+          "p50": 0.04266352786177726,
+          "p95": 0.0577735900479692,
+          "p99": 0.09302089492052788,
+          "max": 0.20818881818794022
+        },
+        "rotation_step_deg": {
+          "count": 929,
+          "p50": 1.2484853720881273,
+          "p95": 3.2805296453347164,
+          "p99": 4.149368952522633,
+          "max": 7.31997144157066
+        },
+        "path_length_m": 33.78506225014924,
+        "endpoint_distance_m": 0.2597321091316888,
+        "position_extent_m": [
+          5.721132516860962,
+          3.9434292316436768,
+          0.9038038635626435
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.4188297,
+            "dt_s": 0.08998799324035645,
+            "translation_m": 0.20818881818794022,
+            "rotation_deg": 2.1092649984139893
+          },
+          {
+            "timestamp": 1789715298.9787853,
+            "dt_s": 0.08998370170593262,
+            "translation_m": 0.13924518853420845,
+            "rotation_deg": 2.0529527622313495
+          },
+          {
+            "timestamp": 1789715301.4087381,
+            "dt_s": 0.17999744415283203,
+            "translation_m": 0.11589328584644867,
+            "rotation_deg": 2.047749590500382
+          },
+          {
+            "timestamp": 1789715299.6987634,
+            "dt_s": 0.18001651763916016,
+            "translation_m": 0.10389128900226564,
+            "rotation_deg": 3.4507667496028507
+          },
+          {
+            "timestamp": 1789715310.948693,
+            "dt_s": 0.17999649047851562,
+            "translation_m": 0.10186464731546621,
+            "rotation_deg": 5.078689083240137
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "c6_loop955_off_2": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 955,
+        "expected_ok_callbacks": 955,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 954,
+          "p50": 0.041962995948219194,
+          "p95": 0.05622984195561932,
+          "p99": 0.06063568479000666,
+          "max": 0.3784272622118314
+        },
+        "rotation_step_deg": {
+          "count": 954,
+          "p50": 1.2274312612123648,
+          "p95": 3.214611815293951,
+          "p99": 4.019097386966045,
+          "max": 4.696461467412113
+        },
+        "path_length_m": 34.00935024622525,
+        "endpoint_distance_m": 0.10119579443154117,
+        "position_extent_m": [
+          5.534595012664795,
+          4.073117971420288,
+          0.9182651713490486
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.688857,
+            "dt_s": 0.09000372886657715,
+            "translation_m": 0.3784272622118314,
+            "rotation_deg": 0.7215729436562561
+          },
+          {
+            "timestamp": 1789715302.578764,
+            "dt_s": 0.09002566337585449,
+            "translation_m": 0.19541082413843766,
+            "rotation_deg": 3.5378666010338464
+          },
+          {
+            "timestamp": 1789715302.3087404,
+            "dt_s": 0.09000492095947266,
+            "translation_m": 0.13955257689726933,
+            "rotation_deg": 0.62268295538968
+          },
+          {
+            "timestamp": 1789715290.338788,
+            "dt_s": 0.08998966217041016,
+            "translation_m": 0.07551341631398287,
+            "rotation_deg": 3.6532077268041165
+          },
+          {
+            "timestamp": 1789715265.2289238,
+            "dt_s": 0.08999013900756836,
+            "translation_m": 0.06759580675878123,
+            "rotation_deg": 1.8719131339924118
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 955,
+        "expected_ok_callbacks": 955,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 954,
+          "p50": 0.041962995948219194,
+          "p95": 0.05622984195561932,
+          "p99": 0.06063568479000666,
+          "max": 0.3784272622118314
+        },
+        "rotation_step_deg": {
+          "count": 954,
+          "p50": 1.2274312612123648,
+          "p95": 3.2145826780942217,
+          "p99": 4.01909757163529,
+          "max": 4.696459177099299
+        },
+        "path_length_m": 34.00935024622525,
+        "endpoint_distance_m": 0.10119579443154117,
+        "position_extent_m": [
+          5.534595012664795,
+          4.073117971420288,
+          0.9182651713490486
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.688857,
+            "dt_s": 0.09000372886657715,
+            "translation_m": 0.3784272622118314,
+            "rotation_deg": 0.7215730570938231
+          },
+          {
+            "timestamp": 1789715302.578764,
+            "dt_s": 0.09002566337585449,
+            "translation_m": 0.19541082413843766,
+            "rotation_deg": 3.5378666010338464
+          },
+          {
+            "timestamp": 1789715302.3087404,
+            "dt_s": 0.09000492095947266,
+            "translation_m": 0.13955257689726933,
+            "rotation_deg": 0.62268295538968
+          },
+          {
+            "timestamp": 1789715290.338788,
+            "dt_s": 0.08998966217041016,
+            "translation_m": 0.07551341631398287,
+            "rotation_deg": 3.6532077268041165
+          },
+          {
+            "timestamp": 1789715265.2289238,
+            "dt_s": 0.08999013900756836,
+            "translation_m": 0.06759580675878123,
+            "rotation_deg": 1.8719131339924118
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "c6_loop955_off_3": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 955,
+        "expected_ok_callbacks": 955,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 954,
+          "p50": 0.04193023104910546,
+          "p95": 0.05588096940023424,
+          "p99": 0.062487477161853704,
+          "max": 0.31591954496823726
+        },
+        "rotation_step_deg": {
+          "count": 954,
+          "p50": 1.2370528918374306,
+          "p95": 3.2146980738381776,
+          "p99": 4.075744764707172,
+          "max": 5.174492145099322
+        },
+        "path_length_m": 33.65281119731043,
+        "endpoint_distance_m": 0.10210450418123339,
+        "position_extent_m": [
+          5.5309388637542725,
+          4.123143255710602,
+          0.9175832346081734
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.3288417,
+            "dt_s": 0.09000134468078613,
+            "translation_m": 0.31591954496823726,
+            "rotation_deg": 2.8056692536421926
+          },
+          {
+            "timestamp": 1789715299.4287474,
+            "dt_s": 0.08999752998352051,
+            "translation_m": 0.15329686658014693,
+            "rotation_deg": 3.6031202359113097
+          },
+          {
+            "timestamp": 1789715265.2289238,
+            "dt_s": 0.08999013900756836,
+            "translation_m": 0.07722192688356526,
+            "rotation_deg": 1.8454313293620987
+          },
+          {
+            "timestamp": 1789715258.478961,
+            "dt_s": 0.09000587463378906,
+            "translation_m": 0.07583911937784646,
+            "rotation_deg": 2.0198563301597647
+          },
+          {
+            "timestamp": 1789715290.9687898,
+            "dt_s": 0.08997845649719238,
+            "translation_m": 0.07576306727380402,
+            "rotation_deg": 1.1611753859265588
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 955,
+        "expected_ok_callbacks": 955,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 954,
+          "p50": 0.04193023104910546,
+          "p95": 0.05588096940023424,
+          "p99": 0.062487477161853704,
+          "max": 0.31591954496823726
+        },
+        "rotation_step_deg": {
+          "count": 954,
+          "p50": 1.2370529941081239,
+          "p95": 3.2146980738381776,
+          "p99": 4.075721721080125,
+          "max": 5.174492145099322
+        },
+        "path_length_m": 33.65281119731043,
+        "endpoint_distance_m": 0.10210450418123339,
+        "position_extent_m": [
+          5.5309388637542725,
+          4.123143255710602,
+          0.9175832346081734
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.3288417,
+            "dt_s": 0.09000134468078613,
+            "translation_m": 0.31591954496823726,
+            "rotation_deg": 2.8056691768691504
+          },
+          {
+            "timestamp": 1789715299.4287474,
+            "dt_s": 0.08999752998352051,
+            "translation_m": 0.15329686658014693,
+            "rotation_deg": 3.6031202359113097
+          },
+          {
+            "timestamp": 1789715265.2289238,
+            "dt_s": 0.08999013900756836,
+            "translation_m": 0.07722192688356526,
+            "rotation_deg": 1.8454313293620987
+          },
+          {
+            "timestamp": 1789715258.478961,
+            "dt_s": 0.09000587463378906,
+            "translation_m": 0.07583911937784646,
+            "rotation_deg": 2.0199054814356647
+          },
+          {
+            "timestamp": 1789715290.9687898,
+            "dt_s": 0.08997845649719238,
+            "translation_m": 0.07576306727380402,
+            "rotation_deg": 1.1611753859265588
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  },
+  "c6_loop955_candidate_3": {
+    "scope": "online published poses only; no S316 ground truth or post-GBA trajectory; jump metrics do not establish accuracy",
+    "topics": {
+      "raw": {
+        "poses": 907,
+        "expected_ok_callbacks": 906,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "slam_map"
+        ],
+        "translation_step_m": {
+          "count": 906,
+          "p50": 0.04219841820850568,
+          "p95": 0.062331155597077845,
+          "p99": 0.10238705271243326,
+          "max": 0.29640518097394697
+        },
+        "rotation_step_deg": {
+          "count": 906,
+          "p50": 1.2351949447052117,
+          "p95": 3.435352145943614,
+          "p99": 4.383930096134693,
+          "max": 7.951533978308391
+        },
+        "path_length_m": 33.72664712682726,
+        "endpoint_distance_m": 0.10287113482456385,
+        "position_extent_m": [
+          5.550609827041626,
+          4.094276487827301,
+          0.8848275328055024
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.5988533,
+            "dt_s": 0.09000182151794434,
+            "translation_m": 0.29640518097394697,
+            "rotation_deg": 1.3909753784273964
+          },
+          {
+            "timestamp": 1789715300.7787628,
+            "dt_s": 0.09000301361083984,
+            "translation_m": 0.14627512380582805,
+            "rotation_deg": 4.029721793356151
+          },
+          {
+            "timestamp": 1789715298.5288014,
+            "dt_s": 0.18003034591674805,
+            "translation_m": 0.14378127770597102,
+            "rotation_deg": 4.558759332641403
+          },
+          {
+            "timestamp": 1789715295.1087718,
+            "dt_s": 0.26999497413635254,
+            "translation_m": 0.13993965193261168,
+            "rotation_deg": 6.885604226856801
+          },
+          {
+            "timestamp": 1789715307.9787242,
+            "dt_s": 0.2700190544128418,
+            "translation_m": 0.1261265805948902,
+            "rotation_deg": 4.20069498415304
+          }
+        ],
+        "pass": true
+      },
+      "continuous": {
+        "poses": 907,
+        "expected_ok_callbacks": 906,
+        "missing_ok_callbacks": 0,
+        "finite": true,
+        "strictly_increasing_timestamps": true,
+        "unit_quaternions": true,
+        "frame_names": [
+          "map"
+        ],
+        "translation_step_m": {
+          "count": 906,
+          "p50": 0.04219841820850568,
+          "p95": 0.062331155597077845,
+          "p99": 0.10238705271243326,
+          "max": 0.29640518097394697
+        },
+        "rotation_step_deg": {
+          "count": 906,
+          "p50": 1.2351951418210196,
+          "p95": 3.435352145943614,
+          "p99": 4.383930096134693,
+          "max": 7.951533978308391
+        },
+        "path_length_m": 33.72664712682726,
+        "endpoint_distance_m": 0.10287113482456385,
+        "position_extent_m": [
+          5.550609827041626,
+          4.094276487827301,
+          0.8848275328055024
+        ],
+        "largest_steps": [
+          {
+            "timestamp": 1789715282.5988533,
+            "dt_s": 0.09000182151794434,
+            "translation_m": 0.29640518097394697,
+            "rotation_deg": 1.3909753784273964
+          },
+          {
+            "timestamp": 1789715300.7787628,
+            "dt_s": 0.09000301361083984,
+            "translation_m": 0.14627512380582805,
+            "rotation_deg": 4.029721793356151
+          },
+          {
+            "timestamp": 1789715298.5288014,
+            "dt_s": 0.18003034591674805,
+            "translation_m": 0.14378127770597102,
+            "rotation_deg": 4.558759332641403
+          },
+          {
+            "timestamp": 1789715295.1087718,
+            "dt_s": 0.26999497413635254,
+            "translation_m": 0.13993965193261168,
+            "rotation_deg": 6.885604226856801
+          },
+          {
+            "timestamp": 1789715307.9787242,
+            "dt_s": 0.2700190544128418,
+            "translation_m": 0.1261265805948902,
+            "rotation_deg": 4.20069498415304
+          }
+        ],
+        "pass": true
+      }
+    },
+    "pass": true
+  }
+}

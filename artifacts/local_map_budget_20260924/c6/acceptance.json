@@ -1,0 +1,1891 @@
+{
+  "board": {
+    "long2910": {
+      "off_p99_median_ms": 124.67121859999979,
+      "max_limit_ms": 5378.338122300001,
+      "rounds": {
+        "c6_long2910_off_1": {
+          "variant": "off",
+          "processed": 2752,
+          "non_ok_after_initialization": 35,
+          "callback_ms": {
+            "count": 2752,
+            "mean": 89.97657217078489,
+            "min": 47.360606,
+            "max": 4889.398293,
+            "p50": 87.4385515,
+            "p95": 113.66078334999997,
+            "p99": 131.10359717999995
+          },
+          "fixed_tail_callback_ms": {
+            "count": 683,
+            "mean": 94.43952014055637,
+            "min": 67.718514,
+            "max": 184.598247,
+            "p50": 92.20552,
+            "p95": 117.3274096,
+            "p99": 126.50429827999997
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 2,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": false,
+            "single_map": false,
+            "no_unexpected_reset": true,
+            "node_exit": true
+          },
+          "pass": false,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 275,
+              "mean": 796060.2618181818,
+              "min": 36988.0,
+              "max": 1021104.0,
+              "p50": 802384.0,
+              "p95": 1020384.0,
+              "p99": 1020384.0
+            },
+            "pss_kib": {
+              "count": 275,
+              "mean": 763422.1236363637,
+              "min": 35764.0,
+              "max": 1021958.0,
+              "p50": 802986.0,
+              "p95": 1021798.0,
+              "p99": 1021822.0
+            },
+            "swap_kib": {
+              "count": 275,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 275,
+              "mean": 5028601.178181818,
+              "min": 4798092.0,
+              "max": 5764380.0,
+              "p50": 5020288.0,
+              "p95": 5292723.2,
+              "p99": 5362616.879999999
+            }
+          },
+          "faults": {
+            "majflt": 1,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 206,
+              "mean": 284.48623932038834,
+              "min": 23.604845,
+              "max": 5162.439001,
+              "p50": 165.31785250000001,
+              "p95": 960.01954475,
+              "p99": 1921.5957764500001
+            },
+            "aborted": {
+              "count": 200,
+              "mean": 242.22948977499996,
+              "min": 23.604845,
+              "max": 2355.450669,
+              "p50": 158.776562,
+              "p95": 629.1962213999967,
+              "p99": 1798.557483259999
+            },
+            "completed": {
+              "count": 6,
+              "mean": 1693.0445575,
+              "min": 429.494224,
+              "max": 5162.439001,
+              "p50": 1027.320488,
+              "p95": 4351.71504975,
+              "p99": 5000.29421075
+            }
+          }
+        },
+        "c6_long2910_candidate_1": {
+          "variant": "candidate",
+          "processed": 2282,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 2282,
+            "mean": 113.78410187730061,
+            "min": 59.862899,
+            "max": 421.279194,
+            "p50": 112.84776,
+            "p95": 148.54659794999998,
+            "p99": 166.50279656
+          },
+          "fixed_tail_callback_ms": {
+            "count": 524,
+            "mean": 124.32880953435114,
+            "min": 70.750119,
+            "max": 421.279194,
+            "p50": 122.633675,
+            "p95": 153.7862241,
+            "p99": 170.50118799999993
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": false,
+            "hard_caps": true,
+            "commits": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 2281,
+            "full_frames": 301,
+            "full_fraction": 0.1319596668128014,
+            "longest_full_local_frame_run": 34,
+            "ordinary_ok_frames": 2261,
+            "ordinary_ok_full_or_retry_fraction": 0.124281291463954,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 361,
+              "2": 395,
+              "1": 375,
+              "0": 1150
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 524,
+            "full_frames": 97,
+            "full_fraction": 0.1851145038167939,
+            "longest_full_local_frame_run": 34,
+            "ordinary_ok_frames": 524,
+            "ordinary_ok_full_or_retry_fraction": 0.1851145038167939,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "0": 234,
+              "1": 95,
+              "2": 79,
+              "3": 116
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 275,
+              "mean": 785191.2290909091,
+              "min": 33544.0,
+              "max": 1006452.0,
+              "p50": 793404.0,
+              "p95": 992407.2000000002,
+              "p99": 1006452.0
+            },
+            "pss_kib": {
+              "count": 275,
+              "mean": 759259.0763636364,
+              "min": 31822.0,
+              "max": 1008142.0,
+              "p50": 793138.0,
+              "p95": 993941.2000000002,
+              "p99": 1008142.0
+            },
+            "swap_kib": {
+              "count": 275,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 275,
+              "mean": 5038474.167272727,
+              "min": 4807656.0,
+              "max": 5766824.0,
+              "p50": 5029512.0,
+              "p95": 5293659.6,
+              "p99": 5371269.919999999
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 112,
+              "mean": 433.9868313660714,
+              "min": 38.945453,
+              "max": 8699.075254,
+              "p50": 224.96721150000002,
+              "p95": 1392.3969842499994,
+              "p99": 2325.39795245
+            },
+            "aborted": {
+              "count": 106,
+              "mean": 327.79077965094336,
+              "min": 38.945453,
+              "max": 2380.478088,
+              "p50": 212.56037600000002,
+              "p95": 837.41015075,
+              "p99": 1727.9949300500007
+            },
+            "completed": {
+              "count": 6,
+              "mean": 2310.117078333333,
+              "min": 449.954756,
+              "max": 8699.075254,
+              "p50": 1177.7729805,
+              "p95": 6994.24383625,
+              "p99": 8358.108970450001
+            }
+          }
+        },
+        "c6_long2910_candidate_2": {
+          "variant": "candidate",
+          "processed": 2316,
+          "non_ok_after_initialization": 36,
+          "callback_ms": {
+            "count": 2316,
+            "mean": 112.38435910233162,
+            "min": 60.786768,
+            "max": 249.530404,
+            "p50": 110.1084855,
+            "p95": 146.16706125,
+            "p99": 178.99502364999987
+          },
+          "fixed_tail_callback_ms": {
+            "count": 509,
+            "mean": 128.08550483693517,
+            "min": 71.604197,
+            "max": 249.530404,
+            "p50": 124.041478,
+            "p95": 172.58542559999995,
+            "p99": 192.46251528000002
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 2,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": false,
+            "single_map": false,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": false,
+            "hard_caps": true,
+            "commits": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 2281,
+            "full_frames": 264,
+            "full_fraction": 0.11573871109162648,
+            "longest_full_local_frame_run": 52,
+            "ordinary_ok_frames": 2237,
+            "ordinary_ok_full_or_retry_fraction": 0.09834599910594546,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 304,
+              "2": 351,
+              "1": 478,
+              "0": 1148
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 509,
+            "full_frames": 63,
+            "full_fraction": 0.1237721021611002,
+            "longest_full_local_frame_run": 43,
+            "ordinary_ok_frames": 509,
+            "ordinary_ok_full_or_retry_fraction": 0.1237721021611002,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "2": 114,
+              "1": 122,
+              "0": 201,
+              "3": 72
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 276,
+              "mean": 779201.3913043478,
+              "min": 6808.0,
+              "max": 1019888.0,
+              "p50": 794148.0,
+              "p95": 979132.0,
+              "p99": 1019888.0
+            },
+            "pss_kib": {
+              "count": 276,
+              "mean": 751567.4710144928,
+              "min": 4244.0,
+              "max": 1021342.0,
+              "p50": 788096.0,
+              "p95": 970734.0,
+              "p99": 1021342.0
+            },
+            "swap_kib": {
+              "count": 276,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 276,
+              "mean": 5042188.768115942,
+              "min": 4798956.0,
+              "max": 5769152.0,
+              "p50": 5029588.0,
+              "p95": 5287874.0,
+              "p99": 5441807.0
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 133,
+              "mean": 418.1505651654136,
+              "min": 17.868716,
+              "max": 14598.324546,
+              "p50": 175.798513,
+              "p95": 1164.1915441999984,
+              "p99": 1685.1306698800022
+            },
+            "aborted": {
+              "count": 129,
+              "mean": 292.44851936434105,
+              "min": 17.868716,
+              "max": 1461.281578,
+              "p50": 166.712031,
+              "p95": 929.135270399999,
+              "p99": 1427.3752805200002
+            },
+            "completed": {
+              "count": 4,
+              "mean": 4472.04154225,
+              "min": 581.792766,
+              "max": 14598.324546,
+              "p50": 1354.0244284999999,
+              "p95": 12677.146576949994,
+              "p99": 14214.088952189997
+            }
+          }
+        },
+        "c6_long2910_off_2": {
+          "variant": "off",
+          "processed": 2825,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 2825,
+            "mean": 86.98956341734512,
+            "min": 51.81191,
+            "max": 325.856696,
+            "p50": 85.827437,
+            "p95": 110.15665200000001,
+            "p99": 124.67121859999979
+          },
+          "fixed_tail_callback_ms": {
+            "count": 681,
+            "mean": 94.60807158296622,
+            "min": 63.694374,
+            "max": 325.856696,
+            "p50": 93.326804,
+            "p95": 118.274516,
+            "p99": 130.20029520000006
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": true,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true
+          },
+          "pass": false,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 275,
+              "mean": 801329.2218181818,
+              "min": 620.0,
+              "max": 1033944.0,
+              "p50": 804908.0,
+              "p95": 1033796.0,
+              "p99": 1033796.0
+            },
+            "pss_kib": {
+              "count": 275,
+              "mean": 767444.1018181818,
+              "min": 846.0,
+              "max": 1036054.0,
+              "p50": 806398.0,
+              "p95": 1035898.0,
+              "p99": 1035922.0
+            },
+            "swap_kib": {
+              "count": 275,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 275,
+              "mean": 5019484.945454545,
+              "min": 4778224.0,
+              "max": 5767664.0,
+              "p50": 5014440.0,
+              "p95": 5286336.0,
+              "p99": 5438065.679999999
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 198,
+              "mean": 304.4383227171717,
+              "min": 17.909216,
+              "max": 6447.874775,
+              "p50": 169.36384700000002,
+              "p95": 879.8366724499999,
+              "p99": 2118.6218411800005
+            },
+            "aborted": {
+              "count": 192,
+              "mean": 251.84279025520834,
+              "min": 17.909216,
+              "max": 2319.872403,
+              "p50": 168.0596055,
+              "p95": 752.7361714999995,
+              "p99": 1400.6332679200011
+            },
+            "completed": {
+              "count": 6,
+              "mean": 1987.4953615000002,
+              "min": 394.051747,
+              "max": 6447.874775,
+              "p50": 1200.0650215,
+              "p95": 5364.0054805,
+              "p99": 6231.100916100001
+            }
+          }
+        },
+        "c6_long2910_off_3": {
+          "variant": "off",
+          "processed": 2831,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 2831,
+            "mean": 84.87599174284705,
+            "min": 51.267456,
+            "max": 263.660895,
+            "p50": 85.246691,
+            "p95": 108.010187,
+            "p99": 121.44773239999992
+          },
+          "fixed_tail_callback_ms": {
+            "count": 667,
+            "mean": 96.38405093553224,
+            "min": 60.610894,
+            "max": 263.660895,
+            "p50": 95.666664,
+            "p95": 117.0387113,
+            "p99": 130.25326802
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": true,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true
+          },
+          "pass": false,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 274,
+              "mean": 802164.7153284672,
+              "min": 36960.0,
+              "max": 1039956.0,
+              "p50": 807108.0,
+              "p95": 1028801.9999999993,
+              "p99": 1039956.0
+            },
+            "pss_kib": {
+              "count": 274,
+              "mean": 763124.7883211679,
+              "min": 36630.0,
+              "max": 1041634.0,
+              "p50": 805684.0,
+              "p95": 1030535.3999999994,
+              "p99": 1041630.0
+            },
+            "swap_kib": {
+              "count": 274,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 274,
+              "mean": 5018491.678832117,
+              "min": 4773960.0,
+              "max": 5762784.0,
+              "p50": 5011354.0,
+              "p95": 5288285.4,
+              "p99": 5360715.839999998
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 194,
+              "mean": 309.9446982061856,
+              "min": 37.650628,
+              "max": 6220.116895,
+              "p50": 176.733424,
+              "p95": 832.6300032999999,
+              "p99": 1806.7768796599917
+            },
+            "aborted": {
+              "count": 188,
+              "mean": 266.10492146276596,
+              "min": 37.650628,
+              "max": 2941.16441,
+              "p50": 170.70719200000002,
+              "p95": 771.0270186000004,
+              "p99": 1300.3234293299986
+            },
+            "completed": {
+              "count": 6,
+              "mean": 1683.5910361666665,
+              "min": 268.515154,
+              "max": 6220.116895,
+              "p50": 742.5682525,
+              "p95": 5095.43588925,
+              "p99": 5995.180693850001
+            }
+          }
+        },
+        "c6_long2910_candidate_3": {
+          "variant": "candidate",
+          "processed": 2431,
+          "non_ok_after_initialization": 111,
+          "callback_ms": {
+            "count": 2431,
+            "mean": 102.22403964870423,
+            "min": 48.675097,
+            "max": 402.153736,
+            "p50": 100.758589,
+            "p95": 146.36510249999998,
+            "p99": 183.11637729999987
+          },
+          "fixed_tail_callback_ms": {
+            "count": 566,
+            "mean": 113.06176616607775,
+            "min": 58.863072,
+            "max": 380.631294,
+            "p50": 112.9903415,
+            "p95": 148.02198699999997,
+            "p99": 160.98710390000002
+          },
+          "gba_events": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 0,
+            "merge_detected": 0,
+            "new_maps": 4,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": false,
+            "single_map": false,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": false,
+            "hard_caps": true,
+            "commits": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 2320,
+            "full_frames": 355,
+            "full_fraction": 0.15301724137931033,
+            "longest_full_local_frame_run": 32,
+            "ordinary_ok_frames": 2235,
+            "ordinary_ok_full_or_retry_fraction": 0.12080536912751678,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 426,
+              "2": 285,
+              "1": 323,
+              "0": 1286
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 537,
+            "full_frames": 62,
+            "full_fraction": 0.1154562383612663,
+            "longest_full_local_frame_run": 32,
+            "ordinary_ok_frames": 513,
+            "ordinary_ok_full_or_retry_fraction": 0.07407407407407407,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "1": 64,
+              "0": 349,
+              "2": 52,
+              "3": 72
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 275,
+              "mean": 783855.2727272727,
+              "min": 11976.0,
+              "max": 1012636.0,
+              "p50": 786388.0,
+              "p95": 997931.2000000001,
+              "p99": 1012636.0
+            },
+            "pss_kib": {
+              "count": 275,
+              "mean": 766441.0836363636,
+              "min": 7248.0,
+              "max": 1014182.0,
+              "p50": 787586.0,
+              "p95": 997513.2,
+              "p99": 1014182.0
+            },
+            "swap_kib": {
+              "count": 275,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 275,
+              "mean": 5036818.661818182,
+              "min": 4805224.0,
+              "max": 5765020.0,
+              "p50": 5031472.0,
+              "p95": 5286411.2,
+              "p99": 5439269.919999999
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 162,
+              "mean": 318.37571985802475,
+              "min": 37.536504,
+              "max": 11104.066349,
+              "p50": 141.258448,
+              "p95": 828.6732586999992,
+              "p99": 2260.053606429975
+            },
+            "aborted": {
+              "count": 155,
+              "mean": 236.69320417419354,
+              "min": 37.536504,
+              "max": 3376.852426,
+              "p50": 130.797267,
+              "p95": 745.2436350999996,
+              "p99": 1239.4034606800046
+            },
+            "completed": {
+              "count": 7,
+              "mean": 2127.059995714286,
+              "min": 173.159114,
+              "max": 11104.066349,
+              "p50": 508.431956,
+              "p95": 8151.844419799994,
+              "p99": 10513.621963159996
+            }
+          }
+        }
+      }
+    },
+    "loop955": {
+      "off_p99_median_ms": 105.54218738000007,
+      "max_limit_ms": 279.6982353,
+      "rounds": {
+        "c6_loop955_off_1": {
+          "variant": "off",
+          "processed": 953,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 953,
+            "mean": 68.7061289066107,
+            "min": 43.567547,
+            "max": 160.0572,
+            "p50": 66.791186,
+            "p95": 88.7302598,
+            "p99": 104.52101412000007
+          },
+          "fixed_tail_callback_ms": {
+            "count": 238,
+            "mean": 75.34746705042018,
+            "min": 63.553625,
+            "max": 147.977154,
+            "p50": 74.375158,
+            "p95": 86.55699625,
+            "p99": 90.14392761
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": true,
+            "p95_fixed_tail": true,
+            "p99": true,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": false,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 107,
+              "mean": 615638.7663551401,
+              "min": 42804.0,
+              "max": 748012.0,
+              "p50": 665696.0,
+              "p95": 722984.8,
+              "p99": 746956.0
+            },
+            "pss_kib": {
+              "count": 107,
+              "mean": 604086.0373831776,
+              "min": 43990.0,
+              "max": 749618.0,
+              "p50": 644822.0,
+              "p95": 724740.3999999999,
+              "p99": 748588.56
+            },
+            "swap_kib": {
+              "count": 107,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 107,
+              "mean": 5206077.457943926,
+              "min": 5070088.0,
+              "max": 5760884.0,
+              "p50": 5159564.0,
+              "p95": 5324524.0,
+              "p99": 5684664.959999999
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 111,
+              "mean": 365.18630764864866,
+              "min": 29.976011,
+              "max": 5343.48223,
+              "p50": 244.108273,
+              "p95": 1035.2669365,
+              "p99": 1792.876481100002
+            },
+            "aborted": {
+              "count": 95,
+              "mean": 316.2780370105263,
+              "min": 29.976011,
+              "max": 1830.040158,
+              "p50": 233.818465,
+              "p95": 1030.5079927,
+              "p99": 1480.7015951400008
+            },
+            "completed": {
+              "count": 16,
+              "mean": 655.5791645625,
+              "min": 131.85126,
+              "max": 5343.48223,
+              "p50": 305.9101805,
+              "p95": 1846.7552994999999,
+              "p99": 4644.136843899998
+            }
+          }
+        },
+        "c6_loop955_candidate_1": {
+          "variant": "candidate",
+          "processed": 900,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 900,
+            "mean": 86.09215266333334,
+            "min": 51.817327,
+            "max": 184.240833,
+            "p50": 86.73424349999999,
+            "p95": 123.41669859999999,
+            "p99": 137.17906786999998
+          },
+          "fixed_tail_callback_ms": {
+            "count": 227,
+            "mean": 92.70425571806167,
+            "min": 77.088536,
+            "max": 179.612488,
+            "p50": 90.132659,
+            "p95": 113.6930041,
+            "p99": 123.95817728000003
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": true,
+            "hard_caps": true,
+            "commits": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 899,
+            "full_frames": 94,
+            "full_fraction": 0.10456062291434928,
+            "longest_full_local_frame_run": 34,
+            "ordinary_ok_frames": 839,
+            "ordinary_ok_full_or_retry_fraction": 0.04052443384982122,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 111,
+              "2": 129,
+              "1": 138,
+              "0": 521
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 227,
+            "full_frames": 0,
+            "full_fraction": 0.0,
+            "longest_full_local_frame_run": 0,
+            "ordinary_ok_frames": 227,
+            "ordinary_ok_full_or_retry_fraction": 0.0,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "2": 2,
+              "1": 20,
+              "0": 205
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 106,
+              "mean": 619220.5283018867,
+              "min": 55152.0,
+              "max": 748468.0,
+              "p50": 668788.0,
+              "p95": 742528.0,
+              "p99": 745801.6
+            },
+            "pss_kib": {
+              "count": 106,
+              "mean": 608651.962264151,
+              "min": 57294.0,
+              "max": 750226.0,
+              "p50": 670262.0,
+              "p95": 744216.0,
+              "p99": 747403.6
+            },
+            "swap_kib": {
+              "count": 106,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 106,
+              "mean": 5202692.339622642,
+              "min": 5073612.0,
+              "max": 5753740.0,
+              "p50": 5153860.0,
+              "p95": 5322007.0,
+              "p99": 5640159.200000001
+            }
+          },
+          "faults": {
+            "majflt": 1,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 87,
+              "mean": 395.43168883908044,
+              "min": 39.626906,
+              "max": 3771.780377,
+              "p50": 226.905928,
+              "p95": 1175.4841078000006,
+              "p99": 3327.9708642200003
+            },
+            "aborted": {
+              "count": 75,
+              "mean": 364.74910549333333,
+              "min": 39.626906,
+              "max": 3255.722804,
+              "p50": 212.72427,
+              "p95": 1091.9883061999994,
+              "p99": 1828.72591006001
+            },
+            "completed": {
+              "count": 12,
+              "mean": 587.19783475,
+              "min": 128.966362,
+              "max": 3771.780377,
+              "p50": 300.8913175,
+              "p95": 2030.7934523999977,
+              "p99": 3423.582992080002
+            }
+          }
+        },
+        "c6_loop955_candidate_2": {
+          "variant": "candidate",
+          "processed": 930,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 930,
+            "mean": 83.86059828064516,
+            "min": 52.681821,
+            "max": 152.886455,
+            "p50": 85.79891599999999,
+            "p95": 110.79856295,
+            "p99": 128.37519940000004
+          },
+          "fixed_tail_callback_ms": {
+            "count": 231,
+            "mean": 91.75690428571428,
+            "min": 75.529296,
+            "max": 110.379401,
+            "p50": 90.737821,
+            "p95": 104.41994,
+            "p99": 108.83740669999997
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": false,
+            "hard_caps": true,
+            "commits": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 929,
+            "full_frames": 212,
+            "full_fraction": 0.22820236813778255,
+            "longest_full_local_frame_run": 34,
+            "ordinary_ok_frames": 869,
+            "ordinary_ok_full_or_retry_fraction": 0.17491369390103567,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 247,
+              "2": 172,
+              "1": 138,
+              "0": 372
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 231,
+            "full_frames": 16,
+            "full_fraction": 0.06926406926406926,
+            "longest_full_local_frame_run": 16,
+            "ordinary_ok_frames": 231,
+            "ordinary_ok_full_or_retry_fraction": 0.06926406926406926,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 20,
+              "2": 20,
+              "1": 40,
+              "0": 151
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 107,
+              "mean": 621782.5794392524,
+              "min": 46808.0,
+              "max": 725356.0,
+              "p50": 663824.0,
+              "p95": 725336.0,
+              "p99": 725336.0
+            },
+            "pss_kib": {
+              "count": 107,
+              "mean": 601671.8878504672,
+              "min": 43028.0,
+              "max": 727094.0,
+              "p50": 659822.0,
+              "p95": 727090.0,
+              "p99": 727090.0
+            },
+            "swap_kib": {
+              "count": 107,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 107,
+              "mean": 5199450.76635514,
+              "min": 5090768.0,
+              "max": 5757944.0,
+              "p50": 5155948.0,
+              "p95": 5322838.0,
+              "p99": 5682750.56
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 83,
+              "mean": 389.4396616024096,
+              "min": 42.639554,
+              "max": 8400.588713,
+              "p50": 233.70905,
+              "p95": 675.2457277999993,
+              "p99": 2375.8561499399457
+            },
+            "aborted": {
+              "count": 71,
+              "mean": 289.6323525352112,
+              "min": 42.639554,
+              "max": 1053.35388,
+              "p50": 206.628394,
+              "p95": 642.468243,
+              "p99": 981.2224744999996
+            },
+            "completed": {
+              "count": 12,
+              "mean": 979.9662402499998,
+              "min": 130.742726,
+              "max": 8400.588713,
+              "p50": 307.209422,
+              "p95": 4111.085664949995,
+              "p99": 7542.688103390004
+            }
+          }
+        },
+        "c6_loop955_off_2": {
+          "variant": "off",
+          "processed": 955,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 955,
+            "mean": 69.49513846806282,
+            "min": 45.481076,
+            "max": 254.271123,
+            "p50": 68.189344,
+            "p95": 92.30027759999999,
+            "p99": 105.54218738000007
+          },
+          "fixed_tail_callback_ms": {
+            "count": 238,
+            "mean": 75.98928065546218,
+            "min": 64.26137,
+            "max": 127.305498,
+            "p50": 74.718385,
+            "p95": 88.80972959999997,
+            "p99": 101.9870875
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": true,
+            "p95_whole": false,
+            "p95_fixed_tail": true,
+            "p99": true,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": false,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 106,
+              "mean": 606715.2075471698,
+              "min": 46808.0,
+              "max": 719220.0,
+              "p50": 640308.0,
+              "p95": 710904.0,
+              "p99": 718348.8
+            },
+            "pss_kib": {
+              "count": 106,
+              "mean": 588117.4716981133,
+              "min": 46106.0,
+              "max": 720914.0,
+              "p50": 641036.0,
+              "p95": 710895.0,
+              "p99": 719729.8
+            },
+            "swap_kib": {
+              "count": 106,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 106,
+              "mean": 5214286.264150944,
+              "min": 5101764.0,
+              "max": 5755632.0,
+              "p50": 5181856.0,
+              "p95": 5320636.0,
+              "p99": 5684000.000000001
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 111,
+              "mean": 376.1611973153154,
+              "min": 48.769597,
+              "max": 3624.910298,
+              "p50": 267.759409,
+              "p95": 868.007492,
+              "p99": 1761.5811660000045
+            },
+            "aborted": {
+              "count": 99,
+              "mean": 355.38024811111103,
+              "min": 48.769597,
+              "max": 1839.45118,
+              "p50": 261.400118,
+              "p95": 864.4316655999999,
+              "p99": 1076.3250427999972
+            },
+            "completed": {
+              "count": 12,
+              "mean": 547.6040282499999,
+              "min": 131.709969,
+              "max": 3624.910298,
+              "p50": 307.3796705,
+              "p95": 1836.3481126999977,
+              "p99": 3267.1978609400016
+            }
+          }
+        },
+        "c6_loop955_off_3": {
+          "variant": "off",
+          "processed": 955,
+          "non_ok_after_initialization": 0,
+          "callback_ms": {
+            "count": 955,
+            "mean": 68.37853794450261,
+            "min": 42.654345,
+            "max": 146.021709,
+            "p50": 67.213434,
+            "p95": 87.95973140000001,
+            "p99": 108.9513975000001
+          },
+          "fixed_tail_callback_ms": {
+            "count": 238,
+            "mean": 74.0601951092437,
+            "min": 61.468305,
+            "max": 146.021709,
+            "p50": 72.0108815,
+            "p95": 87.74355369999999,
+            "p99": 117.60651818999995
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": true,
+            "p95_whole": true,
+            "p95_fixed_tail": true,
+            "p99": true,
+            "maximum": true,
+            "tracking": true,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": true,
+          "full_usage": null,
+          "full_tail_usage": null,
+          "memory": {
+            "rss_kib": {
+              "count": 107,
+              "mean": 606532.7102803738,
+              "min": 47060.0,
+              "max": 718152.0,
+              "p50": 641112.0,
+              "p95": 703130.4,
+              "p99": 712233.12
+            },
+            "pss_kib": {
+              "count": 107,
+              "mean": 588250.3925233645,
+              "min": 43726.0,
+              "max": 719906.0,
+              "p50": 639646.0,
+              "p95": 704904.8,
+              "p99": 713554.24
+            },
+            "swap_kib": {
+              "count": 107,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 107,
+              "mean": 5214076.14953271,
+              "min": 5104948.0,
+              "max": 5760236.0,
+              "p50": 5181552.0,
+              "p95": 5320376.0,
+              "p99": 5683121.68
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 115,
+              "mean": 345.8985390347826,
+              "min": 36.837675,
+              "max": 2996.970502,
+              "p50": 250.584523,
+              "p95": 925.3308112999998,
+              "p99": 1201.1262113599998
+            },
+            "aborted": {
+              "count": 102,
+              "mean": 325.87180577450994,
+              "min": 36.837675,
+              "max": 1206.450709,
+              "p50": 239.9874255,
+              "p95": 893.1070603499991,
+              "p99": 1167.5632498599994
+            },
+            "completed": {
+              "count": 13,
+              "mean": 503.0313692307693,
+              "min": 136.303605,
+              "max": 2996.970502,
+              "p50": 294.38511,
+              "p95": 1547.8422603999966,
+              "p99": 2707.1448536799976
+            }
+          }
+        },
+        "c6_loop955_candidate_3": {
+          "variant": "candidate",
+          "processed": 907,
+          "non_ok_after_initialization": 1,
+          "callback_ms": {
+            "count": 907,
+            "mean": 85.27019320396913,
+            "min": 41.974808,
+            "max": 228.408334,
+            "p50": 86.773139,
+            "p95": 116.87840379999999,
+            "p99": 130.61004973999988
+          },
+          "fixed_tail_callback_ms": {
+            "count": 222,
+            "mean": 94.50369672972974,
+            "min": 77.522949,
+            "max": 166.870363,
+            "p50": 93.4975325,
+            "p95": 108.72227565,
+            "p99": 116.69541638
+          },
+          "gba_events": {
+            "0": 1,
+            "1": 0,
+            "2": 1,
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "6": 0
+          },
+          "map_events": {
+            "loop_detected": 1,
+            "merge_detected": 0,
+            "new_maps": 1,
+            "active_map_resets": 0
+          },
+          "gates": {
+            "input_complete": false,
+            "p95_whole": false,
+            "p95_fixed_tail": false,
+            "p99": false,
+            "maximum": true,
+            "tracking": false,
+            "single_map": true,
+            "no_unexpected_reset": true,
+            "node_exit": true,
+            "ordinary_tail_fallback": true,
+            "hard_caps": true,
+            "commits": true,
+            "known_loop": true,
+            "gba_lifecycle": true
+          },
+          "pass": false,
+          "full_usage": {
+            "local_tracking_frames": 905,
+            "full_frames": 162,
+            "full_fraction": 0.17900552486187846,
+            "longest_full_local_frame_run": 47,
+            "ordinary_ok_frames": 825,
+            "ordinary_ok_full_or_retry_fraction": 0.0993939393939394,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 189,
+              "2": 153,
+              "1": 121,
+              "0": 442
+            }
+          },
+          "full_tail_usage": {
+            "local_tracking_frames": 222,
+            "full_frames": 17,
+            "full_fraction": 0.07657657657657657,
+            "longest_full_local_frame_run": 17,
+            "ordinary_ok_frames": 205,
+            "ordinary_ok_full_or_retry_fraction": 0.0,
+            "ordinary_exclusion": "only explicit event/initial/relocalization safety deadline; budget recovery/cooldown stays included",
+            "controller_states": {
+              "3": 21,
+              "2": 20,
+              "1": 20,
+              "0": 161
+            }
+          },
+          "memory": {
+            "rss_kib": {
+              "count": 108,
+              "mean": 609729.0,
+              "min": 2992.0,
+              "max": 730300.0,
+              "p50": 653924.0,
+              "p95": 721931.2,
+              "p99": 726720.16
+            },
+            "pss_kib": {
+              "count": 108,
+              "mean": 596479.7314814815,
+              "min": 1105.0,
+              "max": 732018.0,
+              "p50": 653500.0,
+              "p95": 723311.0,
+              "p99": 728285.8400000001
+            },
+            "swap_kib": {
+              "count": 108,
+              "mean": 0.0,
+              "min": 0.0,
+              "max": 0.0,
+              "p50": 0.0,
+              "p95": 0.0,
+              "p99": 0.0
+            },
+            "available_kib": {
+              "count": 108,
+              "mean": 5210208.666666667,
+              "min": 5090348.0,
+              "max": 5768788.0,
+              "p50": 5165426.0,
+              "p95": 5322623.0,
+              "p99": 5733718.319999998
+            }
+          },
+          "faults": {
+            "majflt": 0,
+            "pswpin": 0,
+            "pswpout": 0
+          },
+          "local_ba": {
+            "all": {
+              "count": 85,
+              "mean": 444.2839043294118,
+              "min": 65.255197,
+              "max": 3608.973778,
+              "p50": 272.966584,
+              "p95": 1242.7157451999992,
+              "p99": 3244.5639036399984
+            },
+            "aborted": {
+              "count": 72,
+              "mean": 420.8324122222222,
+              "min": 65.255197,
+              "max": 3175.152499,
+              "p50": 245.3067025,
+              "p95": 1143.7344698000009,
+              "p99": 2439.2533327100064
+            },
+            "completed": {
+              "count": 13,
+              "mean": 574.1690913846153,
+              "min": 133.507416,
+              "max": 3608.973778,
+              "p50": 309.333012,
+              "p95": 1816.5511383999956,
+              "p99": 3250.489250079997
+            }
+          }
+        }
+      }
+    }
+  },
+  "tum": {
+    "input_and_tracking_gates": {
+      "off_1": false,
+      "candidate_1": true,
+      "candidate_2": false,
+      "off_2": false,
+      "off_3": false,
+      "candidate_3": true
+    },
+    "poses_online": {
+      "ate_rmse_m": {
+        "off": [
+          1.0721544113267334,
+          5.049790297246573,
+          1.4040586579048586
+        ],
+        "candidate": [
+          0.355575220967864,
+          5.105281510698205,
+          0.3492695026091354
+        ],
+        "off_median": 1.4040586579048586,
+        "candidate_median": 0.355575220967864,
+        "limit": 1.4742615908001016,
+        "numerical_pass": true,
+        "trajectory_valid": false,
+        "pass": false
+      },
+      "rpe_translation_rmse_m": {
+        "off": [
+          0.6354923294884377,
+          2.2181871086391403,
+          0.6653033292978205
+        ],
+        "candidate": [
+          0.14233996879425925,
+          0.0924727303582145,
+          0.15451279613395502
+        ],
+        "off_median": 0.6653033292978205,
+        "candidate_median": 0.14233996879425925,
+        "limit": 0.6985684957627116,
+        "numerical_pass": true,
+        "trajectory_valid": false,
+        "pass": false
+      },
+      "rpe_rotation_rmse_deg": {
+        "off": [
+          15.153699932777997,
+          13.40369962005541,
+          24.899868773101844
+        ],
+        "candidate": [
+          1.6004143613544448,
+          1.1139177813558954,
+          1.7074701508027568
+        ],
+        "off_median": 15.153699932777997,
+        "candidate_median": 1.6004143613544448,
+        "limit": 15.911384929416897,
+        "numerical_pass": true,
+        "trajectory_valid": false,
+        "pass": false
+      }
+    },
+    "trajectory_corrected": {
+      "ate_rmse_m": {
+        "off": [
+          null,
+          null,
+          null
+        ],
+        "candidate": [
+          0.12226823771893854,
+          null,
+          0.14054384547613524
+        ],
+        "off_median": null,
+        "candidate_median": null,
+        "limit": null,
+        "numerical_pass": false,
+        "trajectory_valid": false,
+        "pass": false
+      },
+      "rpe_translation_rmse_m": {
+        "off": [
+          null,
+          null,
+          null
+        ],
+        "candidate": [
+          0.08818698164850113,
+          null,
+          0.07506593478805916
+        ],
+        "off_median": null,
+        "candidate_median": null,
+        "limit": null,
+        "numerical_pass": false,
+        "trajectory_valid": false,
+        "pass": false
+      },
+      "rpe_rotation_rmse_deg": {
+        "off": [
+          null,
+          null,
+          null
+        ],
+        "candidate": [
+          1.009497617209949,
+          null,
+          0.9158252159396908
+        ],
+        "off_median": null,
+        "candidate_median": null,
+        "limit": null,
+        "numerical_pass": false,
+        "trajectory_valid": false,
+        "pass": false
+      }
+    },
+    "note": "Multi-map/lost runs fail independently of numerical errors; online global alignment across resets is diagnostic only. GT timestamp association coverage is recorded per run."
+  },
+  "production_pass": false,
+  "supplementary": {
+    "transactions_and_concurrency": {
+      "pass": true,
+      "evidence": [
+        "c5/checks_checkpoint.json",
+        "c6/board_transaction_probe.log"
+      ],
+      "scope": "scoped fixtures only; documented Boost/GDAL exceptions and TSan deadlock-check size limit; full-System LSan/merge progress remain open"
+    },
+    "legacy_probes": {
+      "pass": true,
+      "evidence": [
+        "c6/board_probe_verification.json",
+        "c6/board_numeric_comparison.json"
+      ]
+    },
+    "shadow_recall": {
+      "pass": true,
+      "evidence": [
+        "c5/completed/native_analysis_v2.json"
+      ],
+      "scope": "measured native shadow selection/association; no promotion from recall alone"
+    },
+    "newborn": {
+      "pass": true,
+      "evidence": [
+        "c5/completed/native_analysis_v2.json",
+        "c5/completed/board_matrix.json",
+        "c6/cohort_comparison.json"
+      ]
+    },
+    "fault_regressions": {
+      "pass": false,
+      "gates": {
+        "blackout_gap_candidate": false,
+        "reset_candidate": true,
+        "map_switch_candidate": true
+      },
+      "evidence": [
+        "c6/final_faults/results.json"
+      ],
+      "scope": "reset/switch recover; blackout requires recovery without unintended map split to claim relocalization preservation"
+    },
+    "save_reload": {
+      "pass": false,
+      "evidence": [
+        "c6/save_reload/results.json"
+      ],
+      "note": "save120/120 OK; load101/120 OK, missing19 inputs; map fetch/hash/cleanup completed"
+    },
+    "loop_trajectory_checks": {
+      "pass": true,
+      "evidence": [
+        "c6/pose_sidecars/analysis.json"
+      ],
+      "scope": "online output integrity and distribution only; no S316 truth or post-GBA full-frame trajectory; precision is a separate failed TUM gate"
+    },
+    "artifact_integrity": {
+      "pass": true,
+      "evidence": [
+        "c6/formal_details.json",
+        "c6/save_reload/results.json",
+        "c6/board_final_audit.json"
+      ]
+    }
+  }
+}

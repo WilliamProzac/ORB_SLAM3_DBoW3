@@ -1,0 +1,7 @@
+{
+  "source_files": 126,
+  "all_match_build_snapshot": true,
+  "native_freeze_matches": true,
+  "production_default": "RGBD.LocalMapMode off",
+  "scope": "compiled C++ sources/headers unchanged since frozen formal build"
+}

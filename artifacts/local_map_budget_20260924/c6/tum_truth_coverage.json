@@ -1,0 +1,29 @@
+{
+  "processed_input_pairs": 5057,
+  "duration_s": 172.72070002555847,
+  "groundtruth_rows": 12284,
+  "groundtruth_gaps_over_100ms": [
+    {
+      "start_relative_s": 19.990638971328735,
+      "duration_s": 0.14989995956420898
+    },
+    {
+      "start_relative_s": 20.287238836288452,
+      "duration_s": 0.11339998245239258
+    },
+    {
+      "start_relative_s": 20.58393883705139,
+      "duration_s": 0.1100001335144043
+    },
+    {
+      "start_relative_s": 20.91723895072937,
+      "duration_s": 0.25
+    },
+    {
+      "start_relative_s": 21.16723895072937,
+      "duration_s": 129.8650999069214
+    }
+  ],
+  "typical_unique_pose_associations_20ms": 1227,
+  "limitation": "central ~130s has no ground truth; do not claim full-trajectory accuracy coverage"
+}
