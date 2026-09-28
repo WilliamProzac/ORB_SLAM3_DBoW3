@@ -1,0 +1,9 @@
+{
+  "reason": "User requested fewer repeats; retain completed baseline and resume single-pass factorial",
+  "stopped_owned_pids": [
+    2821351,
+    2834025
+  ],
+  "utc": "2026-09-28T07:47:42Z",
+  "completed_baseline_preserved": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/euroc_modules/1_baseline"
+}

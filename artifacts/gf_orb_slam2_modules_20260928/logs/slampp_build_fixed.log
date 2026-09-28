@@ -1,0 +1,78 @@
+Scanning dependencies of target csparse
+[  0%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_add.o
+[  0%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_amd.o
+[  1%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_chol.o
+[  1%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_cholsol.o
+[  2%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_compress.o
+[  2%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_counts.o
+[  3%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_cumsum.o
+[  3%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dfs.o
+[  4%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dmperm.o
+[  4%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_droptol.o
+[  5%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dropzeros.o
+[  5%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dupl.o
+[  5%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_entry.o
+[  6%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ereach.o
+[  6%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_etree.o
+[  7%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_fkeep.o
+[  7%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_gaxpy.o
+[  8%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_happly.o
+[  8%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_house.o
+[  9%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ipvec.o
+[  9%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_leaf.o
+[ 10%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_load.o
+[ 10%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lsolve.o
+[ 10%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ltsolve.o
+[ 11%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lu.o
+[ 11%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lusol.o
+[ 12%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_malloc.o
+[ 12%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_maxtrans.o
+[ 13%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_multiply.o
+[ 13%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_norm.o
+[ 14%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_permute.o
+[ 14%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_pinv.o
+[ 15%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_post.o
+[ 15%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_print.o
+[ 15%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_pvec.o
+[ 16%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_qr.o
+[ 16%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_qrsol.o
+[ 17%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_randperm.o
+[ 17%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_reach.o
+[ 18%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_scatter.o
+[ 18%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_scc.o
+[ 19%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_schol.o
+[ 19%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_spsolve.o
+[ 19%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_sqr.o
+[ 20%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_symperm.o
+[ 20%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_tdfs.o
+[ 21%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_transpose.o
+[ 21%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_updown.o
+[ 22%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_usolve.o
+[ 22%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_util.o
+[ 23%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_utsolve.o
+[ 23%] Linking C shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libcsparse.so
+[ 23%] Built target csparse
+Scanning dependencies of target eigen
+[ 24%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/complex_double.o
+[ 27%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/double.o
+In file included from /usr/include/eigen3/Eigen/Geometry:42,
+                 from /usr/include/eigen3/Eigen/Eigenvalues:19,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/src/eigen33/lapack/eigenvalues.cpp:11,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/src/eigen33/lapack/double.cpp:17:
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:187:48: error: ISO C++ forbids declaration of ‘EIGEN_DEFAULT_COPY_CONSTRUCTOR’ with no type [-fpermissive]
+  187 |   EIGEN_DEFAULT_COPY_CONSTRUCTOR(QuaternionBase)
+      |                                                ^
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:187:48: error: expected ‘;’ at end of member declaration
+  187 |   EIGEN_DEFAULT_COPY_CONSTRUCTOR(QuaternionBase)
+      |                                                ^
+      |                                                 ;
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:188:64: error: ISO C++ forbids declaration of ‘EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR’ with no type [-fpermissive]
+  188 |   EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(QuaternionBase)
+      |                                                                ^
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:188:64: error: expected ‘;’ at end of member declaration
+  188 |   EIGEN_DEFAULT_EMPTY_CONSTRUCTOR_AND_DESTRUCTOR(QuaternionBase)
+      |                                                                ^
+      |                                                                 ;
+make[2]: *** [src/eigen33/CMakeFiles/eigen.dir/build.make:89：src/eigen33/CMakeFiles/eigen.dir/lapack/double.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:552：src/eigen33/CMakeFiles/eigen.dir/all] 错误 2
+make: *** [Makefile:130：all] 错误 2

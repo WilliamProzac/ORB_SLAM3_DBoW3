@@ -1,0 +1,242 @@
+{
+  "baseline": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 608,
+        "ate_rmse_m": 0.03320088019142457,
+        "max_m": 0.04500100828927364
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.038220310094740084,
+        "max_m": 0.06301120112707052
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.03185365946605368,
+        "max_m": 0.05945343974197915
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.030277694570349754,
+        "max_m": 0.05454353044330623
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_baseline"
+  },
+  "f": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 607,
+        "ate_rmse_m": 0.03233544025148393,
+        "max_m": 0.04303402315280636
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.036980479028593256,
+        "max_m": 0.062452311201765455
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.03104426167678604,
+        "max_m": 0.058609747054896556
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.02952189421126859,
+        "max_m": 0.06164936660274805
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_f"
+  },
+  "fg": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 610,
+        "ate_rmse_m": 0.03375891709598727,
+        "max_m": 0.04631282047791373
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.038754791276265764,
+        "max_m": 0.062297895662356544
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.03375392625710572,
+        "max_m": 0.0683137996149773
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.0488197062267419,
+        "max_m": 0.5725457804910262
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_fg"
+  },
+  "fh": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 607,
+        "ate_rmse_m": 0.033476050899553515,
+        "max_m": 0.05057427156278977
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.037567937924335784,
+        "max_m": 0.05817972689603795
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.032865850664798184,
+        "max_m": 0.061149644608206585
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.029276304824722956,
+        "max_m": 0.05387892370525747
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_fh"
+  },
+  "fhg": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 614,
+        "ate_rmse_m": 0.2046370619544171,
+        "max_m": 0.27529495105372365
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.24631842411144791,
+        "max_m": 0.3396877864075697
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.3344985384365662,
+        "max_m": 0.5577866091905987
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.3450459662792651,
+        "max_m": 0.5223893829762575
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_fhg"
+  },
+  "g": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 612,
+        "ate_rmse_m": 0.03527645580506125,
+        "max_m": 0.04715669740963551
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.037175845940539194,
+        "max_m": 0.0619159482162549
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.031665993646900426,
+        "max_m": 0.06039571375553619
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.03096471696834004,
+        "max_m": 0.05662034091752189
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_g"
+  },
+  "h": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 589,
+        "ate_rmse_m": 0.03521519470607272,
+        "max_m": 0.04883524783057401
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.038470070943002796,
+        "max_m": 0.06285598859580013
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.032424575841313245,
+        "max_m": 0.06999518475449383
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.03133916933113878,
+        "max_m": 0.056661706526396155
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_h"
+  },
+  "hg": {
+    "same_global_alignment": true,
+    "quarters": [
+      {
+        "quarter": 1,
+        "associated_poses": 614,
+        "ate_rmse_m": 0.032230792987194556,
+        "max_m": 0.04496513034032328
+      },
+      {
+        "quarter": 2,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.03592658643642541,
+        "max_m": 0.05744885825371829
+      },
+      {
+        "quarter": 3,
+        "associated_poses": 728,
+        "ate_rmse_m": 0.03220540322651749,
+        "max_m": 0.07570478503705996
+      },
+      {
+        "quarter": 4,
+        "associated_poses": 709,
+        "ate_rmse_m": 0.029297038601485578,
+        "max_m": 0.061886351442414625
+      }
+    ],
+    "source_run": "runs/euroc_modules/1_hg"
+  }
+}

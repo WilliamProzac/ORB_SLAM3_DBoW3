@@ -1,0 +1,1216 @@
+[  7%] Built target DBoW2
+[ 57%] Built target g2o
+[ 96%] Built target gf_baseline
+Scanning dependencies of target replay_baseline
+[ 96%] Building CXX object CMakeFiles/replay_baseline.dir/replay.cc.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:80:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:112:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/FrameDrawer.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Viewer.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Tracking.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+[100%] Linking CXX executable replay_baseline
+[100%] Built target replay_baseline
+[  8%] Built target DBoW2
+[ 62%] Built target g2o
+[100%] Built target gf_f
+Scanning dependencies of target replay_f
+[100%] Building CXX object CMakeFiles/replay_f.dir/replay.cc.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:80:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:112:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/FrameDrawer.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Viewer.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Tracking.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+[100%] Linking CXX executable replay_f
+[100%] Built target replay_f
+[  8%] Built target DBoW2
+[ 60%] Built target g2o
+[ 96%] Built target gf_h
+Scanning dependencies of target replay_h
+[ 96%] Building CXX object CMakeFiles/replay_h.dir/replay.cc.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:80:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:112:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/FrameDrawer.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Viewer.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Tracking.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+[100%] Linking CXX executable replay_h
+[100%] Built target replay_h
+[  3%] Built target goodgraph_backend
+[ 51%] Built target g2o
+[ 59%] Built target DBoW2
+[ 96%] Built target gf_g
+Scanning dependencies of target replay_g
+[ 96%] Building CXX object CMakeFiles/replay_g.dir/replay.cc.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:80:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:112:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/FrameDrawer.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Viewer.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Tracking.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+[100%] Linking CXX executable replay_g
+[100%] Built target replay_g
+[  8%] Built target DBoW2
+[ 60%] Built target g2o
+[ 96%] Built target gf_fh
+Scanning dependencies of target replay_fh
+[100%] Building CXX object CMakeFiles/replay_fh.dir/replay.cc.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:80:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:112:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:37,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:38,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Converter.h:26,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:32,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/FrameDrawer.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Viewer.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Tracking.h:28,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/harness/../upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+[100%] Linking CXX executable replay_fh
+[100%] Built target replay_fh
+[  3%] Built target goodgraph_backend
+[ 51%] Built target g2o
+[ 59%] Built target DBoW2
+[ 96%] Built target gf_fg
+[100%] Built target replay_fg
+[  3%] Built target goodgraph_backend
+[ 51%] Built target g2o
+[ 59%] Built target DBoW2
+[ 96%] Built target gf_hg
+[100%] Built target replay_hg
+[  3%] Built target goodgraph_backend
+[ 51%] Built target g2o
+[ 59%] Built target DBoW2
+[ 96%] Built target gf_fhg
+[100%] Built target replay_fhg

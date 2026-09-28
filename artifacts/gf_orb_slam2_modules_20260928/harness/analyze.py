@@ -37,6 +37,8 @@ def summarize(run):
     out['processed']=len(x);out['complete']=len(x)==meta['expected_frames'] and meta['exit_code']==0
     if not len(x):return out
     out['indices_contiguous']=bool(np.array_equal(x['index'],np.arange(len(x))))
+    out['input_lateness_measured']='input_lateness_ms' in x.dtype.names
+    out['diagnostic_schema_columns']=list(x.dtype.names)
     out['timestamps_increasing']=bool(np.all(np.diff(x['timestamp'])>0))
     out['finite_fields']=bool(all(np.isfinite(x[key]).all() for key in x.dtype.names))
     out['complete']=out['complete'] and out['indices_contiguous'] and out['timestamps_increasing'] and out['finite_fields']
@@ -66,6 +68,10 @@ def summarize(run):
                 _,frame,completed,count,elapsed=line.split();ots.append((int(frame),int(completed),int(count),float(elapsed)))
             except ValueError:pass
     out['ots']={'updates':len(ots),'completed':sum(z[1] for z in ots),'table_counts':stats(np.array([z[2] for z in ots])),'update_ms':stats(np.array([z[3]*1000 for z in ots]))}
+    out['conditional_diagnostics']={}
+    for label,mask in [('f_active',x['gfm_active']>0),('f_skip_local',x['gfm_skip_local']>0),('hash_nonempty',x['hash_mp']>0)]:
+        part=x[mask]
+        out['conditional_diagnostics'][label]={'frames':len(part),**{key:stats(part[key]) for key in ['track_ms','pose_ready_ms','local_ms','match_ms','post_ms','local_mp','covis_mp','hash_mp','valid_associations']}}
     resources=json.loads((run/'resources.json').read_text())
     out['resources']={'rss_peak_kib':max([int(z.get('VmHWM',z.get('VmRSS','0 kB')).split()[0]) for z in resources] or [0]),'swap_peak_kib':max([int(z.get('VmSwap','0 kB').split()[0]) for z in resources] or [0])}
     cpu=[z for z in resources if 'cpu_ticks' in z]
@@ -108,6 +114,8 @@ def main():
             if eligible:g['median_valid_'+key]=float(np.median([r['accuracy'][key] for r in eligible]))
         g['module_execution_totals']={key:sum(r.get('module_execution',{}).get(key,0) for r in rr) for key in ['gfm_active_frames','gfm_skip_local_frames','good_graph_triggered','good_graph_completed']}
         g['ots_update_count']=sum(r.get('ots',{}).get('updates',0) for r in rr)
+        g['ots_completed_count']=sum(r.get('ots',{}).get('completed',0) for r in rr)
+        g['hash_nonempty_frames']=sum(r.get('hash_query_nonzero_frames',0) for r in rr)
         for name in ['valid_associations','local_ms','local_mp','match_ms','post_ms']:
             vals=[r['after_initialization'][name]['mean'] for r in rr if r.get('after_initialization',{}).get(name)]
             if vals:g['median_run_'+name+'_mean']=float(np.median(vals))

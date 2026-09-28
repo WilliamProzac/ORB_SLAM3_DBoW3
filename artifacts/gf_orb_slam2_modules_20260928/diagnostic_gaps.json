@@ -1,0 +1,60 @@
+{
+  "issue": "Incremental build reused three historical driver executables; final freeze establishes immutability but not uniform diagnostic schema.",
+  "missing_column": "input_lateness_ms",
+  "affected_modes": [
+    "fg",
+    "hg",
+    "fhg"
+  ],
+  "affected_datasets": [
+    "V1_01_easy",
+    "tum_large"
+  ],
+  "historical_source_sha256": "d85f25dcd5102923d8112136ada8774315128aeefe1cdd81da2db734539454e5",
+  "current_source_sha256": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+  "evidence": "CSV headers, executable embedded headers, build_final.log (no final replay.cc recompilation for last three targets), preserved source diff",
+  "difference": "One pre-call lateness calculation and one additional CSV column. Core algorithm switches, Track call, full API clock endpoints and trajectory output unchanged between saved drivers. No measured bound on tiny diagnostic overhead; exact driver parity is not claimed.",
+  "decision": "Keep every original measurement. Missing values remain unmeasured. Do not overwrite frozen binaries or rerun six full sequences solely for this field.",
+  "modes": {
+    "baseline": {
+      "input_lateness_measured": true,
+      "driver_source_variant_inferred_from_build_log_and_schema": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+      "executable_sha256": "745546878feee480f6daf60f62423e70734fe85612841e9c9a2b60b3bc635373"
+    },
+    "f": {
+      "input_lateness_measured": true,
+      "driver_source_variant_inferred_from_build_log_and_schema": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+      "executable_sha256": "0a16d361bf29589d5bd7c8c56f239cdfb3613153cf59e5ede1b8dfcad26855c1"
+    },
+    "h": {
+      "input_lateness_measured": true,
+      "driver_source_variant_inferred_from_build_log_and_schema": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+      "executable_sha256": "cefe2f1d084ba82ff71cbbb3cba7ede86d209bdb9c48bf4244bd97344a6ec15a"
+    },
+    "g": {
+      "input_lateness_measured": true,
+      "driver_source_variant_inferred_from_build_log_and_schema": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+      "executable_sha256": "87c7cf39d5686364d6a123ae3cc285eb8edb7e7c5efdcbf53dc7e33b01d09ccf"
+    },
+    "fh": {
+      "input_lateness_measured": true,
+      "driver_source_variant_inferred_from_build_log_and_schema": "2a5138f5ece9305a81595cf2e7374f0d1429c152080a56dd413944c627fdf176",
+      "executable_sha256": "835bfef48a059c240444b7c11f3be8c2fc72026356b25230ef457cc7260e6f96"
+    },
+    "fg": {
+      "input_lateness_measured": false,
+      "driver_source_variant_inferred_from_build_log_and_schema": "d85f25dcd5102923d8112136ada8774315128aeefe1cdd81da2db734539454e5",
+      "executable_sha256": "7fff11add0fac3ef52bfcb434dbb395f69146831bd429e82434d029b3dcc440b"
+    },
+    "hg": {
+      "input_lateness_measured": false,
+      "driver_source_variant_inferred_from_build_log_and_schema": "d85f25dcd5102923d8112136ada8774315128aeefe1cdd81da2db734539454e5",
+      "executable_sha256": "785bf78a9ea9020c587be3b90e056a3d3ba4874d45ff7ec86f5524c0bb4ca9b5"
+    },
+    "fhg": {
+      "input_lateness_measured": false,
+      "driver_source_variant_inferred_from_build_log_and_schema": "d85f25dcd5102923d8112136ada8774315128aeefe1cdd81da2db734539454e5",
+      "executable_sha256": "a392f8ca06f1082cb2e7f8a56161552deef556e276fc711635c4756d9bce824a"
+    }
+  }
+}

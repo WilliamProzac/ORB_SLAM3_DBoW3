@@ -1,0 +1,8 @@
+test_rgbd_never_fits_scale (test_accuracy.AccuracyTests) ... ok
+test_sim3_scale_rotation_translation_and_rpe (test_accuracy.AccuracyTests) ... ok
+test_truth_gap_is_not_interpolated (test_accuracy.AccuracyTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.015s
+
+OK

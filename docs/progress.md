@@ -601,3 +601,13 @@
 - Four builds, release/ASan/UBSan/LSan/TSan index fixtures, 3 accuracy tests and four smoke runs passed. Interleaved EuRoC/TUM full matrices completed 24 rounds / 95,628 frames. Integrity/source/binary/config/input-list checks passed.
 - Candidates did not improve whole-API latency. EuRoC bounded mean/P95 30.724/63.127 ms vs 26.603/35.609 baseline; TUM all-query 26.067/59.477 vs 19.824/27.550. One TUM bounded-only startup failure occurred before querying. Failure and timing-boundary caveats are preserved in the report.
 - Report distinguishes GF-specific thresholds from canonical ORB2 and explains why same-ORB2 A/B cannot measure an ORB2-to-ORB3 version effect. No production deployment, board cleanup or map generation.
+
+
+### 2026-09-28 — GF03 existing-module factorial evaluation
+
+- Audited all three module cores against primary papers and frozen source; documented optional/unfinished branches. Built all eight combinations in an isolated GF02-derived worktree; source commit 1ad2246 adds SLAM++ dependency discovery and actual F branch counters. Existing algorithm mathematics retained.
+- Per user steering, reduced formal work to 16 runs (one per combination/dataset), retained the completed baseline and archived cancelled partial F. All 63,752 frames processed, 15 loss-free runs. Three accuracy-helper tests and 16 functional short runs passed; frozen artifacts and previous binaries remain unchanged.
+- No candidate passes the combined screening gate. H reduces candidates but adds postprocessing tails. G modestly reduces front-end P95 while TUM accuracy worsens. EuRoC FHG ATE 0.2913 m vs 0.0336 baseline; TUM FHG loses at index 4126, with 931 non-OK frames. No speed credit for failed tracking or incomplete trajectory accuracy.
+- Final audit corrected an earlier build claim: FG/HG/FHG reused historical drivers without input-lateness diagnostics. Both driver sources and their small diagnostic diff are preserved; primary Track clocks/trajectory outputs remain present, strict driver parity is not claimed. No frozen binary was overwritten to conceal the gap.
+- Loss diagnosis also confirms loop-off skips normal keyframe database insertion; first loss and impaired recovery are separated. All module combinations execute, but this is not full-paper, dynamic-budget, relocalization or production acceptance.
+- Archived REPORT/CODE_AUDIT/DETAILS, all machine results, raw SHA256 indices, charts, patches, manifests and known diagnostic limitations. No production/board change or map files.

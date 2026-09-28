@@ -1,0 +1,802 @@
+[
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/console.log",
+    "bytes": 145571,
+    "sha256": "3ed324ccce9543e76af5528089fcb78ee4a57bff95c906128fb149529afa964e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/frames.csv",
+    "bytes": 224602,
+    "sha256": "4ab4bf59036dbae89dfdba039694f94ee64448561a39582124cbd5f56365ebbc"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/index_diagnostics.json",
+    "bytes": 137,
+    "sha256": "f81f41dcdfb2f310b0a92e7e56aaf0ca15829cf7e5af9dea076c856c6e0db045"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/keyframes.txt",
+    "bytes": 9343,
+    "sha256": "c214df1db752e6264784fc7d5a6e48147fa3aadbf06e41dbf43a5cd2eb83ae94"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/online.txt",
+    "bytes": 116820,
+    "sha256": "d5d2d45ede3ab310598ce9872bac16ef38a23e5601fb8dae96005cf923b2c106"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/resources.json",
+    "bytes": 5336,
+    "sha256": "c12630c44e2198d4cbad1075001b8d5376da3c569ea8288aff9f3bfccea17eac"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/run.json",
+    "bytes": 3625,
+    "sha256": "1f951d9a7a0b1d800e1dc93fb15e5e25f08b349efab0d964b4c826a40c259518"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/upstream_mapping.txt",
+    "bytes": 37440,
+    "sha256": "de058f5f2d28f8f24ac7beb2a0eb8e2a3380ba11717acec4d52f4cd25e584c14"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/upstream_online.txt",
+    "bytes": 98424,
+    "sha256": "9863dddf7bdd37dced3054cb32bbea995a445997a563d0b056934a4200dbe740"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_all_euroc/1_fhg/upstream_tracking.txt",
+    "bytes": 187284,
+    "sha256": "1a5a2790767f9ac8dbe7dcf7b215f931827d48b2ed3ce15e9595dd5530e942c5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/console.log",
+    "bytes": 41838,
+    "sha256": "aa02dafd479f168f88160c5655a0202778ae07546d2c022afc6672ea83064460"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/frames.csv",
+    "bytes": 62696,
+    "sha256": "2204ce2e3ff4beaedfef773366c7b0b7eb9ec4057554e140bb70a81b427e49d1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/keyframes.txt",
+    "bytes": 2893,
+    "sha256": "8b5860dc9f3ce86e839da0c0d9dfb68e1d40dbc19b96fcfb05d6d084efeadbfb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/online.txt",
+    "bytes": 30629,
+    "sha256": "31ba4ff150c648f5bba6939301fcbe6b70d2707350a1cf56d2c38aec7f398c59"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/resources.json",
+    "bytes": 2098,
+    "sha256": "f9eca02eebffd2abc7f29906d5347548842cf8dd09a0a60ebfd7327dda175cf3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/run.json",
+    "bytes": 4275,
+    "sha256": "155be1816e8ba697f70a267dd56575c5ae22a9c30a0e8bbadedc82e2374af229"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/upstream_mapping.txt",
+    "bytes": 13647,
+    "sha256": "177a82c8fad3150f34ea7c6c0e40b7470e871e9a9e43fcb7a320b831decbbb7d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/upstream_online.txt",
+    "bytes": 25816,
+    "sha256": "dbca67ff507a90c88113d1f8fad8e4b5eb15644a115292b44375c9e7003d43af"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_baseline/upstream_tracking.txt",
+    "bytes": 49602,
+    "sha256": "c88d35bf83ce6c48ca42920db51751a204660239b3f3dcdfdac6df1c65e9cfe9"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/console.log",
+    "bytes": 41241,
+    "sha256": "31db01ebd7604d3dbbed232feb203309ba8e1ec1050d86cfd932e14a88d75aa1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/frames.csv",
+    "bytes": 61605,
+    "sha256": "6d584e8bff2699e087e0f5396a02e92a5534d5890eb52fdb6814b40cc2296c64"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/keyframes.txt",
+    "bytes": 2893,
+    "sha256": "3c9ee3f57782373c3c3871a122e6f64d12cc2b5cbc4f78f41d5a187358d1dc21"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/online.txt",
+    "bytes": 29978,
+    "sha256": "084109d85b5eaad24ac9fd37bac54092fc358027abb33ab61dc9983667a6265c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/resources.json",
+    "bytes": 2103,
+    "sha256": "bc38d1a336871a30dcf81b6a108e4d8b56004ae9db133aa72ba5143effdd0cef"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/run.json",
+    "bytes": 4255,
+    "sha256": "fbee647d5af131588178558b8913db0972a72f5865e8d7a625556bdfb99bd6ca"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/upstream_mapping.txt",
+    "bytes": 14314,
+    "sha256": "2dd5bc22d06fe3102dd5befdd0c0089006ec1e6b82c9b5d652f349f04fada45e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/upstream_online.txt",
+    "bytes": 25267,
+    "sha256": "958ebe23c9b21de4e02c877c582509c86f24f40a92251e5d761f9153e04e13dc"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_f/upstream_tracking.txt",
+    "bytes": 48259,
+    "sha256": "dd347c08f5531fbd2660676e916a0d85b28c200736c5c79151f7be293c839073"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/console.log",
+    "bytes": 41926,
+    "sha256": "80ac61e72dbc9198dd82868116fa418d86292ddd8942f6f4182f0ba2c891ee2b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/frames.csv",
+    "bytes": 67686,
+    "sha256": "c8b634b241945a334d138d1a05d5b05fb9a1f2104e50bfc74ebb39c86e6dd4c6"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/index_diagnostics.json",
+    "bytes": 130,
+    "sha256": "be5f2831a860c16c9708e949147e6176725ce4ba7d4863722e1a41b7b1949432"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/keyframes.txt",
+    "bytes": 2890,
+    "sha256": "8f93ef43ed68387ebe9467f80ff71bf60f7d8c310ae3f5ce9d2b6756fa2b6be3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/online.txt",
+    "bytes": 30514,
+    "sha256": "86121be3e3de613a55eb67ce822ce00c8a7c4005f6c602a7ee6a70639082e732"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/resources.json",
+    "bytes": 2097,
+    "sha256": "ed107ab376f562d57f3dfd8a9c76cd553cd5e827a847d8b5c9efc77c5c321bde"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/run.json",
+    "bytes": 4255,
+    "sha256": "a803d9e6b6ac3ae346e61034467e9f28bcc286582713eeb0d0a55ca2f494a252"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/upstream_mapping.txt",
+    "bytes": 14296,
+    "sha256": "f04c9627240f4f402979f6e83c5c38986fcca4b739dc05f96d26c3e42610e36d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/upstream_online.txt",
+    "bytes": 25718,
+    "sha256": "956437f197f1756c3b1a50c258a1a5495c2290bc7cc191b8069e30a3ad5b2acc"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_frontend_euroc/1_h/upstream_tracking.txt",
+    "bytes": 49432,
+    "sha256": "9c18a91d5d182a0f24a157acd27ecbbbc9121c6e58e63546751e3362e66629c4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/console.log",
+    "bytes": 90021,
+    "sha256": "cc21d6b2099d1a167d03e280dac4f9b951a03e99638320bd19c94c596648f98d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/frames.csv",
+    "bytes": 133850,
+    "sha256": "d26f0133c3a209322a75eefe3860621402d86b85c9d39f1a55f22a4062df5a89"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/keyframes.txt",
+    "bytes": 6082,
+    "sha256": "72287e7d88587d747b8c1f29a32f22679b4723c43bf50f1ab3750c0cdebecba9"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/online.txt",
+    "bytes": 73919,
+    "sha256": "3f7791361dba890d55393f0c70bf63c697ecb6c1c4102ae47fb7a53397f898d0"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/resources.json",
+    "bytes": 3724,
+    "sha256": "566962eef31547d3f4ba1922f7a2ce392f21c7beacc5cd05f90a612779244cfd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/run.json",
+    "bytes": 3618,
+    "sha256": "a86d993bf0fa75fbf287d1824e78c77a2bd8120a3e22f639531c31ff6a5bddc2"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/upstream_mapping.txt",
+    "bytes": 24981,
+    "sha256": "4ea907865031e94f7dccf7f126271865ff15075dee17f1a6b1db00a383315d53"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/upstream_online.txt",
+    "bytes": 62306,
+    "sha256": "36195f5eadaf913dacbab9181655cc2feb2f160612b980eb2093b86079e7676c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_graph_euroc/1_g/upstream_tracking.txt",
+    "bytes": 119209,
+    "sha256": "91bc5766108017ba4ab27696608d451fdb03c8baf1242cfc633f746854e6bc61"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/console.log",
+    "bytes": 36415,
+    "sha256": "a30e9b0d4e85e3de59e343b03a93baae7297f34cc6922735df501b420f6d3b7f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/frames.csv",
+    "bytes": 62032,
+    "sha256": "2f3655cc975c2362620e9737c796b859fbbc281b67ced0a9662fd554cdb61729"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/keyframes.txt",
+    "bytes": 2803,
+    "sha256": "61389c72d1bf34a739fd65b06ed5628a3272f27b49eeb9937b4d2e4434ebf868"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/online.txt",
+    "bytes": 30307,
+    "sha256": "7b0e9dad0e6cd1badc594cd6f4746788be4b4e76c4ffc0a471b3f68736ca2ed4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/resources.json",
+    "bytes": 2094,
+    "sha256": "7e8e9b3cbf4e439649da246f7a60dd7be6315f81004d8fcab86d1db90a49e348"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/run.json",
+    "bytes": 4245,
+    "sha256": "8695795ed51b30e8800e0218b79aa8657dd48dc0e22481d6f5bcaf2a9cb119aa"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/upstream_mapping.txt",
+    "bytes": 13983,
+    "sha256": "463feda398d817d35e5f06bda8ef6ec870f848473af4e202c6be1235fb07f47a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/upstream_online.txt",
+    "bytes": 25545,
+    "sha256": "1024bcc915e05137e3119edd101f3372507606d963593203301f850d26a7b5c4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fg/upstream_tracking.txt",
+    "bytes": 48788,
+    "sha256": "36d35b2f4bb04ff42b78d10dba48d20b665528886c86a657904e890ef6f6718d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/console.log",
+    "bytes": 41496,
+    "sha256": "275aa4560c39785e50fe97624962fa4e63431343cc50408a38c489c47f110069"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/frames.csv",
+    "bytes": 66495,
+    "sha256": "cb6860ac07aaf386619dc4323dba373b73f030e8d6953ebbbfda49bd17d05eae"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/index_diagnostics.json",
+    "bytes": 130,
+    "sha256": "ec005cc870c65e8241637825245a8c5d226eb9a1a3c65ad5e2c2cd266a7bd7ac"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/keyframes.txt",
+    "bytes": 2896,
+    "sha256": "57a8bf782347ad44da4151b56d149720d1a1388921a9b43c068f0c562bb1c105"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/online.txt",
+    "bytes": 30084,
+    "sha256": "6b5816a0b7683c12223ce462550cb511b8eea59adcb13184f3e809570a456eb4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/resources.json",
+    "bytes": 2097,
+    "sha256": "e6d7774f7e05ab7dc5d6632ff05b82835f6a279585ad473f848164bd9082beea"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/run.json",
+    "bytes": 4246,
+    "sha256": "809d85e4cb2442656f4fda2536cb4ca6fd215f23c0b3762bc65f92ecc524a934"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/upstream_mapping.txt",
+    "bytes": 14817,
+    "sha256": "9852210b744a379ebbbef9ca4368f0e0aa896591d2a30f2232cbf8932f86db62"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/upstream_online.txt",
+    "bytes": 25356,
+    "sha256": "239a80cf580215af5ed5a7c288afe786b93086bbd8e1da2bb4e7f57626b8489b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_fh/upstream_tracking.txt",
+    "bytes": 48447,
+    "sha256": "157614d879e23ee51e5d04fdfe4cf87a62b7634775c977645aae853186b61503"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/console.log",
+    "bytes": 36631,
+    "sha256": "1c23b9353600718ccb495b060c700c7b236d50b3e4e851898fd13b6566b3b0d3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/frames.csv",
+    "bytes": 67103,
+    "sha256": "798360c5d42fdba3bebdb36f219777be1d9f52a5c10bf0235346dd931389ff2b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/index_diagnostics.json",
+    "bytes": 130,
+    "sha256": "8a091672c8df82e5a51cdff7765407f6e82b51467e0b0a46d0b22535dc2b424e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/keyframes.txt",
+    "bytes": 2894,
+    "sha256": "dc624b8f3db441d66abadf9bb881f44d3d0ab5d6c31ff793b869f07a703c2e08"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/online.txt",
+    "bytes": 30421,
+    "sha256": "9523d9b910e1d29321343114562edbe2e09471c1c5aa9a37192cec99f3c17bb8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/resources.json",
+    "bytes": 2100,
+    "sha256": "1b9394e5a5b5fd2b2071128e4428003b6978bea59c8422ffb8e584405a7ce387"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/run.json",
+    "bytes": 4246,
+    "sha256": "2a60771fd44c55f05bf0826a568612dbf6d00978822f5f9dd5aba4e4e3a90e7a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/upstream_mapping.txt",
+    "bytes": 14312,
+    "sha256": "4608d350878c5297cff49178b980fa712c203a7d8a6c0e53d06453d658864954"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/upstream_online.txt",
+    "bytes": 25642,
+    "sha256": "4732c89bd1764ed858b65ccd161950bed2eb8da23e304e0b318b8cd4488890ed"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_euroc/1_hg/upstream_tracking.txt",
+    "bytes": 49262,
+    "sha256": "be193c445703f66c273b0283b8fcb9bcf1fc3e24309abe574d339965e525bc07"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/console.log",
+    "bytes": 52483,
+    "sha256": "5eb95cd7d4107f160139d82b12bd29bdc20ab1df06b88513b745df8b18b67563"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/corrected.txt",
+    "bytes": 41745,
+    "sha256": "0f99a08092d4b2d17d77b86808f58b6921c20a9b21cc8c7710bfde59679273c5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/frames.csv",
+    "bytes": 73890,
+    "sha256": "32d6a6bed3eeb40304b69874a9aa4e5bc45e3b43e2d2a33a85015606dc49fc6d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/keyframes.txt",
+    "bytes": 5975,
+    "sha256": "24ecbcc8030fc71c1a54793801eac26ef2067d3921643472cd423b021cd3d881"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/online.txt",
+    "bytes": 42945,
+    "sha256": "6b6f87fa01f83123222e7ed16bb6e5e3c6719053a8903320033e6d17637988ee"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/resources.json",
+    "bytes": 1616,
+    "sha256": "fa781c593dcd94e00a36af50ee7f23c37f65553a80519f4b658bd83e4e1dca44"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/run.json",
+    "bytes": 4550,
+    "sha256": "5ff59b829e554c28d93596da3b341da58d16586fa741c2c0d910baa75f6db2b9"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/upstream_mapping.txt",
+    "bytes": 11889,
+    "sha256": "6e92746001761c3909ee5d184f2cbeae3e611ca03f52b5a78436cd48cd9ab237"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/upstream_online.txt",
+    "bytes": 36177,
+    "sha256": "0dd4c33ece064d2ced572d0d4446161262e005a4d51f246de2d223e790ad6cc3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fg/upstream_tracking.txt",
+    "bytes": 69371,
+    "sha256": "ebcaa7128aed3f58413e893e4cadce46d12a3cf235632119b0a1c4d2fbc68ee8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/console.log",
+    "bytes": 56508,
+    "sha256": "740204ce39054f541a04f82b7b4571dc16018bb20e241cf05d07a5463374212a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/corrected.txt",
+    "bytes": 41716,
+    "sha256": "d3645ed00344dabeb0c4b59e7b9f5b497ad6b0eddd5c3085b10c69f9b353b9a7"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/frames.csv",
+    "bytes": 86046,
+    "sha256": "0501d8566949faa036031c7edb957e12c44e2f1b960de17032475650416689a7"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/index_diagnostics.json",
+    "bytes": 131,
+    "sha256": "1aee54e14794b78f75a72f95be80638fee1942dc7391778c8c0b5457d972111a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/keyframes.txt",
+    "bytes": 6955,
+    "sha256": "7080cc7e21d2a552c4896950959da38f235586f1b9d31dac1c10c29ee4cfa5a8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/online.txt",
+    "bytes": 42913,
+    "sha256": "a8e26ec26e202e8c9a751eab0f5320dc0010160fefca4ccf2da452f5141aa22c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/resources.json",
+    "bytes": 1611,
+    "sha256": "fa74501ae63d1c4cd087ef99f2a417d73f8a5c6b034e77945e43a271f2f0490a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/run.json",
+    "bytes": 4551,
+    "sha256": "623591fa671bfd5780dbcbe8b59cf65a672341d310f085ccae16807f067ade44"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/upstream_mapping.txt",
+    "bytes": 14165,
+    "sha256": "b8f0228bf2e8f36ce491228be3cf8c84dbe463043efe339ef08268628b7a41d4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/upstream_online.txt",
+    "bytes": 36145,
+    "sha256": "0aba69a6f9aac3e02640a1a023f23a968db842cc1e4b44d322e0b2b11d86bd6d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fh/upstream_tracking.txt",
+    "bytes": 69263,
+    "sha256": "ff7340b198162863a6c52d175dae3f2259ee35b9c3386ca2ef213f97554b4b61"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/console.log",
+    "bytes": 52611,
+    "sha256": "bddffccd49ab43fe818cdf015e7491fd2c0b7b4b931a527387ef51a171631eee"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/corrected.txt",
+    "bytes": 41718,
+    "sha256": "381698986a21ebe62c59d0e3664bc24faaafa02e4ad05ff1313692460aa93bcb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/frames.csv",
+    "bytes": 80219,
+    "sha256": "9f33009a515adbe6ca3e1acb7d8a335cec241c54cda08b018e19c670a2a40957"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/index_diagnostics.json",
+    "bytes": 130,
+    "sha256": "c523b4c85ff1eb9b4af1d783c9772e72737de9e4cd0253d5b101f004915df20d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/keyframes.txt",
+    "bytes": 6330,
+    "sha256": "9c5c798711a8699acdccd661811e9fa0409bc1b7192092100126ca6c2e47cf9e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/online.txt",
+    "bytes": 42936,
+    "sha256": "2f31130dcb13c1aaa7e1def43bba5b709fd069765a59134072f3b55cf735d243"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/resources.json",
+    "bytes": 1615,
+    "sha256": "0e70ab5f278eb6e672309711c62a2bb3343962e48236dad08726c1edaeb5eb3c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/run.json",
+    "bytes": 4553,
+    "sha256": "6b29ddc30a2dcf4cfb1d642f2ecc8a55a2a6e6860bf77224d81264bc0fcf01a5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/upstream_mapping.txt",
+    "bytes": 12854,
+    "sha256": "ca5db74679bca72e6903ec19e110a32b893be6e3d29b94ccdbbae1979a1a91ed"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/upstream_online.txt",
+    "bytes": 36168,
+    "sha256": "3fc11fa06d6b4a1ddb0cace6c81f67ed4892d2583c28d7d992de5095c8e11e6c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_fhg/upstream_tracking.txt",
+    "bytes": 69318,
+    "sha256": "8b6733637079a7d76727e52b393cb258030040f411825c2862dcf87dfc05aa7e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/console.log",
+    "bytes": 51624,
+    "sha256": "f0c87da9fe490329d07f9562697d709698baa880edfe3572e8e1042cbbafb7af"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/corrected.txt",
+    "bytes": 41703,
+    "sha256": "cf4e35a9afac3f026191c89bd8ff27fa2866df4c4e8126041605abe68ad25965"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/frames.csv",
+    "bytes": 77264,
+    "sha256": "79a2f67414349751cae9a5fa9af99b90537ebbf2f94982b5ae063052f5236a11"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/index_diagnostics.json",
+    "bytes": 132,
+    "sha256": "88ef8c766790b5d1f39bc493f204677a05f8fc1c2a3c252b32b553f225cc1e44"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/keyframes.txt",
+    "bytes": 5694,
+    "sha256": "dae56887eabda110c26c12904e39f534f0571fdb8fba1708cae76f7fd5cc550f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/online.txt",
+    "bytes": 42872,
+    "sha256": "3c2fce4eb59819f747cb45ae98758a82fb016ecce7270b65a8c2e71d1cf0e834"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/resources.json",
+    "bytes": 1615,
+    "sha256": "d4edd63457afc223ee5c853397a4792a56b43b1435046139cd16f31fd3227a2f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/run.json",
+    "bytes": 4551,
+    "sha256": "608ad22e39e5521fbf697697ea3aa7b018e79325cfa941d8daa8467cd7d9d5bd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/upstream_mapping.txt",
+    "bytes": 11900,
+    "sha256": "894e6962aff9ad4b4a02afeddd2b990cb2b17b586026deaa3b2e435bf05a692f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/upstream_online.txt",
+    "bytes": 36104,
+    "sha256": "3c77f1f0d6e511339313b5936c1b5355448068d206e826aefadd3091f5de58cf"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_pairs_tum/1_hg/upstream_tracking.txt",
+    "bytes": 69409,
+    "sha256": "36cbb12b963ee927765d47cc1e8797f22fdcf426a9ed3afaf8a95de55fe46072"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/console.log",
+    "bytes": 55815,
+    "sha256": "8bcc5970b456018f75d33de75190373dfb881ccfe9bf2727bcbf2c14b482a9c4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/corrected.txt",
+    "bytes": 41694,
+    "sha256": "efb69f48944282f51224d93ec84afb2ca1459b5c544a015f7d2c7fc362d71c52"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/frames.csv",
+    "bytes": 70438,
+    "sha256": "c6f9ec2b2d677dc7f34df5275676b5145e262b9215981112a6862dc52151fe7b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/keyframes.txt",
+    "bytes": 6329,
+    "sha256": "5d9d38e2b0d75d003f5a3acb17ca3aa44acd74bc7c82068d918cf007babb66ec"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/online.txt",
+    "bytes": 42878,
+    "sha256": "02582731b519ef8e48134c186f1d6415b32d7b3c3fe03f0b0b26d103d3cb8dee"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/resources.json",
+    "bytes": 1610,
+    "sha256": "cef0390ae5a3836fc2b93a352fd804b10a5b7d7aabace69bd6e6647565cdf0a8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/run.json",
+    "bytes": 4575,
+    "sha256": "30dcdf49f4627561a578f380217cae35d8e9d15a846fef46cf7c3f7ed8ebe336"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/upstream_mapping.txt",
+    "bytes": 11740,
+    "sha256": "0f53207148d39dce0f48704e0b668ca01a84764a80bda58402ce81dda4428681"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/upstream_online.txt",
+    "bytes": 36110,
+    "sha256": "673f8b8bebf8f8505e64174b703ca2206d7fbf0eee583870d430e9957c73f2c2"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_baseline/upstream_tracking.txt",
+    "bytes": 69554,
+    "sha256": "7d6efc7c1e9f89ea19f877d5dbd0ca6d88d15579f628ad254eb86b60b039c3d0"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/console.log",
+    "bytes": 56133,
+    "sha256": "0ebe1476888eebd7b51a02e046fc4a3a186526a27faa51322245d63d0b8d0744"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/corrected.txt",
+    "bytes": 41778,
+    "sha256": "0f42195a4ef941230efeac898ec436ec979bce4f55a614c3d31d02b4e2310bfb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/frames.csv",
+    "bytes": 73355,
+    "sha256": "131a54ae04d7d89bcf7596f2b876adee78d9a6848c573e09e08cba03ae0ccea3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/keyframes.txt",
+    "bytes": 6433,
+    "sha256": "15a81ee56caba17dd8e09a577c123cefeb5c286071f7f729d1f8bed8ca244fb1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/online.txt",
+    "bytes": 42972,
+    "sha256": "201013e69eb5516fb1ada01a4bad2b2304371be6826dea37aabf04bcc62adba4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/resources.json",
+    "bytes": 1609,
+    "sha256": "418cb2381e6769adc6dcc87e2755bf72a7b5b6a23cbfff49c67591df28905560"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/run.json",
+    "bytes": 4553,
+    "sha256": "7ceb25b51595d570451856f5d24d56eecc38f84f59c26298da39ae8d42ed9165"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/upstream_mapping.txt",
+    "bytes": 13357,
+    "sha256": "81c0df8530ef7dacf7226a46cdc9462433ddc8f8fd98af6e178e7b4b2baf865c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/upstream_online.txt",
+    "bytes": 36204,
+    "sha256": "597a1c663c8b84e6d947c0e9f7a48fbc1a437a618ffb293aeb9a2589d40ce8e8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum/1_f/upstream_tracking.txt",
+    "bytes": 69322,
+    "sha256": "fe02f6c2574af7b41a61fa61294ab204d2cf1cd28aefd3d7941749e3d66a616c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/console.log",
+    "bytes": 51449,
+    "sha256": "169bd58537ec97dc66511ad61629c4d75a518eb7867f1f7cc4dcbc0aaae3eed3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/corrected.txt",
+    "bytes": 41774,
+    "sha256": "ac94cbb8e1346f22190f11e34177ffbf728040dd7c8a387cbc50b4c693f47ff8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/frames.csv",
+    "bytes": 71182,
+    "sha256": "0beaef006a0f9d174c96575e84cba8b1d11d80a6365f6bb9c301196f9e1a96ca"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/keyframes.txt",
+    "bytes": 5343,
+    "sha256": "2a9dee6fb35fbb0b6cbc8198b38c04d405ee19cb1bfc1da8750c326929ea14fd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/online.txt",
+    "bytes": 42975,
+    "sha256": "bd9882813cd368070be2ea8b6372ed48a47e94890e35e2300680cc6ebf616877"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/resources.json",
+    "bytes": 1609,
+    "sha256": "67e25ad4853a7d5cb8ce2d0a25761a5b78634201337d1fe0da7ca56eac9ff465"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/run.json",
+    "bytes": 3923,
+    "sha256": "2dbeff3a8f4d5e92f394eb9d85a64f797ed95b18fd290f66d9da472c413d8431"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/upstream_mapping.txt",
+    "bytes": 10911,
+    "sha256": "bf5d4ba1b43ede84861f7fe82952a8ae26cef1014b7e5a21fdcdf9a8fe6c331a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/upstream_online.txt",
+    "bytes": 36207,
+    "sha256": "8b099745a712a0a10e5bb7379ff3e1deda97b974c4cbe72e11f75bdaae6887da"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_g/upstream_tracking.txt",
+    "bytes": 69559,
+    "sha256": "abe9c5ff5398516a9d35e5742235b287ca241213b0a6fc8d17ede5dfc791492f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/console.log",
+    "bytes": 55597,
+    "sha256": "222eff7b60915bced4787d702d3d04d3be067d8cfa80dfb6c6c69c9b235d79dd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/corrected.txt",
+    "bytes": 41713,
+    "sha256": "f2ec84a4229a5cbed55d945424303944344885858df869c17dc5ba52dc52e9cb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/frames.csv",
+    "bytes": 77960,
+    "sha256": "d9a799d89bc4b9b173e3113b57a8bfd0caeff5996758b0161df6be4b3d1a0883"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/index_diagnostics.json",
+    "bytes": 129,
+    "sha256": "1a421ad80f9755067e6df0dccf6f584dd46698debea517cafc091a1821135310"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/keyframes.txt",
+    "bytes": 5248,
+    "sha256": "e1367d2373a5b18b0ab5e0e0a5eaabc8f8fe66a369b549c3ee7100ba38988073"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/online.txt",
+    "bytes": 42911,
+    "sha256": "56924b566415633245ae245b03211c0e5210c8de449e2cc863407d86233ad8c0"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/resources.json",
+    "bytes": 1609,
+    "sha256": "ec77076352de74699695d67d882abc1b5c351bd24d5275eb1f46e4bf5b3bf29e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/run.json",
+    "bytes": 3923,
+    "sha256": "25e27ca0a52eb95561b92d69699a9fa978ed59aaf61a9e5b37bd8c0686d614ce"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/upstream_mapping.txt",
+    "bytes": 11398,
+    "sha256": "638de40db1c346d6f6de6d468b6e2c433e6b193543294ced2dcaa98995f8b8fc"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/upstream_online.txt",
+    "bytes": 36143,
+    "sha256": "7059bbe728df6c8a3d725b1d57e6c0c1750f23b3216e671619441de8c8505f48"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/runs/smoke_single_tum_hg/1_h/upstream_tracking.txt",
+    "bytes": 69536,
+    "sha256": "19d0e9b8db41490aebe481360ce0a75d8d5a4ac74e74f576681bb42e5255de33"
+  }
+]

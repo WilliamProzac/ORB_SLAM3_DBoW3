@@ -1,0 +1,6 @@
+# Preserve frozen snapshots and captured output byte-for-byte for SHA256 audits.
+configs/** -text -whitespace
+provenance/** -text -whitespace
+logs/** -text -whitespace
+*.patch -text -whitespace
+*.csv text eol=lf

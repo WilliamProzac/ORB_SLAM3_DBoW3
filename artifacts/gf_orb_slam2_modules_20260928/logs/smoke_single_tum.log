@@ -1,0 +1,10 @@
+START 1_baseline
+END 1_baseline 0 20.02
+START 1_f
+END 1_f 0 20.02
+Traceback (most recent call last):
+  File "harness/run_matrix.py", line 56, in <module>
+    if __name__=='__main__':main()
+  File "harness/run_matrix.py", line 31, in main
+    assert all(sha(Path(k))==v for k,v in hashes.items()),'Frozen input changed'
+AssertionError: Frozen input changed

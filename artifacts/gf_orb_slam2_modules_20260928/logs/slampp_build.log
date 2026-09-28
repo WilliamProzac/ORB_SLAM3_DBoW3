@@ -1,0 +1,230 @@
+Scanning dependencies of target csparse
+[  0%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_add.o
+Scanning dependencies of target eigen
+[  1%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/complex_double.o
+[  1%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_amd.o
+[  2%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_chol.o
+[  2%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_cholsol.o
+[  3%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_compress.o
+[  3%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_counts.o
+[  4%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_cumsum.o
+[  4%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dfs.o
+[  5%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dmperm.o
+[  5%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_droptol.o
+[  6%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dropzeros.o
+[  6%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_dupl.o
+[  6%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_entry.o
+[  7%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ereach.o
+[  7%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_etree.o
+[  8%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_fkeep.o
+[  8%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_gaxpy.o
+[  9%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_happly.o
+[  9%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_house.o
+[ 10%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ipvec.o
+[ 10%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_leaf.o
+[ 11%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_load.o
+[ 11%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lsolve.o
+[ 11%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_ltsolve.o
+[ 12%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lu.o
+[ 12%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_lusol.o
+[ 13%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_malloc.o
+[ 13%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_maxtrans.o
+[ 14%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_multiply.o
+[ 14%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_norm.o
+[ 15%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_permute.o
+[ 15%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_pinv.o
+[ 16%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_post.o
+[ 16%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_print.o
+[ 16%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_pvec.o
+[ 17%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_qr.o
+[ 17%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_qrsol.o
+[ 18%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_randperm.o
+[ 18%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_reach.o
+[ 19%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_scatter.o
+[ 19%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_scc.o
+[ 20%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_schol.o
+[ 20%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_spsolve.o
+[ 20%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_sqr.o
+[ 21%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_symperm.o
+[ 21%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_tdfs.o
+[ 22%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_transpose.o
+[ 22%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_updown.o
+[ 23%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_usolve.o
+[ 23%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_util.o
+[ 24%] Building C object src/csparse/CMakeFiles/csparse.dir/cs_utsolve.o
+[ 24%] Linking C shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libcsparse.so
+[ 24%] Built target csparse
+Scanning dependencies of target cholmod
+[ 24%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_1.o
+[ 25%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_2.o
+[ 25%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_aat.o
+[ 26%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_control.o
+[ 26%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_defaults.o
+[ 27%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_dump.o
+[ 27%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_global.o
+[ 28%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_info.o
+[ 28%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_order.o
+[ 28%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_postorder.o
+[ 29%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_post_tree.o
+[ 29%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_preprocess.o
+[ 30%] Building C object src/cholmod/CMakeFiles/cholmod.dir/AMD/amd_valid.o
+[ 30%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_1.o
+[ 31%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_2.o
+[ 31%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_aat.o
+[ 32%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_control.o
+[ 32%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_defaults.o
+[ 33%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_dump.o
+[ 33%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_global.o
+[ 33%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_info.o
+[ 34%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_order.o
+[ 34%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_postorder.o
+[ 35%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_preprocess.o
+[ 35%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CAMD/camd_valid.o
+[ 36%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CCOLAMD/ccolamd.o
+[ 36%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CCOLAMD/ccolamd_global.o
+[ 37%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Check/cholmod_check.o
+[ 37%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Check/cholmod_read.o
+[ 38%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Check/cholmod_write.o
+[ 38%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_amd.o
+[ 38%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_analyze.o
+[ 39%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_colamd.o
+[ 39%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_etree.o
+[ 40%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_factorize.o
+[ 40%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_postorder.o
+[ 41%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_rcond.o
+[ 41%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_resymbol.o
+[ 42%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_rowcolcounts.o
+[ 42%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_rowfac.o
+[ 42%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_solve.o
+[ 43%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Cholesky/cholmod_spsolve.o
+[ 43%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_aat.o
+[ 44%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_add.o
+[ 44%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_band.o
+[ 45%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_change_factor.o
+[ 45%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_common.o
+[ 46%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_complex.o
+[ 46%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_copy.o
+[ 47%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_dense.o
+[ 47%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_error.o
+[ 47%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_factor.o
+[ 48%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_memory.o
+[ 48%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_sparse.o
+[ 49%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_transpose.o
+[ 49%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_triplet.o
+[ 50%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Core/cholmod_version.o
+[ 50%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_drop.o
+[ 51%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_horzcat.o
+[ 51%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_norm.o
+[ 52%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_scale.o
+[ 52%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_sdmult.o
+[ 52%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_ssmult.o
+[ 53%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_submatrix.o
+[ 53%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_symmetry.o
+[ 54%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/MatrixOps/cholmod_vertcat.o
+[ 54%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Modify/cholmod_rowadd.o
+[ 55%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Modify/cholmod_rowdel.o
+[ 55%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Modify/cholmod_updown.o
+[ 56%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Partition/cholmod_camd.o
+[ 56%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Partition/cholmod_ccolamd.o
+[ 57%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Partition/cholmod_csymamd.o
+[ 57%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Partition/cholmod_metis.o
+[ 57%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Partition/cholmod_nesdis.o
+[ 58%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Supernodal/cholmod_super_numeric.o
+[ 58%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Supernodal/cholmod_super_solve.o
+[ 59%] Building C object src/cholmod/CMakeFiles/cholmod.dir/CHOLMOD/Supernodal/cholmod_super_symbolic.o
+[ 59%] Building C object src/cholmod/CMakeFiles/cholmod.dir/COLAMD/colamd.o
+[ 60%] Building C object src/cholmod/CMakeFiles/cholmod.dir/COLAMD/colamd_global.o
+[ 60%] Building C object src/cholmod/CMakeFiles/cholmod.dir/SuiteSparse/SuiteSparse_config.o
+[ 61%] Linking C shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libcholmod.so
+[ 61%] Built target cholmod
+Scanning dependencies of target camd_dlong
+[ 61%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_1.o
+[ 61%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_2.o
+[ 62%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_aat.o
+[ 62%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_control.o
+[ 63%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_defaults.o
+[ 63%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_dump.o
+[ 64%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_info.o
+[ 64%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_order.o
+[ 65%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_postorder.o
+[ 65%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_preprocess.o
+[ 65%] Building C object src/cholmod/CAMD_DLONG/CMakeFiles/camd_dlong.dir/camd_valid.o
+[ 66%] Linking C shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libcamd_dlong.so
+[ 66%] Built target camd_dlong
+Scanning dependencies of target cxsparse
+[ 67%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_add.o
+[ 67%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_amd.o
+[ 67%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_chol.o
+[ 68%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_cholsol.o
+[ 68%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_compress.o
+[ 69%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_counts.o
+[ 69%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_cumsum.o
+[ 70%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_dfs.o
+[ 70%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_dmperm.o
+[ 71%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_droptol.o
+[ 71%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_dropzeros.o
+[ 72%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_dupl.o
+[ 72%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_entry.o
+[ 72%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_ereach.o
+[ 73%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_etree.o
+[ 73%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_fkeep.o
+[ 74%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_gaxpy.o
+[ 74%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_happly.o
+[ 75%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_house.o
+[ 75%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_ipvec.o
+[ 76%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_leaf.o
+[ 76%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_load.o
+[ 77%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_lsolve.o
+[ 77%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_ltsolve.o
+[ 77%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_lu.o
+[ 78%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_lusol.o
+[ 78%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_malloc.o
+[ 79%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_maxtrans.o
+[ 79%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_multiply.o
+[ 80%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_norm.o
+[ 80%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_permute.o
+[ 81%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_pinv.o
+[ 81%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_post.o
+[ 81%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_pvec.o
+[ 82%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_qr.o
+[ 82%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_qrsol.o
+[ 83%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_randperm.o
+[ 83%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_reach.o
+[ 84%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_scatter.o
+[ 84%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_scc.o
+[ 85%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_schol.o
+[ 85%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_spsolve.o
+[ 86%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_sqr.o
+[ 86%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_symperm.o
+[ 86%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_tdfs.o
+[ 87%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_transpose.o
+[ 87%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_updown.o
+[ 88%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_usolve.o
+[ 88%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_util.o
+[ 89%] Building C object src/cxsparse/CMakeFiles/cxsparse.dir/cs_utsolve.o
+[ 89%] Linking C shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libcxsparse.so
+[ 89%] Built target cxsparse
+[ 89%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/complex_single.o
+Scanning dependencies of target slampp_base
+[ 89%] Building CXX object src/slam/CMakeFiles/slampp_base.dir/LinearSolver_Schur_GPU.o
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/include/slam/BlockMatrix.h:149,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/include/slam/LinearSolverTags.h:56,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/include/slam/LinearSolver_Schur.h:24,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/src/slam/LinearSolver_Schur_GPU.cpp:20:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/include/slam/BlockMatrixBase.h:210:10: fatal error: Eigen/Core: 没有那个文件或目录
+  210 | #include "Eigen/Core"
+      |          ^~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [src/slam/CMakeFiles/slampp_base.dir/build.make:63：src/slam/CMakeFiles/slampp_base.dir/LinearSolver_Schur_GPU.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:660：src/slam/CMakeFiles/slampp_base.dir/all] 错误 2
+make[1]: *** 正在等待未完成的任务....
+[ 90%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/double.o
+[ 90%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/lapack/single.o
+[ 24%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/blas/double.o
+[ 25%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/blas/single.o
+[ 25%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/blas/complex_double.o
+[ 26%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/blas/complex_single.o
+[ 27%] Building CXX object src/eigen33/CMakeFiles/eigen.dir/blas/xerbla.o
+[ 28%] Linking CXX shared library /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/upstream/Thirdparty/SLAM++/lib/libeigen.so
+[ 28%] Built target eigen
+make: *** [Makefile:130：all] 错误 2

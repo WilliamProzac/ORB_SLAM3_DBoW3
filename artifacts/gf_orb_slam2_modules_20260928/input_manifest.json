@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/inputs/V1_01_easy.txt",
+    "bytes": 294112,
+    "sha256": "7a2b6e7a0acd11bbf3d064b7efe6b380e6aa26a6ae4160e6deb713399327d56a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/inputs/tum_large.txt",
+    "bytes": 940602,
+    "sha256": "1928bbecf7a0611363dffe467f9c7ba85f36405cd2f510b36d2752fadc9f9859"
+  }
+]

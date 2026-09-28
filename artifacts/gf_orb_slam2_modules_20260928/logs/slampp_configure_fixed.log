@@ -1,0 +1,19 @@
+CMake Deprecation Warning at CMakeLists.txt:5 (CMAKE_POLICY):
+  The OLD behavior for policy CMP0014 will be removed from a future version
+  of CMake.
+
+  The cmake-policies(7) manual explains that the OLD behaviors of all
+  policies are deprecated and that a policy should be set to OLD only under
+  specific short-term circumstances.  Projects should be ported to the NEW
+  behavior and not rely on setting a policy to OLD.
+
+
+-- Found OpenMP_C: -fopenmp  
+-- Found OpenMP_CXX: -fopenmp  
+-- Found OpenMP: TRUE   
+-- Compiling with OpenMP support
+-- Found Armadillo: /usr/lib/libarmadillo.so (found version "9.800.4") 
+ARMADILLO libs: /usr/lib/libarmadillo.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/build_slampp

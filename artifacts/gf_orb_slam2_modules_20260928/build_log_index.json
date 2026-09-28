@@ -1,0 +1,172 @@
+[
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/accuracy_tests.log",
+    "bytes": 316,
+    "sha256": "623a28cbe3e8f0d5f32e13ba6ad010fc17e57d5a3925a3a1164ea101a26f2c3e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/accuracy_tests_final.log",
+    "bytes": 316,
+    "sha256": "a505ec70fb90825f2082b69b14e3704d6abb73ba67f175e27c3e4c1bbc1d89da"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/archive.log",
+    "bytes": 98,
+    "sha256": "5a80514cefc57cc6ccfe35e6d19a03e5be7ae273d52762eb88a8df06459e8afd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/build.log",
+    "bytes": 3604440,
+    "sha256": "513f6199c96c86bd39c4228a0dafa8b3239f5e8b6f90d83f2d6317aca03bee53"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/build_final.log",
+    "bytes": 137732,
+    "sha256": "bee85aa5ed7025c82d6c8d670a048816de2e07a9fb4c89d9adeb8ddde9bfb0e1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/comparison.log",
+    "bytes": 8852,
+    "sha256": "6544ef616049152a83384bf06bd8122815f622f8ce3f3499925e488ae7507f6b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/comparison_partial_euroc.log",
+    "bytes": 4422,
+    "sha256": "f8e73eb11c14c4851d03cddfce9af66d0bfbf6e8e78723154314be557713618d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/configure.log",
+    "bytes": 1717,
+    "sha256": "c81c2309ac2120453594f7ef6693b4a8f2c33f2f2b58ad6d25dc197219c786ff"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/detail_tables.log",
+    "bytes": 24,
+    "sha256": "c397472e4646e989c67b584b506f1188423e7472a44f0cc50ae3388675473bf4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/euroc_accuracy_diagnostic.log",
+    "bytes": 5829,
+    "sha256": "630769983addcfcdb84deb5d4302918b24fa4f04bc032fe5e1c921f885d007bf"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/euroc_analysis.log",
+    "bytes": 9999,
+    "sha256": "8143bc690905e0f6953dd3c153367090e2c50af174b5ff42d1baba0cd51f3a41"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/euroc_modules.log",
+    "bytes": 51,
+    "sha256": "d086a112d4853af9f4a82cda2396bbfff8e5f758e6e9d15d83478008898746b7"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/euroc_modules_once.log",
+    "bytes": 323,
+    "sha256": "43ca9c436a1ffe147044e38426737e0232f7f580c2b03a790da7e031fe1175e4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/freeze_audit.log",
+    "bytes": 62,
+    "sha256": "1356c975203887e8c35395917390e4b6a3b8d1dd8ccd1b6070077b711d7504af"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/freeze_initial.log",
+    "bytes": 97,
+    "sha256": "3bda1fc0edc91617c6c0af2f99a62559baf6df2aebef25f9a5e82365b9203c9f"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/functional_freeze_note.txt",
+    "bytes": 424,
+    "sha256": "3bf60effc09b7f2b2a2d3058c4cdcfa364c0920f84a4b97d1cc2aafbb6a7433b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/host_environment.json",
+    "bytes": 1655,
+    "sha256": "9994b1365894dce3f39f9b190b3a50f176e5523634b7c1e48ec59330b4f3e58e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/linked_libraries.log",
+    "bytes": 130376,
+    "sha256": "843d9e4191c2683ae8e4c0b7f034a908c952211565a525bec58f3187cf175991"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/slampp_build.log",
+    "bytes": 18362,
+    "sha256": "7683a047e94a2aa3afe0a5dc5ec3ea39b8404c877f8a79fb769391194eb13a01"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/slampp_build_fixed.log",
+    "bytes": 5941,
+    "sha256": "82e79a3e4cce571b0167523e67cbb4b93733fd8069435fe92e25231eefee14d9"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/slampp_configure.log",
+    "bytes": 1407,
+    "sha256": "2d56843816d4ce2debc05b16cd18c8eadb053775235fb7c19cf46e898190eaf5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/slampp_configure_fixed.log",
+    "bytes": 812,
+    "sha256": "9a4d93eadc40d186c1fda5f15dbdba73545a1a4f7cac76e6d776812eea1afedc"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/slampp_native.log",
+    "bytes": 14864,
+    "sha256": "0c809a4924222e78f9f975fd720845a7fae0c2a162468d30bdfef558d74ebe14"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_all_euroc.log",
+    "bytes": 131,
+    "sha256": "579dabfbf2cf02be553572186e14ef7a024def780bc3d4590d93a68ef7b9cad5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_frontend_euroc.log",
+    "bytes": 198,
+    "sha256": "e3c812d030b3080b96154ab3a05408f28519413939c0ce35378f294a7d8a6d4d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_graph_euroc.log",
+    "bytes": 129,
+    "sha256": "8872d051288f4a9757d264650377b31ee5ceab461a14a3568d629f99200144f1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_pairs_euroc.log",
+    "bytes": 187,
+    "sha256": "ca123bf58665c94de9eaab1b27e3ec542285f0edcad2306196a2ee04eb467535"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_pairs_tum.log",
+    "bytes": 215,
+    "sha256": "da2dbd80edbd987877587a25dea9a02ba7a810387d01f73f6db240508a9c394e"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_single_tum.log",
+    "bytes": 356,
+    "sha256": "006bbd423117a02aa1622f6da663443248a4a7fec284690915bd55885aa10387"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/smoke_single_tum_hg.log",
+    "bytes": 157,
+    "sha256": "bc3798404cf9ff85f71a8609c6ce80f8c8cfc19eceed4f8d0f4c026098fdceb5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/tum_analysis.log",
+    "bytes": 9825,
+    "sha256": "f0e6b765da77318ff14f5f5e1e96df493313a210d71375ae1a5b49fdba9679f0"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/tum_completed_accuracy_interim.json",
+    "bytes": 1059,
+    "sha256": "93184cd9a413ecd4190e6385734d34f4b87cebbe0fca199e94c71a1e260090f7"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/tum_modules_once.log",
+    "bytes": 337,
+    "sha256": "24f9be8d4de304e02ddb5bc9872b700c2946504a44235264dc74bf06c5224e8c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/logs/user_repeat_reduction.json",
+    "bytes": 326,
+    "sha256": "1f89333fb35babd1051309eba733ae53cb0139c8492214f657152315cc019ba3"
+  }
+]

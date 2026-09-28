@@ -1,0 +1,37 @@
+{
+  "baseline": {
+    "ate_rmse_m": 0.7463994671231045,
+    "rpe_translation_rmse_m": 0.09698640374887511,
+    "rpe_rotation_rmse_deg": 1.315999526927639,
+    "associated_poses": 1227,
+    "estimated_poses": 5057
+  },
+  "f": {
+    "ate_rmse_m": 0.9380423365323773,
+    "rpe_translation_rmse_m": 0.09752998614465877,
+    "rpe_rotation_rmse_deg": 1.2499489054962085,
+    "associated_poses": 1227,
+    "estimated_poses": 5057
+  },
+  "fh": {
+    "ate_rmse_m": 0.6201098072707177,
+    "rpe_translation_rmse_m": 0.08635409296118507,
+    "rpe_rotation_rmse_deg": 1.1873818934115117,
+    "associated_poses": 1227,
+    "estimated_poses": 5057
+  },
+  "g": {
+    "ate_rmse_m": 0.9453833457777646,
+    "rpe_translation_rmse_m": 0.11647039905654161,
+    "rpe_rotation_rmse_deg": 1.5325196429852248,
+    "associated_poses": 1227,
+    "estimated_poses": 5057
+  },
+  "h": {
+    "ate_rmse_m": 1.3496653512504957,
+    "rpe_translation_rmse_m": 0.0860026438820945,
+    "rpe_rotation_rmse_deg": 1.0734786849018614,
+    "associated_poses": 1227,
+    "estimated_poses": 5057
+  }
+}
