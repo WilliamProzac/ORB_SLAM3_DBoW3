@@ -726,3 +726,8 @@ Runtime memory/LM01.md specifies the refined synchronization contract.
 - No ARM/ROS callback gate, GF concurrent-lifecycle sanitizer gate, full-paper
   benchmark or combined Good Feature Matching/Good Graph gate was run.
   GF01 passing refers to reproducible evaluation delivery only.
+
+## GF02: paper-described MIH policy experiment
+
+Isolated runtime root: `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928`.
+See `artifacts/gf_orb_slam2_paper_20260928/README.md` for exact CMake, sanitizer, replay and analysis commands, and `DESIGN.md` for controls and measurement boundaries. Source commit `33e5064` is built in four modes; release and ASan/UBSan/LSan/TSan index fixtures and four 400-frame smoke runs pass. The short input does not trigger hash queries; full replay is required. Formal matrices are `euroc_paper` and `tum_paper`, 12 rounds each. Full-SLAM sanitizer safety, exact 2019-paper reconstruction, ARM speed and ROS latency are outside this verification. Do not mark speed acceptance merely because bucket capacity or tests pass.

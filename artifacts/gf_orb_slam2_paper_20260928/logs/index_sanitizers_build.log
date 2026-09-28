@@ -1,0 +1,36 @@
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc:34:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc: In member function ‘void HASHING::MultiIndexHashing::query(const unsigned int*, std::vector<ORB_SLAM2::MapPoint*>&, unsigned int, unsigned int)’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc:692:30: warning: NULL used in arithmetic [-Wpointer-arith]
+  692 |     if(nactive_tables_top == NULL)
+      |                              ^~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/harness/test_hash_index.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/harness/test_hash_stubs.cc:2:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+asan index fixture passed
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc:34:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc: In member function ‘void HASHING::MultiIndexHashing::query(const unsigned int*, std::vector<ORB_SLAM2::MapPoint*>&, unsigned int, unsigned int)’:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/src/Hashing.cc:692:30: warning: NULL used in arithmetic [-Wpointer-arith]
+  692 |     if(nactive_tables_top == NULL)
+      |                              ^~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/harness/test_hash_index.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/MapPoint.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/harness/test_hash_stubs.cc:2:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928/upstream/include/Hashing.h:206:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  206 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~
+tsan index fixture passed

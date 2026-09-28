@@ -1,0 +1,8 @@
+
+Hashing Parameters: 
+- Number of Binary Bits: 256
+- Number of Hash Tables: 32
+- Number of Bits per Substring: 8
+- Max. Number of Entries per Bucket: 10
+
+GF02_INDEX_TESTS_PASS capacity refresh duplicate eviction migration reinsertion concurrency partial_membership reset

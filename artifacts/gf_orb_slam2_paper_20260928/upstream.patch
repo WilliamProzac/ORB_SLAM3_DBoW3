@@ -1,0 +1,694 @@
+diff --git a/Thirdparty/DBoW2/CMakeLists.txt b/Thirdparty/DBoW2/CMakeLists.txt
+index 6dd8912..3f748f5 100755
+--- a/Thirdparty/DBoW2/CMakeLists.txt
++++ b/Thirdparty/DBoW2/CMakeLists.txt
+@@ -54,6 +54,7 @@ elseif ($ENV{ROS_DISTRO} STREQUAL "kinetic")
+                 NO_DEFAULT_PATH)
+ endif()
+ 
++find_package(OpenCV 4 REQUIRED)
+ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+ 
+ include_directories(${OpenCV_INCLUDE_DIRS})
+diff --git a/Thirdparty/g2o/CMakeLists.txt b/Thirdparty/g2o/CMakeLists.txt
+index 2cdfb6f..4678963 100755
+--- a/Thirdparty/g2o/CMakeLists.txt
++++ b/Thirdparty/g2o/CMakeLists.txt
+@@ -81,7 +81,7 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${g2o_C_FLAGS}")
+ 
+ # Find Eigen3
+ # SET( G2O_EIGEN3_INCLUDE /usr/include/eigen3 )
+-SET( G2O_EIGEN3_INCLUDE /opt/eigen33/include/eigen3/ )
++SET( G2O_EIGEN3_INCLUDE /usr/include/eigen3 )
+ SET(EIGEN3_INCLUDE_DIR ${G2O_EIGEN3_INCLUDE})
+ FIND_PACKAGE(Eigen3 3.3.0 REQUIRED)
+ IF(EIGEN3_FOUND)
+diff --git a/include/Frame.h b/include/Frame.h
+index fa4c924..bb285ee 100755
+--- a/include/Frame.h
++++ b/include/Frame.h
+@@ -35,9 +35,9 @@
+ // NOTE
+ // as an alternative of stereo pipeline, undistort the keypoints and perform stereo matching
+ // no image recitification is required, nor does the subpixel stereo refine is used
+-#define ALTER_STEREO_MATCHING
++// REPRO: configured by build target: ALTER_STEREO_MATCHING
+ // only uncomment it for stereo pipeline
+-#define DELAYED_STEREO_MATCHING
++// REPRO: configured by build target: DELAYED_STEREO_MATCHING
+ 
+ // For fisheye collected sequences such as TUM VI & MYNT
+ // #define USE_FISHEYE_DISTORTION
+@@ -51,7 +51,7 @@
+ 
+ 
+ // For anticipation in good graph
+-#define ENABLE_ANTICIPATION_IN_GRAPH
++// REPRO: configured by build target: ENABLE_ANTICIPATION_IN_GRAPH
+ 
+ 
+ #ifdef ENABLE_ANTICIPATION_IN_GRAPH
+diff --git a/include/Hashing.h b/include/Hashing.h
+index 58e143c..91e5ab4 100755
+--- a/include/Hashing.h
++++ b/include/Hashing.h
+@@ -46,6 +46,8 @@
+ //#include <boost/thread.hpp>
+ #include <mutex>
+ #include <deque>
++#include <unordered_map>
++#include <stdexcept>
+ 
+ #include "MapPoint.h"
+ 
+@@ -56,11 +58,17 @@
+ #define MAX_SUPPORTED_BIT_LENGTH    32 /*(sizeof(size_t))*/
+ #define MAX_REPEATED_FRAME_NUM      1
+ #define MIN_BUCKET_SIZE             1
+-#define MAX_BUCKET_SIZE             20 // 10 // 200 //
+-#define NUM_CANDIDATE_FEATURES      20 // 10 // 1 //
++#ifndef MAX_BUCKET_SIZE
++#define MAX_BUCKET_SIZE 10
++#endif
++#ifndef NUM_CANDIDATE_FEATURES
++#define NUM_CANDIDATE_FEATURES 10
++#endif
+ #define NUM_ADDITIONAL_FEATURES     0 // 1 // 3 // 2   // 0 if use all features in the bucket
+ #define NUM_TOTAL_HASHTABLES        32
+-#define NUM_ACTIVE_HASHTABLES       8 // 32 // 2 // 12 // 1 // 
++#ifndef NUM_ACTIVE_HASHTABLES
++#define NUM_ACTIVE_HASHTABLES 32
++#endif
+ //#define NUM_RETRIEVE_CTRL
+ //#define NUM_RETRIEVE_TOP_N          10
+ 
+@@ -74,7 +82,9 @@
+ /* --- options of parameters used in online table selection --- */
+ #define MIN_DETERMINE_THRESHOLD     80
+ #define MIN_NUM_HASHTABLES          1
+-#define MAX_NUM_HASHTABLES          24 // 16 // 
++#ifndef MAX_NUM_HASHTABLES
++#define MAX_NUM_HASHTABLES 8
++#endif
+ #define MAX_TRACK_LOCALMAP_TIME     0.020 // 0.012 // 
+ #define MIN_TIME_DIFF               0.001
+ 
+@@ -112,6 +122,9 @@ public:
+     ~Bucket();
+     // insert entry into the bucket
+     void add(const Entry e);
++    Entry touch(const Entry e, size_t capacity);
++    void erase(const Entry e);
++    size_t size();
+     // retrieve entries from the bucket
+     std::vector<Entry> back(int n = 1);
+     int back(std::vector<Entry> &dst, int n=1);
+@@ -200,6 +213,11 @@ public:
+     //    void printBuckets(const unsigned int* pDesc, unsigned int nactive_tables = NULL);
+     unsigned int getSubstringLen();
+     int updateDynamics(double e);
++    struct Diagnostics {
++        size_t entries=0, max_bucket=0, indexed_points=0;
++        size_t insertions=0, refreshes=0, evictions=0, migrations=0, queries=0;
++    };
++    Diagnostics diagnostics();
+ 
+ private:
+     unsigned int feature_length;
+@@ -212,7 +230,12 @@ private:
+     std::string logfile;
+     int dynamics;
+ 
+-    //    std::mutex mMutexUpdate;
++    // One index operation is atomic with respect to insertion/reset/query.
++    std::mutex mMutexUpdate;
++    std::unordered_map<Entry, std::vector<size_t>> mLocations;
++    Diagnostics mDiagnostics;
++    bool insertRecentLocked(Entry feature, const std::vector<size_t>& buckets);
++    friend struct IndexTestAccess;
+ };
+ }
+ 
+diff --git a/include/ORBextractor.h b/include/ORBextractor.h
+index 8839dd0..12e3dbd 100755
+--- a/include/ORBextractor.h
++++ b/include/ORBextractor.h
+@@ -23,7 +23,7 @@
+ 
+ #include <vector>
+ #include <list>
+-#include <opencv/cv.h>
++#include <opencv2/opencv.hpp>
+ 
+ #if !defined(__SSE3__) && !defined(__SSE2__) && !defined(__SSE1__)
+     #include "SSE2NEON.h"
+diff --git a/include/Optimizer.h b/include/Optimizer.h
+index 0ec575b..c195ad8 100755
+--- a/include/Optimizer.h
++++ b/include/Optimizer.h
+@@ -1,4 +1,4 @@
+-﻿/**
++/**
+ * This file is part of ORB-SLAM2.
+ *
+ * Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+@@ -34,7 +34,7 @@
+ //#define DEBUG_VERBOSE
+ 
+ // good graph switch macro
+-#define ENABLE_GOOD_GRAPH
++// REPRO: configured by build target: ENABLE_GOOD_GRAPH
+ // reference methods to compare against good graph
+ // #define ENABLE_SLIDING_WINDOW_FILTER
+ // #define ENABLE_COVIS_GRAPH
+diff --git a/include/Tracking.h b/include/Tracking.h
+index 9068e8f..f08bde5 100755
+--- a/include/Tracking.h
++++ b/include/Tracking.h
+@@ -20,6 +20,7 @@
+ 
+ #ifndef TRACKING_H
+ #define TRACKING_H
++#include <chrono>
+ 
+ // #include <opencv2/core/core.hpp>
+ // #include <opencv2/features2d/features2d.hpp>
+@@ -78,7 +79,7 @@ using namespace Eigen;
+ // with random error.  It is then utilized as pose prediction (replacement 
+ // of constant motion model) in tracking thread.
+ //
+-#define PRED_WITH_ODOM
++// REPRO: configured by build target: PRED_WITH_ODOM
+ 
+ /* --- options of anticipating poses with closed-loop planner  --- */
+ //
+@@ -89,7 +90,7 @@ using namespace Eigen;
+ // https://github.gatech.edu/ivabots/trajectory_state_predictor
+ // Otherwise, you might write your own predictor by grabbing output from the controller
+ //
+-#define ENABLE_PLANNER_PREDICTION
++// REPRO: configured by build target: ENABLE_PLANNER_PREDICTION
+ 
+ #ifdef ENABLE_PLANNER_PREDICTION
+   #include <trajectory_state_predictor/trajectory_state_predictor.h>
+@@ -107,7 +108,7 @@ using namespace Eigen;
+ #ifndef ORB_SLAM_BASELINE
+ 
+     /* --- options of additional search after pose estimation --- */
+-    #define DELAYED_MAP_MATCHING
++    // REPRO: configured by build target: DELAYED_MAP_MATCHING
+ 
+     /* --- options of turning on hashing-support in SLAM modules --- */
+     // #define MAP_SIZE_TRIGGER_HASHING  2000 // 4000 //
+@@ -119,12 +120,12 @@ using namespace Eigen;
+     /* --- options to priortize feature matching wrt local map --- */
+     //#define RANDOM_FEATURE_MAP_MATCHING
+     //#define LONGLIVE_FEATURE_MAP_MATCHING
+-    #define GOOD_FEATURE_MAP_MATCHING
++    // REPRO: configured by build target: GOOD_FEATURE_MAP_MATCHING
+     // include frame-by-frame matchings as prior term in good matching
+     // #define FRAME_MATCHING_INFO_PRIOR
+     // pre-compute Jacobian for next frame at the end of tracking
+     // TODO disable it when using map hash; check the latency vs. performance
+-    #define PRECOMPUTE_WITH_MOTION_MODEL
++    // REPRO: configured by build target: PRECOMPUTE_WITH_MOTION_MODEL
+ 
+     /* --- parameters used in good feature --- */
+     #define USE_INFO_MATRIX
+@@ -243,6 +244,10 @@ public:
+ 
+ public:
+ 
++    // Diagnostic wall time from GrabImage entry to the pre-postprocessing pose boundary.
++    std::chrono::steady_clock::time_point mReproImageStart;
++    double mReproPoseReadyMs = 0.0;
++
+     // Tracking states
+     enum eTrackingState{
+         SYSTEM_NOT_READY=-1,
+@@ -324,8 +329,11 @@ public:
+ 
+ #ifdef LOCAL_SEARCH_USING_HASHING
+     
++    HASHING::MultiIndexHashing::Diagnostics HashIndexDiagnostics() { return mpHashMethod->diagnostics(); }
++
+     inline void StoreLocalMapPointsByCoVis(const std::vector<MapPoint *> &LocalMapPoints)
+     {
++        std::unique_lock<std::mutex> lock(mMutexLocalMapBackup);
+         mvpLocalMapPointsByCoVis.clear();
+         mvpLocalMapPointsByCoVis = LocalMapPoints;
+     }
+@@ -333,11 +341,13 @@ public:
+     inline void RestoreLocalMapPoints(std::vector<MapPoint *> &LocalMapPoints)
+     {
+         //    LocalMapPoints = mvpLocalMapPointsBackup;
++        std::unique_lock<std::mutex> lock(mMutexLocalMapBackup);
+         mvpLocalMapPointsByCoVis.swap(LocalMapPoints);
+     }
+ 
+     inline bool BackupLocalMapPointsEmpty()
+     {
++        std::unique_lock<std::mutex> lock(mMutexLocalMapBackup);
+         return (mvpLocalMapPointsByCoVis.size()==0);
+     }
+     
+@@ -467,6 +477,7 @@ protected:
+     std::vector<KeyFrame*> mvpLocalKeyFrames;
+     std::vector<MapPoint*> mvpLocalMapPoints;
+     std::vector<MapPoint*> mvpLocalMapPointsByCoVis;
++    std::mutex mMutexLocalMapBackup;
+     std::vector<MapPoint*> mvpLeftMapPointsByHashing;
+     std::vector<MapPoint*> mvpMapPointsByHashing;
+     std::vector<int> mvpQueriedFeatures;
+diff --git a/src/Hashing.cc b/src/Hashing.cc
+index 95764f9..0ee1620 100755
+--- a/src/Hashing.cc
++++ b/src/Hashing.cc
+@@ -117,40 +117,46 @@ Bucket::Bucket()
+ 
+ Bucket::~Bucket(){}
+ 
+-void Bucket::add(const Entry e/*, const int HashTableID*/)
++void Bucket::add(const Entry e)
+ {
+-    //    boost::mutex::scoped_lock lock(mMutexEntries);
+-    //    std::unique_lock<mutex> lock(mMutexEntries);
+-    //    if(entries.size() < MAX_BUCKET_SIZE)
+-    //        entries.push_back(e);
+-    //    else
+-    //    {
+-    //        entries[p_next]->mvbHashed[HashTableID] = false;
+-    //        //        cout<<"hashtable id:"<<HashTableID<<", turn false, bucket size:"<<entries.size()<<endl;
+-    //        entries[p_next] = e;
+-    //    }
+-
+-    //    p_next = (p_next + 1) % MAX_BUCKET_SIZE;
+-
+-    // push item to the front
++    std::unique_lock<std::mutex> lock(mMutexBucket);
+     mEntries.push_front(e);
++    mLatest = e;
++    mIter = mEntries.begin();
++}
+ 
+-    {
+-        // update current iterator
+-        //        boost::mutex::scoped_lock lock1(mMutexBucket);
+-        std::unique_lock<std::mutex> lock1(mMutexBucket);
+-        mIter = mEntries.begin();
++Entry Bucket::touch(const Entry e, size_t capacity)
++{
++    if (!capacity) throw std::invalid_argument("zero bucket capacity");
++    std::unique_lock<std::mutex> lock(mMutexBucket);
++    // Capacity is fixed for the lifetime of this index, not a per-call budget.
++    if (mEntries.size() > capacity) throw std::logic_error("capacity changed");
++    auto old = std::find(mEntries.begin(), mEntries.end(), e);
++    if (old != mEntries.end()) mEntries.erase(old);
++    mEntries.push_front(e);
++    Entry evicted = nullptr;
++    if (mEntries.size() > capacity) {
++        evicted = mEntries.back();
++        mEntries.pop_back();
+     }
++    mLatest = mEntries.front();
++    mIter = mEntries.begin();
++    return evicted;
++}
+ 
+-    //    if (entries.size() > MAX_BUCKET_SIZE){
+-    //        Entry ent = entries.front();
+-    //        ent->mvbHashed[HashTableID] = false;
+-    //        entries.pop_front();
+-    //    }
+-    {
+-        std::unique_lock<std::mutex> lock2(mMutexLatest);
+-        mLatest = e;
+-    }
++void Bucket::erase(const Entry e)
++{
++    std::unique_lock<std::mutex> lock(mMutexBucket);
++    auto it = std::find(mEntries.begin(), mEntries.end(), e);
++    if (it != mEntries.end()) mEntries.erase(it);
++    mLatest = mEntries.empty() ? nullptr : mEntries.front();
++    mIter = mEntries.begin();
++}
++
++size_t Bucket::size()
++{
++    std::unique_lock<std::mutex> lock(mMutexBucket);
++    return mEntries.size();
+ }
+ 
+ //void Bucket::add(const vector<Entry> &es)
+@@ -188,93 +194,19 @@ void Bucket::add(const Entry e/*, const int HashTableID*/)
+ 
+ std::vector<Entry> Bucket::back(int n)
+ {
+-    //    boost::mutex::scoped_lock lock(mMutexEntries);
+-    //    std::unique_lock<mutex> lock(mMutexEntries);
+-
+-    std::vector<Entry> r;
+-
+-    if(n == 0)
+-        return r;
+-
+-    std::deque<Entry>::iterator it;
+-    int s;
+-
+-    {
+-        std::unique_lock<std::mutex> lock(mMutexBucket);
+-        it = mIter; //clone current iterator
+-        s = mEntries.size();
+-    }
+-
+-    if(s == 0)
+-        return r;
+-
+-    //    //    int p_curr = (p_next - 1) % s;
+-    //    //    while(p_curr<0)
+-    //    //        p_curr += s;
+-
+-    //    //    p_curr = p_curr + 1;
+-
+-    if(n >= s)
+-        r.insert(r.end(), it, mEntries.end());
+-    //#ifdef HASHING_WARNING
+-    //        std::cout << "HASHING-WARNING: .back() bucket size is less than the required return number!" << std::endl;
+-    //#endif
+-    else
+-        r.insert(r.end(), it, it+n);
+-
+-    //    //    if(s == MAX_BUCKET_SIZE){
+-    //    //        if(n <= p_curr)
+-    //    //            r.insert(r.end(), entries.begin() + p_curr - n, entries.begin() + p_curr);
+-
+-    //    //        if(n > p_curr){
+-    //    //            r.insert(r.end(), entries.begin(), entries.begin() + p_curr);
+-    //    //            r.insert(r.end(), entries.end() - n + p_curr, entries.end());
+-    //    //        }
+-    //    //    }
+-
+-    //    //    if(s < MAX_BUCKET_SIZE)
+-    //    //        r.insert(r.end(), entries.end() - n, entries.end());
+-
+-    //    //    if(s > MAX_BUCKET_SIZE){
+-    //    //        std::cerr << "ERROR: .back() bucket size is over the max limit!" << std::endl;
+-    //    //        exit(-1);
+-    //    //    }
+-
+-    //    //    deque<Entry>::reverse_iterator rit = entries.rbegin();
+-    //    //    for (; rit != entries.rbegin()+n /*entries.rend()*/; ++rit)
+-    //    //        r.push_back(*rit);
+-
+-    return r;
++    std::vector<Entry> result;
++    back(result, n);
++    return result;
+ }
+ 
+-int Bucket::back(std::vector<Entry> &dst, int n)
++int Bucket::back(std::vector<Entry>& dst, int n)
+ {
+     dst.clear();
+-
+-    if(n == 0)
+-        return dst.size();
+-
+-    std::deque<Entry>::iterator it;
+-    int s;
+-
+-    {
+-        std::unique_lock<std::mutex> lock(mMutexBucket);
+-        it = mIter; //clone current iterator
+-        s = mEntries.size();
+-    }
+-
+-    if(s == 0)
+-        return dst.size();
+-
+-    if(n >= s)
+-        dst.insert(dst.end(), it, mEntries.end());
+-    //#ifdef HASHING_WARNING
+-    //        std::cout << "HASHING-WARNING: .back() bucket size is less than the required return number!" << std::endl;
+-    //#endif
+-    else
+-        dst.insert(dst.end(), it, it+n);
+-
+-    return dst.size();
++    if (n <= 0) return 0;
++    std::unique_lock<std::mutex> lock(mMutexBucket);
++    const size_t count = std::min(static_cast<size_t>(n), mEntries.size());
++    dst.insert(dst.end(), mEntries.begin(), mEntries.begin() + count);
++    return static_cast<int>(dst.size());
+ }
+ 
+ //size_t Bucket::size()
+@@ -345,7 +277,7 @@ Entry Bucket::front(/*int i, bool circle*/)
+     //            k += MAX_BUCKET_SIZE;
+     //        return entries[k];
+     //    }
+-    std::unique_lock<std::mutex> lock(mMutexLatest);
++    std::unique_lock<std::mutex> lock(mMutexBucket);
+ 
+     return mLatest;
+ }
+@@ -509,6 +441,7 @@ MultiIndexHashing/*<FeatureType>*/::MultiIndexHashing(unsigned int feature_lengt
+     //        //        it->clearSpace();
+     //    }
+ 
++    if (!max_feature_num_per_bucket) throw std::invalid_argument("zero bucket capacity");
+     initialize();
+ 
+ 
+@@ -521,6 +454,9 @@ MultiIndexHashing/*<FeatureType>*/::MultiIndexHashing(unsigned int feature_lengt
+ 
+ void MultiIndexHashing::initialize()
+ {
++    std::unique_lock<std::mutex> lock(mMutexUpdate);
++    mLocations.clear();
++    mDiagnostics = Diagnostics();
+     mvvBuckets.clear();
+     mvvBuckets.resize(hashtable_num);
+     for(int i=0; i!=hashtable_num; ++i){
+@@ -532,6 +468,9 @@ void MultiIndexHashing::initialize()
+ //template<typename FeatureType>
+ bool MultiIndexHashing::insert(const Entry feature)
+ {
++    if (!feature || feature->isBad()) return false;
++    std::unique_lock<std::mutex> lock(mMutexUpdate);
++    ++mDiagnostics.insertions;
+     //    std::unique_lock<mutex> lock(mMutexUpdate);
+ 
+     bool insert_success = false;
+@@ -543,6 +482,10 @@ bool MultiIndexHashing::insert(const Entry feature)
+ 
+     // multi-index hash
+     hash(desc, bucket_idx);
++#ifdef GF_PAPER_BUCKETS
++    return insertRecentLocked(feature, bucket_idx);
++#endif
++
+ 
+     //    /*-----------------------------TEST--------------------------------*/
+     //    cv::Mat mdesc = feature->GetDescriptor();
+@@ -597,6 +540,51 @@ bool MultiIndexHashing::insert(const Entry feature)
+     return insert_success;
+ }
+ 
++// Reverse membership exists only while a point occupies at least one bucket.
++// It is bounded by the number of stored entries, not total historical MPs.
++bool MultiIndexHashing::insertRecentLocked(Entry feature, const std::vector<size_t>& buckets)
++{
++    const size_t absent = bucket_num_per_hashtable;
++    auto previous = mLocations.find(feature);
++    if (previous != mLocations.end()) {
++        ++mDiagnostics.refreshes;
++        for (size_t k=0; k<hashtable_num; ++k) {
++            if (previous->second[k] != absent && previous->second[k] != buckets[k]) {
++                mvvBuckets[k][previous->second[k]].erase(feature);
++                previous->second[k] = absent;
++                ++mDiagnostics.migrations;
++            }
++        }
++    }
++    auto& location = mLocations.emplace(feature, std::vector<size_t>(hashtable_num, absent)).first->second;
++    for (size_t k=0; k<hashtable_num; ++k) {
++        Entry evicted = mvvBuckets[k][buckets[k]].touch(feature, max_feature_num_per_bucket);
++        location[k] = buckets[k];
++        if (evicted) {
++            ++mDiagnostics.evictions;
++            auto old = mLocations.find(evicted);
++            if (old == mLocations.end()) throw std::logic_error("missing reverse membership");
++            old->second[k] = absent;
++            if (std::all_of(old->second.begin(), old->second.end(), [absent](size_t x){return x==absent;}))
++                mLocations.erase(old);
++        }
++    }
++    return true;
++}
++
++MultiIndexHashing::Diagnostics MultiIndexHashing::diagnostics()
++{
++    std::unique_lock<std::mutex> lock(mMutexUpdate);
++    Diagnostics d = mDiagnostics;
++    d.indexed_points = mLocations.size();
++    for (auto& table : mvvBuckets) for (auto& bucket : table) {
++        size_t n = bucket.size();
++        d.entries += n;
++        d.max_bucket = std::max(d.max_bucket, n);
++    }
++    return d;
++}
++
+ //void MultiIndexHashing::query(const cv::Mat &mDesc, std::vector<Entry> &candidates, unsigned int nactive_tables, unsigned int nretrieves)
+ //{
+ //    std::vector<size_t> bucket_idx(hashtable_num);
+@@ -698,6 +686,8 @@ bool MultiIndexHashing::insert(const Entry feature)
+ 
+ void MultiIndexHashing::query(const unsigned int *pDesc, std::vector<Entry> &candidates, unsigned int nactive_tables_top, unsigned int nretrieves)
+ {
++    std::unique_lock<std::mutex> lock(mMutexUpdate);
++    ++mDiagnostics.queries;
+     std::vector<size_t> bucket_idx(hashtable_num);
+     if(nactive_tables_top == NULL)
+         nactive_tables_top = hashtable_num;
+@@ -848,6 +838,8 @@ void MultiIndexHashing::query(const unsigned int *pDesc, std::vector<Entry> &can
+ 
+ void MultiIndexHashing::query(const unsigned int *pDesc, std::vector<Entry> &candidates, std::vector<Entry> &addi_candidates, std::vector<int> &nfeatures)
+ {
++    std::unique_lock<std::mutex> lock(mMutexUpdate);
++    ++mDiagnostics.queries;
+     //    std::unique_lock<mutex> lock(mMutexUpdate);
+ 
+     std::vector<size_t> bucket_idx(hashtable_num);
+diff --git a/src/LocalMapping.cc b/src/LocalMapping.cc
+index 3e793c9..e83987b 100755
+--- a/src/LocalMapping.cc
++++ b/src/LocalMapping.cc
+@@ -617,7 +617,7 @@ void LocalMapping::CreateNewMapPoints()
+             arma::wall_clock timer11;
+             timer11.tic();
+             mpHashMethod->insert(pMP);
+-            mpTracker->logCurrentFrame.time_hash_insert += timer11.toc();
++            // Mapping must not mutate Tracking's per-frame timing record.
+ #endif
+ 
+             nnew++;
+@@ -958,7 +958,8 @@ void LocalMapping::UpdateHashTables(std::vector<MapPoint *> &vpMPs)
+ 
+         mpHashMethod->insert(*it);
+     }
+-    mpTracker->logCurrentFrame.time_hash_insert += timer.toc();
++    // Do not write Tracking's per-frame log from the Mapping thread.
++    // Hash operation counts are available from the synchronized index diagnostics.
+ }
+ 
+ //void LocalMapping::UpdateHashTables(std::vector<MapPoint *> &vpMPs)
+diff --git a/src/Tracking.cc b/src/Tracking.cc
+index 04a4d0f..5e419cf 100755
+--- a/src/Tracking.cc
++++ b/src/Tracking.cc
+@@ -366,7 +366,9 @@ R_bias.copyTo(mT_bias.rowRange(0,3).colRange(0,3));
+ #endif
+     
+ 
+-#if defined DELAYED_MAP_MATCHING && defined LOCAL_SEARCH_USING_HASHING
++#ifdef LOCAL_SEARCH_USING_HASHING
++    mbMapHashTriggered = false;
++    mbMapHashOTS = false;
+     mvpQueriedFeatures.resize(NUM_TOTAL_HASHTABLES);
+     std::fill(mvpQueriedFeatures.begin(), mvpQueriedFeatures.begin() + NUM_ACTIVE_HASHTABLES, NUM_ADDITIONAL_FEATURES + NUM_CANDIDATE_FEATURES);
+     std::fill(mvpQueriedFeatures.begin() + NUM_ACTIVE_HASHTABLES, mvpQueriedFeatures.end(), 0);
+@@ -432,6 +434,8 @@ void Tracking::SetHashHandler(HASHING::MultiIndexHashing *pHashHandler)
+ 
+ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp)
+ {
++    mReproImageStart = std::chrono::steady_clock::now();
++    mReproPoseReadyMs = 0.0;
+     logCurrentFrame.setZero();
+ 
+     arma::wall_clock timer_mod;
+@@ -524,6 +528,8 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
+ 
+ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp)
+ {
++    mReproImageStart = std::chrono::steady_clock::now();
++    mReproPoseReadyMs = 0.0;
+     logCurrentFrame.setZero();
+ 
+     arma::wall_clock timer_mod;
+@@ -572,6 +578,8 @@ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const d
+ 
+ cv::Mat Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp)
+ {
++    mReproImageStart = std::chrono::steady_clock::now();
++    mReproPoseReadyMs = 0.0;
+     logCurrentFrame.setZero();
+ 
+     arma::wall_clock timer_mod;
+@@ -1060,6 +1068,9 @@ void Tracking::Track()
+     //        mlbLost.push_back(mState==LOST);
+     //    }
+ 
++    mReproPoseReadyMs = std::chrono::duration<double, std::milli>(
++        std::chrono::steady_clock::now() - mReproImageStart).count();
++
+ #ifdef REALTIME_TRAJ_LOGGING
+     if(!mCurrentFrame.mTcw.empty())
+     {
+@@ -2706,6 +2717,11 @@ bool Tracking::SearchAdditionalMatchesInFrame(const double time_for_search, Fram
+ 
+ int Tracking::SearchLocalPoints()
+ {
++#if defined ONLINE_TABLE_SELECTION && !defined GOOD_FEATURE_MAP_MATCHING && !defined RANDOM_FEATURE_MAP_MATCHING && !defined LONGLIVE_FEATURE_MAP_MATCHING
++    // OTS standalone needs the same per-frame scratch reset as GF matching.
++    mObsHandler->mLeftMapPoints.clear();
++    mObsHandler->mbNeedVizCheck = false;
++#endif
+     int nAlreadyMatched = mnInitStereo;
+     //    int nAlreadyMatched = 0;
+ 
+@@ -3430,6 +3446,12 @@ void Tracking::Reset()
+     mpKeyFrameDB->clear();
+     cout << " done" << endl;
+ 
++#ifdef LOCAL_SEARCH_USING_HASHING
++    // Mapping reset has acknowledged. Drop borrowed pointers before map deletion.
++    mpHashMethod->initialize();
++    StoreLocalMapPointsByCoVis(std::vector<MapPoint*>());
++#endif
++
+     // Clear Map (this erase MapPoints and KeyFrames)
+     mpMap->clear();
+ 
+@@ -3514,6 +3536,7 @@ void Tracking::UpdateLocalPointsByHashing(eLocalMapSet eLocalMap)
+     double t;
+     //#endif
+     mbMapHashOTS = false;
++    mbMapHashTriggered = false;
+ 
+     timer.tic();
+ 
+@@ -3594,7 +3617,13 @@ void Tracking::UpdateLocalPointsByHashing(eLocalMapSet eLocalMap)
+         // timer.tic();
+         //#endif
+ 
++#ifdef GF_PAPER_ALL_DESCRIPTORS
++        // Paper section III: every descriptor in the input frame queries MIH.
++        vKPU.resize(mDescriptors.rows);
++        std::iota(vKPU.begin(), vKPU.end(), 0u);
++#else
+         Frame::GetUnMatchedKPbyBucketing(&mCurrentFrame, vKPU);
++#endif
+ 
+         //    bool hit[pMIH->getHashTableSize()][pMIH->getBucketNum()] = {0}; // only works for false initialization
+         //    std::vector<std::vector<size_t> > hitid;
+@@ -3964,6 +3993,8 @@ bool Tracking::UpdateQueryNumByHashTable(const double time_limit)
+     // update only if all the NUM_ACTIVE_HASHTABLES(12) hash tables are determined
+     if(completed)
+         mvpQueriedFeatures.swap(queriedfeatures);
++    std::cerr << "REPRO_OTS " << mCurrentFrame.mnId << " " << completed << " "
++              << std::count_if(mvpQueriedFeatures.begin(), mvpQueriedFeatures.end(), [](int n){return n>0;}) << " " << timer.toc() << "\n";
+ 
+ #ifdef MAPHASH_OTS_VERBOSE
+     cerr<<"---------"<<endl;

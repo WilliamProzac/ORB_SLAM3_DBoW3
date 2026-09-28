@@ -1,0 +1,54 @@
+{
+  "build/replay_baseline": {
+    "bytes": 129672,
+    "sha256": "6548efa3ab91b0e218411d60804461797e0772286620b0d5dfa0bd87739eb19a"
+  },
+  "build/replay_paper_ots": {
+    "bytes": 129744,
+    "sha256": "a4a9f6884148c3cd389b56da1a29f21fadee65d8d559789d99fe22b68c0a9f56"
+  },
+  "build/replay_mih_ots": {
+    "bytes": 129744,
+    "sha256": "ac2b079d66f1c012c422b7d741c269d78c64ec76b00da38beeeaded446e1cf9d"
+  },
+  "build/replay_paper_all": {
+    "bytes": 129744,
+    "sha256": "8f5c0e9b755421018190bf0c7ad8dae939561993178ada9bad0578a7d3517de8"
+  },
+  "build/libgf_baseline.so": {
+    "bytes": 2082120,
+    "sha256": "61b82a72326b5e46715061059529e24e58c3da9d6b67b13d83e1bcb86f985352"
+  },
+  "build/libgf_mih_ots.so": {
+    "bytes": 2125504,
+    "sha256": "46fa8db49b99424bf55377ea36667774aae454c34126e6a2d835995d9ba04e32"
+  },
+  "build/libgf_paper_ots.so": {
+    "bytes": 2125472,
+    "sha256": "e2d9f37df9e4cdac12e4c019e2bb6e902535439468bf36384fe111eda01ddc07"
+  },
+  "build/libgf_paper_all.so": {
+    "bytes": 2125568,
+    "sha256": "31a1d86f44aa4c51af8058c94bccce8e6c158d3df3ddeb775928f32adb89aa01"
+  },
+  "build/test_hash_index": {
+    "bytes": 89504,
+    "sha256": "e844e7aa50f09f8bee7ab190d6f2c0c101c1111cb133104d08fb703df362e9cd"
+  },
+  "build/index_asan": {
+    "bytes": 5935024,
+    "sha256": "b1e8df4837adcff104f8c103dd8feff63030b1411ded451d8cc55cf01aadf8d5"
+  },
+  "build/index_tsan": {
+    "bytes": 2958584,
+    "sha256": "06288ff8302dcf7a79873da347b39987f17c4f40b9b6e5d4d7f076bd7396ac5c"
+  },
+  "upstream/Thirdparty/g2o/lib/libg2o.so": {
+    "bytes": 704752,
+    "sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e"
+  },
+  "upstream/Thirdparty/DBoW2/lib/libDBoW2.so": {
+    "bytes": 76560,
+    "sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471"
+  }
+}
