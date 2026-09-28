@@ -1,0 +1,208 @@
+diff --git a/Thirdparty/DBoW2/CMakeLists.txt b/Thirdparty/DBoW2/CMakeLists.txt
+index 6dd8912..3f748f5 100755
+--- a/Thirdparty/DBoW2/CMakeLists.txt
++++ b/Thirdparty/DBoW2/CMakeLists.txt
+@@ -54,6 +54,7 @@ elseif ($ENV{ROS_DISTRO} STREQUAL "kinetic")
+                 NO_DEFAULT_PATH)
+ endif()
+ 
++find_package(OpenCV 4 REQUIRED)
+ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+ 
+ include_directories(${OpenCV_INCLUDE_DIRS})
+diff --git a/Thirdparty/g2o/CMakeLists.txt b/Thirdparty/g2o/CMakeLists.txt
+index 2cdfb6f..4678963 100755
+--- a/Thirdparty/g2o/CMakeLists.txt
++++ b/Thirdparty/g2o/CMakeLists.txt
+@@ -81,7 +81,7 @@ SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${g2o_C_FLAGS}")
+ 
+ # Find Eigen3
+ # SET( G2O_EIGEN3_INCLUDE /usr/include/eigen3 )
+-SET( G2O_EIGEN3_INCLUDE /opt/eigen33/include/eigen3/ )
++SET( G2O_EIGEN3_INCLUDE /usr/include/eigen3 )
+ SET(EIGEN3_INCLUDE_DIR ${G2O_EIGEN3_INCLUDE})
+ FIND_PACKAGE(Eigen3 3.3.0 REQUIRED)
+ IF(EIGEN3_FOUND)
+diff --git a/include/Frame.h b/include/Frame.h
+index fa4c924..bb285ee 100755
+--- a/include/Frame.h
++++ b/include/Frame.h
+@@ -35,9 +35,9 @@
+ // NOTE
+ // as an alternative of stereo pipeline, undistort the keypoints and perform stereo matching
+ // no image recitification is required, nor does the subpixel stereo refine is used
+-#define ALTER_STEREO_MATCHING
++// REPRO: configured by build target: ALTER_STEREO_MATCHING
+ // only uncomment it for stereo pipeline
+-#define DELAYED_STEREO_MATCHING
++// REPRO: configured by build target: DELAYED_STEREO_MATCHING
+ 
+ // For fisheye collected sequences such as TUM VI & MYNT
+ // #define USE_FISHEYE_DISTORTION
+@@ -51,7 +51,7 @@
+ 
+ 
+ // For anticipation in good graph
+-#define ENABLE_ANTICIPATION_IN_GRAPH
++// REPRO: configured by build target: ENABLE_ANTICIPATION_IN_GRAPH
+ 
+ 
+ #ifdef ENABLE_ANTICIPATION_IN_GRAPH
+diff --git a/include/Hashing.h b/include/Hashing.h
+index 58e143c..a9c3648 100755
+--- a/include/Hashing.h
++++ b/include/Hashing.h
+@@ -56,11 +56,17 @@
+ #define MAX_SUPPORTED_BIT_LENGTH    32 /*(sizeof(size_t))*/
+ #define MAX_REPEATED_FRAME_NUM      1
+ #define MIN_BUCKET_SIZE             1
+-#define MAX_BUCKET_SIZE             20 // 10 // 200 //
+-#define NUM_CANDIDATE_FEATURES      20 // 10 // 1 //
++#ifndef MAX_BUCKET_SIZE
++#define MAX_BUCKET_SIZE 10
++#endif
++#ifndef NUM_CANDIDATE_FEATURES
++#define NUM_CANDIDATE_FEATURES 10
++#endif
+ #define NUM_ADDITIONAL_FEATURES     0 // 1 // 3 // 2   // 0 if use all features in the bucket
+ #define NUM_TOTAL_HASHTABLES        32
+-#define NUM_ACTIVE_HASHTABLES       8 // 32 // 2 // 12 // 1 // 
++#ifndef NUM_ACTIVE_HASHTABLES
++#define NUM_ACTIVE_HASHTABLES 32
++#endif
+ //#define NUM_RETRIEVE_CTRL
+ //#define NUM_RETRIEVE_TOP_N          10
+ 
+@@ -74,7 +80,9 @@
+ /* --- options of parameters used in online table selection --- */
+ #define MIN_DETERMINE_THRESHOLD     80
+ #define MIN_NUM_HASHTABLES          1
+-#define MAX_NUM_HASHTABLES          24 // 16 // 
++#ifndef MAX_NUM_HASHTABLES
++#define MAX_NUM_HASHTABLES 8
++#endif
+ #define MAX_TRACK_LOCALMAP_TIME     0.020 // 0.012 // 
+ #define MIN_TIME_DIFF               0.001
+ 
+diff --git a/include/ORBextractor.h b/include/ORBextractor.h
+index 8839dd0..12e3dbd 100755
+--- a/include/ORBextractor.h
++++ b/include/ORBextractor.h
+@@ -23,7 +23,7 @@
+ 
+ #include <vector>
+ #include <list>
+-#include <opencv/cv.h>
++#include <opencv2/opencv.hpp>
+ 
+ #if !defined(__SSE3__) && !defined(__SSE2__) && !defined(__SSE1__)
+     #include "SSE2NEON.h"
+diff --git a/include/Optimizer.h b/include/Optimizer.h
+index 0ec575b..c195ad8 100755
+--- a/include/Optimizer.h
++++ b/include/Optimizer.h
+@@ -1,4 +1,4 @@
+-﻿/**
++/**
+ * This file is part of ORB-SLAM2.
+ *
+ * Copyright (C) 2014-2016 Raúl Mur-Artal <raulmur at unizar dot es> (University of Zaragoza)
+@@ -34,7 +34,7 @@
+ //#define DEBUG_VERBOSE
+ 
+ // good graph switch macro
+-#define ENABLE_GOOD_GRAPH
++// REPRO: configured by build target: ENABLE_GOOD_GRAPH
+ // reference methods to compare against good graph
+ // #define ENABLE_SLIDING_WINDOW_FILTER
+ // #define ENABLE_COVIS_GRAPH
+diff --git a/include/Tracking.h b/include/Tracking.h
+index 9068e8f..0cd580c 100755
+--- a/include/Tracking.h
++++ b/include/Tracking.h
+@@ -78,7 +78,7 @@ using namespace Eigen;
+ // with random error.  It is then utilized as pose prediction (replacement 
+ // of constant motion model) in tracking thread.
+ //
+-#define PRED_WITH_ODOM
++// REPRO: configured by build target: PRED_WITH_ODOM
+ 
+ /* --- options of anticipating poses with closed-loop planner  --- */
+ //
+@@ -89,7 +89,7 @@ using namespace Eigen;
+ // https://github.gatech.edu/ivabots/trajectory_state_predictor
+ // Otherwise, you might write your own predictor by grabbing output from the controller
+ //
+-#define ENABLE_PLANNER_PREDICTION
++// REPRO: configured by build target: ENABLE_PLANNER_PREDICTION
+ 
+ #ifdef ENABLE_PLANNER_PREDICTION
+   #include <trajectory_state_predictor/trajectory_state_predictor.h>
+@@ -107,7 +107,7 @@ using namespace Eigen;
+ #ifndef ORB_SLAM_BASELINE
+ 
+     /* --- options of additional search after pose estimation --- */
+-    #define DELAYED_MAP_MATCHING
++    // REPRO: configured by build target: DELAYED_MAP_MATCHING
+ 
+     /* --- options of turning on hashing-support in SLAM modules --- */
+     // #define MAP_SIZE_TRIGGER_HASHING  2000 // 4000 //
+@@ -119,12 +119,12 @@ using namespace Eigen;
+     /* --- options to priortize feature matching wrt local map --- */
+     //#define RANDOM_FEATURE_MAP_MATCHING
+     //#define LONGLIVE_FEATURE_MAP_MATCHING
+-    #define GOOD_FEATURE_MAP_MATCHING
++    // REPRO: configured by build target: GOOD_FEATURE_MAP_MATCHING
+     // include frame-by-frame matchings as prior term in good matching
+     // #define FRAME_MATCHING_INFO_PRIOR
+     // pre-compute Jacobian for next frame at the end of tracking
+     // TODO disable it when using map hash; check the latency vs. performance
+-    #define PRECOMPUTE_WITH_MOTION_MODEL
++    // REPRO: configured by build target: PRECOMPUTE_WITH_MOTION_MODEL
+ 
+     /* --- parameters used in good feature --- */
+     #define USE_INFO_MATRIX
+diff --git a/src/Tracking.cc b/src/Tracking.cc
+index 04a4d0f..208d88a 100755
+--- a/src/Tracking.cc
++++ b/src/Tracking.cc
+@@ -366,7 +366,9 @@ R_bias.copyTo(mT_bias.rowRange(0,3).colRange(0,3));
+ #endif
+     
+ 
+-#if defined DELAYED_MAP_MATCHING && defined LOCAL_SEARCH_USING_HASHING
++#ifdef LOCAL_SEARCH_USING_HASHING
++    mbMapHashTriggered = false;
++    mbMapHashOTS = false;
+     mvpQueriedFeatures.resize(NUM_TOTAL_HASHTABLES);
+     std::fill(mvpQueriedFeatures.begin(), mvpQueriedFeatures.begin() + NUM_ACTIVE_HASHTABLES, NUM_ADDITIONAL_FEATURES + NUM_CANDIDATE_FEATURES);
+     std::fill(mvpQueriedFeatures.begin() + NUM_ACTIVE_HASHTABLES, mvpQueriedFeatures.end(), 0);
+@@ -2706,6 +2708,11 @@ bool Tracking::SearchAdditionalMatchesInFrame(const double time_for_search, Fram
+ 
+ int Tracking::SearchLocalPoints()
+ {
++#if defined ONLINE_TABLE_SELECTION && !defined GOOD_FEATURE_MAP_MATCHING && !defined RANDOM_FEATURE_MAP_MATCHING && !defined LONGLIVE_FEATURE_MAP_MATCHING
++    // OTS standalone needs the same per-frame scratch reset as GF matching.
++    mObsHandler->mLeftMapPoints.clear();
++    mObsHandler->mbNeedVizCheck = false;
++#endif
+     int nAlreadyMatched = mnInitStereo;
+     //    int nAlreadyMatched = 0;
+ 
+@@ -3514,6 +3521,7 @@ void Tracking::UpdateLocalPointsByHashing(eLocalMapSet eLocalMap)
+     double t;
+     //#endif
+     mbMapHashOTS = false;
++    mbMapHashTriggered = false;
+ 
+     timer.tic();
+ 
+@@ -3964,6 +3972,8 @@ bool Tracking::UpdateQueryNumByHashTable(const double time_limit)
+     // update only if all the NUM_ACTIVE_HASHTABLES(12) hash tables are determined
+     if(completed)
+         mvpQueriedFeatures.swap(queriedfeatures);
++    std::cerr << "REPRO_OTS " << mCurrentFrame.mnId << " " << completed << " "
++              << std::count_if(mvpQueriedFeatures.begin(), mvpQueriedFeatures.end(), [](int n){return n>0;}) << " " << timer.toc() << "\n";
+ 
+ #ifdef MAPHASH_OTS_VERBOSE
+     cerr<<"---------"<<endl;

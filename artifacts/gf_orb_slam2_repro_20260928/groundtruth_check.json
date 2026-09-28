@@ -1,0 +1,6 @@
+{
+  "source": "official ORB_Data cam0 independently checked against EuRoC T_WB*T_BC",
+  "max_position_error_m": 8.542455050092321e-08,
+  "max_rotation_element_error": 1.8576988184207388e-07,
+  "max_timestamp_error_s": 2.384185791015625e-07
+}

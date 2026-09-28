@@ -1,0 +1,34 @@
+{
+  "build/replay_baseline": {
+    "bytes": 129672,
+    "sha256": "ba963a8f714dc5eb40b6b1b06dac369362dd0d24d554258724798a6de5cc6e48"
+  },
+  "build/replay_mih32": {
+    "bytes": 129672,
+    "sha256": "368d15085178eab8192a6d4acfb4af205cb6621e4ac6f6076955f1be8ac6c8c7"
+  },
+  "build/replay_mih_ots": {
+    "bytes": 129672,
+    "sha256": "7613a085c8a41b9511f6cbea51a4a2992a52db56a765644c2c3bc78b23547f60"
+  },
+  "build/libgf_baseline.so": {
+    "bytes": 2067888,
+    "sha256": "282d6b7a28336059fa88f33ce4941aa0ebc7f2d3fc7246e02cf994f9bc285475"
+  },
+  "build/libgf_mih_ots.so": {
+    "bytes": 2115304,
+    "sha256": "ee31d34a2935b3b26b5d77906499eb9881bf05e5d99b428da1c7da8b087ce9c6"
+  },
+  "build/libgf_mih32.so": {
+    "bytes": 2089184,
+    "sha256": "b8b39cd9a1a1203ed6f6dabc8f2e7ace68eb22f7ff38b2811747705d80b507db"
+  },
+  "upstream/Thirdparty/g2o/lib/libg2o.so": {
+    "bytes": 704752,
+    "sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e"
+  },
+  "upstream/Thirdparty/DBoW2/lib/libDBoW2.so": {
+    "bytes": 76560,
+    "sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471"
+  }
+}
