@@ -66,12 +66,15 @@ def main():
         rr=[r for r in results if r['dataset']==ds]
         if not rr:continue
         cutoff=max(r['first_ok_index'] for r in rr)
+        clean_end=min([r['non_ok_ranges'][0][0] if r['non_ok_ranges'] else r['expected_frames'] for r in rr])
         for r in rr:
             x=np.atleast_1d(np.genfromtxt(Path(r['run'])/'frames.csv',names=True,delimiter=','))
             part=x[x['index']>=cutoff]
             r['common_start_index']=cutoff
             r['common_range']={k:stats(part[k]) for k in ['track_ms','input_lateness_ms']}
             r['common_range']['frames']=len(part)
+            clean=x[(x['index']>=cutoff)&(x['index']<clean_end)]
+            r['common_clean_prefix']={'start':cutoff,'end_exclusive':clean_end,'frames':len(clean),'track_ms':stats(clean['track_ms'])}
     previous=Path('/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/gf_orb_slam2_modules_20260928')
     history=[];bridge=[]
     for dataset,folder in [('V1_01_easy','euroc_modules'),('tum_large','tum_modules')]:

@@ -14,7 +14,7 @@ def main():
         'Track API 包含调用至返回的全部耗时，解码和外部诊断不计入。','']
     modes=['official800','delivered800','delivered700','gf_bridge']
     labels=['ORB3 official 800/8','ORB3 delivered 800/8','ORB3 delivered 700/5','GF03 baseline bridge']
-    fig,axes=plt.subplots(1,2,figsize=(12,4.6),layout='constrained')
+    fig,axes=plt.subplots(1,2,figsize=(12,4.6),constrained_layout=True)
     for ax,dataset in zip(axes,['V1_01_easy','tum_large']):
         rr={r['mode']:r for r in data['runs'] if r['dataset']==dataset}
         if len(rr)!=4:continue
@@ -36,11 +36,13 @@ def main():
         lines+=['']
         vals=[rr[m]['common_range']['track_ms']['p95'] for m in modes]
         bars=ax.barh(np.arange(4),vals,color=['#506784','#187c83','#62a4a0','#a2a2a2'])
-        ax.set_yticks(np.arange(4),labels);ax.invert_yaxis();ax.set_title(dataset)
+        ax.set_yticks(np.arange(4));ax.set_yticklabels(labels);ax.invert_yaxis();ax.set_title(dataset)
         ax.axvline(rr['official800']['period_ms'],color='#ba623f',ls='--',lw=1,label='Input frame period')
         ax.set_xlabel('Track API P95 (ms), common frame range');ax.set_xlim(0,max(max(vals)*1.2,rr['official800']['period_ms']*1.14))
+        if any(not rr[m]['tracking_pass'] for m in modes):ax.set_title(dataset+' (* tracking failure / split map)')
         for b,v,m in zip(bars,vals,modes):ax.text(v+.35,b.get_y()+b.get_height()/2,f'{v:.2f}'+(' *' if not rr[m]['tracking_pass'] else ''),va='center',fontsize=9)
-        ax.spines[['top','right']].set_visible(False);ax.legend(loc='lower right',fontsize=8)
+        for spine in ['top','right']:ax.spines[spine].set_visible(False)
+        ax.legend(loc='lower right',fontsize=8)
     (ROOT/'figures').mkdir(exist_ok=True)
     fig.savefig(ROOT/'figures/api_p95.png',dpi=180);fig.savefig(ROOT/'figures/api_p95.pdf');plt.close(fig)
     lines+=['## GF03 历史组合，以官方 ORB-SLAM3 为参照','',
