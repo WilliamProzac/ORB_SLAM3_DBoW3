@@ -737,3 +737,7 @@ Independent root: `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928
 - EuRoC baseline / bounded buckets / bounded+all-descriptor API P95: 35.609 / 63.127 / 64.263 ms. TUM: 27.550 / 52.368 / 59.477 ms; bounded-only has a failed repeat. Production promotion fails. GF02 `passing` means the implementation/evaluation/evidence task is delivered, not performance or full-paper acceptance.
 - Report, complete per-run JSON/CSV, raw-file SHA256 indices, plots, patches and provenance are in `artifacts/gf_orb_slam2_paper_20260928`. `harness/audit_freeze.py` reproduces the final integrity audit.
 - Not executed: full SLAM sanitizers, ARM/ROS timing, loop closure, map merge/save/reload, long-duration NewCollege or all EuRoC sequences. TUM GT covers only 1227/5057 poses. Production ORB3/LM01 and board files are unchanged.
+
+## GF03: module factorial evaluation
+
+Independent root `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928`. Verification: build all eight replay targets; run `harness/run_matrix.py` on V1_01_easy and tum_large with three repeats; use `harness/analyze.py` and a frozen-artifact audit. Confirm actual F/H/G execution and preserve failed runs. GF03 passing will mean evaluation delivered, not automatically algorithm acceptance.
