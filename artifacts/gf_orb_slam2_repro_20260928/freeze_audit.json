@@ -1,0 +1,346 @@
+{
+  "euroc_formal": [
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/configs/euroc800.yaml",
+      "expected_sha256": "97cc6a867c931083a8e80e8814ffbaeb29ff42c46f357163ee0c561e76da479c",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/inputs/V1_01_easy.txt",
+      "expected_sha256": "7a2b6e7a0acd11bbf3d064b7efe6b380e6aa26a6ae4160e6deb713399327d56a",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "harness/run_matrix.py",
+      "expected_sha256": "a027f523d75f9c7167e0f59891633705968358b4388026a1add03b750d1d7721",
+      "matches_current": false,
+      "historical_copy": "provenance/run_matrix.py.a027f523d75f9c7167e0f59891633705968358b4388026a1add03b750d1d7721",
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/harness/replay.cc",
+      "expected_sha256": "e5541c454d81b290e5eb82f7377d588a0811bf7a9026b214c6696e487ef2b88e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_baseline",
+      "expected_sha256": "ba963a8f714dc5eb40b6b1b06dac369362dd0d24d554258724798a6de5cc6e48",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_baseline.so",
+      "expected_sha256": "282d6b7a28336059fa88f33ce4941aa0ebc7f2d3fc7246e02cf994f9bc285475",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih32",
+      "expected_sha256": "368d15085178eab8192a6d4acfb4af205cb6621e4ac6f6076955f1be8ac6c8c7",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih32.so",
+      "expected_sha256": "b8b39cd9a1a1203ed6f6dabc8f2e7ace68eb22f7ff38b2811747705d80b507db",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots",
+      "expected_sha256": "7613a085c8a41b9511f6cbea51a4a2992a52db56a765644c2c3bc78b23547f60",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots.so",
+      "expected_sha256": "ee31d34a2935b3b26b5d77906499eb9881bf05e5d99b428da1c7da8b087ce9c6",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/g2o/lib/libg2o.so",
+      "expected_sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/DBoW2/lib/libDBoW2.so",
+      "expected_sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    }
+  ],
+  "euroc_default": [
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/configs/euroc800.yaml",
+      "expected_sha256": "97cc6a867c931083a8e80e8814ffbaeb29ff42c46f357163ee0c561e76da479c",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/inputs/V1_01_easy.txt",
+      "expected_sha256": "7a2b6e7a0acd11bbf3d064b7efe6b380e6aa26a6ae4160e6deb713399327d56a",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "harness/run_matrix.py",
+      "expected_sha256": "a027f523d75f9c7167e0f59891633705968358b4388026a1add03b750d1d7721",
+      "matches_current": false,
+      "historical_copy": "provenance/run_matrix.py.a027f523d75f9c7167e0f59891633705968358b4388026a1add03b750d1d7721",
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/harness/replay.cc",
+      "expected_sha256": "e5541c454d81b290e5eb82f7377d588a0811bf7a9026b214c6696e487ef2b88e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_baseline",
+      "expected_sha256": "ba963a8f714dc5eb40b6b1b06dac369362dd0d24d554258724798a6de5cc6e48",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_baseline.so",
+      "expected_sha256": "282d6b7a28336059fa88f33ce4941aa0ebc7f2d3fc7246e02cf994f9bc285475",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots_default",
+      "expected_sha256": "d861e769f7c2f6856aae1ef2d2f19537de035b1c464bc78ff91f2f23d34ee0d7",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots_default.so",
+      "expected_sha256": "6dff692369d9154f83913cad687af7df5f9dde006dd4384281058509227263bd",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/g2o/lib/libg2o.so",
+      "expected_sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/DBoW2/lib/libDBoW2.so",
+      "expected_sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    }
+  ],
+  "tum_formal": [
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/configs/tum800.yaml",
+      "expected_sha256": "17e6435d5fcab950b2781d85da7cfae50219644a71229a29fd0b15f4e9160eff",
+      "matches_current": false,
+      "historical_copy": "provenance/tum800_17e6435d5fcab950b2781d85da7cfae50219644a71229a29fd0b15f4e9160eff.yaml",
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/inputs/tum_large.txt",
+      "expected_sha256": "1928bbecf7a0611363dffe467f9c7ba85f36405cd2f510b36d2752fadc9f9859",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "harness/run_matrix.py",
+      "expected_sha256": "72d434aef0faca1b2f1d8cd0d647fbf45f6c9d4a92ad9ec9726eca69e0e49b3d",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/harness/replay.cc",
+      "expected_sha256": "e5541c454d81b290e5eb82f7377d588a0811bf7a9026b214c6696e487ef2b88e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt",
+      "expected_sha256": "f8dd027f7a6cb88129821341194d7f2c75b77b3394257ddd0d2229863d1a3570",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_baseline",
+      "expected_sha256": "ba963a8f714dc5eb40b6b1b06dac369362dd0d24d554258724798a6de5cc6e48",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_baseline.so",
+      "expected_sha256": "282d6b7a28336059fa88f33ce4941aa0ebc7f2d3fc7246e02cf994f9bc285475",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots",
+      "expected_sha256": "7613a085c8a41b9511f6cbea51a4a2992a52db56a765644c2c3bc78b23547f60",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots.so",
+      "expected_sha256": "ee31d34a2935b3b26b5d77906499eb9881bf05e5d99b428da1c7da8b087ce9c6",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots_default",
+      "expected_sha256": "d861e769f7c2f6856aae1ef2d2f19537de035b1c464bc78ff91f2f23d34ee0d7",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots_default.so",
+      "expected_sha256": "6dff692369d9154f83913cad687af7df5f9dde006dd4384281058509227263bd",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/g2o/lib/libg2o.so",
+      "expected_sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/DBoW2/lib/libDBoW2.so",
+      "expected_sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    }
+  ],
+  "tum_bgr_formal": [
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/configs/tum800.yaml",
+      "expected_sha256": "8b3951a6605d8636783428e4d45297e937ff5cc34586a4f65892595520c8b8a5",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/inputs/tum_large.txt",
+      "expected_sha256": "1928bbecf7a0611363dffe467f9c7ba85f36405cd2f510b36d2752fadc9f9859",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "harness/run_matrix.py",
+      "expected_sha256": "72d434aef0faca1b2f1d8cd0d647fbf45f6c9d4a92ad9ec9726eca69e0e49b3d",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/harness/replay.cc",
+      "expected_sha256": "e5541c454d81b290e5eb82f7377d588a0811bf7a9026b214c6696e487ef2b88e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt",
+      "expected_sha256": "f8dd027f7a6cb88129821341194d7f2c75b77b3394257ddd0d2229863d1a3570",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_baseline",
+      "expected_sha256": "ba963a8f714dc5eb40b6b1b06dac369362dd0d24d554258724798a6de5cc6e48",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_baseline.so",
+      "expected_sha256": "282d6b7a28336059fa88f33ce4941aa0ebc7f2d3fc7246e02cf994f9bc285475",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots",
+      "expected_sha256": "7613a085c8a41b9511f6cbea51a4a2992a52db56a765644c2c3bc78b23547f60",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots.so",
+      "expected_sha256": "ee31d34a2935b3b26b5d77906499eb9881bf05e5d99b428da1c7da8b087ce9c6",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/replay_mih_ots_default",
+      "expected_sha256": "d861e769f7c2f6856aae1ef2d2f19537de035b1c464bc78ff91f2f23d34ee0d7",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build/libgf_mih_ots_default.so",
+      "expected_sha256": "6dff692369d9154f83913cad687af7df5f9dde006dd4384281058509227263bd",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/g2o/lib/libg2o.so",
+      "expected_sha256": "3f616eda825263a49e4a9f5c29a35481ef77b67f55f87a5627bee183e141660e",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    },
+    {
+      "file": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/Thirdparty/DBoW2/lib/libDBoW2.so",
+      "expected_sha256": "d9ac1a51a6ada33ea077ac6ca56a6becda1938587006d84a3dbf20a92372b471",
+      "matches_current": true,
+      "historical_copy": null,
+      "recoverable": true
+    }
+  ]
+}

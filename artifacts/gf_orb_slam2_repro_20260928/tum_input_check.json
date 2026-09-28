@@ -1,0 +1,146 @@
+{
+  "input_pairs": 5057,
+  "max_rgb_depth_delta_seconds": 0.01999187469482422,
+  "samples": [
+    {
+      "index": 0,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.6993717447916666,
+      "depth_quantiles_m": [
+        2.3758,
+        4.022,
+        5.1334
+      ],
+      "rgb_bgr_grayscale_mae": 4.180953776041667
+    },
+    {
+      "index": 1000,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.14226888020833334,
+      "depth_quantiles_m": [
+        4.3524,
+        6.3644,
+        8.1862
+      ],
+      "rgb_bgr_grayscale_mae": 2.574254557291667
+    },
+    {
+      "index": 1727,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.15232747395833332,
+      "depth_quantiles_m": [
+        3.5948,
+        6.1536,
+        6.7088
+      ],
+      "rgb_bgr_grayscale_mae": 2.468600260416667
+    },
+    {
+      "index": 1728,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.152080078125,
+      "depth_quantiles_m": [
+        3.739,
+        6.1536,
+        6.7088
+      ],
+      "rgb_bgr_grayscale_mae": 2.5166341145833333
+    },
+    {
+      "index": 1729,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.16720052083333334,
+      "depth_quantiles_m": [
+        5.6834,
+        6.2568,
+        6.7088
+      ],
+      "rgb_bgr_grayscale_mae": 2.463876953125
+    },
+    {
+      "index": 3000,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.8493131510416667,
+      "depth_quantiles_m": [
+        1.6344,
+        2.5038,
+        3.5604000000000005
+      ],
+      "rgb_bgr_grayscale_mae": 2.417421875
+    },
+    {
+      "index": 5056,
+      "rgb_shape": [
+        480,
+        640,
+        3
+      ],
+      "depth_dtype": "uint16",
+      "depth_shape": [
+        480,
+        640
+      ],
+      "nonzero_depth_fraction": 0.6138671875,
+      "depth_quantiles_m": [
+        2.6856,
+        4.3524,
+        5.5144
+      ],
+      "rgb_bgr_grayscale_mae": 3.8826334635416666
+    }
+  ]
+}

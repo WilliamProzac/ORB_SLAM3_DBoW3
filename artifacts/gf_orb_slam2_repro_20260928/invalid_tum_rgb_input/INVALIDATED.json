@@ -1,0 +1,6 @@
+{
+  "reason": "PNG BGR input interpreted as RGB; all rounds are diagnostic only and excluded.",
+  "replacement_tag": "tum_bgr_formal",
+  "completed_rounds": 3,
+  "interrupted_rounds": 1
+}

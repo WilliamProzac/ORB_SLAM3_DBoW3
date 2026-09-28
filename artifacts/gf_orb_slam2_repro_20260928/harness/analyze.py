@@ -23,7 +23,7 @@ def accuracy(path,dataset):
     s,R,t=alignment(est[1][ei],truth[1][gi],dataset=='V1_01_easy')
     aligned=(est[0],s*est[1]@R.T+t,R@est[2])
     result=evaluate(aligned,truth)
-    result.update(alignment='Sim3 (one global scale)' if dataset=='V1_01_easy' else 'SE3 (scale 1)',scale=s,truth_path=str(truthpath),truth_max_gap_s=float(np.max(np.diff(truth[0]))),associated_fraction_of_output=len(pairs)/len(est[0]))
+    result.update(alignment='Sim3 (one global scale)' if dataset=='V1_01_easy' else 'SE3 (scale 1)',scale=s,alignment_rotation=R.tolist(),alignment_translation=t.tolist(),truth_path=str(truthpath),truth_max_gap_s=float(np.max(np.diff(truth[0]))),associated_fraction_of_output=len(pairs)/len(est[0]))
     return result
 
 def stats(x):
@@ -36,8 +36,17 @@ def summarize(run):
     out={k:meta[k] for k in ['mode','dataset','repeat','exit_code','elapsed_s','failure_reason','expected_frames']};out['run']=str(run)
     out['processed']=len(x);out['complete']=len(x)==meta['expected_frames'] and meta['exit_code']==0
     if not len(x):return out
+    out['indices_contiguous']=bool(np.array_equal(x['index'],np.arange(len(x))))
+    out['timestamps_increasing']=bool(np.all(np.diff(x['timestamp'])>0))
+    out['finite_fields']=bool(all(np.isfinite(x[key]).all() for key in x.dtype.names))
+    out['complete']=out['complete'] and out['indices_contiguous'] and out['timestamps_increasing'] and out['finite_fields']
     ok=np.flatnonzero(x['state']==2);start=int(ok[0]) if len(ok) else len(x)
+    out['nominal_period_ms']=1000/(20 if meta['dataset']=='V1_01_easy' else 30)
+    out['track_calls_over_nominal_period_after_init']=int(np.sum(x['track_ms'][start:]>out['nominal_period_ms']))
     out['first_ok_index']=start;out['non_ok_after_initialization']=int(np.sum(x['state'][start:]!=2));out['ok_frames']=len(ok)
+    bad=np.flatnonzero((x['state']!=2)&(x['index']>=start))
+    chunks=np.split(bad,np.flatnonzero(np.diff(bad)>1)+1) if len(bad) else []
+    out['non_ok_ranges_inclusive']=[[int(c[0]),int(c[-1])] for c in chunks]
     out['tracking_pass']=out['complete'] and bool(len(ok)) and out['non_ok_after_initialization']==0
     out['states']={str(int(k)):int(v) for k,v in zip(*np.unique(x['state'],return_counts=True))}
     for label,subset in [('all',x),('after_initialization',x[start:]),('tail25',x[x['index']>=meta['expected_frames']-meta['expected_frames']//4])]:
@@ -74,11 +83,15 @@ def main():
     groups={}
     for mode in sorted({r['mode'] for r in results}):
         rr=[r for r in results if r['mode']==mode];g={'runs':len(rr),'tracking_pass_runs':sum(r.get('tracking_pass',False) for r in rr)}
+        g['all_runs_tracking_pass']=bool(rr) and all(r.get('tracking_pass',False) for r in rr)
+        g['timing_includes_failed_runs']=not g['all_runs_tracking_pass']
         for key in ['mean','p50','p95','p99']:
             g['median_run_track_'+key]=float(np.median([r['after_initialization']['track_ms'][key] for r in rr if r.get('after_initialization',{}).get('track_ms')]))
         g['median_run_tail_p95']=float(np.median([r['tail25']['track_ms']['p95'] for r in rr if r.get('tail25',{}).get('track_ms')]))
         eligible=[r for r in rr if r.get('accuracy_eligible')];g['valid_accuracy_runs']=len(eligible)
         if eligible:g['median_valid_ate_rmse_m']=float(np.median([r['accuracy']['ate_rmse_m'] for r in eligible]))
+        for key in ['rpe_translation_rmse_m','rpe_rotation_rmse_deg']:
+            if eligible:g['median_valid_'+key]=float(np.median([r['accuracy'][key] for r in eligible]))
         groups[mode]=g
     out={'runs':results,'groups':groups,'scope':'host native Track API, decoding excluded, no frame drop, no loop closure; failed runs retained'}
     (a.matrix/'analysis.json').write_text(json.dumps(out,indent=2));print(json.dumps(groups,indent=2))

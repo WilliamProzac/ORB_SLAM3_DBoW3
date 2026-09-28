@@ -1,0 +1,190 @@
+{
+  "euroc_formal": {
+    "groups": {
+      "baseline": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 27.520669832020058,
+        "median_run_track_p50": 26.708898,
+        "median_run_track_p95": 36.0999116,
+        "median_run_track_p99": 54.53163183999996,
+        "median_run_tail_p95": 38.724834399999985,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 0.03278798544662983,
+        "median_valid_rpe_translation_rmse_m": 0.04376393031199328,
+        "median_valid_rpe_rotation_rmse_deg": 0.48669589017098486
+      },
+      "mih32": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 33.08303788201645,
+        "median_run_track_p50": 32.542467,
+        "median_run_track_p95": 44.889440199999996,
+        "median_run_track_p99": 58.97360696,
+        "median_run_tail_p95": 49.54772339999999,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 0.032681389683689784,
+        "median_valid_rpe_translation_rmse_m": 0.04532044514021883,
+        "median_valid_rpe_rotation_rmse_deg": 0.507334362586417
+      },
+      "mih_ots": {
+        "runs": 3,
+        "tracking_pass_runs": 2,
+        "all_runs_tracking_pass": false,
+        "timing_includes_failed_runs": true,
+        "median_run_track_mean": 26.342850753218887,
+        "median_run_track_p50": 24.960397,
+        "median_run_track_p95": 38.19559559999996,
+        "median_run_track_p99": 54.77399175,
+        "median_run_tail_p95": 42.8475651,
+        "valid_accuracy_runs": 2,
+        "median_valid_ate_rmse_m": 0.033376293209066946,
+        "median_valid_rpe_translation_rmse_m": 0.04448608014947967,
+        "median_valid_rpe_rotation_rmse_deg": 0.5093023136101951
+      }
+    },
+    "comparisons": {
+      "mih32": {
+        "both_have_three_complete_loss_free_runs": true,
+        "percent_change_candidate_vs_control": {
+          "median_run_track_mean": 20.211601258064672,
+          "median_run_track_p95": 24.347784275460647,
+          "median_run_track_p99": 8.1456853024922,
+          "median_run_tail_p95": 27.948186655124886
+        },
+        "interpretation": "Negative timing change is faster; failed-run ratios are descriptive only."
+      },
+      "mih_ots": {
+        "both_have_three_complete_loss_free_runs": false,
+        "percent_change_candidate_vs_control": {
+          "median_run_track_mean": -4.27976167001135,
+          "median_run_track_p95": 5.805233052149528,
+          "median_run_track_p99": 0.4444391297717676,
+          "median_run_tail_p95": 10.646219057814776
+        },
+        "interpretation": "Negative timing change is faster; failed-run ratios are descriptive only."
+      }
+    }
+  },
+  "euroc_default": {
+    "groups": {
+      "baseline": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 27.261873936002864,
+        "median_run_track_p50": 26.377388,
+        "median_run_track_p95": 35.79057439999998,
+        "median_run_track_p99": 57.39378,
+        "median_run_tail_p95": 39.231861949999995,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 0.03303938678144062,
+        "median_valid_rpe_translation_rmse_m": 0.043704454882818856,
+        "median_valid_rpe_rotation_rmse_deg": 0.48515566835900215
+      },
+      "mih_ots_default": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 30.814259407010013,
+        "median_run_track_p50": 27.2891335,
+        "median_run_track_p95": 52.04223125,
+        "median_run_track_p99": 70.6877369000003,
+        "median_run_tail_p95": 61.72107454999997,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 0.033241645432015576,
+        "median_valid_rpe_translation_rmse_m": 0.043965346358768725,
+        "median_valid_rpe_rotation_rmse_deg": 0.4977002316810457
+      }
+    },
+    "comparisons": {
+      "mih_ots_default": {
+        "both_have_three_complete_loss_free_runs": true,
+        "percent_change_candidate_vs_control": {
+          "median_run_track_mean": 13.030598994575215,
+          "median_run_track_p95": 45.40764467306238,
+          "median_run_track_p99": 23.162713625065834,
+          "median_run_tail_p95": 57.32384720526878
+        },
+        "interpretation": "Negative timing change is faster; failed-run ratios are descriptive only."
+      }
+    }
+  },
+  "tum_bgr_formal": {
+    "groups": {
+      "baseline": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 18.704528241052007,
+        "median_run_track_p50": 18.050955,
+        "median_run_track_p95": 26.418064199999996,
+        "median_run_track_p99": 37.75553603999992,
+        "median_run_tail_p95": 28.603686349999993,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 1.2557619428768496,
+        "median_valid_rpe_translation_rmse_m": 0.09731343922928988,
+        "median_valid_rpe_rotation_rmse_deg": 1.2023296029478008
+      },
+      "mih_ots": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 20.16389808186672,
+        "median_run_track_p50": 18.234496,
+        "median_run_track_p95": 31.134016599999995,
+        "median_run_track_p99": 37.79280331999998,
+        "median_run_tail_p95": 31.582755499999998,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 0.9944491247264406,
+        "median_valid_rpe_translation_rmse_m": 0.0785422316582877,
+        "median_valid_rpe_rotation_rmse_deg": 1.0422424450987964
+      },
+      "mih_ots_default": {
+        "runs": 3,
+        "tracking_pass_runs": 3,
+        "all_runs_tracking_pass": true,
+        "timing_includes_failed_runs": false,
+        "median_run_track_mean": 20.708952009887284,
+        "median_run_track_p50": 18.745075,
+        "median_run_track_p95": 32.4592002,
+        "median_run_track_p99": 41.67847511999993,
+        "median_run_tail_p95": 30.9930709,
+        "valid_accuracy_runs": 3,
+        "median_valid_ate_rmse_m": 1.2961388101575388,
+        "median_valid_rpe_translation_rmse_m": 0.08298652801252672,
+        "median_valid_rpe_rotation_rmse_deg": 1.0998464230162246
+      }
+    },
+    "comparisons": {
+      "mih_ots": {
+        "both_have_three_complete_loss_free_runs": true,
+        "percent_change_candidate_vs_control": {
+          "median_run_track_mean": 7.802227471376377,
+          "median_run_track_p95": 17.85124134871321,
+          "median_run_track_p99": 0.09870679616514888,
+          "median_run_tail_p95": 10.414983277146739
+        },
+        "interpretation": "Negative timing change is faster; failed-run ratios are descriptive only."
+      },
+      "mih_ots_default": {
+        "both_have_three_complete_loss_free_runs": true,
+        "percent_change_candidate_vs_control": {
+          "median_run_track_mean": 10.716248723322753,
+          "median_run_track_p95": 22.867443860629287,
+          "median_run_track_p99": 10.390367854515103,
+          "median_run_tail_p95": 8.353414733901964
+        },
+        "interpretation": "Negative timing change is faster; failed-run ratios are descriptive only."
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ def main():
     p.add_argument('--max-frames',type=int,default=0);p.add_argument('--tag',required=True);a=p.parse_args()
     rgbd=a.dataset=='tum_large'; settings=ROOT/'configs'/('tum800.yaml' if rgbd else 'euroc800.yaml')
     manifest=ROOT/'inputs'/(a.dataset+'.txt');n=len(manifest.read_text().splitlines());n=min(n,a.max_frames) if a.max_frames else n
-    frozen=[settings,manifest,Path(__file__),ROOT/'harness/replay.cc']
+    frozen=[settings,manifest,Path(__file__),ROOT/'harness/replay.cc',Path('/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt')]
     for mode in a.modes:frozen.extend([ROOT/'build'/('replay_'+mode),ROOT/'build'/('libgf_'+mode+'.so')])
     frozen.extend([ROOT/'upstream/Thirdparty/g2o/lib/libg2o.so',ROOT/'upstream/Thirdparty/DBoW2/lib/libDBoW2.so'])
     hashes={str(x):sha(x) for x in frozen}

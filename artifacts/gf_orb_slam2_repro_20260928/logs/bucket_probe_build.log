@@ -1,0 +1,4 @@
+In file included from /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/harness/test_bucket.cc:2:
+/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/upstream/include/Hashing.h:201:105: warning: converting to non-pointer type ‘unsigned int’ from NULL [-Wconversion-null]
+  201 |     void query(const unsigned int* pDesc, std::vector<Entry>& candidates, unsigned int nactive_tables = NULL, unsigned int nretrieved = INT_MAX);
+      |                                                                                                         ^~~~

@@ -706,3 +706,23 @@ C2.1 transaction overhead reduction, then C3 event-based controller, C4 selector
 comparison, C5 MP/statistics/cohorts and C6 formal matrix. Preserve all failures.
 Evidence: IDE artifacts/local_map_budget_20260924/c2/checks.json and runs/.
 Runtime memory/LM01.md specifies the refined synchronization contract.
+
+## GF01 upstream local-map hashing reproduction (2026-09-28)
+
+- Independent source/build/inputs are under
+  `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928`.
+  Run commands and exact upstream/local hashes are in the archived
+  `artifacts/gf_orb_slam2_repro_20260928/README.md` and `REPORT.md`.
+- Four CPU targets built; 3 accuracy evaluator tests pass; input regeneration
+  matches frozen manifests; bucket-container diagnostic verifies the current
+  unbounded storage / bounded query behavior.
+- Completed 15 EuRoC + 9 corrected-input TUM rounds, all source frames consumed.
+  One narrow-OTS EuRoC run has 68 LOST frames. Failed measurements are retained;
+  speed/robustness claims require the full configuration to pass, not just
+  selected successful runs. No stable end-to-end speed benefit was found.
+- `validation.json`, `comparison_summary.json`, per-matrix `analysis.json`,
+  `run_summary.csv`, plots and SHA256 raw indices are archived. TUM accuracy
+  only covers 24.3% of online poses because of a long ground-truth gap.
+- No ARM/ROS callback gate, GF concurrent-lifecycle sanitizer gate, full-paper
+  benchmark or combined Good Feature Matching/Good Graph gate was run.
+  GF01 passing refers to reproducible evaluation delivery only.

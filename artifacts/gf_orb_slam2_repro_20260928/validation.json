@@ -1,0 +1,20 @@
+{
+  "formal_rounds": 24,
+  "processed_formal_frames": 89193,
+  "complete_input_runs": 24,
+  "no_tracking_loss_runs": 23,
+  "accuracy_unit_tests_passed": 3,
+  "bucket_container_diagnostic": {
+    "configured_MAX_BUCKET_SIZE": 10,
+    "inserted": 25,
+    "retrieved_with_limit_100": 25,
+    "retrieved_with_limit_10": 10
+  },
+  "upstream_clean": true,
+  "frozen_files_recoverable": true,
+  "invalidated_tum_input_rounds_complete": 3,
+  "invalidated_tum_input_rounds_interrupted": 1,
+  "production_or_board_modified": false,
+  "paper_full_benchmark_reproduced": false,
+  "stable_end_to_end_acceleration_demonstrated": false
+}

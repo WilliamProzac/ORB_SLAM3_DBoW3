@@ -1,0 +1,9 @@
+-- BUILD TYPE:Release
+-- BUILD TYPE:Release
+-- Compiling on Unix
+-- Found OpenMP_C: -fopenmp  
+-- Found OpenMP_CXX: -fopenmp  
+-- Found OpenMP: TRUE   
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/build

@@ -1,23 +1,61 @@
-# LM01 current handoff — 2026-09-24
+# GF01 current handoff — 2026-09-28
 
-Active work: implement approved active local-map plan in runtime outer/core at
-`/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle`.
-This IDE checkout holds evidence/docs; its XFeat core is not the board baseline.
-C0 snapshots: IDE 4aabed58, core d80009e9, outer 3d38e37 (+ eb05fe4 sanitizer recipe).
-Both runtime repositories are on `perf/tracking-local-map-budget`.
+GF01 host reproduction/evidence delivery is `passing`; stable acceleration and
+full-paper reproduction are **not** demonstrated. Production LM01 stays blocked
+and default off after its completed C6 matrix; do not continue the stale C1
+instructions from earlier handoffs.
 
-C1 transaction foundation passes native/ARM fixtures and the original 27 probes.
-Native short replay: 120/120 OK. Sanitizer results and precise exceptions are
-in `artifacts/local_map_budget_20260924/c1/checks.json` and runtime `memory/LM01.md`.
-The transaction is fixture-only until C2 integrates it with Tracking. No budget
-or realtime acceptance has been enabled/claimed. Valid long baseline bridge
-rounds are in progress; the first runner-error round is explicitly invalid.
+Independent directory:
+`/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928`.
+Official catkin base: `2a60498cb889965bd5b4ab05c918ab28b433e882`;
+local compatibility/isolated-hashing source commit: `39e794a`.
+IDE initial checkpoint: `9fa86c71`; final evidence commit is the history of
+`artifacts/gf_orb_slam2_repro_20260928/REPORT.md`.
 
-Continue C2–C6 per the approved plan; preserve map lifetime, original thresholds,
-feature count/queues and frozen perf20. Use frozen per-round launch helpers and
-manifest-based artifact ownership. Keep inherited full-System LSan separate.
+- Four CPU modes built using `cmake -S harness -B build`, then
+  `cmake --build build --target replay_baseline replay_mih32 replay_mih_ots replay_mih_ots_default -j3`.
+- Completed sequential interleaved matrices: `euroc_formal` (9),
+  `euroc_default` (6), `tum_bgr_formal` (9). All 24 inputs complete,
+  89,193 frames total. One EuRoC narrow-OTS run lost its last 68 frames;
+  all other formal runs remained OK after initialization.
+- EuRoC first batch baseline/OTS mean 27.52/26.34 ms, P95 36.10/38.20 ms;
+  narrow OTS fails the three-run tracking gate. Wider parameters are slower.
+  TUM baseline/8-table/24-table means 18.70/20.16/20.71 ms,
+  P95 26.42/31.13/32.46 ms. Native API timing is not board ROS latency.
+- TUM input adaptation: OpenCV PNG is BGR, so `Camera.RGB=0`; depth factor
+  5000 for uint16 PNG. Initial `tum_formal` with RGB interpretation is
+  explicitly invalidated: 3 completed + 1 interrupted runs retained.
+- Ran `python3 -m unittest discover -s harness -p 'test_*.py' -v` (3 pass),
+  `python3 harness/prepare_inputs.py --check-existing`,
+  `python3 harness/analyze.py runs/<matrix>`, export/plot/archive tools,
+  and `bash harness/run_bucket_probe.sh` after timing finished.
+  Probe confirms the current upstream deque stores 25 entries despite
+  nominal MAX_BUCKET_SIZE=10; query limit 10 still returns 10.
+- Frozen binary/config/driver hashes audited against current or preserved
+  historical files. Source checkout is clean. Raw frames, poses and logs
+  remain local with per-file SHA256 indices in the IDE archive.
+- EuRoC uses global Sim(3); RGB-D uses SE(3). TUM GT covers only 1227/5057
+  poses with a 129.865 s gap; metre-scale ATE is not full-sequence accuracy
+  acceptance. Read the report before using any aggregate.
 
-Prior handoff follows unchanged below.
+Touched: only GF reproduction source checkout, independent harness/configs,
+`artifacts/gf_orb_slam2_repro_20260928/`, and these evaluation docs.
+No production ORB-SLAM3 edit, deployment, board process or board-file cleanup.
+No map files generated.
+
+Not run: 11-sequence/10-repeat EuRoC or NewCollege 43-minute loop SLAM;
+combined Good Feature Matching/Good Graph; ARM deployment; GF sanitizer /
+concurrency certification. Current published source is not a confirmed 2019
+paper revision. Hardware, libraries, timing boundary and bucket semantics
+limit claims of exact paper reproduction.
+
+TODO for a separate follow-up, if authorized: identify the paper revision and
+resolve bounded-bucket/refresh semantics before attributing a performance gap
+to the algorithm; profile query/maintenance/postprocessing costs separately.
+For production LM01, snapshot/commit cost and nonbinding MP limits remain the
+measured issues. Do not port GF solely on the paper's average-latency figure.
+
+Historical handoffs follow.
 
 # Session Handoff
 

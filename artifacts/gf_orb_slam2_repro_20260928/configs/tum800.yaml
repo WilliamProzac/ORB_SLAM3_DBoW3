@@ -37,7 +37,7 @@ Camera.k3: 0.917205
 Camera.fps: 30.0
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
-Camera.RGB: 1
+Camera.RGB: 0  # cv::imread returns BGR; ROS config used RGB
 
 # IR projector baseline times fx (aprox.)
 Camera.bf: 40.0

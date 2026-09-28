@@ -1,0 +1,272 @@
+[
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/console.log",
+    "bytes": 366575,
+    "sha256": "a27f22c399654d5a2ba35bee77d5dd03c21bbe78b5b020b93b2204dd8498e51a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/frames.csv",
+    "bytes": 298829,
+    "sha256": "c84393defd8b7d7bc49b727a5bba8f7fd024772f765831194328b3ee5fa30176"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/keyframes.txt",
+    "bytes": 14550,
+    "sha256": "ca2957010859ba787d9a769eead62c3aa94e3e860bccb661c2857cc98215080d"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/online.txt",
+    "bytes": 301893,
+    "sha256": "76ba097091745dad59e6d694aebcb91159ca9f54786acf6f5e24ba0fc5220a5a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/resources.json",
+    "bytes": 12359,
+    "sha256": "3e99a8ba32e79792c8c7d871c6d77fd3d9088e1e1e29568b99302f503b5bad37"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/run.json",
+    "bytes": 2398,
+    "sha256": "7b1868e09dc8a96f6fbd0457dd069d78e73067f9c6eb47f2266820269cada769"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/upstream_mapping.txt",
+    "bytes": 57784,
+    "sha256": "f0771207a33adc34841d60a89ede4a5427659874f5a11f935c07233b4da81a07"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/upstream_online.txt",
+    "bytes": 254376,
+    "sha256": "154956ab1cb78eb9d77a828beb6c0fbd74e5f2d1ac64e09aa54fd011152a99c8"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_baseline/upstream_tracking.txt",
+    "bytes": 486363,
+    "sha256": "acfaaa5c2ae1027564770b1687fddc4db1067790d328a3529ee0fe50d3b40706"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/console.log",
+    "bytes": 375627,
+    "sha256": "6caa155058b15ad19fbfb9e8b06b1e11eff15c8a849615ec0e9afd97950d1846"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/frames.csv",
+    "bytes": 332913,
+    "sha256": "892741e66e483f9224f8f7570059ac19690be20d1139118fe899cdee1711a25b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/keyframes.txt",
+    "bytes": 15183,
+    "sha256": "763271c1fc4181df0f0146fe66d29475cfb724e75a03734ff3acdeb8544ef38b"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/online.txt",
+    "bytes": 301850,
+    "sha256": "635cc1c0ebaf1d5be43c2972ce26d4fb4f7993b7e372c9a2badb4f00d5f96ef6"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/resources.json",
+    "bytes": 12369,
+    "sha256": "5503b1b8365c7bd8484faf26e329f5e6fea665681b05a08e12eba867ab024d98"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/run.json",
+    "bytes": 2420,
+    "sha256": "a07558278d3c55856a853a1ba965ab6f8fd5f3a17ba8e7b2fb98ba55c514adbd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/upstream_mapping.txt",
+    "bytes": 61855,
+    "sha256": "d9ba01875a9e1b9391293efec71a8a8bc069cef614cd0d2be346e5179baebb26"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/upstream_online.txt",
+    "bytes": 254350,
+    "sha256": "d884a8108b03ac382f515296e19ff8356963b171fade94751e230e8e559925c1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/1_mih_ots_default/upstream_tracking.txt",
+    "bytes": 484469,
+    "sha256": "4204f2d63e7ebe6d377e2b053bd678e361718ef1779384e713080805878f9dcb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/console.log",
+    "bytes": 365992,
+    "sha256": "8bcf786ad1a5f691131a5c474cf689c9e229ec133dfab2e9f11b1d0803cfebf6"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/frames.csv",
+    "bytes": 298838,
+    "sha256": "0eb03b948fa992350590e9af1a49c28a95eaaa930aad3eb0463c5be0228fb8d2"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/keyframes.txt",
+    "bytes": 14274,
+    "sha256": "55c8dc4fdc6eb9cc8b05eac3256a221242b82bef7fe2d821dde161673d550048"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/online.txt",
+    "bytes": 301956,
+    "sha256": "be4239fc468f7d074f90bb2308abc5175b0ceb60dd209fd6a78921e05e70c2f6"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/resources.json",
+    "bytes": 12363,
+    "sha256": "9e2ad5ca135fde7b62ac4b7833a16bff40c94bdb114eb066956a8b4483156c23"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/run.json",
+    "bytes": 2399,
+    "sha256": "731b9e47e64ee5b5a4e1285180ff34df5595970865ee53bdd74765cd13a754ae"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/upstream_mapping.txt",
+    "bytes": 55959,
+    "sha256": "a2b66a5accf24f2d4daaae24abbc0adc62ca110f67fbe53b455a32b3d0b83b7a"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/upstream_online.txt",
+    "bytes": 254439,
+    "sha256": "941da76d4816cb39ee3ebb8fff4884b0eff4e00808b07b5e380d34e810fb3925"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_baseline/upstream_tracking.txt",
+    "bytes": 486295,
+    "sha256": "56f16e7eae53125d2ac9d5a57d180c16fab7aa126fe204aedd4129fc0f6ae9fb"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/console.log",
+    "bytes": 375905,
+    "sha256": "1cd25343deb527546b10af660fb2e6bede27913a1207b78622955ef4af918cfd"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/frames.csv",
+    "bytes": 333547,
+    "sha256": "81e5e0614ee0d24b8c024be80bb228258ca2d5f25dbd27e59d9d3206158fd814"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/keyframes.txt",
+    "bytes": 15547,
+    "sha256": "7d07abc3d9952b10ce0b43f4af8880a8d6a534e507d0fd8b8131d7ee150c0dab"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/online.txt",
+    "bytes": 301943,
+    "sha256": "e3369a5b507cd888fdaf63a3cbc615a5ab41e19444ea2ac655b4d5869df89990"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/resources.json",
+    "bytes": 12370,
+    "sha256": "6711c133dcc9e1501c06369a240da0169cd63dbc18f67b41d5ae6c0f52956749"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/run.json",
+    "bytes": 2420,
+    "sha256": "89aaccf1281742cad7392e252ee8c9b3222ae6782a0a16790c5f906879c6f0b6"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/upstream_mapping.txt",
+    "bytes": 62575,
+    "sha256": "1747adcdf254eeb1e9c14ce89b0a0be14f4424b2cb7764e06d1d637d2b636027"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/upstream_online.txt",
+    "bytes": 254426,
+    "sha256": "147b77f6f71c56f37ef241538c024984cdf412e3ae52bfdf93b1347c704dbe40"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/2_mih_ots_default/upstream_tracking.txt",
+    "bytes": 484709,
+    "sha256": "537a197440ef99b1560859e3be8c0ca1de095a5673e46084a93599281b793c04"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/console.log",
+    "bytes": 367146,
+    "sha256": "bc2f4a36fc8145aa0343b529965bc67db35b0d34dfa8602f610a14fd256fd8c5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/frames.csv",
+    "bytes": 298275,
+    "sha256": "abdbc00767d0bb3e5f3ff9a2768c29f7e09b29edfdca6d6b97a956a0a8c4b424"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/keyframes.txt",
+    "bytes": 14550,
+    "sha256": "d70ed676a207f1527ed8978b3145c2b1568a87b1cd9b982c70aa1ca0427fbce3"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/online.txt",
+    "bytes": 301417,
+    "sha256": "aa2c031fdf5cb0b7650cf67a669c887b0e754d75a38dc754c05eae7c45bc3102"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/resources.json",
+    "bytes": 12363,
+    "sha256": "892a5aa0df4e8d4967e61cfb4c345d5c091b29b88a1581a0f20b7807bd5efcc5"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/run.json",
+    "bytes": 2399,
+    "sha256": "2c6304d5e1eaa9cb0f8387c2e43ecd221d16707d5df3a825118e18abf1520324"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/upstream_mapping.txt",
+    "bytes": 60215,
+    "sha256": "8f55ede7055fde6ff35286efc2a3a2ca3faa3dd139f8c7d855c21fe7449f3bc1"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/upstream_online.txt",
+    "bytes": 253985,
+    "sha256": "862992d665184c3be128814ee87a283916751df4cd1bb70a0fec2f54826f9495"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_baseline/upstream_tracking.txt",
+    "bytes": 485507,
+    "sha256": "99e97e2f366637e2f3106d2cc4e20da0f5ac73b43eac7d90e0b649adac3bff29"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/console.log",
+    "bytes": 379756,
+    "sha256": "42745c71b743ed525e1ed4eb2c4de3f8c2d6137c2debd4d6d02bc271b2e451b4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/frames.csv",
+    "bytes": 332057,
+    "sha256": "1bdf170848e6e1e3a38f9058e881b7ed342e50c1480ffe26e8cac622a94e093c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/keyframes.txt",
+    "bytes": 15633,
+    "sha256": "99da4bad9c846fd27e6395c2d0c73712d4d49e5ae60c7f2a44c5b10700ecf555"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/online.txt",
+    "bytes": 301820,
+    "sha256": "ac55b007c246ea27ce9fe6ec95689716fa2a96835125a86a6748b734d7779710"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/resources.json",
+    "bytes": 12367,
+    "sha256": "3254b3852af7e110096b517dcfba4e3bee6e0a291ae90f114c8df8c194dd89e4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/run.json",
+    "bytes": 2420,
+    "sha256": "cc0dc6461b9b0ebd18aab6e092a382cea77f64a6bcab3ae2a2bd5e14135a02b2"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/upstream_mapping.txt",
+    "bytes": 67616,
+    "sha256": "ce07a158e8e7893f431ef59f0965b011208257c9d178c9aa6f6e31a88c90c4f4"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/upstream_online.txt",
+    "bytes": 254320,
+    "sha256": "b7ad313c2c1a8a0cc1c37116f38806d86f1515ccc4784ea8e9e2b152f00be45c"
+  },
+  {
+    "path": "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_repro_20260928/runs/euroc_default/3_mih_ots_default/upstream_tracking.txt",
+    "bytes": 484339,
+    "sha256": "ae79eb12c0743a9a83c8747e5b9eca9cd589f6a2f42201f432f5c7242190f78c"
+  }
+]
