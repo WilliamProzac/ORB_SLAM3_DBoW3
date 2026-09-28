@@ -2,11 +2,10 @@
 
 ## Current Active Feature
 
-- Feature ID: BR01
-- Current state: passing
-- Owner/session: branch and local archive separation, 2026-09-07.
-- Source preservation, archive verification, descriptor/syntax checks and build/data routing checks passed. Final commit/status results are recorded in the archive.
-- Next feature: Continue F23 tracking-quality work on `feature/xfeat-f23`; the EuRoC/full-lawn gate remains blocked.
+- Feature ID: GF02
+- State: passing for completed evaluation delivery; repaired acceleration candidate not accepted.
+- Source `33e5064`, implementation archive `ee1c6bec`; 24 rounds / 95,628 frames, 23 loss-free, bounded-index sanitizers and final freeze audit pass.
+- Evidence: `artifacts/gf_orb_slam2_paper_20260928/REPORT.md`. Production ORB3 and board unchanged; LM01 remains blocked/default off.
 
 ## Command Log
 
@@ -595,3 +594,10 @@
 - Archived 7,626 files/links (1,585,974,243 regular-file bytes) outside Git and verified their fingerprints.
 - Kept compatibility links for existing evidence paths; see `docs/branch-layout.md`.
 - Runtime experiments imported into this branch retain historical evidence and use scoped RD IDs where present.
+
+### 2026-09-28 — GF02 paper-semantics experiment
+
+- Implemented bounded/recent MIH, descriptor migration and a separate all-descriptor-query ablation in an isolated GF01 worktree. Common index/handoff/reset synchronization and measured pose-ready boundary are shared by relevant controls.
+- Four builds, release/ASan/UBSan/LSan/TSan index fixtures, 3 accuracy tests and four smoke runs passed. Interleaved EuRoC/TUM full matrices completed 24 rounds / 95,628 frames. Integrity/source/binary/config/input-list checks passed.
+- Candidates did not improve whole-API latency. EuRoC bounded mean/P95 30.724/63.127 ms vs 26.603/35.609 baseline; TUM all-query 26.067/59.477 vs 19.824/27.550. One TUM bounded-only startup failure occurred before querying. Failure and timing-boundary caveats are preserved in the report.
+- Report distinguishes GF-specific thresholds from canonical ORB2 and explains why same-ORB2 A/B cannot measure an ORB2-to-ORB3 version effect. No production deployment, board cleanup or map generation.

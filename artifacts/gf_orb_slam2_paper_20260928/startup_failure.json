@@ -1,0 +1,291 @@
+{
+  "case": "1_paper_ots",
+  "scope": "observed startup failure, not a proven root cause",
+  "comparisons": {
+    "baseline": {
+      "processed": 5057,
+      "non_ok_indices_first_last_count": [],
+      "selected_startup_frames": [
+        {
+          "index": "0",
+          "state": "2",
+          "inliers": "0",
+          "kfs": "1",
+          "mps": "504",
+          "local_mp": "0",
+          "hash_mp": "0",
+          "track_ms": "14.768774000000001"
+        },
+        {
+          "index": "10",
+          "state": "2",
+          "inliers": "55",
+          "kfs": "4",
+          "mps": "363",
+          "local_mp": "284",
+          "hash_mp": "0",
+          "track_ms": "13.560544"
+        },
+        {
+          "index": "20",
+          "state": "2",
+          "inliers": "105",
+          "kfs": "10",
+          "mps": "655",
+          "local_mp": "667",
+          "hash_mp": "0",
+          "track_ms": "13.313171000000001"
+        },
+        {
+          "index": "25",
+          "state": "2",
+          "inliers": "90",
+          "kfs": "12",
+          "mps": "656",
+          "local_mp": "656",
+          "hash_mp": "0",
+          "track_ms": "14.386680999999999"
+        },
+        {
+          "index": "26",
+          "state": "2",
+          "inliers": "77",
+          "kfs": "12",
+          "mps": "737",
+          "local_mp": "656",
+          "hash_mp": "0",
+          "track_ms": "14.287927"
+        },
+        {
+          "index": "27",
+          "state": "2",
+          "inliers": "106",
+          "kfs": "13",
+          "mps": "692",
+          "local_mp": "692",
+          "hash_mp": "0",
+          "track_ms": "12.048997999999999"
+        },
+        {
+          "index": "28",
+          "state": "2",
+          "inliers": "87",
+          "kfs": "13",
+          "mps": "761",
+          "local_mp": "692",
+          "hash_mp": "0",
+          "track_ms": "14.019881"
+        },
+        {
+          "index": "29",
+          "state": "2",
+          "inliers": "117",
+          "kfs": "14",
+          "mps": "717",
+          "local_mp": "717",
+          "hash_mp": "0",
+          "track_ms": "16.790502"
+        }
+      ],
+      "hash_nonzero_first_29_frames": 0
+    },
+    "mih_ots": {
+      "processed": 5057,
+      "non_ok_indices_first_last_count": [],
+      "selected_startup_frames": [
+        {
+          "index": "0",
+          "state": "2",
+          "inliers": "0",
+          "kfs": "1",
+          "mps": "501",
+          "local_mp": "0",
+          "hash_mp": "0",
+          "track_ms": "16.515056000000001"
+        },
+        {
+          "index": "10",
+          "state": "2",
+          "inliers": "69",
+          "kfs": "5",
+          "mps": "323",
+          "local_mp": "323",
+          "hash_mp": "0",
+          "track_ms": "11.771993999999999"
+        },
+        {
+          "index": "20",
+          "state": "2",
+          "inliers": "59",
+          "kfs": "7",
+          "mps": "475",
+          "local_mp": "401",
+          "hash_mp": "0",
+          "track_ms": "16.789667999999999"
+        },
+        {
+          "index": "25",
+          "state": "2",
+          "inliers": "85",
+          "kfs": "9",
+          "mps": "553",
+          "local_mp": "553",
+          "hash_mp": "0",
+          "track_ms": "11.674009"
+        },
+        {
+          "index": "26",
+          "state": "2",
+          "inliers": "53",
+          "kfs": "9",
+          "mps": "641",
+          "local_mp": "553",
+          "hash_mp": "0",
+          "track_ms": "12.472911"
+        },
+        {
+          "index": "27",
+          "state": "2",
+          "inliers": "94",
+          "kfs": "10",
+          "mps": "544",
+          "local_mp": "544",
+          "hash_mp": "0",
+          "track_ms": "11.097198000000001"
+        },
+        {
+          "index": "28",
+          "state": "2",
+          "inliers": "70",
+          "kfs": "10",
+          "mps": "544",
+          "local_mp": "544",
+          "hash_mp": "0",
+          "track_ms": "12.225676999999999"
+        },
+        {
+          "index": "29",
+          "state": "2",
+          "inliers": "62",
+          "kfs": "10",
+          "mps": "544",
+          "local_mp": "544",
+          "hash_mp": "0",
+          "track_ms": "10.251013"
+        }
+      ],
+      "hash_nonzero_first_29_frames": 0,
+      "index_diagnostics": {
+        "entries": 6262848,
+        "max_bucket": 11703,
+        "indexed_points": 0,
+        "insertions": 3354864,
+        "refreshes": 0,
+        "evictions": 0,
+        "migrations": 0,
+        "queries": 1095375
+      }
+    },
+    "paper_ots": {
+      "processed": 5057,
+      "non_ok_indices_first_last_count": [
+        28,
+        5056,
+        5029
+      ],
+      "selected_startup_frames": [
+        {
+          "index": "0",
+          "state": "2",
+          "inliers": "0",
+          "kfs": "1",
+          "mps": "501",
+          "local_mp": "0",
+          "hash_mp": "0",
+          "track_ms": "17.816445000000002"
+        },
+        {
+          "index": "10",
+          "state": "2",
+          "inliers": "56",
+          "kfs": "4",
+          "mps": "363",
+          "local_mp": "286",
+          "hash_mp": "0",
+          "track_ms": "22.368507000000001"
+        },
+        {
+          "index": "20",
+          "state": "2",
+          "inliers": "38",
+          "kfs": "6",
+          "mps": "370",
+          "local_mp": "370",
+          "hash_mp": "0",
+          "track_ms": "11.622991000000001"
+        },
+        {
+          "index": "25",
+          "state": "2",
+          "inliers": "54",
+          "kfs": "7",
+          "mps": "360",
+          "local_mp": "360",
+          "hash_mp": "0",
+          "track_ms": "12.563533"
+        },
+        {
+          "index": "26",
+          "state": "2",
+          "inliers": "40",
+          "kfs": "7",
+          "mps": "360",
+          "local_mp": "360",
+          "hash_mp": "0",
+          "track_ms": "11.910664000000001"
+        },
+        {
+          "index": "27",
+          "state": "2",
+          "inliers": "31",
+          "kfs": "7",
+          "mps": "360",
+          "local_mp": "360",
+          "hash_mp": "0",
+          "track_ms": "10.516648"
+        },
+        {
+          "index": "28",
+          "state": "3",
+          "inliers": "24",
+          "kfs": "7",
+          "mps": "360",
+          "local_mp": "360",
+          "hash_mp": "0",
+          "track_ms": "10.657586"
+        },
+        {
+          "index": "29",
+          "state": "3",
+          "inliers": "0",
+          "kfs": "7",
+          "mps": "360",
+          "local_mp": "0",
+          "hash_mp": "0",
+          "track_ms": "12.011583999999999"
+        }
+      ],
+      "hash_nonzero_first_29_frames": 0,
+      "index_diagnostics": {
+        "entries": 22245,
+        "max_bucket": 10,
+        "indexed_points": 818,
+        "insertions": 1870,
+        "refreshes": 1052,
+        "evictions": 6321,
+        "migrations": 1550,
+        "queries": 0
+      }
+    }
+  }
+}

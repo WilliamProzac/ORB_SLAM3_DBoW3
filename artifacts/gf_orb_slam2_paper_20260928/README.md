@@ -18,11 +18,15 @@ python3 harness/run_matrix.py --dataset tum_large --repeats 3 --tag tum_paper
 python3 harness/analyze.py runs/euroc_paper
 python3 harness/analyze.py runs/tum_paper
 python3 harness/export_summary.py runs/euroc_paper runs/tum_paper
+python3 harness/audit_freeze.py
+python3 harness/report_tables.py runs/euroc_paper runs/tum_paper
 python3 harness/plot_results.py runs/euroc_paper
 python3 harness/plot_results.py runs/tum_paper
+python3 harness/plot_boundary.py runs/euroc_paper
+python3 harness/plot_boundary.py runs/tum_paper
 ```
 
-Matrix tags must be new directories; existing results are never overwritten. Run SLAM processes sequentially and finish compilation/sanitizers before timing. Inputs remain on the host and no maps are saved. Main vocabulary is `/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt`. `inputs/` contains absolute local dataset filenames. `ORB_Data` is a read-only-use symlink to GF01's frozen official pose/config checkout. The host dependencies match GF01 (Ubuntu 20.04/GCC 9/OpenCV 4.2/Eigen/Pangolin/Armadillo/Boost).
+Matrix tags must be new directories; existing results are never overwritten. Run SLAM processes sequentially and finish compilation/sanitizers before timing. Inputs remain on the host and no maps are saved. Main vocabulary is `/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt`. `inputs/` contains absolute local dataset filenames. `ORB_Data` is a read-only-use symlink to GF01's frozen official pose/config checkout. The worktree shares the Git object database with GF01; keep the GF01 checkout. The archived full upstream.patch also reconstructs these changes from the pinned official base. The host dependencies match GF01 (Ubuntu 20.04/GCC 9/OpenCV 4.2/Eigen/Pangolin/Armadillo/Boost).
 
 `baseline` is the GF fork with hashing disabled, not canonical ORB-SLAM2. `mih_ots` is the previous unbounded/no-refresh policy plus the same index/handoff synchronization fixes as the candidates. `paper_ots` bounds buckets at 10 and refreshes revisited points, retaining unmatched-descriptor queries. `paper_all` additionally queries all current-frame descriptors. All hashed variants retain 32 index tables, at most 8 queried tables, target logDet 80, Combined covisibility intersection and the existing trigger/time budget. Loop closure, GFM, Good Graph, GPU and external priors are disabled in every mode.
 

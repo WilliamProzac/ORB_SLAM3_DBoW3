@@ -9,7 +9,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('destination',type=Path);a=p.parse_args();dest=a.destination.resolve()
     assert dest!=ROOT and ROOT not in dest.parents
     dest.mkdir(parents=True,exist_ok=True)
-    for name in ['README.md','DESIGN.md','upstream.patch','paper_delta.patch','source_manifest.json','build_manifest.json','freeze_audit.json','comparison_summary.json','run_summary.csv']:
+    for name in ['README.md','DESIGN.md','upstream.patch','paper_delta.patch','source_manifest.json','source_manifest_initial.json','gf01_preservation.json','build_manifest.json','freeze_audit.json','comparison_summary.json','run_summary.csv','startup_failure.json']:
         shutil.copy2(ROOT/name,dest/name)
     for folder in ['harness','configs']:
         (dest/folder).mkdir(exist_ok=True)
@@ -21,11 +21,11 @@ def main():
         matrix=ROOT/'runs'/tag;target=dest/tag;target.mkdir(exist_ok=True)
         assert len(list(matrix.glob('*/run.json')))==12
         assert len(json.loads((matrix/'analysis.json').read_text())['runs'])==12
-        for name in ['analysis.json','frozen.json','comparison.png','comparison.pdf']:
+        for name in ['analysis.json','frozen.json','tables.md','comparison.png','comparison.pdf','timing_boundary.png','timing_boundary.pdf']:
             shutil.copy2(matrix/name,target/name)
         (target/'raw_index.json').write_text(json.dumps([record(x) for x in sorted(matrix.glob('*/*')) if x.is_file()],indent=2)+'\n')
     (dest/'logs').mkdir(exist_ok=True)
-    for name in ['configure.log','index_asan.log','index_tsan.log','index_sanitizers_build.log','index_release.log','accuracy_tests.log','smoke.log','euroc_paper.log','tum_paper.log']:
+    for name in ['configure.log','index_asan.log','index_tsan.log','index_sanitizers_build.log','index_release.log','accuracy_tests.log','smoke.log','euroc_paper.log','tum_paper.log','freeze_audit.log','linked_libraries.log','euroc_analysis.log','tum_analysis.log','export.log']:
         shutil.copy2(ROOT/'logs'/name,dest/'logs'/name)
     (dest/'build_log_index.json').write_text(json.dumps([record(x) for x in sorted((ROOT/'logs').glob('build*.log'))],indent=2)+'\n')
     (dest/'smoke_index.json').write_text(json.dumps([record(x) for x in sorted((ROOT/'runs/smoke').glob('*/*')) if x.is_file()],indent=2)+'\n')

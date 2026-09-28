@@ -729,5 +729,11 @@ Runtime memory/LM01.md specifies the refined synchronization contract.
 
 ## GF02: paper-described MIH policy experiment
 
-Isolated runtime root: `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928`.
-See `artifacts/gf_orb_slam2_paper_20260928/README.md` for exact CMake, sanitizer, replay and analysis commands, and `DESIGN.md` for controls and measurement boundaries. Source commit `33e5064` is built in four modes; release and ASan/UBSan/LSan/TSan index fixtures and four 400-frame smoke runs pass. The short input does not trigger hash queries; full replay is required. Formal matrices are `euroc_paper` and `tum_paper`, 12 rounds each. Full-SLAM sanitizer safety, exact 2019-paper reconstruction, ARM speed and ROS latency are outside this verification. Do not mark speed acceptance merely because bucket capacity or tests pass.
+Independent root: `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_paper_20260928`; source `33e5064`, GF01 parent `39e794a`. Exact commands are archived in `artifacts/gf_orb_slam2_paper_20260928/README.md`.
+
+- Four CPU modes built; release plus focused ASan/UBSan/LSan and TSan fixtures passed for capacity/refresh/eviction/migration/partial membership/concurrent query/reset. These fixtures do not certify the full System/MapPoint lifecycle. Three accuracy-tool tests passed.
+- Four 400-frame smoke runs passed, but did not yet activate querying. Formal EuRoC and TUM matrices each completed 12 rounds, 95,628 input frames in total. All records are contiguous/finite, timestamps increase, and frozen source/binary/config/driver/input-list hashes match.
+- 23/24 rounds remained OK after initialization. TUM `1_paper_ots` lost from index 28 through 5056, with zero hash queries throughout; its fast LOST frames are retained and excluded from acceleration claims.
+- EuRoC baseline / bounded buckets / bounded+all-descriptor API P95: 35.609 / 63.127 / 64.263 ms. TUM: 27.550 / 52.368 / 59.477 ms; bounded-only has a failed repeat. Production promotion fails. GF02 `passing` means the implementation/evaluation/evidence task is delivered, not performance or full-paper acceptance.
+- Report, complete per-run JSON/CSV, raw-file SHA256 indices, plots, patches and provenance are in `artifacts/gf_orb_slam2_paper_20260928`. `harness/audit_freeze.py` reproduces the final integrity audit.
+- Not executed: full SLAM sanitizers, ARM/ROS timing, loop closure, map merge/save/reload, long-duration NewCollege or all EuRoC sequences. TUM GT covers only 1227/5057 poses. Production ORB3/LM01 and board files are unchanged.
