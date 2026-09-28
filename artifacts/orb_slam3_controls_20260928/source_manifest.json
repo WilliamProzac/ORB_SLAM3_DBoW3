@@ -261,7 +261,7 @@
       "Thirdparty/Sophus/py/sophus/so3_codegen.py": "3af4621685f29b5a3d49113246fe3578bf1b2b861bccf4f729aaef9b2854abd0"
     },
     "delivery_archive_match": null,
-    "adapter": "friend class ControlsAccess in System.h; no algorithm edits"
+    "adapter": "friend class ControlsAccess in System.h; one-line mbActiveLC guard in LoopClosing::Run; no Tracking/LocalMapping/matcher/optimizer edits"
   },
   "delivered": {
     "repository": "/home/ywl/Project/RDK_X5_orb_slam/debug_branches/rgbd_memory_lifecycle/core",
@@ -577,6 +577,6 @@
       "files": 69,
       "mismatches": []
     },
-    "adapter": "friend class ControlsAccess in System.h; no algorithm edits"
+    "adapter": "friend class ControlsAccess in System.h; one-line mbActiveLC guard in LoopClosing::Run; no Tracking/LocalMapping/matcher/optimizer edits"
   }
 }

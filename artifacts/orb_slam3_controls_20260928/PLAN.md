@@ -8,7 +8,7 @@ IDE 起点 `fa8395a5` 工作区干净，不存在需先保存的源码改动。
 隔离目录 `/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928`。
 由 Git 对象导出源码，与交付归档 src/include 逐文件比对；独立完整重建。
 统一 GCC、Release -O3 -march=native、OpenCV 4.2、原生 CPU API 驱动。
-官方算法保持原样；通过仅授予诊断访问权限的 friend 声明记录 Frame/Atlas，
+官方跟踪/建图算法保持原样；通过诊断 friend 声明记录 Frame/Atlas，
 官方构建脚本 OpenCV 4.4 下限以独立 CMake 适配现有 4.2，记录此构建差异。
 
 每组每数据仅一轮：official800、delivered800、delivered700，另跑 GF03
@@ -30,3 +30,12 @@ TUM GT 仅覆盖约24.3%，保留精度结论边界。单轮不声称统计显�
 GF03 8组合旧结果保留，增加相对官方 baseline 的参考表；桥接有明显漂移
 则明确旧表为历史参考，不能当同批严格对照。不覆写旧实验或旧 baseline。
 交付源/二进制、工具、机器可读结果、报告及 Git 提交作为最终证据。
+
+短测修订：原样 `loopClosing=0` 在两版中均触发 LoopClosing::Run 段错误。
+NewDetectCommonRegions 提前返回，mpCurrentKF 未赋值，却被复制到
+mpLastCurrentKF 后解引用。两份隔离源码统一将外层条件改为
+`mbActiveLC && CheckNewKeyFrames()`，保留 reset/finish 处理。
+仅关闭回环的分支受到影响，未修改 Tracking/LocalMapping/优化/匹配。
+完整补丁见 loop_off_guard.patch；初始崩溃和未复现的 GDB 诊断均保留。
+因此测试 baseline 的严格名称为「官方 ORB-SLAM3 + 关闭回环基准适配」，
+不宣称是未经任何源码适配的官方完整系统测试。

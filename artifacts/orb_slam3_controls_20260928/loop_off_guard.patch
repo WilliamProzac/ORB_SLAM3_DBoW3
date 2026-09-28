@@ -1,0 +1,22 @@
+--- official/src/LoopClosing.cc
++++ official/src/LoopClosing.cc
+@@ -98,7 +98,7 @@
+         //----------------------------
+ 
+ 
+-        if(CheckNewKeyFrames())
++        if(mbActiveLC && CheckNewKeyFrames())
+         {
+             if(mpLastCurrentKF)
+             {
+--- delivered/src/LoopClosing.cc
++++ delivered/src/LoopClosing.cc
+@@ -97,7 +97,7 @@
+     // NEW LOOP AND MERGE DETECTION ALGORITHM
+     //----------------------------
+ 
+-    if (CheckNewKeyFrames()) {
++    if (mbActiveLC && CheckNewKeyFrames()) {
+       if (mpLastCurrentKF) {
+         mpLastCurrentKF->mvpLoopCandKFs.clear();
+         mpLastCurrentKF->mvpMergeCandKFs.clear();
