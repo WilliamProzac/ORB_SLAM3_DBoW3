@@ -1,0 +1,4 @@
+# Preserve tested configuration and generated build evidence byte for byte.
+configs/*.yaml -text -whitespace
+fullsystem/*.yaml -text -whitespace
+build_provenance/*/CMakeCache.txt -text -whitespace

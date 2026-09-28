@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/build/replay_baseline",
+    "/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/configs/tum800.yaml",
+    "rgbd",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/tum_large.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge",
+    "0"
+  ],
+  "mode": "gf_bridge",
+  "dataset": "tum_large",
+  "phase": "formal",
+  "repeat": 1,
+  "expected_frames": 5057,
+  "hashes": {
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/build/replay_baseline": "745546878feee480f6daf60f62423e70734fe85612841e9c9a2b60b3bc635373",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/configs/tum800.yaml": "8b3951a6605d8636783428e4d45297e937ff5cc34586a4f65892595520c8b8a5",
+    "/home/ywl/Project/ORB_SLAM3_DBoW3/Vocabulary/ORBvoc.txt": "f8dd027f7a6cb88129821341194d7f2c75b77b3394257ddd0d2229863d1a3570",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/tum_large.txt": "1928bbecf7a0611363dffe467f9c7ba85f36405cd2f510b36d2752fadc9f9859"
+  },
+  "start_utc": "2026-09-28T09:30:26Z",
+  "thread_env": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "loop_closure": false,
+  "rate": 1,
+  "drop_policy": "none"
+}

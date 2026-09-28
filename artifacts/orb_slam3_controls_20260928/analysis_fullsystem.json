@@ -1,0 +1,929 @@
+{
+  "scope": "RGB-D loop-on, one pass; frozen original core libraries, shutdown waits for GBA",
+  "frozen_main_files_pass": true,
+  "runs": [
+    {
+      "mode": "delivered700",
+      "dataset": "tum_large",
+      "exit_code": 7,
+      "elapsed_s": 240.2229618888814,
+      "failure_reason": null,
+      "expected_frames": 5057,
+      "run": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700",
+      "processed": 5057,
+      "schema": [
+        "index",
+        "timestamp",
+        "state",
+        "track_ms",
+        "input_lateness_ms",
+        "features",
+        "valid_associations",
+        "map_id",
+        "maps",
+        "kfs",
+        "mps"
+      ],
+      "finite": true,
+      "indices_contiguous": true,
+      "timestamps_increasing": true,
+      "completion_marker": false,
+      "complete": false,
+      "first_ok_index": 0,
+      "non_ok_after_initialization": 0,
+      "states": {
+        "2": 5057
+      },
+      "non_ok_ranges": [],
+      "map_ids": [
+        0
+      ],
+      "max_maps": 1,
+      "tracking_pass": false,
+      "period_ms": 33.333333333333336,
+      "all": {
+        "track_ms": {
+          "mean": 8.999304406169665,
+          "p50": 8.631038,
+          "p95": 12.3712708,
+          "p99": 14.717036479999976,
+          "max": 22.558781
+        },
+        "input_lateness_ms": {
+          "mean": 13.939222366422777,
+          "p50": 14.034233,
+          "p95": 17.9433066,
+          "p99": 19.44852232,
+          "max": 21.475813
+        },
+        "features": {
+          "mean": 702.3624678663239,
+          "p50": 703.0,
+          "p95": 706.0,
+          "p99": 707.0,
+          "max": 710.0
+        },
+        "valid_associations": {
+          "mean": 188.6076725331224,
+          "p50": 189.0,
+          "p95": 288.0,
+          "p99": 370.3199999999988,
+          "max": 520.0
+        },
+        "kfs": {
+          "mean": 578.9118054182321,
+          "p50": 584.0,
+          "p95": 1075.0,
+          "p99": 1087.0,
+          "max": 1088.0
+        },
+        "mps": {
+          "mean": 11397.305517105004,
+          "p50": 11501.0,
+          "p95": 20687.6,
+          "p99": 20960.76,
+          "max": 21033.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "after_initialization": {
+        "track_ms": {
+          "mean": 8.999304406169665,
+          "p50": 8.631038,
+          "p95": 12.3712708,
+          "p99": 14.717036479999976,
+          "max": 22.558781
+        },
+        "input_lateness_ms": {
+          "mean": 13.939222366422777,
+          "p50": 14.034233,
+          "p95": 17.9433066,
+          "p99": 19.44852232,
+          "max": 21.475813
+        },
+        "features": {
+          "mean": 702.3624678663239,
+          "p50": 703.0,
+          "p95": 706.0,
+          "p99": 707.0,
+          "max": 710.0
+        },
+        "valid_associations": {
+          "mean": 188.6076725331224,
+          "p50": 189.0,
+          "p95": 288.0,
+          "p99": 370.3199999999988,
+          "max": 520.0
+        },
+        "kfs": {
+          "mean": 578.9118054182321,
+          "p50": 584.0,
+          "p95": 1075.0,
+          "p99": 1087.0,
+          "max": 1088.0
+        },
+        "mps": {
+          "mean": 11397.305517105004,
+          "p50": 11501.0,
+          "p95": 20687.6,
+          "p99": 20960.76,
+          "max": 21033.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "ok_only": {
+        "track_ms": {
+          "mean": 8.999304406169665,
+          "p50": 8.631038,
+          "p95": 12.3712708,
+          "p99": 14.717036479999976,
+          "max": 22.558781
+        },
+        "input_lateness_ms": {
+          "mean": 13.939222366422777,
+          "p50": 14.034233,
+          "p95": 17.9433066,
+          "p99": 19.44852232,
+          "max": 21.475813
+        },
+        "features": {
+          "mean": 702.3624678663239,
+          "p50": 703.0,
+          "p95": 706.0,
+          "p99": 707.0,
+          "max": 710.0
+        },
+        "valid_associations": {
+          "mean": 188.6076725331224,
+          "p50": 189.0,
+          "p95": 288.0,
+          "p99": 370.3199999999988,
+          "max": 520.0
+        },
+        "kfs": {
+          "mean": 578.9118054182321,
+          "p50": 584.0,
+          "p95": 1075.0,
+          "p99": 1087.0,
+          "max": 1088.0
+        },
+        "mps": {
+          "mean": 11397.305517105004,
+          "p50": 11501.0,
+          "p95": 20687.6,
+          "p99": 20960.76,
+          "max": 21033.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "tail25": {
+        "track_ms": {
+          "mean": 9.329418984177215,
+          "p50": 8.926217999999999,
+          "p95": 12.764207249999995,
+          "p99": 15.611741689999988,
+          "max": 22.558781
+        },
+        "input_lateness_ms": {
+          "mean": 13.769892187499998,
+          "p50": 13.716088,
+          "p95": 17.9974026,
+          "p99": 18.89942627,
+          "max": 19.735592
+        },
+        "features": {
+          "mean": 702.4715189873418,
+          "p50": 703.0,
+          "p95": 706.0,
+          "p99": 707.0,
+          "max": 709.0
+        },
+        "valid_associations": {
+          "mean": 198.00237341772151,
+          "p50": 192.0,
+          "p95": 296.0,
+          "p99": 362.0,
+          "max": 513.0
+        },
+        "kfs": {
+          "mean": 1009.3330696202531,
+          "p50": 1025.0,
+          "p95": 1087.0,
+          "p99": 1088.0,
+          "max": 1088.0
+        },
+        "mps": {
+          "mean": 19333.96914556962,
+          "p50": 19583.5,
+          "p95": 20935.949999999997,
+          "p99": 20983.0,
+          "max": 21033.0
+        },
+        "over_period": 0,
+        "frames": 1264
+      },
+      "input_lateness_end_ms": 8.304957,
+      "final_kfs": 1087,
+      "final_mps": 20697,
+      "resources": {
+        "rss_peak_kib": 1503104,
+        "swap_peak_kib": 0,
+        "threads_peak": 6,
+        "mean_process_cores": 1.4080772942210111
+      },
+      "accuracy": {
+        "estimated_poses": 5057,
+        "associated_poses": 1227,
+        "timestamp_tolerance_s": 0.02,
+        "alignment": "global SE3",
+        "alignment_rotation": [
+          [
+            1.0000000000000002,
+            2.314229537170309e-16,
+            -4.85722573273506e-17
+          ],
+          [
+            -2.090612839095174e-16,
+            1.0000000000000002,
+            -1.986258379993444e-16
+          ],
+          [
+            1.0408340855860843e-16,
+            2.740863092043355e-16,
+            1.0000000000000004
+          ]
+        ],
+        "alignment_translation": [
+          1.9984014443252818e-15,
+          9.992007221626409e-16,
+          -2.4424906541753444e-15
+        ],
+        "ate_rmse_m": 0.4303032945834611,
+        "ate_median_m": 0.3457044769074287,
+        "rpe_interval_s": 1.0,
+        "rpe_interval_tolerance_s": 0.02,
+        "rpe_pairs": 1130,
+        "rpe_translation_rmse_m": 0.18272980296274297,
+        "rpe_rotation_rmse_deg": 1.775809877470561,
+        "rpe_actual_interval_range_s": [
+          0.9959890842437744,
+          1.0054240226745605
+        ],
+        "scale": 1.0,
+        "truth_path": "/home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/groundtruth.txt",
+        "truth_sha256": "38001ca39d7e3d130899d231fc99acabd3b165d819f2ae3afc1226b576ad2973",
+        "truth_max_gap_s": 129.8650999069214,
+        "associated_fraction_of_output": 0.24263397271109352
+      },
+      "accuracy_eligible": false,
+      "delivery_workers_confirmed": true,
+      "delivery_l4_confirmed": true,
+      "loop_closure": true,
+      "loop_events": {
+        "detected": 1,
+        "merge_detected": 0,
+        "gba_start_log_messages": 0,
+        "gba_finished_log_messages": 0
+      },
+      "gba_log_visibility": "System sets VERBOSITY_QUIET; missing NORMAL-level GBA messages do not imply no GBA activity.",
+      "all_input_rows_processed": true,
+      "diagnostic_exit_meaning": "60 s shutdown wait timed out; LocalMapping / LoopClosing / running-GBA are checked jointly. Per-thread terminal states were not recorded.",
+      "loop_log": [
+        "*Loop detected",
+        "Shutdown",
+        "Shutdown: Waiting for threads...",
+        "Shutdown: All threads finished.",
+        "Shutdown: Waiting 100ms... done.",
+        "Shutdown: Checking save file... no save file configured."
+      ],
+      "common_clean_prefix": {
+        "start": 0,
+        "end_exclusive": 5057,
+        "track_ms": {
+          "mean": 8.999304406169665,
+          "p50": 8.631038,
+          "p95": 12.3712708,
+          "p99": 14.717036479999976,
+          "max": 22.558781
+        }
+      }
+    },
+    {
+      "mode": "delivered800",
+      "dataset": "tum_large",
+      "exit_code": 7,
+      "elapsed_s": 240.2241298300214,
+      "failure_reason": null,
+      "expected_frames": 5057,
+      "run": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800",
+      "processed": 5057,
+      "schema": [
+        "index",
+        "timestamp",
+        "state",
+        "track_ms",
+        "input_lateness_ms",
+        "features",
+        "valid_associations",
+        "map_id",
+        "maps",
+        "kfs",
+        "mps"
+      ],
+      "finite": true,
+      "indices_contiguous": true,
+      "timestamps_increasing": true,
+      "completion_marker": false,
+      "complete": false,
+      "first_ok_index": 0,
+      "non_ok_after_initialization": 0,
+      "states": {
+        "2": 5057
+      },
+      "non_ok_ranges": [],
+      "map_ids": [
+        0
+      ],
+      "max_maps": 1,
+      "tracking_pass": false,
+      "period_ms": 33.333333333333336,
+      "all": {
+        "track_ms": {
+          "mean": 10.256712511370377,
+          "p50": 9.819586,
+          "p95": 14.147708,
+          "p99": 16.468971519999975,
+          "max": 22.150659
+        },
+        "input_lateness_ms": {
+          "mean": 13.489308140003951,
+          "p50": 13.79453,
+          "p95": 17.766955,
+          "p99": 19.221173199999996,
+          "max": 21.169855
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 217.32015028673126,
+          "p50": 218.0,
+          "p95": 320.0,
+          "p99": 382.4399999999996,
+          "max": 613.0
+        },
+        "kfs": {
+          "mean": 518.8617757563773,
+          "p50": 524.0,
+          "p95": 956.0,
+          "p99": 965.0,
+          "max": 966.0
+        },
+        "mps": {
+          "mean": 11467.211983389361,
+          "p50": 11509.0,
+          "p95": 20724.4,
+          "p99": 20869.0,
+          "max": 21005.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "after_initialization": {
+        "track_ms": {
+          "mean": 10.256712511370377,
+          "p50": 9.819586,
+          "p95": 14.147708,
+          "p99": 16.468971519999975,
+          "max": 22.150659
+        },
+        "input_lateness_ms": {
+          "mean": 13.489308140003951,
+          "p50": 13.79453,
+          "p95": 17.766955,
+          "p99": 19.221173199999996,
+          "max": 21.169855
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 217.32015028673126,
+          "p50": 218.0,
+          "p95": 320.0,
+          "p99": 382.4399999999996,
+          "max": 613.0
+        },
+        "kfs": {
+          "mean": 518.8617757563773,
+          "p50": 524.0,
+          "p95": 956.0,
+          "p99": 965.0,
+          "max": 966.0
+        },
+        "mps": {
+          "mean": 11467.211983389361,
+          "p50": 11509.0,
+          "p95": 20724.4,
+          "p99": 20869.0,
+          "max": 21005.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "ok_only": {
+        "track_ms": {
+          "mean": 10.256712511370377,
+          "p50": 9.819586,
+          "p95": 14.147708,
+          "p99": 16.468971519999975,
+          "max": 22.150659
+        },
+        "input_lateness_ms": {
+          "mean": 13.489308140003951,
+          "p50": 13.79453,
+          "p95": 17.766955,
+          "p99": 19.221173199999996,
+          "max": 21.169855
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 217.32015028673126,
+          "p50": 218.0,
+          "p95": 320.0,
+          "p99": 382.4399999999996,
+          "max": 613.0
+        },
+        "kfs": {
+          "mean": 518.8617757563773,
+          "p50": 524.0,
+          "p95": 956.0,
+          "p99": 965.0,
+          "max": 966.0
+        },
+        "mps": {
+          "mean": 11467.211983389361,
+          "p50": 11509.0,
+          "p95": 20724.4,
+          "p99": 20869.0,
+          "max": 21005.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "tail25": {
+        "track_ms": {
+          "mean": 10.925124119462025,
+          "p50": 10.525017,
+          "p95": 15.253156049999998,
+          "p99": 17.043467829999983,
+          "max": 22.150659
+        },
+        "input_lateness_ms": {
+          "mean": 13.184900433544303,
+          "p50": 13.399890500000001,
+          "p95": 17.7802035,
+          "p99": 18.823195369999997,
+          "max": 21.169855
+        },
+        "features": {
+          "mean": 802.2159810126582,
+          "p50": 804.0,
+          "p95": 808.0,
+          "p99": 810.0,
+          "max": 813.0
+        },
+        "valid_associations": {
+          "mean": 226.09889240506328,
+          "p50": 222.0,
+          "p95": 320.8499999999999,
+          "p99": 372.3699999999999,
+          "max": 587.0
+        },
+        "kfs": {
+          "mean": 900.4556962025316,
+          "p50": 917.5,
+          "p95": 965.0,
+          "p99": 966.0,
+          "max": 966.0
+        },
+        "mps": {
+          "mean": 19455.106012658227,
+          "p50": 19702.0,
+          "p95": 20869.0,
+          "p99": 20927.96,
+          "max": 21005.0
+        },
+        "over_period": 0,
+        "frames": 1264
+      },
+      "input_lateness_end_ms": 8.168233,
+      "final_kfs": 966,
+      "final_mps": 20730,
+      "resources": {
+        "rss_peak_kib": 1429748,
+        "swap_peak_kib": 0,
+        "threads_peak": 6,
+        "mean_process_cores": 1.4656197483018092
+      },
+      "accuracy": {
+        "estimated_poses": 5057,
+        "associated_poses": 1227,
+        "timestamp_tolerance_s": 0.02,
+        "alignment": "global SE3",
+        "alignment_rotation": [
+          [
+            0.9999999999999999,
+            5.438900198273533e-16,
+            2.706168622523819e-16
+          ],
+          [
+            -6.010003692630272e-16,
+            1.0,
+            6.817463260588852e-16
+          ],
+          [
+            -2.7755575615628914e-16,
+            -5.84601811404184e-16,
+            0.9999999999999997
+          ]
+        ],
+        "alignment_translation": [
+          -2.1094237467877974e-15,
+          -8.881784197001252e-16,
+          2.886579864025407e-15
+        ],
+        "ate_rmse_m": 0.5037027664174519,
+        "ate_median_m": 0.3541257275504471,
+        "rpe_interval_s": 1.0,
+        "rpe_interval_tolerance_s": 0.02,
+        "rpe_pairs": 1130,
+        "rpe_translation_rmse_m": 0.24034938301544903,
+        "rpe_rotation_rmse_deg": 2.238383740129936,
+        "rpe_actual_interval_range_s": [
+          0.9959890842437744,
+          1.0054240226745605
+        ],
+        "scale": 1.0,
+        "truth_path": "/home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/groundtruth.txt",
+        "truth_sha256": "38001ca39d7e3d130899d231fc99acabd3b165d819f2ae3afc1226b576ad2973",
+        "truth_max_gap_s": 129.8650999069214,
+        "associated_fraction_of_output": 0.24263397271109352
+      },
+      "accuracy_eligible": false,
+      "delivery_workers_confirmed": true,
+      "delivery_l4_confirmed": true,
+      "loop_closure": true,
+      "loop_events": {
+        "detected": 1,
+        "merge_detected": 0,
+        "gba_start_log_messages": 0,
+        "gba_finished_log_messages": 0
+      },
+      "gba_log_visibility": "System sets VERBOSITY_QUIET; missing NORMAL-level GBA messages do not imply no GBA activity.",
+      "all_input_rows_processed": true,
+      "diagnostic_exit_meaning": "60 s shutdown wait timed out; LocalMapping / LoopClosing / running-GBA are checked jointly. Per-thread terminal states were not recorded.",
+      "loop_log": [
+        "*Loop detected",
+        "Shutdown",
+        "Shutdown: Waiting for threads...",
+        "Shutdown: All threads finished.",
+        "Shutdown: Waiting 100ms... done.",
+        "Shutdown: Checking save file... no save file configured."
+      ],
+      "common_clean_prefix": {
+        "start": 0,
+        "end_exclusive": 5057,
+        "track_ms": {
+          "mean": 10.256712511370377,
+          "p50": 9.819586,
+          "p95": 14.147708,
+          "p99": 16.468971519999975,
+          "max": 22.150659
+        }
+      }
+    },
+    {
+      "mode": "official800",
+      "dataset": "tum_large",
+      "exit_code": 7,
+      "elapsed_s": 238.23278172314167,
+      "failure_reason": null,
+      "expected_frames": 5057,
+      "run": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800",
+      "processed": 5057,
+      "schema": [
+        "index",
+        "timestamp",
+        "state",
+        "track_ms",
+        "input_lateness_ms",
+        "features",
+        "valid_associations",
+        "map_id",
+        "maps",
+        "kfs",
+        "mps"
+      ],
+      "finite": true,
+      "indices_contiguous": true,
+      "timestamps_increasing": true,
+      "completion_marker": false,
+      "complete": false,
+      "first_ok_index": 0,
+      "non_ok_after_initialization": 0,
+      "states": {
+        "2": 5057
+      },
+      "non_ok_ranges": [],
+      "map_ids": [
+        0
+      ],
+      "max_maps": 1,
+      "tracking_pass": false,
+      "period_ms": 33.333333333333336,
+      "all": {
+        "track_ms": {
+          "mean": 12.780660547953332,
+          "p50": 12.316889,
+          "p95": 17.061795,
+          "p99": 19.677979479999962,
+          "max": 32.536998
+        },
+        "input_lateness_ms": {
+          "mean": 12.971242953925252,
+          "p50": 13.536258,
+          "p95": 17.358403799999998,
+          "p99": 19.10186752,
+          "max": 31.003615
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 214.1109353371564,
+          "p50": 216.0,
+          "p95": 318.0,
+          "p99": 387.3199999999988,
+          "max": 619.0
+        },
+        "kfs": {
+          "mean": 514.9952541032233,
+          "p50": 510.0,
+          "p95": 944.0,
+          "p99": 956.0,
+          "max": 956.0
+        },
+        "mps": {
+          "mean": 11512.457583547557,
+          "p50": 11549.0,
+          "p95": 21075.0,
+          "p99": 21133.0,
+          "max": 21245.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "after_initialization": {
+        "track_ms": {
+          "mean": 12.780660547953332,
+          "p50": 12.316889,
+          "p95": 17.061795,
+          "p99": 19.677979479999962,
+          "max": 32.536998
+        },
+        "input_lateness_ms": {
+          "mean": 12.971242953925252,
+          "p50": 13.536258,
+          "p95": 17.358403799999998,
+          "p99": 19.10186752,
+          "max": 31.003615
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 214.1109353371564,
+          "p50": 216.0,
+          "p95": 318.0,
+          "p99": 387.3199999999988,
+          "max": 619.0
+        },
+        "kfs": {
+          "mean": 514.9952541032233,
+          "p50": 510.0,
+          "p95": 944.0,
+          "p99": 956.0,
+          "max": 956.0
+        },
+        "mps": {
+          "mean": 11512.457583547557,
+          "p50": 11549.0,
+          "p95": 21075.0,
+          "p99": 21133.0,
+          "max": 21245.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "ok_only": {
+        "track_ms": {
+          "mean": 12.780660547953332,
+          "p50": 12.316889,
+          "p95": 17.061795,
+          "p99": 19.677979479999962,
+          "max": 32.536998
+        },
+        "input_lateness_ms": {
+          "mean": 12.971242953925252,
+          "p50": 13.536258,
+          "p95": 17.358403799999998,
+          "p99": 19.10186752,
+          "max": 31.003615
+        },
+        "features": {
+          "mean": 802.4162546964603,
+          "p50": 804.0,
+          "p95": 809.0,
+          "p99": 810.0,
+          "max": 814.0
+        },
+        "valid_associations": {
+          "mean": 214.1109353371564,
+          "p50": 216.0,
+          "p95": 318.0,
+          "p99": 387.3199999999988,
+          "max": 619.0
+        },
+        "kfs": {
+          "mean": 514.9952541032233,
+          "p50": 510.0,
+          "p95": 944.0,
+          "p99": 956.0,
+          "max": 956.0
+        },
+        "mps": {
+          "mean": 11512.457583547557,
+          "p50": 11549.0,
+          "p95": 21075.0,
+          "p99": 21133.0,
+          "max": 21245.0
+        },
+        "over_period": 0,
+        "frames": 5057
+      },
+      "tail25": {
+        "track_ms": {
+          "mean": 13.587069142405063,
+          "p50": 13.129911,
+          "p95": 18.397348399999988,
+          "p99": 21.332613589999966,
+          "max": 32.536998
+        },
+        "input_lateness_ms": {
+          "mean": 12.686200832278482,
+          "p50": 13.055239499999999,
+          "p95": 17.06807635,
+          "p99": 18.191105659999995,
+          "max": 31.003615
+        },
+        "features": {
+          "mean": 802.2159810126582,
+          "p50": 804.0,
+          "p95": 808.0,
+          "p99": 810.0,
+          "max": 813.0
+        },
+        "valid_associations": {
+          "mean": 221.58465189873417,
+          "p50": 225.0,
+          "p95": 324.0,
+          "p99": 374.7399999999998,
+          "max": 546.0
+        },
+        "kfs": {
+          "mean": 890.6479430379746,
+          "p50": 904.0,
+          "p95": 956.0,
+          "p99": 956.0,
+          "max": 956.0
+        },
+        "mps": {
+          "mean": 19625.511867088608,
+          "p50": 19934.5,
+          "p95": 21133.0,
+          "p99": 21186.0,
+          "max": 21245.0
+        },
+        "over_period": 0,
+        "frames": 1264
+      },
+      "input_lateness_end_ms": 9.069322,
+      "final_kfs": 956,
+      "final_mps": 21133,
+      "resources": {
+        "rss_peak_kib": 1396932,
+        "swap_peak_kib": 0,
+        "threads_peak": 4,
+        "mean_process_cores": 1.4131668412465235
+      },
+      "accuracy": {
+        "estimated_poses": 5057,
+        "associated_poses": 1227,
+        "timestamp_tolerance_s": 0.02,
+        "alignment": "global SE3",
+        "alignment_rotation": [
+          [
+            1.0000000000000002,
+            -3.625843115334648e-16,
+            5.551115123125783e-17
+          ],
+          [
+            2.376842212631347e-16,
+            1.0,
+            -3.0704605524789486e-16
+          ],
+          [
+            -7.632783294297951e-17,
+            3.3306690738754696e-16,
+            1.0000000000000002
+          ]
+        ],
+        "alignment_translation": [
+          7.771561172376096e-16,
+          -7.771561172376096e-16,
+          -3.3306690738754696e-15
+        ],
+        "ate_rmse_m": 0.477288521760504,
+        "ate_median_m": 0.3867295880127563,
+        "rpe_interval_s": 1.0,
+        "rpe_interval_tolerance_s": 0.02,
+        "rpe_pairs": 1130,
+        "rpe_translation_rmse_m": 0.22812576274543697,
+        "rpe_rotation_rmse_deg": 2.1270503253021094,
+        "rpe_actual_interval_range_s": [
+          0.9959890842437744,
+          1.0054240226745605
+        ],
+        "scale": 1.0,
+        "truth_path": "/home/ywl/dataset/rgbd_dataset_freiburg2_large_with_loop/groundtruth.txt",
+        "truth_sha256": "38001ca39d7e3d130899d231fc99acabd3b165d819f2ae3afc1226b576ad2973",
+        "truth_max_gap_s": 129.8650999069214,
+        "associated_fraction_of_output": 0.24263397271109352
+      },
+      "accuracy_eligible": false,
+      "delivery_workers_confirmed": false,
+      "delivery_l4_confirmed": null,
+      "loop_closure": true,
+      "loop_events": {
+        "detected": 1,
+        "merge_detected": 0,
+        "gba_start_log_messages": 0,
+        "gba_finished_log_messages": 0
+      },
+      "gba_log_visibility": "System sets VERBOSITY_QUIET; missing NORMAL-level GBA messages do not imply no GBA activity.",
+      "all_input_rows_processed": true,
+      "diagnostic_exit_meaning": "60 s shutdown wait timed out; LocalMapping / LoopClosing / running-GBA are checked jointly. Per-thread terminal states were not recorded.",
+      "loop_log": [
+        "*Loop detected",
+        "Shutdown"
+      ],
+      "common_clean_prefix": {
+        "start": 0,
+        "end_exclusive": 5057,
+        "track_ms": {
+          "mean": 12.780660547953332,
+          "p50": 12.316889,
+          "p95": 17.061795,
+          "p99": 19.677979479999962,
+          "max": 32.536998
+        }
+      }
+    }
+  ]
+}

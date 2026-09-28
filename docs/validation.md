@@ -748,3 +748,24 @@ Independent root `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_2026092
 - TUM FHG fails at index4126, remaining931 frames LOST. First failure is in upstream motion/reference tracking, with declining prior inliers. Loop-off also prevents normal keyframe database population, so recovery is not validated. Failed timing is retained and excluded from gains; partial ATE is not comparable to complete trajectories.
 - Diagnostic gap: FG/HG/FHG executables have historical replay driver d85f25dc; other modes have 2a5138f5 with input-lateness column. Incremental build did not recompile those three. File-freeze audit alone does not prove uniform compiled-source provenance. Primary tracking clocks/poses/counters exist; missing lateness remains unmeasured. See diagnostic_gaps.json, preserved source snapshots and driver_diagnostic_delta.patch.
 - TUM GT covers only24.3% of complete outputs, maxgap129.865s. Single-pass fixed order/ondemand host cannot establish repeated-run stability. No GF03 full-System sanitizer, dynamic Good Graph, complete relocalization/loop, save/reload, full benchmark suite or board/ROS gate. No maps or board files generated.
+
+## GF04: official and delivered ORB-SLAM3 controls
+
+See artifacts/orb_slam3_controls_20260928/README.md and REPORT.md. Separate GCC9.4/
+OpenCV4.2 builds from official4452a3c4 and delivered4d6df6a2; both use identical loop-off
+crash protection plus a diagnostic friend, without frontend/backend algorithm edits.
+
+- `harness/verify.py --phase smoke/formal`:8 smokes1200 frames and8 full rounds31876
+  rows pass input/schema/source/dependency checks. Official RGB-D has92 nonOK and a map
+  split; input PASS is not tracking acceptance.589 frozen files remain unchanged.
+- `harness/fullsystem.py build/smoke/formal`, `verify_fullsystem.py`,
+  `analyze_fullsystem.py`:3 loop-on RGB-D smokes450 rows;3 full rounds15171 rows, zero
+  nonOK and one loop each. All3 exit7(60s backend/GBA shutdown wait); complete shutdown FAIL.
+  GBA NORMAL-level logs are suppressed by QUIET; no final per-thread-state diagnostic.
+- `test_accuracy.py`:3 tests pass. `analyze.py`, `tables.py`, `all_results.py`, `archive.py`
+  produce JSON/CSV/plots and184 SHA-indexed compressed raw files. Matched800 loop-on
+  delivered ATE+5.5% vs official on sparse TUM truth; quality gate NOT accepted.
+- Total11 formal attempts47047 input rows. GF03 bridge change+0.44%/-5.48% P95 on EuRoC/TUM;
+  old factorial data stays historical. Single pass, host native API, PNG decode excluded.
+- Not run: ARM/ROS callback90ms target, repeats, full-System sanitizers, full-GT suite,
+  save/reload or clean GBA lifecycle. No board deployment or generated Atlas maps.

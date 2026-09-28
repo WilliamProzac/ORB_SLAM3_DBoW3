@@ -611,3 +611,18 @@
 - Final audit corrected an earlier build claim: FG/HG/FHG reused historical drivers without input-lateness diagnostics. Both driver sources and their small diagnostic diff are preserved; primary Track clocks/trajectory outputs remain present, strict driver parity is not claimed. No frozen binary was overwritten to conceal the gap.
 - Loss diagnosis also confirms loop-off skips normal keyframe database insertion; first loss and impaired recovery are separated. All module combinations execute, but this is not full-paper, dynamic-budget, relocalization or production acceptance.
 - Archived REPORT/CODE_AUDIT/DETAILS, all machine results, raw SHA256 indices, charts, patches, manifests and known diagnostic limitations. No production/board change or map files.
+
+## 2026-09-28 — GF04 official/delivered ORB-SLAM3 latency comparison
+
+Completed the requested control replacement and delivered-source comparison, one pass
+per configuration. Official4452a3c4, delivered4d6df6a2/18ba684; preserved old production
+and experimental sources. Eight main rounds plus three failure-triggered loop-on RGB-D
+rounds processed47047 input rows. Matched800 EuRoC P95 24.564→21.778ms; loop-on RGB-D
+17.062→14.148ms. Delivery700/5 further reduces time but includes configuration effects.
+
+Negative results retained: official loop-off TUM92 nonOK/map split; all3 loop-on attempts
+zero nonOK but60s backend/GBA exit wait fails; matched800 loop-on ATE+5.5% on sparse truth.
+Initial common loop-off uninitialized-KF crash documented and minimally guarded in both
+isolated sources. No production acceptance or board deployment.589-file freeze and184
+raw-file archive checks pass. Evidence artifacts/orb_slam3_controls_20260928/REPORT.md;
+checkpoints95b26786,c1c7d760,679c9fc2; final evidence commit in report history.

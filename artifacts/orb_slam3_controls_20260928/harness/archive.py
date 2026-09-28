@@ -6,7 +6,7 @@ from run import ROOT,sha
 
 def main():
     dest=Path(__file__).resolve().parents[1]
-    for name in ['analysis.json','analysis_fullsystem.json','summary.csv','DETAILS.md','frozen.json','freeze_audit.json','verification_formal.json','verification_smoke.json','verification_fullsystem.json','host.json','initial_build_sha256.json']:
+    for name in ['analysis.json','analysis_fullsystem.json','summary.csv','comparison_all.csv','DETAILS.md','frozen.json','freeze_audit.json','verification_formal.json','verification_smoke.json','verification_fullsystem.json','verification_fullsystem_smoke.json','host.json','initial_build_sha256.json']:
         shutil.copy2(ROOT/name,dest/name)
     shutil.copytree(ROOT/'figures',dest/'figures',dirs_exist_ok=True)
     index=[]

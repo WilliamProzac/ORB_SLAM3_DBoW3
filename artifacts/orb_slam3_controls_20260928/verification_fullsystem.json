@@ -1,0 +1,26 @@
+{
+  "phase": "formal",
+  "frozen_main_unchanged": true,
+  "same_driver_except_shutdown_GBA_wait": true,
+  "runs": [
+    {
+      "mode": "official800",
+      "complete": false,
+      "frames": 5057,
+      "exit_code": 7
+    },
+    {
+      "mode": "delivered800",
+      "complete": false,
+      "frames": 5057,
+      "exit_code": 7
+    },
+    {
+      "mode": "delivered700",
+      "complete": false,
+      "frames": 5057,
+      "exit_code": 7
+    }
+  ],
+  "all_complete": false
+}

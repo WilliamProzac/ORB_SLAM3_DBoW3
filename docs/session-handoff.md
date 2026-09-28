@@ -1,4 +1,46 @@
-# GF03 current handoff — 2026-09-28 (completed)
+# GF04 current handoff — 2026-09-28 (completed evaluation)
+
+User requested official ORB-SLAM3 as baseline plus the previously delivered acceleration;
+one pass per configuration persists. GF04 is passing for evaluation delivery, not production.
+No subagents or board access. Main checkpoints95b26786/c1c7d760/679c9fc2; final report commit
+is the Git history of artifacts/orb_slam3_controls_20260928/REPORT.md.
+
+- Isolated root `/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928`.
+  Official4452a3c4; delivered core4d6df6a2 /outer18ba684, NOT MEM18/perf20/LM01/XFeat.
+  Delivered69 src/include files match the archived source. Original checkouts untouched;
+  official untracked build_log.txt preserved. Custom native GCC9.4/OpenCV4.2/C++14 builds.
+- First unpatched loop-off smokes crashed in BOTH versions. NewDetectCommonRegions returns
+  before initializing mpCurrentKF; Run then copies/dereferences it. Both isolated sources
+  get the same one-line mbActiveLC guard, plus diagnostic friend in System.h. No Tracking,
+  LocalMapping, matcher or optimizer change. Never call this an untouched upstream binary.
+- 8 main rounds: 4 modes(official800/delivered800/delivered700/frozen GF03 baseline bridge)
+  ×EuRoC2912/TUM5057 =31876 frames; complete input/finite fields/exit0. 800/8 matched;
+  700/5 delivery configuration separate; delivery3workers/RGBD L4. Viewer/loop/mapsave off.
+  Official TUM has92 nonOK(indices1715–1806), map split. Remaining7 loss-free.
+- EuRoC P95 official/del800/del700/GF=24.564/21.778/20.148/36.728ms; all ATE≈0.033–0.034m.
+  TUM P95=17.431/13.764/11.873/25.079ms. Official split invalidates a whole-map quality/late
+  workload comparison; clean prefix[0,1715) and common-start metrics are explicitly stored.
+- Failure-triggered3 RGB-D loop-on rounds reuse frozen core libraries, separate driver
+  differing only by shutdown GBA wait. All5057 each, zero nonOK, one map, one detected loop.
+  P95 official/del800/del700=17.062/14.148/12.371ms. ALL exit7:60s combined backend/GBA wait
+  times out. Do not equate all input rows with clean shutdown. Exact final thread states
+  unrecorded. QUIET suppresses NORMAL GBA logs; missing log messages do NOT mean no GBA.
+  ATE0.47729/0.50370/0.43030m; matched800 ATE/RPE degrade≈5.5/5.4/5.2%, outside5% gate.
+- All11 formal attempts47047 input rows;11 validated smokes1650 rows;3 accuracy tests pass.
+  Main589 frozen files unchanged even after fullsystem driver builds/runs.184 raw artifacts
+  compressed+byte-checked,6.6MiB evidence. Raw runs retained. No Atlas maps generated.
+- GF bridge P95 change vs GF03:+0.44% EuRoC,-5.48% TUM; old8 combinations are historical
+  references, not new matched A/B. Never rescale old runs to remove drift. TUM GT1227/5057,
+  maxgap129.865s. One global Sim3 for mono, SE3 for RGBD; no per-map alignment.
+- Commands: harness/run.py smoke/formal, verify.py, analyze.py, tables.py; fullsystem.py
+  build/smoke/formal, verify_fullsystem.py, analyze_fullsystem.py; all_results.py/archive.py.
+  Sessions61367(main)/27070(loop-on) finished. No active replay remains.
+- TODO not run: RDK-X5/ROS/network callback gate, repeats, full-System sanitizers, full-GT
+  precision, clean GBA shutdown, map save/reload or longer scenes. Existing deployments and
+  production source/binaries unchanged. Next work should diagnose background exit and
+  validate board realtime before declaring a new production optimization accepted.
+
+# GF03 historical handoff — 2026-09-28 (completed)
 
 GF03 evaluation delivery is complete (`passing` for the research workflow), not an acceleration or production acceptance. User explicitly reduced the matrix to one pass per mode/dataset. No subagents were used.
 

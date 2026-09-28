@@ -1,0 +1,1290 @@
+[
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/delivered800_mono_gdb/frames.csv",
+    "size": 10953,
+    "sha256": "3d852a4e8554085a89d435a36443057af61283bec2bfd2ffe66941110a70dce8",
+    "archived": "runs/diagnostic/delivered800_mono_gdb/frames.csv.gz",
+    "archive_sha256": "75314fdb72c254ce080b94b8a5bd00caf8cc4f0bd73a3686de1a53988955c0b1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/delivered800_mono_gdb/gdb.log",
+    "size": 23683,
+    "sha256": "1e214ade70a3430758349f35c3e6aef2a42802b97edb8afc68d1fb89df2f9730",
+    "archived": "runs/diagnostic/delivered800_mono_gdb/gdb.log.gz",
+    "archive_sha256": "6b64d9092f30c508db41647e3205afbd4806afb4f350ef4405975c7f02141503"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/delivered800_mono_gdb/keyframes.txt",
+    "size": 1266,
+    "sha256": "dd780d34affd0593ebc18212eb8f72c27d38b7b05806668caa8aa22a240d3757",
+    "archived": "runs/diagnostic/delivered800_mono_gdb/keyframes.txt.gz",
+    "archive_sha256": "099f793a5e746f98993aac94fb8ecccb8c40dd41cec0173516d331c3de7ec48c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/delivered800_mono_gdb/online.txt",
+    "size": 3862,
+    "sha256": "438fa8653124ab17919d0d7704465a1366cd766d1bce791081d9ff96e07e9d49",
+    "archived": "runs/diagnostic/delivered800_mono_gdb/online.txt.gz",
+    "archive_sha256": "479a745303fb68852ce2483f301c8994df9828ce198f115d5f1bdff39d5324fe"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/delivered_mono_coredump.txt",
+    "size": 2197,
+    "sha256": "1e77555fc034d1172110ac9b00a2631c7621e3bce52dbf92c2c2c3899c7124a4",
+    "archived": "runs/diagnostic/delivered_mono_coredump.txt.gz",
+    "archive_sha256": "289ef5d0c39c67e1d8b6ea9c73a32758036125bf3fb494569a5f48ede3a833e4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/console.log",
+    "size": 12391,
+    "sha256": "f0a76cef2eb65faa2a2bfb697ae08fe0a26ddef02fbbcae5ac6eb346cc6bc2d8",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/console.log.gz",
+    "archive_sha256": "2e1acd73e9b9fc94b1b5e6cb785a39f16eab3f6d8cb5c2e6c4111b3084bdec4c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/frames.csv",
+    "size": 7406,
+    "sha256": "00ea6bbe30463ed7290dfa11bd8450187b3e957c03e84db26ff1886c939017f8",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/frames.csv.gz",
+    "archive_sha256": "c8e8d0892f79632e640a55ceca312d153fe4f2157b1765c4acd2eafa27bf6c1d"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/online.txt",
+    "size": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/online.txt.gz",
+    "archive_sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/resources.json",
+    "size": 1365,
+    "sha256": "394f7c64300dc5a94d85b067edb50b17521cf57a680e481e1f744c2be779ec2a",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/resources.json",
+    "archive_sha256": "394f7c64300dc5a94d85b067edb50b17521cf57a680e481e1f744c2be779ec2a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/run.json",
+    "size": 1638,
+    "sha256": "06eabc61ce396b2741ed483fe191cbcc711173c818fb04bbf074bdf510eff615",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/run.json",
+    "archive_sha256": "06eabc61ce396b2741ed483fe191cbcc711173c818fb04bbf074bdf510eff615"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/delivered800/started.json",
+    "size": 1520,
+    "sha256": "896ab3327e8fdcd00e73d08bb365ca2571211750cbdd606234c46821941a8def",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/delivered800/started.json",
+    "archive_sha256": "896ab3327e8fdcd00e73d08bb365ca2571211750cbdd606234c46821941a8def"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/console.log",
+    "size": 1374,
+    "sha256": "6540b747e2aea3562fc364c61dd28bcf18ae5116a18d40ae3cb562d58e07cbbd",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/console.log.gz",
+    "archive_sha256": "82739ede6e5621f6d31bf36b6cc8bb88bdcdf14392c2d04568cbd4c781e79fe8"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/frames.csv",
+    "size": 11226,
+    "sha256": "0020b9f9797e91c39b5539612d24403bde0a40fa7e3c791bf0f8508f8a458e78",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/frames.csv.gz",
+    "archive_sha256": "504072bff14758746b00453339edd128460c788ff97529eed6cd4717d6768e37"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/keyframes.txt",
+    "size": 1356,
+    "sha256": "6ccd2a45efeb60f71e8a092025b539e6914dab10a103aa1d1fdc44b786c605ec",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/keyframes.txt.gz",
+    "archive_sha256": "4c33f84d1789f8ac789fbaaeb9618c9b06a70ff0635888f138d744d5cea7edc5"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/online.txt",
+    "size": 3862,
+    "sha256": "46384f3c8b4eff36ed42c343cc9aeaa91d527682783a51fde7415aa523a5cc8d",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/online.txt.gz",
+    "archive_sha256": "37625746f225ab0f9038682f787433ef3ed8afa0831752fde744f373723bd1c9"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/resources.json",
+    "size": 1362,
+    "sha256": "70c02266b1868c2315c5348a3dd125e0f56bddcbbc407e4d172fb6fd6cd6e359",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/resources.json",
+    "archive_sha256": "70c02266b1868c2315c5348a3dd125e0f56bddcbbc407e4d172fb6fd6cd6e359"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/run.json",
+    "size": 1630,
+    "sha256": "f6522ef0e00101889f462b18d6e4b81c868e8dbb43d0109aac4128ac29cfb60c",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/run.json",
+    "archive_sha256": "f6522ef0e00101889f462b18d6e4b81c868e8dbb43d0109aac4128ac29cfb60c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/V1_01_easy/official800/started.json",
+    "size": 1514,
+    "sha256": "79e2d2da4856c8ef9d3676fe127dbbfd8f02781d38465db9ce520ea17d9ded88",
+    "archived": "runs/diagnostic/initial_smoke/V1_01_easy/official800/started.json",
+    "archive_sha256": "79e2d2da4856c8ef9d3676fe127dbbfd8f02781d38465db9ce520ea17d9ded88"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/console.log",
+    "size": 1218,
+    "sha256": "06f2ab53e484922182643691d4cedb582cbc38136fb78daee4462ebf30df4f59",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/console.log.gz",
+    "archive_sha256": "6befbcfafbbe480393b58c28d07defef7ff89fb0e1233128aa29378a5f02d77e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/frames.csv",
+    "size": 167,
+    "sha256": "0798ead41ac23d523ff40c5708765cca7b9e1206865da6b95b17e444613069ea",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/frames.csv.gz",
+    "archive_sha256": "cd383e9e6d602909e7b0a8915d0dd29213706cb55df25162ee9ccccaf79abe43"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/online.txt",
+    "size": 108,
+    "sha256": "c190625690853398cc58ca412a1f356aa9571bbb5eafe0ffcbf556932510cadd",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/online.txt.gz",
+    "archive_sha256": "fce7779ce1527403942f152f14e74594829210ec34ab7be6a309042aca03d1a2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/resources.json",
+    "size": 578,
+    "sha256": "23ac0b1a91e7d7f03a26e074032577010ca646a6906fbfd5409d49d6ac503b23",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/resources.json",
+    "archive_sha256": "23ac0b1a91e7d7f03a26e074032577010ca646a6906fbfd5409d49d6ac503b23"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/run.json",
+    "size": 1623,
+    "sha256": "48d27f754151f6823a841d20e17147b6ef4d6ff801835c7f4dd69bec8f2e045b",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/run.json",
+    "archive_sha256": "48d27f754151f6823a841d20e17147b6ef4d6ff801835c7f4dd69bec8f2e045b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/initial_smoke/tum_large/official800/started.json",
+    "size": 1506,
+    "sha256": "c88f99097c92dc47a251b99d2236e40320e81348d784a036a7470f9433328439",
+    "archived": "runs/diagnostic/initial_smoke/tum_large/official800/started.json",
+    "archive_sha256": "c88f99097c92dc47a251b99d2236e40320e81348d784a036a7470f9433328439"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/diagnostic/official_rgbd_coredump.txt",
+    "size": 2996,
+    "sha256": "e2864c2fa79bc9675aa7ab481bf8044a44a4dc55eff4266bf926c4a484ec70e3",
+    "archived": "runs/diagnostic/official_rgbd_coredump.txt.gz",
+    "archive_sha256": "eaa881bcd495a832339b082c736686fd44fd52dc88b40e9ba2e8e4dd67d94b6d"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/console.log",
+    "size": 48109,
+    "sha256": "aea565f62192a22c2aad2532740d66df77ac6d8964f1cc42ff9c30ac4716a52e",
+    "archived": "runs/formal/V1_01_easy/delivered700/console.log.gz",
+    "archive_sha256": "6df2d41a17909c30e2a0abe93bdeed9320ef983df85865476c01c60f8b8c823e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/frames.csv",
+    "size": 227546,
+    "sha256": "984d258650927aa230e0952f6cd804bf816db33aaf152ea3159154effdd8372b",
+    "archived": "runs/formal/V1_01_easy/delivered700/frames.csv.gz",
+    "archive_sha256": "6a0786079eae057714b65492397cafc6a8f99704b6dddbd042d3d8a55915bb27"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/keyframes.txt",
+    "size": 26238,
+    "sha256": "02bb1b49ed583c3c2685bc20f6f65964317d0a79d0ed2cd806a290ec362303cf",
+    "archived": "runs/formal/V1_01_easy/delivered700/keyframes.txt.gz",
+    "archive_sha256": "0f399e4fa3bbdcc9dbad2832c3c9fb0486a8cf80138a460730edd77f2c4e64d8"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/online.txt",
+    "size": 300682,
+    "sha256": "d1c7c10b4193684da3f1355e173614dece3fce5b92278c7df2f05472125f7593",
+    "archived": "runs/formal/V1_01_easy/delivered700/online.txt.gz",
+    "archive_sha256": "022599141d72a1b7ca966d30d6ec16c4b94a8ddddc92b751f2a27e0098cbe3cd"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/resources.json",
+    "size": 14938,
+    "sha256": "3c1146cfd48013b4be1be4ae05b81755bf85ac1d89ed38c4b9b52123a9d3a61f",
+    "archived": "runs/formal/V1_01_easy/delivered700/resources.json",
+    "archive_sha256": "3c1146cfd48013b4be1be4ae05b81755bf85ac1d89ed38c4b9b52123a9d3a61f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/run.json",
+    "size": 1637,
+    "sha256": "65aa9a3e9d05410e6e816064998ffdc2fe21b59dc5a8bcc10f6001f1cf58b18a",
+    "archived": "runs/formal/V1_01_easy/delivered700/run.json",
+    "archive_sha256": "65aa9a3e9d05410e6e816064998ffdc2fe21b59dc5a8bcc10f6001f1cf58b18a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered700/started.json",
+    "size": 1521,
+    "sha256": "7259297f159caab7ad9d531efdba1f0657809b4d44c595f8e88a20e89303ed58",
+    "archived": "runs/formal/V1_01_easy/delivered700/started.json",
+    "archive_sha256": "7259297f159caab7ad9d531efdba1f0657809b4d44c595f8e88a20e89303ed58"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/console.log",
+    "size": 42639,
+    "sha256": "ab2d704abc018073f4bc11743a011bbaf07e594c16ae2b88a5e115b2e9551542",
+    "archived": "runs/formal/V1_01_easy/delivered800/console.log.gz",
+    "archive_sha256": "41a42e08330af5d1b319bf32ca0693359b8565aa34d395afd40c05cd80e666b0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/frames.csv",
+    "size": 228495,
+    "sha256": "9a31532b79490f89d04520ce97e4004317432a778f7c159de65f3863fa11775d",
+    "archived": "runs/formal/V1_01_easy/delivered800/frames.csv.gz",
+    "archive_sha256": "665f7f9dffd41c446dc58acef5a64b826a71f26f8cf967237aefc170a81d9bd1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/keyframes.txt",
+    "size": 23139,
+    "sha256": "1f5b282cc69533ab636f3c8e2a10f124502096f04555f3925595d54a43cf4122",
+    "archived": "runs/formal/V1_01_easy/delivered800/keyframes.txt.gz",
+    "archive_sha256": "23c17ff810173ed713a89b50a1eb9d9d33502769d874c78b286d3c39a41f0184"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/online.txt",
+    "size": 300331,
+    "sha256": "b0b80c20dc262dda1b175c59974d249f21fe86aace89377a0e3691edfc853266",
+    "archived": "runs/formal/V1_01_easy/delivered800/online.txt.gz",
+    "archive_sha256": "e74615f192ac4e87c83632dda574d0780a14d814731b73a0646872bc35b921a0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/resources.json",
+    "size": 14943,
+    "sha256": "ad031fb9912bb292dcda0595182c2f690f714911496dd619f6d1393dde1c741c",
+    "archived": "runs/formal/V1_01_easy/delivered800/resources.json",
+    "archive_sha256": "ad031fb9912bb292dcda0595182c2f690f714911496dd619f6d1393dde1c741c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/run.json",
+    "size": 1637,
+    "sha256": "f198c31e744ceaab41eb5960ed1643726a4b08e65e23d7a5edce2a3bd1b95959",
+    "archived": "runs/formal/V1_01_easy/delivered800/run.json",
+    "archive_sha256": "f198c31e744ceaab41eb5960ed1643726a4b08e65e23d7a5edce2a3bd1b95959"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/delivered800/started.json",
+    "size": 1521,
+    "sha256": "e892e644f12dd381d9df80b93377e97e9646361ad4b17afddc8c6009802ae2d4",
+    "archived": "runs/formal/V1_01_easy/delivered800/started.json",
+    "archive_sha256": "e892e644f12dd381d9df80b93377e97e9646361ad4b17afddc8c6009802ae2d4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/console.log",
+    "size": 369332,
+    "sha256": "aef9f11752767b77779f8ec7b1d3f3644a0ce956a650430e028e00852fca4994",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/console.log.gz",
+    "archive_sha256": "7beedd821ce08736e2697a30b6dd3f1a210bdfc8a17eecb31789e4e4a03a1f84"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/frames.csv",
+    "size": 566223,
+    "sha256": "6fa1173f800ef2007943d30bab4211f9f028fd9224402cba34130773d64ba056",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/frames.csv.gz",
+    "archive_sha256": "dde201f7d53fa51717db97b73b9ce073155b314601be52dd56ee16378f561b47"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/keyframes.txt",
+    "size": 15103,
+    "sha256": "9d42af5504c32536a1421fe7ee465909fb10293a80466e84e310da5bd637b500",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/keyframes.txt.gz",
+    "archive_sha256": "c60316060db58bb021b794f22691f35785a62c3db38bfb2c2b0fdb537a6c3c68"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/online.txt",
+    "size": 301823,
+    "sha256": "c02354b4a2efbb377f86d558d134b774232172078397721100824e7daebcf413",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/online.txt.gz",
+    "archive_sha256": "8c3714b92c966bd6f50739cb94d8f787742897eeda4aaf224298c930fb78cd36"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/resources.json",
+    "size": 14950,
+    "sha256": "4cbe6f94960652362c7338e0e9a589470dd0075ec949b76d8b00031458910964",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/resources.json",
+    "archive_sha256": "4cbe6f94960652362c7338e0e9a589470dd0075ec949b76d8b00031458910964"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/run.json",
+    "size": 1561,
+    "sha256": "e62ffd9a95955dd25373c1681378d04dc2ce3dea921df9ee07d67153ee22ad18",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/run.json",
+    "archive_sha256": "e62ffd9a95955dd25373c1681378d04dc2ce3dea921df9ee07d67153ee22ad18"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/started.json",
+    "size": 1445,
+    "sha256": "ed09e30d168a49a635a766447397627bb6206362c7a0528717f466c67010d198",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/started.json",
+    "archive_sha256": "ed09e30d168a49a635a766447397627bb6206362c7a0528717f466c67010d198"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/upstream_mapping.txt",
+    "size": 64829,
+    "sha256": "d5312f4f0e5c0b2eb6c0eefec9b8271ca212b2c4a70c79fa64139e287be232e3",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/upstream_mapping.txt.gz",
+    "archive_sha256": "afc13468e47ca9f3b4f35777185b381cff5c4bd147c6bdc8a5fe7a82d91f15b1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/upstream_online.txt",
+    "size": 254323,
+    "sha256": "e68688300ad8426b46786ff3cfc476724506dbacf11bb8a63f6df47f5ec33e52",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/upstream_online.txt.gz",
+    "archive_sha256": "2eb1469bc77a94db65f657e5bed444fa1891cc4e89ebddef539a723aace76aac"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/gf_bridge/upstream_tracking.txt",
+    "size": 486184,
+    "sha256": "ce8fdeb385914004da374d21f0e3e5874ab317688b0750929c0b72b67e8f2a3f",
+    "archived": "runs/formal/V1_01_easy/gf_bridge/upstream_tracking.txt.gz",
+    "archive_sha256": "ada9db620de7e11bccddeb129325c5bf931855d4740d9def87975dd8b43e313e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/console.log",
+    "size": 2375,
+    "sha256": "51d953a678b2949177179e553a87366c6750d1fce0ccd606e4596cb0a12eba0e",
+    "archived": "runs/formal/V1_01_easy/official800/console.log.gz",
+    "archive_sha256": "77e54f3b80989ba503bbdedc657ecfae321829b3ae16040a0d7997c88ff132d3"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/frames.csv",
+    "size": 231265,
+    "sha256": "9d1bb43e58f256a1a3ac3f0a0e841bed210a4ca9d2cb6aa7277dec30346977bf",
+    "archived": "runs/formal/V1_01_easy/official800/frames.csv.gz",
+    "archive_sha256": "8fe3e22881fccc8da880b0106919b8596ac15e790b127e0fc387acb77e92371b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/keyframes.txt",
+    "size": 22782,
+    "sha256": "ce7ed43cb2e8b6894e10ade20d66d8bd9d173a1b488d188117dafcc07f9e4ee8",
+    "archived": "runs/formal/V1_01_easy/official800/keyframes.txt.gz",
+    "archive_sha256": "0d604721454d4173da9164e7106b516a111d802eada57c2ff7753847ac4d1913"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/online.txt",
+    "size": 300342,
+    "sha256": "3bdecd7eccceb6bf5a3b346378460d2f215583a0820307a99836b74e16f11fd7",
+    "archived": "runs/formal/V1_01_easy/official800/online.txt.gz",
+    "archive_sha256": "b9d134dd4f45723e827b8b298849ce223107b35cb012bfd9ad2f91cd67b79cb1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/resources.json",
+    "size": 14950,
+    "sha256": "388da9580ccf67f3ef3fde33151088f9d1c2570439c3034cef4e488026540acb",
+    "archived": "runs/formal/V1_01_easy/official800/resources.json",
+    "archive_sha256": "388da9580ccf67f3ef3fde33151088f9d1c2570439c3034cef4e488026540acb"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/run.json",
+    "size": 1631,
+    "sha256": "a0649184b9e02e2b6270e25df2f0a4855307534ce580951fd9844d47742655f4",
+    "archived": "runs/formal/V1_01_easy/official800/run.json",
+    "archive_sha256": "a0649184b9e02e2b6270e25df2f0a4855307534ce580951fd9844d47742655f4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800/started.json",
+    "size": 1515,
+    "sha256": "7cea2f47a95ed8c6d56db829a29424845dc45d78f4e2b6748a967e0acd697e96",
+    "archived": "runs/formal/V1_01_easy/official800/started.json",
+    "archive_sha256": "7cea2f47a95ed8c6d56db829a29424845dc45d78f4e2b6748a967e0acd697e96"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/console.log",
+    "size": 113821,
+    "sha256": "bd6bc09b9835b34587e88a84b1272907ed7a8546782f1a5d84950428d29862e4",
+    "archived": "runs/formal/tum_large/delivered700/console.log.gz",
+    "archive_sha256": "4275489a93f8cb56b4a78e865d6baf6308ce48380a498bc4276eef882f94c595"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/frames.csv",
+    "size": 400355,
+    "sha256": "7684d66cd1e9233eb53ab7606f06a1565d51a7741983d27f7a30968e5d19d5e2",
+    "archived": "runs/formal/tum_large/delivered700/frames.csv.gz",
+    "archive_sha256": "70b820cc96faa2c54f7a24c0c8923e0b5f4757b38e0a3811135859c8845c9602"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/keyframes.txt",
+    "size": 104088,
+    "sha256": "0a23b07af4224592c5f5151840e6af4c8f3e9b7b76eed84a7f9fda74c7d37031",
+    "archived": "runs/formal/tum_large/delivered700/keyframes.txt.gz",
+    "archive_sha256": "aff09a62887c35c61eb98011b50a23dc9ef600c49f4366df275ed29ebdc4f142"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/online.txt",
+    "size": 548699,
+    "sha256": "a38147a0f33e5d819eab215819b664bce7776849458f89b5e7e76c4242fab44d",
+    "archived": "runs/formal/tum_large/delivered700/online.txt.gz",
+    "archive_sha256": "d85e335e59a4b49bf6d9cdcb8fcbb3a4e1391502ca561a846f437d157de5119b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/resources.json",
+    "size": 17726,
+    "sha256": "67e3682d49d311426031e066102b691b07f85b43bcd80258a8463f6bd88d1d23",
+    "archived": "runs/formal/tum_large/delivered700/resources.json",
+    "archive_sha256": "67e3682d49d311426031e066102b691b07f85b43bcd80258a8463f6bd88d1d23"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/run.json",
+    "size": 1629,
+    "sha256": "0b51136435e1c1664684ed96275395e7eed6cc8d7f2f3a6c000e8ec19fcc15b9",
+    "archived": "runs/formal/tum_large/delivered700/run.json",
+    "archive_sha256": "0b51136435e1c1664684ed96275395e7eed6cc8d7f2f3a6c000e8ec19fcc15b9"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered700/started.json",
+    "size": 1513,
+    "sha256": "c7e3021a9be98769b72fc2b440139380876fe5b2436df1986dc43f7d973cb273",
+    "archived": "runs/formal/tum_large/delivered700/started.json",
+    "archive_sha256": "c7e3021a9be98769b72fc2b440139380876fe5b2436df1986dc43f7d973cb273"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/console.log",
+    "size": 102049,
+    "sha256": "19c6eb212c6e1517509c587bb1a2b26aeaef4d3c2bcbd7f20c024783226c8b0c",
+    "archived": "runs/formal/tum_large/delivered800/console.log.gz",
+    "archive_sha256": "ace4c773ade32fd7e8f3c511f99e31dfd3ee08db9e7a73642868e2b061db6a67"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/frames.csv",
+    "size": 395155,
+    "sha256": "978ca3902ff927e5fcd0eec2ed943500f61accaa61f6c4a91b2c96b5cfb91911",
+    "archived": "runs/formal/tum_large/delivered800/frames.csv.gz",
+    "archive_sha256": "64d3aada35fddd0d542cf93120f4db6e549e463fce39ccf02107d34be8e7b43e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/keyframes.txt",
+    "size": 91353,
+    "sha256": "e568bdb7be477509a88d3a3638401d960f99dbfea3c2ffb7b8e6f135c876b1a3",
+    "archived": "runs/formal/tum_large/delivered800/keyframes.txt.gz",
+    "archive_sha256": "a61a4db9a01d39027b6abde7283955dd3b0ec2e3c8a2d34dc7599f5d7a7369e3"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/online.txt",
+    "size": 548638,
+    "sha256": "306996978457ac35668ef2fb2a078b9003ec32deaae700778c2b0546f72f0513",
+    "archived": "runs/formal/tum_large/delivered800/online.txt.gz",
+    "archive_sha256": "6ac1d5fc7fcac244fed6919777ff75733df25d1cb4638eb65182a5e7ecef0da0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/resources.json",
+    "size": 17725,
+    "sha256": "4f3cee4fd378a7bbe4ab37e66a483aacbca71eb58b96e0ac223b1bec264e3550",
+    "archived": "runs/formal/tum_large/delivered800/resources.json",
+    "archive_sha256": "4f3cee4fd378a7bbe4ab37e66a483aacbca71eb58b96e0ac223b1bec264e3550"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/run.json",
+    "size": 1629,
+    "sha256": "479ae2b4c6d80537e6474b484d171072abb61f16079b906010b22d2aa5d3563e",
+    "archived": "runs/formal/tum_large/delivered800/run.json",
+    "archive_sha256": "479ae2b4c6d80537e6474b484d171072abb61f16079b906010b22d2aa5d3563e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/delivered800/started.json",
+    "size": 1513,
+    "sha256": "1238d1e1a024a17e7c624f16660caeb146be2254b95fa745ca37e27b71ef73cc",
+    "archived": "runs/formal/tum_large/delivered800/started.json",
+    "archive_sha256": "1238d1e1a024a17e7c624f16660caeb146be2254b95fa745ca37e27b71ef73cc"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/console.log",
+    "size": 679425,
+    "sha256": "777e64660fb85f32a45d3f5fa8ea1da360991b2e6193c2a6b68b2c507149b02f",
+    "archived": "runs/formal/tum_large/gf_bridge/console.log.gz",
+    "archive_sha256": "76843baea7c53d0809b4a4600bf857f2c652ed422cdb4f151bbd6b9c98dfb4f5"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/corrected.txt",
+    "size": 532744,
+    "sha256": "b971275a57de373a08ce54854a9a34051e284aa2af271131605cf6e7a52ac823",
+    "archived": "runs/formal/tum_large/gf_bridge/corrected.txt.gz",
+    "archive_sha256": "33a8b5c8e3359fd97f6a4d1d0aed0cb18c0efc53037906939841443421e6bf7b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/frames.csv",
+    "size": 988168,
+    "sha256": "ca1fe0c2779ddb9f6da5798ad02f960b58d85f65b7854183c2ba52660081af0f",
+    "archived": "runs/formal/tum_large/gf_bridge/frames.csv.gz",
+    "archive_sha256": "4a7493b8c4f692cb4d9d387486e27f02c014edc6538d93c808fdeba73b582522"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/keyframes.txt",
+    "size": 87571,
+    "sha256": "37fb6280a6fbc40a74cd64c4947aea572a83633bb2df7d947f60e0f4947b9d56",
+    "archived": "runs/formal/tum_large/gf_bridge/keyframes.txt.gz",
+    "archive_sha256": "ae6000eb92aee63f66ebf372190bbd3685c90a029ed0345990ad21e67bf475a2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/online.txt",
+    "size": 547906,
+    "sha256": "db50ad8fdc3d53b82662f03603a457c823f8bd6f5d61aea50083d523982b1ee3",
+    "archived": "runs/formal/tum_large/gf_bridge/online.txt.gz",
+    "archive_sha256": "bf1131bd11eeb8c4ec34943193c575aaa1d69fa0d42d97c3ea1f0b8bcb9eeece"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/resources.json",
+    "size": 17590,
+    "sha256": "3a75e4ae2ed5f9555311f57088fc18e7c01533264b7e18ced6e64b3784ca6f47",
+    "archived": "runs/formal/tum_large/gf_bridge/resources.json",
+    "archive_sha256": "3a75e4ae2ed5f9555311f57088fc18e7c01533264b7e18ced6e64b3784ca6f47"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/run.json",
+    "size": 1553,
+    "sha256": "4f2fa12e5d30e5081c7f1a9535ca5e7f2ef9ee4b286eb432ef74dc34b135cbe3",
+    "archived": "runs/formal/tum_large/gf_bridge/run.json",
+    "archive_sha256": "4f2fa12e5d30e5081c7f1a9535ca5e7f2ef9ee4b286eb432ef74dc34b135cbe3"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/started.json",
+    "size": 1437,
+    "sha256": "729e925339441f9168cd0fbaf4bd15e094f3c512aca47426947a319872d7e258",
+    "archived": "runs/formal/tum_large/gf_bridge/started.json",
+    "archive_sha256": "729e925339441f9168cd0fbaf4bd15e094f3c512aca47426947a319872d7e258"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/upstream_mapping.txt",
+    "size": 181166,
+    "sha256": "ff5372e950d934861d05678f974f311a1960a6e6fd0ab2dfd7e265faa4a29e6f",
+    "archived": "runs/formal/tum_large/gf_bridge/upstream_mapping.txt.gz",
+    "archive_sha256": "00e5cdb80d5c107af7af5e8792a27722f6e273b2ea3165b6b4b5312285c950be"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/upstream_online.txt",
+    "size": 461969,
+    "sha256": "28be5bf8e587a0635d98c330f10a8ec9196ea06d5891068dbfd97e75afa3eb3d",
+    "archived": "runs/formal/tum_large/gf_bridge/upstream_online.txt.gz",
+    "archive_sha256": "3ff396a0e99eae8fa7676d5d5ecbfd207803062eedecc6c2ba30230537450a5b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/gf_bridge/upstream_tracking.txt",
+    "size": 878588,
+    "sha256": "1230d0b749f07f05e840e7de038c8f6ad2cd93d748a08a79cec9e18d7e9ae765",
+    "archived": "runs/formal/tum_large/gf_bridge/upstream_tracking.txt.gz",
+    "archive_sha256": "e37cc2560fe5ee3c25fdf14859b1699809f039a7303ac6fbe628b292fb24c008"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/console.log",
+    "size": 5634,
+    "sha256": "3f49971d6b06cd0427d372f2d02b82d1825e089823d9ada2ac9f4107334eaa77",
+    "archived": "runs/formal/tum_large/official800/console.log.gz",
+    "archive_sha256": "0be4424a2c05a2968a29935c07b4479ba94ef57ec981394080da757b6f497c8b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/frames.csv",
+    "size": 383172,
+    "sha256": "1acba016e3c5d49d49aadb528b7b66321afbf4911754b892fcf86c850c7d59c4",
+    "archived": "runs/formal/tum_large/official800/frames.csv.gz",
+    "archive_sha256": "4c80c001c5caef723095ab8c0e9db6daf379dde3e95c42b6e5d69bbad8aed6e9"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/keyframes.txt",
+    "size": 58240,
+    "sha256": "c3f8977615e20bc4610aa453fb0b7ec235ab760df11b9c20bbbb20bb5090ce0d",
+    "archived": "runs/formal/tum_large/official800/keyframes.txt.gz",
+    "archive_sha256": "8dd369726bb03082cb7e28ec998ee8de6510d02b181f594e90b64820d99d5a46"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/online.txt",
+    "size": 537614,
+    "sha256": "f4ea5d531b9185cc7040402c6a0e26efff3f6f7aa2de9afa2adc5e2221d05cb5",
+    "archived": "runs/formal/tum_large/official800/online.txt.gz",
+    "archive_sha256": "faf8879f8d7163c827ddd2bcfa1b11518139651ae79fdabefdf4e1cfd428d2e0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/resources.json",
+    "size": 17519,
+    "sha256": "dfe8655a0d7eb17838f6c3143d028430064635303a7baeecffac7a8eeb703975",
+    "archived": "runs/formal/tum_large/official800/resources.json",
+    "archive_sha256": "dfe8655a0d7eb17838f6c3143d028430064635303a7baeecffac7a8eeb703975"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/run.json",
+    "size": 1623,
+    "sha256": "0c459ef6aca570d3bad11799d480ef925fba9cd7689d3960a5fd291535257369",
+    "archived": "runs/formal/tum_large/official800/run.json",
+    "archive_sha256": "0c459ef6aca570d3bad11799d480ef925fba9cd7689d3960a5fd291535257369"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/tum_large/official800/started.json",
+    "size": 1507,
+    "sha256": "2643b09c6d0917c3ab42020e76de9357bbfb943fae6ce125abc1982c64ee9f30",
+    "archived": "runs/formal/tum_large/official800/started.json",
+    "archive_sha256": "2643b09c6d0917c3ab42020e76de9357bbfb943fae6ce125abc1982c64ee9f30"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700/console.log",
+    "size": 113781,
+    "sha256": "8ab82bc240f7e78fb6dcce2ca93390725f3273819083d7ca91ae6855c51345a9",
+    "archived": "runs/fullsystem_formal/tum_large/delivered700/console.log.gz",
+    "archive_sha256": "adc873eef0994bc8353ac1b2dad2c3507ac93923b44cae16ae7628c60ed17b6a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700/frames.csv",
+    "size": 399563,
+    "sha256": "fd48bfe90c22eeb2fc4a24cd17cc31a87d4a8734fd60bf39a16205ef4692adf7",
+    "archived": "runs/fullsystem_formal/tum_large/delivered700/frames.csv.gz",
+    "archive_sha256": "bed3a3f52282236b838b4ac1234211ca14153acce4524d42d20aa343ca39478f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700/online.txt",
+    "size": 548993,
+    "sha256": "cafbfcb60b560506a41c3621b99852844e3a9d6a588a0f41095ada888f600c27",
+    "archived": "runs/fullsystem_formal/tum_large/delivered700/online.txt.gz",
+    "archive_sha256": "cff59113d06ef56a1b79447a882296dc9c0f6b8174ef2c31b1e8be5842837fc6"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700/resources.json",
+    "size": 23724,
+    "sha256": "f96e7edc1166f4c270f26224776ac9c32aafa8813d0c3dbbbc72a6bf37116d00",
+    "archived": "runs/fullsystem_formal/tum_large/delivered700/resources.json",
+    "archive_sha256": "f96e7edc1166f4c270f26224776ac9c32aafa8813d0c3dbbbc72a6bf37116d00"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered700/run.json",
+    "size": 2630,
+    "sha256": "5b00c5843a8ba1ef699b8ddf0b5c2341861bff73368ba5b5c70c41adf9def6a4",
+    "archived": "runs/fullsystem_formal/tum_large/delivered700/run.json",
+    "archive_sha256": "5b00c5843a8ba1ef699b8ddf0b5c2341861bff73368ba5b5c70c41adf9def6a4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800/console.log",
+    "size": 98490,
+    "sha256": "11a16a509b26b127c48d1acbccbac76901e34a7b448ac806c07f16687a988da9",
+    "archived": "runs/fullsystem_formal/tum_large/delivered800/console.log.gz",
+    "archive_sha256": "f5d8790952790ff8487d215f8af158802bb5bf36c384f42ff62ac4d75bbe89f6"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800/frames.csv",
+    "size": 394408,
+    "sha256": "0f63cf03e7f5a73ccfb00741f61db9029a9c3f6306bc4e6cbd5edecf537e3f39",
+    "archived": "runs/fullsystem_formal/tum_large/delivered800/frames.csv.gz",
+    "archive_sha256": "9cf6baee6fd82cb5470ac068d70329cb5c92637dbe8260c5c306f5370964a822"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800/online.txt",
+    "size": 549083,
+    "sha256": "dc7c01e88cfb05d726ac6c426a5354f2ca19cf2f7d8600a0f24bf52dd9663843",
+    "archived": "runs/fullsystem_formal/tum_large/delivered800/online.txt.gz",
+    "archive_sha256": "9937740224d0bcc3936ff1357ac01cfe30491c1781d934bad47054d07fd08c5b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800/resources.json",
+    "size": 23731,
+    "sha256": "5b5c9c7abc680814a0ee3bf0da33c3d7ca6db146c3cb0addbb52cf92dfd9aaf4",
+    "archived": "runs/fullsystem_formal/tum_large/delivered800/resources.json",
+    "archive_sha256": "5b5c9c7abc680814a0ee3bf0da33c3d7ca6db146c3cb0addbb52cf92dfd9aaf4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/delivered800/run.json",
+    "size": 2630,
+    "sha256": "6e4ad16030587789505b21ff42580dd7f6c4819fe1b87e0a9210e133fe43ff04",
+    "archived": "runs/fullsystem_formal/tum_large/delivered800/run.json",
+    "archive_sha256": "6e4ad16030587789505b21ff42580dd7f6c4819fe1b87e0a9210e133fe43ff04"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800/console.log",
+    "size": 3069,
+    "sha256": "aa260841fb7f2b1d1a1f9aad5e9c478a6045d40990b1081a4f115f3e08966e60",
+    "archived": "runs/fullsystem_formal/tum_large/official800/console.log.gz",
+    "archive_sha256": "912103e5f5bcea79dd46056670ccaad3c676ddda23f3abfdce1e06477e4f1553"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800/frames.csv",
+    "size": 386045,
+    "sha256": "cc4a9cd1eabf38cb5e483de1127017736a86ba50a28b096950dccf8f78392497",
+    "archived": "runs/fullsystem_formal/tum_large/official800/frames.csv.gz",
+    "archive_sha256": "1f1e50cde8e39094c9c1d3cad97596175043ef2e7b71481e76b0f36844c7e72b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800/online.txt",
+    "size": 549000,
+    "sha256": "0da8decbfe2eb76f7e5dc99eec4e0ff81790c93eef17d373da6ff732b3712a1d",
+    "archived": "runs/fullsystem_formal/tum_large/official800/online.txt.gz",
+    "archive_sha256": "45359f9bc18ea2d6038d6c86f679bb67afe2192c4385469bce7936b62edfca70"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800/resources.json",
+    "size": 23525,
+    "sha256": "46d338c3ab7dd2e09a97639b3ef68bb41a518fc5d8b4052fc149f4a40399493a",
+    "archived": "runs/fullsystem_formal/tum_large/official800/resources.json",
+    "archive_sha256": "46d338c3ab7dd2e09a97639b3ef68bb41a518fc5d8b4052fc149f4a40399493a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_formal/tum_large/official800/run.json",
+    "size": 2627,
+    "sha256": "3f296f359aa48e22804a73548a471fb5c822d4f2f411c5c78bec58922474d79f",
+    "archived": "runs/fullsystem_formal/tum_large/official800/run.json",
+    "archive_sha256": "3f296f359aa48e22804a73548a471fb5c822d4f2f411c5c78bec58922474d79f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/console.log",
+    "size": 15221,
+    "sha256": "e0f2c65ccaea48e1e6c6a0f840079d7ac51ed7fab7939a13ea9ad3532e57f6a4",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/console.log.gz",
+    "archive_sha256": "267d1e6fa3f88b7b37a5b207dd7653ae09442eedc3d2cdc6108d1077e62c2469"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/frames.csv",
+    "size": 11585,
+    "sha256": "7c49e28adeec1b3f501cc63d5bff36179a74c32f4cb33820284c84d98627926a",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/frames.csv.gz",
+    "archive_sha256": "973bf21de2020cda35e92b8cdf75ba18d52220c9e1eb168ba1b6e0c91c71d665"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/keyframes.txt",
+    "size": 3436,
+    "sha256": "b73e7ff8a1a48c2f8d99ff62e56702b50af0db39cb1eee99ad803fddde004b6e",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/keyframes.txt.gz",
+    "archive_sha256": "ca31211fc447713708602fac39127254edc8374f0b158ddf0c86eee34523ed20"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/online.txt",
+    "size": 16078,
+    "sha256": "7ba4c71dafddbd84053b1cee745ae1dacb7c634f5d9529a6ee54141c7df9854c",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/online.txt.gz",
+    "archive_sha256": "60a1321326ee56815164883d29017549a6d863f86d4a7bb0ad6a1c433f10ed77"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/resources.json",
+    "size": 1167,
+    "sha256": "7af46a2c3ebcb45e78e5f0c2d94ac83229e85ddfa1b49fc98a8a01223ce01d79",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/resources.json",
+    "archive_sha256": "7af46a2c3ebcb45e78e5f0c2d94ac83229e85ddfa1b49fc98a8a01223ce01d79"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered700/run.json",
+    "size": 2630,
+    "sha256": "2545b44e46c301124f9e31b74a98b93c3dd1e9684d1366761384b9a57f67606b",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered700/run.json",
+    "archive_sha256": "2545b44e46c301124f9e31b74a98b93c3dd1e9684d1366761384b9a57f67606b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/console.log",
+    "size": 14764,
+    "sha256": "554929424fba1e41ed2060bbf9db317a557d3d77aa6a985606e2eeea1bf68b18",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/console.log.gz",
+    "archive_sha256": "68bdcc5cd5d97e3e59701a5a5e28cc1e78f691d237b7fa2e47c136d01ee88ba6"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/frames.csv",
+    "size": 11421,
+    "sha256": "60ef4a74581cc185ba8d57d4c51cadc161119982d00c57c97e610c01060f99cd",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/frames.csv.gz",
+    "archive_sha256": "a32aa051ad17547675fb2b46e34ffeb6f804aa244db96ec51e2047cedd36c51f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/keyframes.txt",
+    "size": 2724,
+    "sha256": "35d5ed51c7569f648844fe783c12a7c565256e6668aba797c7749e9fcfea2f8f",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/keyframes.txt.gz",
+    "archive_sha256": "8f6151777e06fcfa08c43275f7ef6fe588111742e89da6e6b5b959797ef26783"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/online.txt",
+    "size": 16088,
+    "sha256": "845adef531dc232b715f7b302991b84dd82cb093fe6e837f34b738859a59068f",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/online.txt.gz",
+    "archive_sha256": "48fe6d0c271d32ac38de7410836beff234de062cc24b14516bd6ee048628c95e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/resources.json",
+    "size": 1171,
+    "sha256": "0f365ac68b04542730974b9c3d67a3fb0b44c0282c51df534c3d6aeac7ef5020",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/resources.json",
+    "archive_sha256": "0f365ac68b04542730974b9c3d67a3fb0b44c0282c51df534c3d6aeac7ef5020"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/delivered800/run.json",
+    "size": 2630,
+    "sha256": "b93de5436ff0201bc55a00618735147f84151ae10c586e01a41910f298b233ef",
+    "archived": "runs/fullsystem_smoke/tum_large/delivered800/run.json",
+    "archive_sha256": "b93de5436ff0201bc55a00618735147f84151ae10c586e01a41910f298b233ef"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/console.log",
+    "size": 1435,
+    "sha256": "76683a242398736cb3a43eec97c83c8fc55c6460dbfdf96156d3c4a4f3655565",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/console.log.gz",
+    "archive_sha256": "d11e228250f1241cd90deae21e772caf9512d1fd1227a7dc863ad4b892e58118"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/frames.csv",
+    "size": 11302,
+    "sha256": "5b100994a9e6f3b4bbb16a87366ebc38cd9638e941b0393f1708e691a3c87110",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/frames.csv.gz",
+    "archive_sha256": "13101810d93ee679b4f5eb01af14b801df60cc3bb856e1a35639775ed8ba0839"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/keyframes.txt",
+    "size": 3166,
+    "sha256": "4fc1b682de1c8ee98a2112f994e7590209ca20a48042a3a79864132c7986136c",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/keyframes.txt.gz",
+    "archive_sha256": "29a1f302c10f56f4c5a6657d7d814eeb3b9c2c0bcc4341b09937b329386be6be"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/online.txt",
+    "size": 16078,
+    "sha256": "637b84844fb8b824abdf930ba089deece0245cb4b65668e0cf3ab203fa1e1354",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/online.txt.gz",
+    "archive_sha256": "50c8fefb177e9a781eb1ac1b5bdc7625481f64e70d2326ac1ea3769ac9b0bee0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/resources.json",
+    "size": 1166,
+    "sha256": "5996bb3289353f8b42eb36259ab78f2d3bdd0c8b67a496065ccdabe91d4d87ff",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/resources.json",
+    "archive_sha256": "5996bb3289353f8b42eb36259ab78f2d3bdd0c8b67a496065ccdabe91d4d87ff"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/fullsystem_smoke/tum_large/official800/run.json",
+    "size": 2626,
+    "sha256": "3c27e62b89214a889f6e5f6bb9b400723937d9c12551dd67ccb0a5e7219f0677",
+    "archived": "runs/fullsystem_smoke/tum_large/official800/run.json",
+    "archive_sha256": "3c27e62b89214a889f6e5f6bb9b400723937d9c12551dd67ccb0a5e7219f0677"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/console.log",
+    "size": 14384,
+    "sha256": "a661a38b1b4b09f4c854d5bf7ce7d747f5914594fc104ac150a59fbd8011c4e1",
+    "archived": "runs/smoke/V1_01_easy/delivered700/console.log.gz",
+    "archive_sha256": "a58c3753bbf17eecd691264db7ef446577ed8943b3d4f7d91940378ec65b4531"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/frames.csv",
+    "size": 11113,
+    "sha256": "93d92980cbf16370ed6b372af2fe50f1d54f6922c201ca7223cce34f28a201c5",
+    "archived": "runs/smoke/V1_01_easy/delivered700/frames.csv.gz",
+    "archive_sha256": "80fcaa97e3f0b8dbd08572b995fc61394e343190bb7f3bc24861fc51982d2c19"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/keyframes.txt",
+    "size": 1447,
+    "sha256": "02e908c5f3cdcb377210740712b8a97fe43c5047992421751f0bb8e307e2ce17",
+    "archived": "runs/smoke/V1_01_easy/delivered700/keyframes.txt.gz",
+    "archive_sha256": "7a043e8f391fe6673676067d82040d39d609582036f28d389c8d4bd54c7de1ea"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/online.txt",
+    "size": 4183,
+    "sha256": "4417905e0d89f4204ecb7af456be16fdef0d16bc67388b61be206bf243ccf4f0",
+    "archived": "runs/smoke/V1_01_easy/delivered700/online.txt.gz",
+    "archive_sha256": "61d583520f0e1a67e07242374a70cd3b38f480ab45c083507d3895c0e407bc9f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/resources.json",
+    "size": 1362,
+    "sha256": "c51f993aa1220c7c14a732102a2eb31e008a7de5f0004b3c38aedb8756fb7462",
+    "archived": "runs/smoke/V1_01_easy/delivered700/resources.json",
+    "archive_sha256": "c51f993aa1220c7c14a732102a2eb31e008a7de5f0004b3c38aedb8756fb7462"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/run.json",
+    "size": 1636,
+    "sha256": "4f65715bc4dbfcb890117a69b12e45b7e09ab243a6e3cab1505c3e8923a7e5ff",
+    "archived": "runs/smoke/V1_01_easy/delivered700/run.json",
+    "archive_sha256": "4f65715bc4dbfcb890117a69b12e45b7e09ab243a6e3cab1505c3e8923a7e5ff"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered700/started.json",
+    "size": 1520,
+    "sha256": "87f922c6cc210f411b14348b01e2a9615995d3d6c7625c616b80e8f346252803",
+    "archived": "runs/smoke/V1_01_easy/delivered700/started.json",
+    "archive_sha256": "87f922c6cc210f411b14348b01e2a9615995d3d6c7625c616b80e8f346252803"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/console.log",
+    "size": 14308,
+    "sha256": "6ebc62efdf3bf47e13cf726165b68983e924c45ae3dca9d2f5aaa7e8125f45b1",
+    "archived": "runs/smoke/V1_01_easy/delivered800/console.log.gz",
+    "archive_sha256": "e7bf75f467a114e87c2cc445381cfcc2c85cce2f00fdf9c08d85f3ff3cb0f7b2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/frames.csv",
+    "size": 11024,
+    "sha256": "dfbbc0d8f75b0179122070dd631427aa4890cd0ccdf5d40ad0e2839889095909",
+    "archived": "runs/smoke/V1_01_easy/delivered800/frames.csv.gz",
+    "archive_sha256": "8be0cea930368a003f2f22465add83cc0961dc42b85f45efc48f5c3a13544af3"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/keyframes.txt",
+    "size": 1266,
+    "sha256": "9639527ca1f61ddfa87cf54c10a6ba7302c8ee19e8e024e785ca928dd55f8838",
+    "archived": "runs/smoke/V1_01_easy/delivered800/keyframes.txt.gz",
+    "archive_sha256": "c7e2988ebcd245503018db55738d6667c33a16e76d2057bceea252ff370afd91"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/online.txt",
+    "size": 3862,
+    "sha256": "4058c68375d56ab7185b9949e647a64b516919956145c8b1d17544d9dcade912",
+    "archived": "runs/smoke/V1_01_easy/delivered800/online.txt.gz",
+    "archive_sha256": "69da07b86bd2c2a2559f01d0528e01ff5801012dfe3e5115fbe01b7c5cc1ee67"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/resources.json",
+    "size": 1362,
+    "sha256": "43966345f81417610c38cf2de6828a79c727247c8674d5a70fd3b35ee8d91459",
+    "archived": "runs/smoke/V1_01_easy/delivered800/resources.json",
+    "archive_sha256": "43966345f81417610c38cf2de6828a79c727247c8674d5a70fd3b35ee8d91459"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/run.json",
+    "size": 1636,
+    "sha256": "512677dcba1dc60eed88d32ccdf4c6aac3ad486b4fa6866ab7beb300185ca8d4",
+    "archived": "runs/smoke/V1_01_easy/delivered800/run.json",
+    "archive_sha256": "512677dcba1dc60eed88d32ccdf4c6aac3ad486b4fa6866ab7beb300185ca8d4"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/delivered800/started.json",
+    "size": 1520,
+    "sha256": "c72fdb1aa445b8b82da795091a22d1742aa444d89e1065ef1136787342ee05ad",
+    "archived": "runs/smoke/V1_01_easy/delivered800/started.json",
+    "archive_sha256": "c72fdb1aa445b8b82da795091a22d1742aa444d89e1065ef1136787342ee05ad"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/console.log",
+    "size": 7129,
+    "sha256": "ea2dcb519fc16ae193a969bc8e4c4cfe26b8fa8b206afb8ccf14074cc1b2538b",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/console.log.gz",
+    "archive_sha256": "289eabc48ddd378a5a2c71109d5657f1a3f93f5d440786ea9423242d1182bbe0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/frames.csv",
+    "size": 19634,
+    "sha256": "55f1e4b4e819414bd3407c7b0e3c08b1a7a2a1a67959e54e0af2839aa54b4bb2",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/frames.csv.gz",
+    "archive_sha256": "075175ce35e21f2bc625e93251304841a1170870bf025e5fbeb5b569f701c841"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/keyframes.txt",
+    "size": 730,
+    "sha256": "e5c279549b98d0bbde41280c89755a38c8feee81c6740459929b93749d1ec765",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/keyframes.txt.gz",
+    "archive_sha256": "d9b876528202d4a785f928697b93eea29226608d7f56962d1bee84e1430e9b89"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/online.txt",
+    "size": 3713,
+    "sha256": "6ffe528a1d68dc6dd66411b89745eddbacbebc5e863709de088c9082281966ea",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/online.txt.gz",
+    "archive_sha256": "978b59d5201fefdc6b969ca41be455c70c3f4003449a8a04b71ae387a271cedc"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/resources.json",
+    "size": 1361,
+    "sha256": "232c4e3405a412127ab6be31ef091a29c0e483156428c65123a6abbe3f9860a0",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/resources.json",
+    "archive_sha256": "232c4e3405a412127ab6be31ef091a29c0e483156428c65123a6abbe3f9860a0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/run.json",
+    "size": 1559,
+    "sha256": "3deaca613e30c551b0cceccdf899127f9b8f6e6a7d536d3657bcaf3408e0b8bf",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/run.json",
+    "archive_sha256": "3deaca613e30c551b0cceccdf899127f9b8f6e6a7d536d3657bcaf3408e0b8bf"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/started.json",
+    "size": 1444,
+    "sha256": "c318a80090223e7a1d8c35b44c6a490f9ea79cf503c661fca0985303b1c6f764",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/started.json",
+    "archive_sha256": "c318a80090223e7a1d8c35b44c6a490f9ea79cf503c661fca0985303b1c6f764"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/upstream_mapping.txt",
+    "size": 3549,
+    "sha256": "738f57f44b1678921071450d97243e127f7bf253db436ad02b5cd766ca9d14a4",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/upstream_mapping.txt.gz",
+    "archive_sha256": "0298745f9c6d2ace74b27fed6c030b52ec176b4f0f19f7c5a3dfff67ce526706"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/upstream_online.txt",
+    "size": 3167,
+    "sha256": "e765ef7306d1fc4562a7e8f547712b766dc1d46917868f06dbde0b7020429e9e",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/upstream_online.txt.gz",
+    "archive_sha256": "6315dd7d99a30f2dea98c5568ce7e44da4eb7eb7fabf3e3c69d49e355ecd7a28"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/gf_bridge/upstream_tracking.txt",
+    "size": 5968,
+    "sha256": "6ddd8298e05f032fc02fc615ed7538dd01fd15750beea0df94cf26bd9575a037",
+    "archived": "runs/smoke/V1_01_easy/gf_bridge/upstream_tracking.txt.gz",
+    "archive_sha256": "11d55aa44e211e2ae7307354a5e9bb406d728aa4c32376c306ebb18053906b0f"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/console.log",
+    "size": 1374,
+    "sha256": "9d74daf191cbb7c9d70e85a825d031c4779de10bc690935747fd0804b58fe5ce",
+    "archived": "runs/smoke/V1_01_easy/official800/console.log.gz",
+    "archive_sha256": "c099af2b62801581134144c8004fbec927df27fa8ee12ea2771d713112250c0b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/frames.csv",
+    "size": 11126,
+    "sha256": "070dd95730666c89bd60eae0d4cec58c3f3bcc3680f224eda74ab422179328a3",
+    "archived": "runs/smoke/V1_01_easy/official800/frames.csv.gz",
+    "archive_sha256": "d498c390da81749915f50ff87a956c71905f591953743bff111094d7e3f061ce"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/keyframes.txt",
+    "size": 1266,
+    "sha256": "a89e4acb1a68439a1aeaa19e90450d5fb8e5193ce65fcc112db4e474c21fc4b3",
+    "archived": "runs/smoke/V1_01_easy/official800/keyframes.txt.gz",
+    "archive_sha256": "b00976a6f353049617d9e8a2bf77fda9bd1f3521037991d0487396ab15fdb9ec"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/online.txt",
+    "size": 3862,
+    "sha256": "4814a82b90d8f1cfab95cec2a3bef60d0ef299d861b4dcc3611ad0b499bf337b",
+    "archived": "runs/smoke/V1_01_easy/official800/online.txt.gz",
+    "archive_sha256": "02f167e9b92d18480e463fe649d80293b50284732a0d7d5b9842ccb74594a614"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/resources.json",
+    "size": 1365,
+    "sha256": "91bde8ecd42ae2e87bdf08c33af4ed4bdbfd805a238e7ff711dddef4a95ba27e",
+    "archived": "runs/smoke/V1_01_easy/official800/resources.json",
+    "archive_sha256": "91bde8ecd42ae2e87bdf08c33af4ed4bdbfd805a238e7ff711dddef4a95ba27e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/run.json",
+    "size": 1630,
+    "sha256": "c8193f8c2476c95d727fd43c57eb28d2bc372807ef6af215e1338b306d5ae9f8",
+    "archived": "runs/smoke/V1_01_easy/official800/run.json",
+    "archive_sha256": "c8193f8c2476c95d727fd43c57eb28d2bc372807ef6af215e1338b306d5ae9f8"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/V1_01_easy/official800/started.json",
+    "size": 1514,
+    "sha256": "79becd06b4d22f0817fa0f54aaff0510777806d4a71e41f7efeba642c642417e",
+    "archived": "runs/smoke/V1_01_easy/official800/started.json",
+    "archive_sha256": "79becd06b4d22f0817fa0f54aaff0510777806d4a71e41f7efeba642c642417e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/console.log",
+    "size": 15437,
+    "sha256": "d8588eac43811cef40f56ce3448858c2991d5d31f22e8b687f4f6be479486e82",
+    "archived": "runs/smoke/tum_large/delivered700/console.log.gz",
+    "archive_sha256": "9b019592f6646797426825f81d136eb5e7b1126b12ab81a1e90853b5f5ceaa22"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/frames.csv",
+    "size": 11473,
+    "sha256": "9b93005f4ae110a22197437debd95835c6abf6e0b66d29f285978a7a5268e69e",
+    "archived": "runs/smoke/tum_large/delivered700/frames.csv.gz",
+    "archive_sha256": "6576c7dfd50d8a57a304359820c79507ab0885e25b3452c078765fef998a602c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/keyframes.txt",
+    "size": 3710,
+    "sha256": "cbeca97fe72b09165caa14fa17e94f2d71b485dce251620943d879b24bebd439",
+    "archived": "runs/smoke/tum_large/delivered700/keyframes.txt.gz",
+    "archive_sha256": "40612988c51066b7912a65dc22c0639cef0beb52a7d7a3ef070f73fd2a9651d1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/online.txt",
+    "size": 16079,
+    "sha256": "df01c8c31cfff25659f20186dd469694ff5aeba44b1ff463d5938bce82352982",
+    "archived": "runs/smoke/tum_large/delivered700/online.txt.gz",
+    "archive_sha256": "83e6fb7c46c6229d34ab6a59315a91dc5e2f85299c549137d0c26cb88f143a9e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/resources.json",
+    "size": 1169,
+    "sha256": "af8444ffadf3f1b113e977b78bf807ff26f628b823ee0b1ed70885bc1a413b2c",
+    "archived": "runs/smoke/tum_large/delivered700/resources.json",
+    "archive_sha256": "af8444ffadf3f1b113e977b78bf807ff26f628b823ee0b1ed70885bc1a413b2c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/run.json",
+    "size": 1628,
+    "sha256": "d6a519f3253f8d4cf5412bf64ebfa6e04ed621c8872ee08bb5a11afdc84abb83",
+    "archived": "runs/smoke/tum_large/delivered700/run.json",
+    "archive_sha256": "d6a519f3253f8d4cf5412bf64ebfa6e04ed621c8872ee08bb5a11afdc84abb83"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered700/started.json",
+    "size": 1512,
+    "sha256": "c4a27f172012a8ef650342ad53a5c7ba5376b7b65ca6d7bbded852c026e77417",
+    "archived": "runs/smoke/tum_large/delivered700/started.json",
+    "archive_sha256": "c4a27f172012a8ef650342ad53a5c7ba5376b7b65ca6d7bbded852c026e77417"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/console.log",
+    "size": 14753,
+    "sha256": "63e72613227fba281a0c32fb0118f45617c0b7be8edf32907221e9dd52e81e78",
+    "archived": "runs/smoke/tum_large/delivered800/console.log.gz",
+    "archive_sha256": "9a0667825fd836559496ad122cfc9c8c7a7f5fcddfc5e7a4056ff00e99124f2d"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/frames.csv",
+    "size": 11415,
+    "sha256": "946abc36601448c58d28b480f9dcf3eb72b1c0c522cff24e242b539272e7212c",
+    "archived": "runs/smoke/tum_large/delivered800/frames.csv.gz",
+    "archive_sha256": "a56ebad936b1abda607ba72495000e464a3c90492afdb40b5acb01215b6c6ece"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/keyframes.txt",
+    "size": 2810,
+    "sha256": "fc5d89783d517ca1d98adf65d6861ba97d6d95712f7165dd179bb9eae95ca1da",
+    "archived": "runs/smoke/tum_large/delivered800/keyframes.txt.gz",
+    "archive_sha256": "bda2ead892583c4818087bdb4841528652c9768d3bd0e6addad5905f384c4dd2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/online.txt",
+    "size": 16088,
+    "sha256": "26a6cde668142d525222f07acd583d258cc3cf029fa4b94f1217dad6c8b4456a",
+    "archived": "runs/smoke/tum_large/delivered800/online.txt.gz",
+    "archive_sha256": "e79d9ea1ac7aeeeaf2e87f340c6f2f12a5ac2793c25cf95d6e098d27738d86b1"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/resources.json",
+    "size": 1166,
+    "sha256": "3027449d468eafda1f0d2c749fe6c9267ad419af0ed25490b1cacdb48f4cf4e0",
+    "archived": "runs/smoke/tum_large/delivered800/resources.json",
+    "archive_sha256": "3027449d468eafda1f0d2c749fe6c9267ad419af0ed25490b1cacdb48f4cf4e0"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/run.json",
+    "size": 1628,
+    "sha256": "84a6e1e2517373274a553c44ee5dc75ac7f4be33f8700d9443b9ae539f4d03ca",
+    "archived": "runs/smoke/tum_large/delivered800/run.json",
+    "archive_sha256": "84a6e1e2517373274a553c44ee5dc75ac7f4be33f8700d9443b9ae539f4d03ca"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800/started.json",
+    "size": 1512,
+    "sha256": "03b4eeda3a5592c91c99e70e8988adf20d43aa2525d966453e56fc57e8b926aa",
+    "archived": "runs/smoke/tum_large/delivered800/started.json",
+    "archive_sha256": "03b4eeda3a5592c91c99e70e8988adf20d43aa2525d966453e56fc57e8b926aa"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/console.log",
+    "size": 22049,
+    "sha256": "39ed6c3bd7935050857d61c5db96d1bb999bc01982efe8cdc9a70931c68c5da3",
+    "archived": "runs/smoke/tum_large/gf_bridge/console.log.gz",
+    "archive_sha256": "ee44d4a0045d01c83afe2a46a8dbea6877a4fbaac55197288dd8544f7df2ca35"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/corrected.txt",
+    "size": 15576,
+    "sha256": "27292da8c0aa1fbfbdcc8d38d198f3293fbd209b6f9efedad50640556ed85e1e",
+    "archived": "runs/smoke/tum_large/gf_bridge/corrected.txt.gz",
+    "archive_sha256": "ac73f3b1f5c35fceb324a009610e2b6cbc074022099f143be73f6d86d937b13c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/frames.csv",
+    "size": 28005,
+    "sha256": "8ffcf18ba3b831a237f6e5ff3f7a9b5d214c732f24034e2356d2f59c12f2b7f2",
+    "archived": "runs/smoke/tum_large/gf_bridge/frames.csv.gz",
+    "archive_sha256": "3baefeb3a0b0ce118984b9d96ddf638ab741002255fb541225d79d4982e79bc2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/keyframes.txt",
+    "size": 2151,
+    "sha256": "0cde65fa5e4604a49b7d011ba937b232ad1b7e9f3c1a708326491117099bfb57",
+    "archived": "runs/smoke/tum_large/gf_bridge/keyframes.txt.gz",
+    "archive_sha256": "26947b8afa91d423fb29b1e40b2126f0f198033227c6fc3e99337837998b72a2"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/online.txt",
+    "size": 16035,
+    "sha256": "6be9d8b1aaa69596cfd23ba51eeb1fa943659785d8cd8519046d092bcd992680",
+    "archived": "runs/smoke/tum_large/gf_bridge/online.txt.gz",
+    "archive_sha256": "9da68c4c1f05d6ac2531d85a455bbbabdc13afff3b9b6112bdb577eafcacb7c6"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/resources.json",
+    "size": 1165,
+    "sha256": "5ad69c9d7e46256fd9dbd90fd9d97d90d59c777d224fdf90febe8cf7a12b1b52",
+    "archived": "runs/smoke/tum_large/gf_bridge/resources.json",
+    "archive_sha256": "5ad69c9d7e46256fd9dbd90fd9d97d90d59c777d224fdf90febe8cf7a12b1b52"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/run.json",
+    "size": 1552,
+    "sha256": "42de3210c13ec93468ed462f96e0f27cbf33d1f65455e905cee72549f78780f9",
+    "archived": "runs/smoke/tum_large/gf_bridge/run.json",
+    "archive_sha256": "42de3210c13ec93468ed462f96e0f27cbf33d1f65455e905cee72549f78780f9"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/started.json",
+    "size": 1436,
+    "sha256": "7816f9feaa67c774488abb6ffa6fba3fd987d412d9a0f6cc70c42e73ea0dcf9e",
+    "archived": "runs/smoke/tum_large/gf_bridge/started.json",
+    "archive_sha256": "7816f9feaa67c774488abb6ffa6fba3fd987d412d9a0f6cc70c42e73ea0dcf9e"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/upstream_mapping.txt",
+    "size": 4361,
+    "sha256": "7db32a83b9693448424116561dd7de931c9a5ca44cabf46a174fa41d63025e45",
+    "archived": "runs/smoke/tum_large/gf_bridge/upstream_mapping.txt.gz",
+    "archive_sha256": "1bf910b9e1043874442282153d69a23a76ff296f6047a6d0487ef6eb3cd62d33"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/upstream_online.txt",
+    "size": 13517,
+    "sha256": "31c945ff53d0fee7608fe5f43ced01b4383f67da6b2675ed50cd4d3bb7a10134",
+    "archived": "runs/smoke/tum_large/gf_bridge/upstream_online.txt.gz",
+    "archive_sha256": "b2c3c841f66382c5575e4bed858650be43e28bc01748ed803f2e4f0610fce09a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/gf_bridge/upstream_tracking.txt",
+    "size": 25978,
+    "sha256": "ab20dd0833ce7e2e70f20fa1b0d87e55fe2153843ed94f97026520dafa018513",
+    "archived": "runs/smoke/tum_large/gf_bridge/upstream_tracking.txt.gz",
+    "archive_sha256": "7e6efec4051f4cd444551c47c41ad6ae3cccc14f3573420d90bb1e7263aad719"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/console.log",
+    "size": 1425,
+    "sha256": "93afda892c43aa9d0541b9bfa8f0a490edf13d8179ab34cfdcaa13675b5f7490",
+    "archived": "runs/smoke/tum_large/official800/console.log.gz",
+    "archive_sha256": "cf35b12ea0df25c160e5d18db6846967471bdcf4cb1f469a53a0eb3af79d1e1b"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/frames.csv",
+    "size": 11116,
+    "sha256": "91c359cdca3634eab832ea918c20ba350182e7d1ca3e409ccae2fcb4e8a67770",
+    "archived": "runs/smoke/tum_large/official800/frames.csv.gz",
+    "archive_sha256": "9d22403da4f5869c9e09f66a5ba2781214beab103b05e0f1ad1b64e72d85c067"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/keyframes.txt",
+    "size": 3257,
+    "sha256": "dca4e31cbf222359d2d2c9d105c05fdea6860e930bc60cb5ba12de647c8db565",
+    "archived": "runs/smoke/tum_large/official800/keyframes.txt.gz",
+    "archive_sha256": "6cd425dd94045d56cc48179ef2782fdbb0e737d949dbe01c19860a50725b7035"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/online.txt",
+    "size": 16081,
+    "sha256": "9df39e3c0eea1674045ac10e350b93a7684d0cd21fdf5ea2bd256d4d0ba27c0f",
+    "archived": "runs/smoke/tum_large/official800/online.txt.gz",
+    "archive_sha256": "89b2ec89bc8cfe7aedd3e672b718f3e8436b785ea51496753f2a57a142f8239c"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/resources.json",
+    "size": 1165,
+    "sha256": "88dba7b485dfcda8ca878160c159b063659c276673371f1f3abbf5883db2b25a",
+    "archived": "runs/smoke/tum_large/official800/resources.json",
+    "archive_sha256": "88dba7b485dfcda8ca878160c159b063659c276673371f1f3abbf5883db2b25a"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/run.json",
+    "size": 1622,
+    "sha256": "d3d5283e4a7e7e1eddf19d56f9d5551ceff7d864437384c6eea0dd2a61754069",
+    "archived": "runs/smoke/tum_large/official800/run.json",
+    "archive_sha256": "d3d5283e4a7e7e1eddf19d56f9d5551ceff7d864437384c6eea0dd2a61754069"
+  },
+  {
+    "source": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/official800/started.json",
+    "size": 1506,
+    "sha256": "bd1c42ea9f4a11cd1ed2144d1b05346ab2fe86af3cc5576dfbe547db2ad8808d",
+    "archived": "runs/smoke/tum_large/official800/started.json",
+    "archive_sha256": "bd1c42ea9f4a11cd1ed2144d1b05346ab2fe86af3cc5576dfbe547db2ad8808d"
+  }
+]

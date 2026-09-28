@@ -1,0 +1,803 @@
+[
+  {
+    "elapsed_s": 0.10857008583843708,
+    "cpu_ticks": 0,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "8 kB",
+    "VmRSS": "8 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 2.11108145583421,
+    "cpu_ticks": 199,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "212608 kB",
+    "VmRSS": "212608 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 4.111758298007771,
+    "cpu_ticks": 399,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "371008 kB",
+    "VmRSS": "371008 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 6.1139963360037655,
+    "cpu_ticks": 609,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "504504 kB",
+    "VmRSS": "504504 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 8.115734500810504,
+    "cpu_ticks": 811,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "512160 kB",
+    "VmRSS": "512160 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 10.11673896596767,
+    "cpu_ticks": 977,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "513744 kB",
+    "VmRSS": "513744 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 12.119278854923323,
+    "cpu_ticks": 1193,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "521676 kB",
+    "VmRSS": "521676 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 14.121996953850612,
+    "cpu_ticks": 1473,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "530388 kB",
+    "VmRSS": "530236 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 16.12419066601433,
+    "cpu_ticks": 1780,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "532668 kB",
+    "VmRSS": "532568 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 18.126652052858844,
+    "cpu_ticks": 2090,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "534684 kB",
+    "VmRSS": "534172 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 20.127716043032706,
+    "cpu_ticks": 2408,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "538912 kB",
+    "VmRSS": "538044 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 22.129184245830402,
+    "cpu_ticks": 2747,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "555300 kB",
+    "VmRSS": "555300 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 24.13180626393296,
+    "cpu_ticks": 2979,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "557412 kB",
+    "VmRSS": "557412 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 26.133131803013384,
+    "cpu_ticks": 3226,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "558204 kB",
+    "VmRSS": "558040 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 28.135924740927294,
+    "cpu_ticks": 3521,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "580544 kB",
+    "VmRSS": "574660 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 30.138266762020066,
+    "cpu_ticks": 3871,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "587676 kB",
+    "VmRSS": "582192 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 32.13957665185444,
+    "cpu_ticks": 4174,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "588532 kB",
+    "VmRSS": "584144 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 34.14105567103252,
+    "cpu_ticks": 4438,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "588532 kB",
+    "VmRSS": "586436 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 36.14357508090325,
+    "cpu_ticks": 4776,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "597888 kB",
+    "VmRSS": "594388 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 38.14606164093129,
+    "cpu_ticks": 5084,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "597888 kB",
+    "VmRSS": "594684 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 40.14770778082311,
+    "cpu_ticks": 5392,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "602864 kB",
+    "VmRSS": "597892 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 42.150080936960876,
+    "cpu_ticks": 5709,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "607920 kB",
+    "VmRSS": "604276 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 44.151705792872235,
+    "cpu_ticks": 5928,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "607920 kB",
+    "VmRSS": "606384 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 46.154093493008986,
+    "cpu_ticks": 6136,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "608760 kB",
+    "VmRSS": "608760 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 48.15560494503006,
+    "cpu_ticks": 6400,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "612992 kB",
+    "VmRSS": "612992 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 50.15794363291934,
+    "cpu_ticks": 6737,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "623196 kB",
+    "VmRSS": "623196 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 52.15976980281994,
+    "cpu_ticks": 7015,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "627508 kB",
+    "VmRSS": "625004 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 54.16041570692323,
+    "cpu_ticks": 7318,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "627768 kB",
+    "VmRSS": "627420 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 56.162761996965855,
+    "cpu_ticks": 7661,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "643520 kB",
+    "VmRSS": "638528 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 58.16498561901972,
+    "cpu_ticks": 7997,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "650932 kB",
+    "VmRSS": "646752 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 60.16753886081278,
+    "cpu_ticks": 8303,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "650932 kB",
+    "VmRSS": "646808 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 62.168364704819396,
+    "cpu_ticks": 8569,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "650932 kB",
+    "VmRSS": "648564 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 64.17067365790717,
+    "cpu_ticks": 8885,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "654368 kB",
+    "VmRSS": "654368 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 66.17165358387865,
+    "cpu_ticks": 9035,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "654632 kB",
+    "VmRSS": "654632 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 68.1733860860113,
+    "cpu_ticks": 9219,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "658328 kB",
+    "VmRSS": "658328 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 70.17573630088009,
+    "cpu_ticks": 9494,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "665720 kB",
+    "VmRSS": "665720 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 72.17658211686648,
+    "cpu_ticks": 9662,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "668096 kB",
+    "VmRSS": "668096 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 74.17784974281676,
+    "cpu_ticks": 9850,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "671264 kB",
+    "VmRSS": "671264 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 76.17957835784182,
+    "cpu_ticks": 10057,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "674696 kB",
+    "VmRSS": "674696 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 78.18231376889162,
+    "cpu_ticks": 10375,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "683672 kB",
+    "VmRSS": "683672 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 80.18358940887265,
+    "cpu_ticks": 10626,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "688952 kB",
+    "VmRSS": "688952 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 82.18600551900454,
+    "cpu_ticks": 10899,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "692648 kB",
+    "VmRSS": "690224 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 84.18771648686379,
+    "cpu_ticks": 11241,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "695068 kB",
+    "VmRSS": "692864 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 86.19036503788084,
+    "cpu_ticks": 11582,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "706728 kB",
+    "VmRSS": "706448 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 88.19249547994696,
+    "cpu_ticks": 11926,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "719240 kB",
+    "VmRSS": "715872 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 90.19499905081466,
+    "cpu_ticks": 12241,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "722664 kB",
+    "VmRSS": "722664 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 92.19734307588078,
+    "cpu_ticks": 12558,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "728736 kB",
+    "VmRSS": "728736 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 94.19984044088051,
+    "cpu_ticks": 12848,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "734808 kB",
+    "VmRSS": "734808 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 96.20235460693948,
+    "cpu_ticks": 13180,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "745368 kB",
+    "VmRSS": "745368 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 98.20430359081365,
+    "cpu_ticks": 13500,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "749248 kB",
+    "VmRSS": "747928 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 100.20669624302536,
+    "cpu_ticks": 13801,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "760488 kB",
+    "VmRSS": "755052 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 102.20805459097028,
+    "cpu_ticks": 14150,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "768996 kB",
+    "VmRSS": "764344 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 104.21062276093289,
+    "cpu_ticks": 14473,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "773816 kB",
+    "VmRSS": "767908 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 106.21162925893441,
+    "cpu_ticks": 14819,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "792080 kB",
+    "VmRSS": "792080 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 108.21402262384072,
+    "cpu_ticks": 15164,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "820336 kB",
+    "VmRSS": "818148 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 110.21563534694724,
+    "cpu_ticks": 15517,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "829184 kB",
+    "VmRSS": "822708 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 112.21669741393998,
+    "cpu_ticks": 15873,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "845780 kB",
+    "VmRSS": "832760 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 114.21910311584361,
+    "cpu_ticks": 16228,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "845780 kB",
+    "VmRSS": "830736 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 116.2196415218059,
+    "cpu_ticks": 16572,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "848500 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 118.2222085618414,
+    "cpu_ticks": 16896,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "838060 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 120.22367278300226,
+    "cpu_ticks": 17216,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "840200 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 122.224879398942,
+    "cpu_ticks": 17462,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "843368 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 124.22734800493345,
+    "cpu_ticks": 17708,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "846008 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 126.22952974284999,
+    "cpu_ticks": 17927,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "848384 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 128.23197656380944,
+    "cpu_ticks": 18199,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "852080 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 130.2345255978871,
+    "cpu_ticks": 18399,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "853400 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 132.2361695319414,
+    "cpu_ticks": 18622,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "855248 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 134.23749188589863,
+    "cpu_ticks": 18893,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "858680 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 136.23976893094368,
+    "cpu_ticks": 19167,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "868632 kB",
+    "VmRSS": "864224 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 138.2424489930272,
+    "cpu_ticks": 19497,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "871352 kB",
+    "VmRSS": "868472 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 140.24378186184913,
+    "cpu_ticks": 19854,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "876400 kB",
+    "VmRSS": "876400 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 142.24624772393145,
+    "cpu_ticks": 20210,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "881476 kB",
+    "VmRSS": "875460 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 144.24885169789195,
+    "cpu_ticks": 20569,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "882356 kB",
+    "VmRSS": "882356 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 146.2500674808398,
+    "cpu_ticks": 20899,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "886272 kB",
+    "VmRSS": "883620 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 148.25162894302048,
+    "cpu_ticks": 21210,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "889428 kB",
+    "VmRSS": "889428 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 150.25338641298003,
+    "cpu_ticks": 21492,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "911076 kB",
+    "VmRSS": "911076 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 152.25578016787767,
+    "cpu_ticks": 21783,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "914772 kB",
+    "VmRSS": "914772 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 154.257983781863,
+    "cpu_ticks": 22091,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "917412 kB",
+    "VmRSS": "909104 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 156.26024574693292,
+    "cpu_ticks": 22333,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "917412 kB",
+    "VmRSS": "910980 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 158.26277090795338,
+    "cpu_ticks": 22575,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "917412 kB",
+    "VmRSS": "912828 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 160.2639099729713,
+    "cpu_ticks": 22844,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "917412 kB",
+    "VmRSS": "914676 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 162.26498593692668,
+    "cpu_ticks": 23183,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "924080 kB",
+    "VmRSS": "924080 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 164.26533105084673,
+    "cpu_ticks": 23525,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "924080 kB",
+    "VmRSS": "923480 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 166.2678108830005,
+    "cpu_ticks": 23839,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "927176 kB",
+    "VmRSS": "927176 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 168.2691083450336,
+    "cpu_ticks": 24078,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "928760 kB",
+    "VmRSS": "922636 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 170.27150373789482,
+    "cpu_ticks": 24326,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "928760 kB",
+    "VmRSS": "924216 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 172.27407572302036,
+    "cpu_ticks": 24595,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "928760 kB",
+    "VmRSS": "926856 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 174.2757212340366,
+    "cpu_ticks": 24872,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "930816 kB",
+    "VmRSS": "930816 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  },
+  {
+    "elapsed_s": 176.27806784003042,
+    "cpu_ticks": 25085,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "931872 kB",
+    "VmRSS": "931872 kB",
+    "VmSwap": "0 kB",
+    "Threads": "3"
+  }
+]

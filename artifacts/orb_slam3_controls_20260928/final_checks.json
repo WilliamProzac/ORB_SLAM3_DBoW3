@@ -1,0 +1,19 @@
+{
+  "archive_files_verified": 184,
+  "frozen_files_verified": 589,
+  "generated_atlas_maps": 0,
+  "active_control_replays": 0,
+  "formal_input_rows": 47047,
+  "main_rounds_exit_zero": 8,
+  "loop_on_rounds_exit_seven": 3,
+  "source_repositories_unchanged": {
+    "official_status": "?? build_log.txt",
+    "runtime_core_status": "clean"
+  },
+  "scope": "Evaluation delivered; tracking/precision/shutdown failures retained, no production acceptance",
+  "checkpoints": [
+    "95b26786",
+    "c1c7d760",
+    "679c9fc2"
+  ]
+}

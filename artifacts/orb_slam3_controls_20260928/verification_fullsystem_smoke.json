@@ -1,0 +1,26 @@
+{
+  "phase": "smoke",
+  "frozen_main_unchanged": true,
+  "same_driver_except_shutdown_GBA_wait": true,
+  "runs": [
+    {
+      "mode": "official800",
+      "complete": true,
+      "frames": 150,
+      "exit_code": 0
+    },
+    {
+      "mode": "delivered800",
+      "complete": true,
+      "frames": 150,
+      "exit_code": 0
+    },
+    {
+      "mode": "delivered700",
+      "complete": true,
+      "frames": 150,
+      "exit_code": 0
+    }
+  ],
+  "all_complete": true
+}

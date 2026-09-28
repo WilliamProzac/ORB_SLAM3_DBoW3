@@ -1,0 +1,65 @@
+[
+  {
+    "elapsed_s": 0.12014846689999104,
+    "cpu_ticks": 0,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "260 kB",
+    "VmRSS": "260 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 2.1215178538113832,
+    "cpu_ticks": 198,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "205284 kB",
+    "VmRSS": "205284 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 4.123039901955053,
+    "cpu_ticks": 399,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "349692 kB",
+    "VmRSS": "349692 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 6.125011367956176,
+    "cpu_ticks": 598,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "587848 kB",
+    "VmRSS": "527688 kB",
+    "VmSwap": "0 kB",
+    "Threads": "1"
+  },
+  {
+    "elapsed_s": 8.12704847077839,
+    "cpu_ticks": 794,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "587848 kB",
+    "VmRSS": "493336 kB",
+    "VmSwap": "0 kB",
+    "Threads": "7"
+  },
+  {
+    "elapsed_s": 10.128366962773725,
+    "cpu_ticks": 992,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "587848 kB",
+    "VmRSS": "493628 kB",
+    "VmSwap": "0 kB",
+    "Threads": "7"
+  },
+  {
+    "elapsed_s": 12.131026049843058,
+    "cpu_ticks": 1183,
+    "clock_ticks_per_second": 100,
+    "VmHWM": "587848 kB",
+    "VmRSS": "499552 kB",
+    "VmSwap": "0 kB",
+    "Threads": "7"
+  }
+]

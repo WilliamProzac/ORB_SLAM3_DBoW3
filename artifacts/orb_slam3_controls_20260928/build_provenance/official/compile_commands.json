@@ -1,0 +1,327 @@
+[
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIE   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/replay.dir/replay.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/harness/replay.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/harness/replay.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Atlas.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Atlas.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Atlas.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/KannalaBrandt8.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/KannalaBrandt8.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/KannalaBrandt8.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/Pinhole.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/Pinhole.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/CameraModels/Pinhole.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Config.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Config.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Config.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Converter.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Converter.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Converter.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Frame.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Frame.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Frame.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/FrameDrawer.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/FrameDrawer.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/FrameDrawer.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/G2oTypes.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/G2oTypes.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/G2oTypes.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/GeometricTools.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/GeometricTools.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/GeometricTools.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ImuTypes.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ImuTypes.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ImuTypes.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrame.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrame.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrame.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrameDatabase.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrameDatabase.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/KeyFrameDatabase.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LocalMapping.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LocalMapping.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LocalMapping.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LoopClosing.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LoopClosing.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/LoopClosing.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MLPnPsolver.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MLPnPsolver.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MLPnPsolver.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Map.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Map.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Map.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapDrawer.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapDrawer.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapDrawer.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapPoint.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapPoint.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/MapPoint.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBextractor.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBextractor.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBextractor.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBmatcher.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBmatcher.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/ORBmatcher.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/OptimizableTypes.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/OptimizableTypes.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/OptimizableTypes.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Optimizer.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Optimizer.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Optimizer.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Settings.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Settings.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Settings.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Sim3Solver.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Sim3Solver.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Sim3Solver.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/System.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/System.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/System.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Tracking.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Tracking.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Tracking.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/TwoViewReconstruction.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/TwoViewReconstruction.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/TwoViewReconstruction.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official",
+  "command": "/usr/bin/c++  -DBOOST_ALL_NO_LIB -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SYSTEM_DYN_LINK -DCOMPILEDWITHC11 -DHAVE_EIGEN -DHAVE_EPOXY -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"wayland\\\" -D_LINUX_ -Dorb3_official_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/include/CameraModels -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/Sophus -isystem /usr/include/opencv4 -isystem /usr/include/eigen3  -O3 -DNDEBUG -fPIC   -O3 -march=native -Wno-error=ignored-qualifiers -Wno-error=sign-compare -Wno-error=deprecated-copy -Wno-error=missing-field-initializers -Wno-error=pessimizing-move -std=gnu++14 -o CMakeFiles/orb3_official.dir/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Viewer.cc.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Viewer.cc",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/src/Viewer.cc"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/types/types_sba.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_sba.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_sba.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/types/types_six_dof_expmap.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_six_dof_expmap.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_six_dof_expmap.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/types/types_seven_dof_expmap.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/hyper_graph_action.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_graph_action.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_graph_action.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/hyper_graph.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_graph.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_graph.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/marginal_covariance_cholesky.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/marginal_covariance_cholesky.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/marginal_covariance_cholesky.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/matrix_structure.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/matrix_structure.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/matrix_structure.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/batch_stats.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/batch_stats.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/batch_stats.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/parameter.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/parameter.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/parameter.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/cache.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/cache.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/cache.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimizable_graph.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimizable_graph.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimizable_graph.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/solver.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/solver.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/solver.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimization_algorithm_factory.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_factory.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_factory.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/estimate_propagator.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/estimate_propagator.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/estimate_propagator.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/factory.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/factory.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/factory.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/sparse_optimizer.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/sparse_optimizer.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/sparse_optimizer.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/hyper_dijkstra.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_dijkstra.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/hyper_dijkstra.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/parameter_container.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/parameter_container.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/parameter_container.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimization_algorithm.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimization_algorithm_with_hessian.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_with_hessian.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_with_hessian.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimization_algorithm_levenberg.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_levenberg.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_levenberg.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/optimization_algorithm_gauss_newton.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_gauss_newton.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/optimization_algorithm_gauss_newton.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/jacobian_workspace.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/jacobian_workspace.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/jacobian_workspace.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/robust_kernel.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/robust_kernel_factory.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel_factory.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel_factory.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/core/robust_kernel_impl.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel_impl.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/core/robust_kernel_impl.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/stuff/timeutil.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/timeutil.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/timeutil.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/cc -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -o CMakeFiles/g2o.dir/g2o/stuff/os_specific.c.o   -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/os_specific.c",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/os_specific.c"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/stuff/string_tools.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/string_tools.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/string_tools.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/g2o",
+  "command": "/usr/bin/c++  -DUNIX -Dg2o_EXPORTS -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/core -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/types -I/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/stuff -I/usr/include/eigen3    -Wall -W -O3 -DNDEBUG -O3 -march=native -fPIC   -std=gnu++14 -o CMakeFiles/g2o.dir/g2o/stuff/property.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/property.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/g2o/g2o/stuff/property.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DBoW2/BowVector.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/BowVector.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/BowVector.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DBoW2/FORB.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/FORB.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/FORB.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DBoW2/FeatureVector.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/FeatureVector.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/FeatureVector.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DBoW2/ScoringObject.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/ScoringObject.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DBoW2/ScoringObject.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DUtils/Random.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DUtils/Random.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DUtils/Random.cpp"
+},
+{
+  "directory": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/dbow",
+  "command": "/usr/bin/c++  -DDBoW2_EXPORTS -isystem /usr/include/opencv4   -Wall  -O3 -march=native -O3 -DNDEBUG -fPIC   -std=gnu++14 -o CMakeFiles/DBoW2.dir/DUtils/Timestamp.cpp.o -c /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DUtils/Timestamp.cpp",
+  "file": "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/official/Thirdparty/DBoW2/DUtils/Timestamp.cpp"
+}
+]

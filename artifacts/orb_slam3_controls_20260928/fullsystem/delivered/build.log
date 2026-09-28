@@ -1,0 +1,352 @@
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:34,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:74: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                          ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:82: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                                  ^~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:34,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<3, Eigen::Matrix<double, 3, 1> >’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_sba.h:40:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:34,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<6, g2o::SE3Quat>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:59:33:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<6, g2o::SE3Quat, g2o::VertexSE3Expmap, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:83:24:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:114:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<3, Eigen::Matrix<double, 3, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_six_dof_expmap.h:146:41:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:34,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h: In instantiation of ‘class g2o::BaseVertex<7, g2o::Sim3>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:48:35:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_vertex.h:62:72: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   62 |     typedef Eigen::Map<Matrix<double, D, D>, Matrix<double,D,D>::Flags & AlignedBit ? Aligned : Unaligned >  HessianBlockType;
+      |                                                                  ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<7, g2o::Sim3, g2o::VertexSim3Expmap, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:99:27:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h: In instantiation of ‘class g2o::BaseBinaryEdge<2, Eigen::Matrix<double, 2, 1>, g2o::VertexSBAPointXYZ, g2o::VertexSim3Expmap>’:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:130:36:   required from here
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:59:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   59 |       typedef Eigen::Map<Matrix<double, Di, Dj>, Matrix<double, Di, Dj>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~
+In file included from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Converter.h:27,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:39,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/g2o/g2o/types/../core/base_binary_edge.h:60:80: warning: ‘Eigen::AlignedBit’ is deprecated [-Wdeprecated-declarations]
+   60 |       typedef Eigen::Map<Matrix<double, Dj, Di>, Matrix<double, Dj, Di>::Flags & AlignedBit ? Aligned : Unaligned > HessianBlockTransposedType;
+      |                                                                          ~~~~~~^~~~~~~~~~~~
+In file included from /usr/include/eigen3/Eigen/Core:363,
+                 from /usr/include/eigen3/Eigen/Dense:1,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/rotation_matrix.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/so3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/Thirdparty/Sophus/sophus/se3.hpp:7,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/CameraModels/GeometricCamera.h:35,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/Atlas.h:25,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/delivered/include/System.h:33,
+                 from /home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/fullsystem/replay.cc:1:
+/usr/include/eigen3/Eigen/src/Core/util/Constants.h:162:37: note: declared here
+  162 | EIGEN_DEPRECATED const unsigned int AlignedBit = 0x80;
+      |                                     ^~~~~~~~~~

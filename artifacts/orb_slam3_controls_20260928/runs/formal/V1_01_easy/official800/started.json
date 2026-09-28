@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/replay",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/vocabulary/ORBvoc.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/configs/euroc_official800.yaml",
+    "mono",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/V1_01_easy.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/formal/V1_01_easy/official800",
+    "0"
+  ],
+  "mode": "official800",
+  "dataset": "V1_01_easy",
+  "phase": "formal",
+  "repeat": 1,
+  "expected_frames": 2912,
+  "hashes": {
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-official/replay": "4410ff6430a49d9d5cd3b544e7e719d4970ac93f304a5440455c8d5146feddc6",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/configs/euroc_official800.yaml": "528fde722e15595ab2935bb492bbfa8d5a695cb20ab1ff4f84171c23988d7b86",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/vocabulary/ORBvoc.txt": "f8dd027f7a6cb88129821341194d7f2c75b77b3394257ddd0d2229863d1a3570",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/V1_01_easy.txt": "7a2b6e7a0acd11bbf3d064b7efe6b380e6aa26a6ae4160e6deb713399327d56a"
+  },
+  "start_utc": "2026-09-28T09:11:17Z",
+  "thread_env": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "loop_closure": false,
+  "rate": 1,
+  "drop_policy": "none"
+}

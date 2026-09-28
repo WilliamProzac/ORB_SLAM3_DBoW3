@@ -1,0 +1,35 @@
+{
+  "command": [
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-delivered/replay",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/vocabulary/ORBvoc.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/configs/tum_delivered800.yaml",
+    "rgbd",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/tum_large.txt",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/runs/smoke/tum_large/delivered800",
+    "150"
+  ],
+  "mode": "delivered800",
+  "dataset": "tum_large",
+  "phase": "smoke",
+  "repeat": 1,
+  "expected_frames": 150,
+  "hashes": {
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/build-delivered/replay": "fe2604af8dfce41b03c1699ce874d576abdbad3ce393058b6c8095e169177fea",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/configs/tum_delivered800.yaml": "478bf659e541aece7fe37d3b88598c56e6e465a18634603a66321121a93f69bd",
+    "/home/ywl/Project/RDK_X5_orb_slam/orb_slam3_controls_20260928/vocabulary/ORBvoc.txt": "f8dd027f7a6cb88129821341194d7f2c75b77b3394257ddd0d2229863d1a3570",
+    "/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928/inputs/tum_large.txt": "1928bbecf7a0611363dffe467f9c7ba85f36405cd2f510b36d2752fadc9f9859"
+  },
+  "start_utc": "2026-09-28T09:09:31Z",
+  "thread_env": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "loop_closure": false,
+  "rate": 1,
+  "drop_policy": "none",
+  "exit_code": 0,
+  "elapsed_s": 12.116817037109286,
+  "failure_reason": null,
+  "end_utc": "2026-09-28T09:09:43Z"
+}
