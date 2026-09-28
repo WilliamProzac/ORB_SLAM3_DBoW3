@@ -1,3 +1,19 @@
+# GF03 current handoff — 2026-09-28 (active)
+
+User authorized evaluation of all existing GF modules individually and in combination. Exactly one active feature GF03. No unsolicited subagents.
+
+- Independent root: `/home/ywl/Project/RDK_X5_orb_slam/gf_orb_slam2_modules_20260928`. Source branch `repro/module-factorial-20260928`, current source `1ad2246`, parent GF02 `33e5064`; official base `2a60498`. Main checkpoint `39e5ebaf` (initially clean `e4902eaa`).
+- Eight modes baseline/f/h/g/fh/fg/hg/fhg. F existing GFM including skip-local and KF insertion behavior, 400 scalar constraints and 800 extracted ORB features. H legacy bucket MIH+OTS with inherited common synchronization, not paper bounded/all-descriptor policy. G existing fixed30/candidates60 Good Graph; no dynamic anticipation/budget or unfinished stereo SLAM++ variant. 2-D graph selection information also on RGB-D; downstream g2o BA keeps depth constraints. No loop, GPU, external prior, viewer or map saves.
+- SLAM++ base dependencies built; hard-coded Eigen/Armadillo discovery corrected in source. Harness links system BLAS/LAPACK instead of legacy mixed-Eigen wrappers. Failed build logs preserved. Actual F active/skip counters added; G selection already logs triggers/completion.
+- Main eight-target build running in `logs/build.log`; baseline/f/h/g/fh/fg complete at this handoff; hg/fhg pending. All native dependency targets passed. Main exec session 44640. Do not benchmark formal timing concurrently with builds.
+- Functional short runs completed: baseline/f/h EuRoC 400 each, G EuRoC800 (22 actual selections), baseline/f/h/g TUM400 each; all complete, zero non-OK after init. `smoke_summary_initial.json`. No formal performance claim.
+- Functional runner freeze guard stopped `smoke_single_tum` after baseline/f when replay.cc was temporarily changed. Old source restored and archived by SHA in provenance; h/g completed as smoke_single_tum_hg. `logs/functional_freeze_note.txt`. New driver with schedule lateness held at `harness/replay_next.cc`; apply after all functional runners/build finish, rebuild every executable, then freeze.
+- Existing GF01/GF02 16 binary hashes unchanged. 3 accuracy helper tests pass. Input manifests rechecked 2912/5057. TUM GT only about24% coverage; do not claim full trajectory accuracy.
+- Remaining: finish builds; apply replay_next.cc; final rebuild; smoke all combinations; commit source/harness, run harness/freeze.py once; full sequential 8 modes x3 repeats on both datasets (48 rounds), 1x, tags euroc_modules/tum_modules; analyze.py, factorial_report.py, audit_freeze.py; archive evidence/report/plots with Git commits and update feature/handoff. Scripts live in independent harness; some archived files at initial checkpoint are earlier versions, refresh before final commit. `freeze.py` refuses overwrite; formal inputs must never change during tests.
+- No production ORB3/board changes. User asked actual tests, continue until results delivered, not only a plan.
+
+---
+
 # GF02 current handoff — 2026-09-28
 
 GF02 evaluation delivery is complete (`passing` for the research workflow). The repaired hashing candidate is **not accepted for acceleration or production**. LM01 remains blocked/default off.

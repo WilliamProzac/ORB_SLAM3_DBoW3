@@ -7,12 +7,15 @@ cmake -S upstream/Thirdparty/SLAM++ -B build_slampp -DCMAKE_BUILD_TYPE=Release -
 cmake --build build_slampp --target slampp_base csparse cxsparse cholmod camd_dlong -j2
 cmake -S harness -B build
 cmake --build build --target replay_baseline replay_f replay_h replay_g replay_fh replay_fg replay_hg replay_fhg -j2
-python3 harness/run_matrix.py --dataset V1_01_easy --repeats 1 --max-frames 400 --tag smoke_euroc
-python3 harness/run_matrix.py --dataset tum_large --repeats 1 --max-frames 400 --tag smoke_tum
+python3 harness/run_matrix.py --dataset V1_01_easy --modes fhg --repeats 1 --max-frames 1200 --tag smoke_all_euroc
+python3 harness/run_matrix.py --dataset tum_large --modes fh fg hg fhg --repeats 1 --max-frames 400 --tag smoke_pairs_tum
+python3 harness/freeze.py
 python3 harness/run_matrix.py --dataset V1_01_easy --repeats 3 --tag euroc_modules
 python3 harness/run_matrix.py --dataset tum_large --repeats 3 --tag tum_modules
 python3 harness/analyze.py runs/euroc_modules
 python3 harness/analyze.py runs/tum_modules
+python3 harness/factorial_report.py
+python3 harness/audit_freeze.py
 ```
 
 No production SLAM/board changes. No maps generated. Full API latency includes optional postprocessing, unlike internal pose-ready latency. G uses existing fixed-cardinality selection and 2-D projection information (including on RGB-D); subsequent g2o BA retains RGB-D constraints. Dynamic anticipation/budget prediction and the upstream explicitly unfinished stereo SLAM++ variant are not enabled. F includes its existing local-tracking skip and RGB-D keyframe rules. H retains legacy bucket policy to isolate module effects; this is not the GF02 paper-all variant.

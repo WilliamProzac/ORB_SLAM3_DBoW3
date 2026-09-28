@@ -50,7 +50,7 @@ def summarize(run):
     out['tracking_pass']=out['complete'] and bool(len(ok)) and out['non_ok_after_initialization']==0
     out['states']={str(int(k)):int(v) for k,v in zip(*np.unique(x['state'],return_counts=True))}
     for label,subset in [('all',x),('after_initialization',x[start:]),('tail25',x[x['index']>=meta['expected_frames']-meta['expected_frames']//4])]:
-        out[label]={key:stats(subset[key]) for key in ['track_ms','local_ms','match_ms','opt_ms','hash_field_ms','local_mp','covis_mp','hash_mp','inliers','pose_stage_sum_ms','post_ms','pose_ready_ms','gfm_active','gfm_matrix_ms','gfm_skip_local','valid_associations'] if key in subset.dtype.names}
+        out[label]={key:stats(subset[key]) for key in ['track_ms','local_ms','match_ms','opt_ms','hash_field_ms','local_mp','covis_mp','hash_mp','inliers','pose_stage_sum_ms','post_ms','pose_ready_ms','gfm_active','gfm_matrix_ms','gfm_skip_local','valid_associations','input_lateness_ms'] if key in subset.dtype.names}
     out['hash_query_nonzero_frames']=int(np.sum(x['hash_mp']>0));out['features_ok']=stats(x['features'][x['state']==2])
     console=(run/'console.log').read_text(errors='replace')
     out['module_execution']={
@@ -67,7 +67,7 @@ def summarize(run):
             except ValueError:pass
     out['ots']={'updates':len(ots),'completed':sum(z[1] for z in ots),'table_counts':stats(np.array([z[2] for z in ots])),'update_ms':stats(np.array([z[3]*1000 for z in ots]))}
     resources=json.loads((run/'resources.json').read_text())
-    out['resources']={'rss_peak_kib':max([int(z.get('VmRSS','0 kB').split()[0]) for z in resources] or [0]),'swap_peak_kib':max([int(z.get('VmSwap','0 kB').split()[0]) for z in resources] or [0])}
+    out['resources']={'rss_peak_kib':max([int(z.get('VmHWM',z.get('VmRSS','0 kB')).split()[0]) for z in resources] or [0]),'swap_peak_kib':max([int(z.get('VmSwap','0 kB').split()[0]) for z in resources] or [0])}
     cpu=[z for z in resources if 'cpu_ticks' in z]
     if len(cpu)>1:out['resources']['mean_process_cores']=(cpu[-1]['cpu_ticks']-cpu[0]['cpu_ticks'])/cpu[-1]['clock_ticks_per_second']/(cpu[-1]['elapsed_s']-cpu[0]['elapsed_s'])
     mapping=run/'upstream_mapping.txt'

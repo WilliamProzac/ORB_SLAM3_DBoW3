@@ -1,0 +1,58 @@
+diff --git a/Thirdparty/SLAM++/CMakeLists.txt b/Thirdparty/SLAM++/CMakeLists.txt
+index a8e73d5..fe07184 100644
+--- a/Thirdparty/SLAM++/CMakeLists.txt
++++ b/Thirdparty/SLAM++/CMakeLists.txt
+@@ -526,8 +526,9 @@ ENDIF(UNIX)
+ 
+ 
+ # customize armadillo dir
+-set(ARMADILLO_INCLUDE_DIR /opt/armadillo/include)
+-set(ARMADILLO_LIBRARIES /opt/armadillo/lib/libarmadillo.so)
++find_package(Armadillo REQUIRED)
++find_package(Eigen3 REQUIRED)
++set(ARMADILLO_INCLUDE_DIR ${ARMADILLO_INCLUDE_DIRS})
+ MESSAGE("ARMADILLO libs: " ${ARMADILLO_LIBRARIES})
+ 
+ 
+@@ -567,7 +568,7 @@ IF(SLAM_P_P_EIGEN33)
+       ${ARMADILLO_INCLUDE_DIR}
+ 	  ${CUDA_INCLUDE_IFENABLED}
+ 	  ${PROJECT_SOURCE_DIR}/include/
+-      /opt/eigen33/include/eigen3/
++      ${EIGEN3_INCLUDE_DIR}
+ #	  ${PROJECT_SOURCE_DIR}/include/eigen33/
+ #	  ${PROJECT_SOURCE_DIR}/external/Ceres/include/
+ #	  ${PROJECT_SOURCE_DIR}/external/Ceres/internal/
+diff --git a/include/Tracking.h b/include/Tracking.h
+index f08bde5..63060bf 100755
+--- a/include/Tracking.h
++++ b/include/Tracking.h
+@@ -246,6 +246,8 @@ public:
+ 
+     // Diagnostic wall time from GrabImage entry to the pre-postprocessing pose boundary.
+     std::chrono::steady_clock::time_point mReproImageStart;
++    bool mReproGfmSkippedLocal = false;
++    bool mReproGfmActive = false; // GF03: actual active matching branch, reset by driver per input
+     double mReproPoseReadyMs = 0.0;
+ 
+     // Tracking states
+diff --git a/src/Tracking.cc b/src/Tracking.cc
+index 5e419cf..b8d43c0 100755
+--- a/src/Tracking.cc
++++ b/src/Tracking.cc
+@@ -913,6 +913,7 @@ void Tracking::Track()
+                 if ( logCurrentFrame.lmk_num_motion*2 > num_good_constr_predef ||
+                      logCurrentFrame.lmk_num_frame*2 > num_good_constr_predef ) {
+                     // Skip map tracking
++                    mReproGfmSkippedLocal = true;
+                     bOK = true;
+                 }
+                 else
+@@ -2911,6 +2912,7 @@ int Tracking::SearchLocalPoints()
+         else {
+             // TEST
+             // try computing Jacobian for each map point
++            mReproGfmActive = true;
+             mObsHandler->mMapPoints = &mvpLocalMapPoints;
+ #ifdef USE_INFO_MATRIX
+             mObsHandler->runMatrixBuilding(ORB_SLAM2::MAP_INFO_MATRIX, (time_total_match-time_Viz)/2, USE_MULTI_THREAD, false);

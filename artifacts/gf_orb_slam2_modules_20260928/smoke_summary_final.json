@@ -1,0 +1,162 @@
+[
+  {
+    "run": "runs/smoke_pairs_tum/1_hg",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 3
+  },
+  {
+    "run": "runs/smoke_pairs_tum/1_fh",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 242,
+    "f_skip": 23,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_pairs_tum/1_fg",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 244,
+    "f_skip": 12,
+    "g_selected": 6,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_pairs_tum/1_fhg",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 233,
+    "f_skip": 24,
+    "g_selected": 7,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_all_euroc/1_fhg",
+    "frames": 1200,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 170,
+    "f_skip": 90,
+    "g_selected": 38,
+    "ots_updates": 127
+  },
+  {
+    "run": "runs/smoke_frontend_euroc/1_baseline",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_frontend_euroc/1_f",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 134,
+    "f_skip": 48,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_frontend_euroc/1_h",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_graph_euroc/1_g",
+    "frames": 800,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 22,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_single_tum/1_baseline",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_single_tum/1_f",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 242,
+    "f_skip": 16,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_pairs_euroc/1_hg",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_pairs_euroc/1_fh",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 131,
+    "f_skip": 45,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_pairs_euroc/1_fg",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 140,
+    "f_skip": 45,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_single_tum_hg/1_g",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  },
+  {
+    "run": "runs/smoke_single_tum_hg/1_h",
+    "frames": 400,
+    "complete": true,
+    "non_ok": 0,
+    "f_active": 0,
+    "f_skip": 0,
+    "g_selected": 0,
+    "ots_updates": 0
+  }
+]

@@ -23,7 +23,7 @@ int main(int argc,char** argv) {
  slam.SetConstrPerFrame(400);
  slam.SetRealTimeFileStream(out+"/upstream_online.txt");
  std::ofstream csv(out+"/frames.csv"), poses(out+"/online.txt");
- csv<<"index,timestamp,state,track_ms,local_ms,match_ms,opt_ms,hash_field_ms,local_mp,covis_mp,hash_mp,inliers,features,kfs,mps,pose_stage_sum_ms,post_ms,pose_ready_ms,gfm_active,gfm_matrix_ms,gfm_skip_local,valid_associations\n";
+ csv<<"index,timestamp,state,track_ms,local_ms,match_ms,opt_ms,hash_field_ms,local_mp,covis_mp,hash_mp,inliers,features,kfs,mps,pose_stage_sum_ms,post_ms,pose_ready_ms,gfm_active,gfm_matrix_ms,gfm_skip_local,valid_associations,input_lateness_ms\n";
  csv<<std::setprecision(17); poses<<std::fixed<<std::setprecision(9);
  using Clock=std::chrono::steady_clock; auto begin=Clock::now();
  for(size_t k=0;k<inputs.size();++k) {
@@ -35,6 +35,7 @@ int main(int argc,char** argv) {
   slam.mpTracker->mReproGfmActive = false;
   slam.mpTracker->mReproGfmSkippedLocal = false;
   auto start=Clock::now();
+  const double lateness_ms=std::max(0.0,std::chrono::duration<double,std::milli>(start-due).count());
   cv::Mat T=rgbd?slam.TrackRGBD(im,depth,i.t):slam.TrackMonocular(im,i.t);
   double ms=std::chrono::duration<double,std::milli>(Clock::now()-start).count();
   const auto &l=slam.mpTracker->logCurrentFrame;
@@ -42,7 +43,7 @@ int main(int argc,char** argv) {
   size_t valid_associations=0;
   const auto &fr=slam.mpTracker->mCurrentFrame;
   for(size_t j=0;j<fr.mvpMapPoints.size();++j) if(fr.mvpMapPoints[j]&&!fr.mvbOutlier[j]&&!fr.mvpMapPoints[j]->isBad()) ++valid_associations;
-  csv<<k<<','<<i.t<<','<<state<<','<<ms<<','<<l.time_track_map*1000<<','<<l.time_match*1000<<','<<l.time_optim*1000<<','<<l.time_hash_query*1000<<','<<l.lmk_localmap_comb<<','<<l.lmk_localmap_covis<<','<<l.lmk_localmap_hash<<','<<l.lmk_num_map<<','<<slam.mpTracker->mCurrentFrame.N<<','<<slam.mpMap->KeyFramesInMap()<<','<<slam.mpMap->MapPointsInMap()<<','<<1000*(l.time_ORB_extraction+l.time_track_motion+l.time_track_frame+l.time_track_map)<<','<<1000*l.time_post_proc<<','<<slam.mpTracker->mReproPoseReadyMs<<','<<slam.mpTracker->mReproGfmActive<<','<<(slam.mpTracker->mReproGfmActive?l.time_mat_online*1000:0)<<','<<slam.mpTracker->mReproGfmSkippedLocal<<','<<valid_associations<<'\n';
+  csv<<k<<','<<i.t<<','<<state<<','<<ms<<','<<l.time_track_map*1000<<','<<l.time_match*1000<<','<<l.time_optim*1000<<','<<l.time_hash_query*1000<<','<<l.lmk_localmap_comb<<','<<l.lmk_localmap_covis<<','<<l.lmk_localmap_hash<<','<<l.lmk_num_map<<','<<slam.mpTracker->mCurrentFrame.N<<','<<slam.mpMap->KeyFramesInMap()<<','<<slam.mpMap->MapPointsInMap()<<','<<1000*(l.time_ORB_extraction+l.time_track_motion+l.time_track_frame+l.time_track_map)<<','<<1000*l.time_post_proc<<','<<slam.mpTracker->mReproPoseReadyMs<<','<<slam.mpTracker->mReproGfmActive<<','<<(slam.mpTracker->mReproGfmActive?l.time_mat_online*1000:0)<<','<<slam.mpTracker->mReproGfmSkippedLocal<<','<<valid_associations<<','<<lateness_ms<<'\n';
   if(state==2 && !T.empty()) {cv::Mat R=T.rowRange(0,3).colRange(0,3).t(); cv::Mat t=-R*T.rowRange(0,3).col(3);auto q=ORB_SLAM2::Converter::toQuaternion(R);poses<<i.t<<' '<<t.at<float>(0)<<' '<<t.at<float>(1)<<' '<<t.at<float>(2)<<' '<<q[0]<<' '<<q[1]<<' '<<q[2]<<' '<<q[3]<<'\n';}
   if(k%100==0){csv.flush();poses.flush();std::cerr<<"REPRO_FRAME "<<k<<" state="<<state<<" ms="<<ms<<'\n';}
  }

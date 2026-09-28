@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Finite, sequential, interleaved upstream runs; retain failed runs."""
-import argparse, hashlib, json, os, signal, subprocess, time
+import argparse, hashlib, json, os, signal, subprocess, time, shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +23,12 @@ def main():
     hashes={str(x):sha(x) for x in frozen}
     dest=ROOT/'runs'/a.tag;dest.mkdir(parents=True,exist_ok=False)
     (dest/'frozen.json').write_text(json.dumps(hashes,indent=2))
+    provenance=ROOT/'provenance';provenance.mkdir(exist_ok=True)
+    for fp in frozen:
+        if fp.suffix in ('.cc','.py','.yaml'):
+            target=provenance/(fp.name+'.'+hashes[str(fp)])
+            if not target.exists():shutil.copy2(fp,target)
+    assert shutil.disk_usage(ROOT).free>4*1024**3,'Insufficient free space'
     env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1')
     for r in range(a.repeats):
         order=a.modes[:] if r==0 else (list(reversed(a.modes)) if r%2 else a.modes[len(a.modes)//2:]+a.modes[:len(a.modes)//2])
@@ -41,13 +47,14 @@ def main():
                         procstat=(Path('/proc')/str(proc.pid)/'stat').read_text().split();
                         samples.append({'cpu_ticks':int(procstat[13])+int(procstat[14]),'clock_ticks_per_second':os.sysconf('SC_CLK_TCK'),'elapsed_s':time.monotonic()-start,**{k:l.split(':',1)[1].strip() for l in s.splitlines() for k in ['VmRSS','VmHWM','VmSwap','Threads'] if l.startswith(k+':')}})
                     except FileNotFoundError:pass
-                    if time.monotonic()>deadline:
-                        reason='timeout';os.killpg(proc.pid,signal.SIGTERM)
+                    if time.monotonic()>deadline or shutil.disk_usage(ROOT).free<2*1024**3:
+                        reason='timeout' if time.monotonic()>deadline else 'disk_guard';os.killpg(proc.pid,signal.SIGTERM)
                         try:proc.wait(timeout=10)
                         except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait()
                         break
                     time.sleep(2)
             meta.update(exit_code=proc.returncode,elapsed_s=time.monotonic()-start,failure_reason=reason)
+            meta['end_utc']=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())
             (out/'run.json').write_text(json.dumps(meta,indent=2));(out/'resources.json').write_text(json.dumps(samples))
             print('END',out.name,proc.returncode,round(meta['elapsed_s'],2),flush=True)
     print('MATRIX_COMPLETE',dest,flush=True)
