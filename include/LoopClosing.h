@@ -81,6 +81,20 @@ public:
     return !mGBA.Running();
   }
 
+  struct DrainSnapshot {
+    std::size_t queued;
+    bool processing;
+    bool gba_running;
+    bool gba_join_pending;
+    bool Idle() const {
+      return queued == 0 && !processing && !gba_running && !gba_join_pending;
+    }
+  };
+  // Requests only natural reaping of GBA; never stops LocalMapping or GBA.
+  // Disabled loop closing is unsupported: its existing queue is not drained.
+  bool RequestDrain();
+  DrainSnapshot GetDrainSnapshot();
+
   void RequestFinish();
 
   bool isFinished();
@@ -154,6 +168,7 @@ protected:
 
   void StartGlobalBundleAdjustment(Map* map, unsigned long loopKF);
   void StopGlobalBundleAdjustment();
+  void JoinCompletedGlobalBundleAdjustment();
 
   void MergeLocal();
   void MergeLocal2();
@@ -230,6 +245,9 @@ protected:
   long unsigned int mLastLoopKFid;
 
   // Variables related to Global Bundle Adjustment
+  bool mbProcessingKeyFrame = false; // protected by mMutexLoopQueue
+  std::atomic<bool> mbDrainRequested{false};
+  std::atomic<bool> mbGBAJoinPending{false};
   JoinableTask mGBA;
   bool mHaveGBA = false; // accessed only by the LoopClosing control thread
   unsigned long mGBAMapId = 0;

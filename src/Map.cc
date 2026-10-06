@@ -129,6 +129,20 @@ void Map::SetReferenceMapPoints(const vector<MapPointPtr > &vpMPs) {
   mvpReferenceMapPoints = vpMPs;
 }
 
+void Map::PublishLocalBADebug(std::set<long unsigned int> optimized,
+                              std::set<long unsigned int> fixed) {
+  std::lock_guard<std::mutex> lock(mMutexLocalBADebug);
+  msOptKFs.swap(optimized);
+  msFixedKFs.swap(fixed);
+}
+
+void Map::GetLocalBADebug(std::set<long unsigned int>& optimized,
+                          std::set<long unsigned int>& fixed) {
+  std::lock_guard<std::mutex> lock(mMutexLocalBADebug);
+  optimized = msOptKFs;
+  fixed = msFixedKFs;
+}
+
 void Map::InformNewBigChange() {
   unique_lock<mutex> lock(mMutexMap);
   mnBigChangeIdx++;

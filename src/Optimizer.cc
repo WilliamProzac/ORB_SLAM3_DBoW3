@@ -1199,8 +1199,8 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   unsigned long maxKFid = 0;
 
   // DEBUG LBA
-  pCurrentMap->msOptKFs.clear();
-  pCurrentMap->msFixedKFs.clear();
+  std::set<long unsigned int> localDebugOptimized;
+  std::set<long unsigned int> localDebugFixed;
 
   // Set Local KeyFrame vertices
   for (list<KeyFrame *>::iterator lit = lLocalKeyFrames.begin(),
@@ -1217,7 +1217,7 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
     if (pKFi->mnId > maxKFid)
       maxKFid = pKFi->mnId;
     // DEBUG LBA
-    pCurrentMap->msOptKFs.insert(pKFi->mnId);
+    localDebugOptimized.insert(pKFi->mnId);
   }
   num_OptKF = lLocalKeyFrames.size();
 
@@ -1236,8 +1236,11 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
     if (pKFi->mnId > maxKFid)
       maxKFid = pKFi->mnId;
     // DEBUG LBA
-    pCurrentMap->msFixedKFs.insert(pKFi->mnId);
+    localDebugFixed.insert(pKFi->mnId);
   }
+
+  pCurrentMap->PublishLocalBADebug(std::move(localDebugOptimized),
+                                   std::move(localDebugFixed));
 
   // Set MapPoint vertices
 

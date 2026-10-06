@@ -76,6 +76,8 @@ public:
 
   void RequestFinish();
   bool isFinished();
+  // Valid as a drain observation only after Tracking input is closed.
+  bool IsIdleForDrain();
 
   int KeyframesInQueue() {
     unique_lock<std::mutex> lock(mMutexNewKFs);
@@ -176,6 +178,7 @@ protected:
   std::list<MapPointPtr > mlpRecentAddedMapPoints;
 
   std::mutex mMutexNewKFs;
+  bool mbProcessingKeyFrame = false; // protected by mMutexNewKFs
 
   std::unordered_map<KeyFrame *, std::chrono::steady_clock::time_point>
       mKeyFrameEnqueueTimes;

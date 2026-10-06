@@ -182,12 +182,11 @@ void MapDrawer::DrawKeyFrames(const bool bDrawKF, const bool bDrawGraph, const b
     const float z = w*0.6;
 
     Map* pActiveMap = mpAtlas->GetCurrentMap();
-    // DEBUG LBA
-    std::set<long unsigned int> sOptKFs = pActiveMap->msOptKFs;
-    std::set<long unsigned int> sFixedKFs = pActiveMap->msFixedKFs;
-
     if(!pActiveMap)
         return;
+    // DEBUG LBA: one consistent pair, shared protocol with the writer.
+    std::set<long unsigned int> sOptKFs, sFixedKFs;
+    pActiveMap->GetLocalBADebug(sOptKFs, sFixedKFs);
 
     const vector<KeyFrame*> vpKFs = pActiveMap->GetAllKeyFrames();
 

@@ -89,7 +89,10 @@ void LocalMapping::SetLoopCloser(LoopClosing *pLoopCloser) {
 void LocalMapping::SetTracker(Tracking *pTracker) { mpTracker = pTracker; }
 
 void LocalMapping::Run() {
-  mbFinished = false;
+  {
+    std::lock_guard<std::mutex> lock(mMutexFinish);
+    mbFinished = false;
+  }
 
   while (1) {
     // Tracking will see that Local Mapping is busy
@@ -97,6 +100,10 @@ void LocalMapping::Run() {
 
     // Check if there are keyframes in the queue
     if (CheckNewKeyFrames() && !mbBadImu) {
+      {
+        std::lock_guard<std::mutex> queueLock(mMutexNewKFs);
+        mbProcessingKeyFrame = true;
+      }
       const std::chrono::steady_clock::time_point detailed_process_start =
           std::chrono::steady_clock::now();
 #ifdef REGISTER_TIMES
@@ -365,6 +372,11 @@ void LocalMapping::Run() {
     }
 
     ResetIfRequested();
+    {
+      // The work branch (including E1's Attempt destructor) has fully ended.
+      std::lock_guard<std::mutex> queueLock(mMutexNewKFs);
+      mbProcessingKeyFrame = false;
+    }
 
     // Tracking will see that Local Mapping is busy
     SetAcceptKeyFrames(true);
@@ -965,6 +977,7 @@ void LocalMapping::Release() {
     return;
   mbStopped = false;
   mbStopRequested = false;
+  unique_lock<mutex> queueLock(mMutexNewKFs);
   for (list<KeyFrame *>::iterator lit = mlNewKeyFrames.begin(),
                                   lend = mlNewKeyFrames.end();
        lit != lend; lit++)
@@ -1193,6 +1206,7 @@ void LocalMapping::ResetIfRequested() {
       executed_reset = true;
 
       cout << "LM: Reseting Atlas in Local Mapping..." << endl;
+      unique_lock<mutex> queueLock(mMutexNewKFs);
       mlNewKeyFrames.clear();
       mKeyFrameEnqueueTimes.clear();
       mlpRecentAddedMapPoints.clear();
@@ -1213,6 +1227,7 @@ void LocalMapping::ResetIfRequested() {
     if (mbResetRequestedActiveMap) {
       executed_reset = true;
       cout << "LM: Reseting current map in Local Mapping..." << endl;
+      unique_lock<mutex> queueLock(mMutexNewKFs);
       mlNewKeyFrames.clear();
       mKeyFrameEnqueueTimes.clear();
       mlpRecentAddedMapPoints.clear();
@@ -1243,10 +1258,16 @@ bool LocalMapping::CheckFinish() {
 }
 
 void LocalMapping::SetFinish() {
-  unique_lock<mutex> lock(mMutexFinish);
+  unique_lock<mutex> lock(mMutexFinish, std::defer_lock);
+  unique_lock<mutex> lock2(mMutexStop, std::defer_lock);
+  std::lock(lock, lock2); // Release takes stop then finish; avoid inversion.
   mbFinished = true;
-  unique_lock<mutex> lock2(mMutexStop);
   mbStopped = true;
+}
+
+bool LocalMapping::IsIdleForDrain() {
+  std::lock_guard<std::mutex> lock(mMutexNewKFs);
+  return mlNewKeyFrames.empty() && !mbProcessingKeyFrame;
 }
 
 bool LocalMapping::isFinished() {

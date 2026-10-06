@@ -638,7 +638,57 @@ void System::ResetActiveMap() {
   mbResetActiveMap = true;
 }
 
+System::BackendDrainResult System::DrainBackend(unsigned int timeout_ms) {
+  std::lock_guard<std::mutex> lifecycleLock(mMutexShutdown);
+  BackendDrainResult result;
+  const auto start = std::chrono::steady_clock::now();
+  {
+    std::lock_guard<std::mutex> lock(mMutexReset);
+    if (mbShutDown || mbReset || mbResetActiveMap) {
+      result.status = BackendDrainResult::SHUTDOWN_OR_RESET_PENDING;
+      return result;
+    }
+  }
+  if (mSensor != RGBD || mpViewer || !mpLoopCloser->RequestDrain()) {
+    result.status = BackendDrainResult::UNSUPPORTED;
+    return result;
+  }
+  for (;;) {
+    // With upstream input closed, LM idle cannot hide an unqueued Loop task:
+    // LM clears its active flag only after forwarding its final keyframe.
+    result.local_idle = mpLocalMapper->IsIdleForDrain();
+    const auto loop = mpLoopCloser->GetDrainSnapshot();
+    result.loop_idle = loop.queued == 0 && !loop.processing;
+    result.gba_running = loop.gba_running;
+    result.gba_join_pending = loop.gba_join_pending;
+    result.wait_ms = MillisecondsSince(start);
+    if (result.local_idle && loop.Idle()) {
+      result.status = BackendDrainResult::COMPLETE;
+      return result;
+    }
+    if (result.wait_ms >= timeout_ms) {
+      result.status = BackendDrainResult::TIMEOUT;
+      return result;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  }
+}
+
 void System::Shutdown() {
+  ShutdownImpl(false);
+}
+
+bool System::ShutdownAndJoin() {
+  // Terminal experiment path; does not change the legacy Viewer's own call.
+  std::lock_guard<std::mutex> lifecycleLock(mMutexShutdown);
+  if (mSensor != RGBD || mpViewer) return false;
+  if (mbShutdownComplete) return true;
+  ShutdownImpl(true);
+  mbShutdownComplete = true;
+  return true;
+}
+
+void System::ShutdownImpl(bool joinWorkers) {
   {
     unique_lock<mutex> lock(mMutexReset);
     mbShutDown = true;
@@ -651,24 +701,31 @@ void System::Shutdown() {
   if (mpViewer) // modified by ywl
   {
     mpViewer->RequestFinish();
-    while (!mpViewer->isFinished())
-      usleep(5000);
+    if (!joinWorkers)
+      while (!mpViewer->isFinished())
+        usleep(5000);
   }
 
-  // Wait until all thread have effectively stopped
-  cout << "Shutdown: Waiting for threads..." << endl;
-  while ((mpLocalMapper && !mpLocalMapper->isFinished()) ||
-         (mpLoopCloser && !mpLoopCloser->isFinished())) {
-    usleep(5000);
+  if (joinWorkers) {
+    cout << "Shutdown: Joining threads..." << endl;
+    if (mptLocalMapping && mptLocalMapping->joinable()) mptLocalMapping->join();
+    if (mptLoopClosing && mptLoopClosing->joinable()) mptLoopClosing->join();
+    if (mpTracker) mpTracker->StopAndJoinExtractorWorkers();
+    cout << "Shutdown: Top-level and ORB worker threads joined." << endl;
+  } else {
+    // Preserve the existing API/Viewer behavior outside the experiment path.
+    cout << "Shutdown: Waiting for threads..." << endl;
+    while ((mpLocalMapper && !mpLocalMapper->isFinished()) ||
+           (mpLoopCloser && !mpLoopCloser->isFinished())) usleep(5000);
+    cout << "Shutdown: All threads finished." << endl;
   }
-  cout << "Shutdown: All threads finished." << endl;
   if (mpTracker) mpTracker->FinishLocalMapDiagnostics();
   LocalLifetime::Finish();
-
-  // Extra wait to ensure all resources are released
-  cout << "Shutdown: Waiting 100ms..." << flush;
-  usleep(100000);
-  cout << " done." << endl;
+  if (!joinWorkers) {
+    cout << "Shutdown: Waiting 100ms..." << flush;
+    usleep(100000);
+    cout << " done." << endl;
+  }
 
   cout << "Shutdown: Checking save file..." << flush;
   if (!mStrSaveAtlasToFile.empty()) {

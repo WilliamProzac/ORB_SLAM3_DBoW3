@@ -89,7 +89,10 @@ void LoopClosing::SetLocalMapper(LocalMapping *pLocalMapper) {
 }
 
 void LoopClosing::Run() {
-  mbFinished = false;
+  {
+    std::lock_guard<std::mutex> lock(mMutexFinish);
+    mbFinished = false;
+  }
 
   while (1) {
 
@@ -97,6 +100,10 @@ void LoopClosing::Run() {
     //----------------------------
 
     if (CheckNewKeyFrames()) {
+      {
+        std::lock_guard<std::mutex> lock(mMutexLoopQueue);
+        mbProcessingKeyFrame = true;
+      }
       if (mpLastCurrentKF) {
         mpLastCurrentKF->mvpLoopCandKFs.clear();
         mpLastCurrentKF->mvpMergeCandKFs.clear();
@@ -306,6 +313,11 @@ void LoopClosing::Run() {
     }
 
     ResetIfRequested();
+    if (mbDrainRequested.load()) JoinCompletedGlobalBundleAdjustment();
+    {
+      std::lock_guard<std::mutex> lock(mMutexLoopQueue);
+      mbProcessingKeyFrame = false;
+    }
 
     if (CheckFinish()) {
       break;
@@ -319,6 +331,18 @@ void LoopClosing::Run() {
   mvpLoopMPs.clear();mvpLoopMatchedMPs.clear();
   mvpMergeMPs.clear();mvpMergeMatchedMPs.clear();
   SetFinish();
+}
+
+bool LoopClosing::RequestDrain() {
+  if (!mbActiveLC) return false;
+  mbDrainRequested.store(true);
+  return true;
+}
+
+LoopClosing::DrainSnapshot LoopClosing::GetDrainSnapshot() {
+  std::lock_guard<std::mutex> lock(mMutexLoopQueue);
+  return {mlpLoopKeyFrameQueue.size(), mbProcessingKeyFrame,
+          mGBA.Running(), mbGBAJoinPending.load()};
 }
 
 void LoopClosing::InsertKeyFrame(KeyFrame *pKF) {
@@ -1013,12 +1037,13 @@ void LoopClosing::CorrectLoop() {
   // before this correction takes ownership of the LocalMapping stop request.
   StopGlobalBundleAdjustment();
   mpLocalMapper->RequestStop();
-  mpLocalMapper->EmptyQueue(); // Proccess keyframes in the queue
 
-  // Wait until Local Mapping has effectively stopped
+  // ProcessNewKeyFrame mutates LocalMapping state: consume from this control
+  // thread only after the LocalMapping worker has acknowledged its stop.
   while (!mpLocalMapper->isStopped() && !mpLocalMapper->isFinished()) {
     usleep(1000);
   }
+  mpLocalMapper->EmptyQueue();
 
   // Ensure current keyframe is updated
   // cout << "Start updating connections" << endl;
@@ -2323,6 +2348,7 @@ void LoopClosing::StartGlobalBundleAdjustment(Map* map, unsigned long loopKF) {
   mGBAMapId = map->GetId();
   mGBALoopKF = loopKF;
   mHaveGBA = true;
+  mbGBAJoinPending.store(true);
   const unsigned long mapId = mGBAMapId;
   mGBA.Start([this, map, loopKF, mapId](const std::atomic<bool>& stop) {
     MemoryStats::GBA(0, mapId, loopKF);
@@ -2342,6 +2368,16 @@ void LoopClosing::StopGlobalBundleAdjustment() {
   if (mHaveGBA) MemoryStats::GBA(4, mGBAMapId, mGBALoopKF);
   mHaveGBA = false;
   mGBA.RethrowFailure();
+  mbGBAJoinPending.store(false);
+}
+
+void LoopClosing::JoinCompletedGlobalBundleAdjustment() {
+  // LoopClosing alone owns mHaveGBA and all task control operations.
+  if (!mHaveGBA || !mGBA.JoinIfFinished()) return;
+  MemoryStats::GBA(4, mGBAMapId, mGBALoopKF);
+  mHaveGBA = false;
+  mGBA.RethrowFailure(); // retain existing failure propagation, never certify idle
+  mbGBAJoinPending.store(false);
 }
 
 void LoopClosing::RunGlobalBundleAdjustment(Map *pActiveMap,

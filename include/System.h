@@ -189,6 +189,23 @@ public:
   void Shutdown();
   bool isShutDown();
 
+  struct BackendDrainResult {
+    enum Status { COMPLETE, TIMEOUT, UNSUPPORTED, SHUTDOWN_OR_RESET_PENDING };
+    Status status = TIMEOUT;
+    bool local_idle = false;
+    bool loop_idle = false;
+    bool gba_running = false;
+    bool gba_join_pending = false;
+    double wait_ms = 0.0;
+  };
+  // Terminal input protocol: caller has stopped callbacks, waited for the last
+  // Track/pose publication to finish, and issues no reset/mode/Track calls now.
+  // Pure RGB-D + enabled loop closing + viewer off only; never cancels work.
+  BackendDrainResult DrainBackend(unsigned int timeout_ms);
+  // Same quiescent-input requirement; pure RGB-D + viewer off only. Keeps the
+  // legacy Shutdown/Viewer path unchanged. Do not mix concurrent terminal APIs.
+  bool ShutdownAndJoin();
+
   // Save camera trajectory in the TUM RGB-D dataset format.
   // Only for stereo and RGB-D. This method does not work for monocular.
   // Call first Shutdown()
@@ -254,6 +271,7 @@ public:
 #endif
 
 private:
+  void ShutdownImpl(bool joinWorkers);
   void SaveAtlas(int type);
   bool LoadAtlas(int type);
 
@@ -296,9 +314,9 @@ private:
   // System threads: Local Mapping, Loop Closing, Viewer.
   // The Tracking thread "lives" in the main execution thread that creates the
   // System object.
-  std::thread *mptLocalMapping;
-  std::thread *mptLoopClosing;
-  std::thread *mptViewer;
+  std::thread *mptLocalMapping = nullptr;
+  std::thread *mptLoopClosing = nullptr;
+  std::thread *mptViewer = nullptr;
 
   // Reset flag
   std::mutex mMutexReset;
@@ -310,6 +328,9 @@ private:
   bool mbActivateLocalizationMode;
   bool mbDeactivateLocalizationMode;
 
+  // Serialize terminal drain/shutdown, not ordinary Tracking calls.
+  std::mutex mMutexShutdown;
+  bool mbShutdownComplete = false;
   // Shutdown flag
   bool mbShutDown;
 

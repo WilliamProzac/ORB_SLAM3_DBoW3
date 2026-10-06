@@ -70,6 +70,8 @@ public:
 
   ~Tracking();
   void FinishLocalMapDiagnostics();
+  // Requires the final Track call to have returned; does not destroy Frames.
+  void StopAndJoinExtractorWorkers();
 
   // Parse the config file
   bool ParseCamParamFile(cv::FileStorage &fSettings);
@@ -299,8 +301,8 @@ protected:
   LoopClosing *mpLoopClosing;
 
   // ORB
-  ORBextractor *mpORBextractorLeft, *mpORBextractorRight;
-  ORBextractor *mpIniORBextractor;
+  ORBextractor *mpORBextractorLeft = nullptr, *mpORBextractorRight = nullptr;
+  ORBextractor *mpIniORBextractor = nullptr;
 
   // Installed before the first stereo frame when Hybrid mode is selected.
   std::shared_ptr<StereoDepthProvider> mpStereoDepthProvider;

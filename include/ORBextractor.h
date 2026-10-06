@@ -92,6 +92,9 @@ public:
                int minThFAST, int parallelWorkers = 1);
 
   ~ORBextractor();
+  // Terminal operation after the caller has finished its last extraction.
+  // Does not delete extractor/image storage; not concurrent with operator().
+  void StopAndJoinWorkers();
 
   // Compute the ORB features and descriptors on an image.
   // ORB are dispersed on the image using an octree.

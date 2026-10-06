@@ -39,6 +39,14 @@ public:
     std::lock_guard<std::mutex> lock(control_);
     JoinLocked();
   }
+  // Only joins a worker that already returned; never requests cancellation.
+  // Called by the same control thread that owns Start/CancelAndJoin.
+  bool JoinIfFinished() {
+    std::lock_guard<std::mutex> lock(control_);
+    if (running_.load()) return false;
+    if (thread_.joinable()) thread_.join();
+    return true;
+  }
   bool Running() const { return running_.load(); }
   // Must be queried by the controlling thread after joining. Do not discard
   // asynchronous failures silently when deciding whether a map is saveable.

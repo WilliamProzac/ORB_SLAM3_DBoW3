@@ -557,6 +557,11 @@ namespace ORB_SLAM3
 
     ORBextractor::~ORBextractor()
     {
+        StopAndJoinWorkers();
+    }
+
+    void ORBextractor::StopAndJoinWorkers()
+    {
         {
             std::lock_guard<std::mutex> lock(mWorkerMutex);
             mStopWorkers = true;
@@ -1240,6 +1245,8 @@ namespace ORB_SLAM3
     int ORBextractor::operator()( InputArray _image, InputArray _mask, vector<KeyPoint>& _keypoints,
                                   OutputArray _descriptors, std::vector<int> &vLappingArea)
     {
+        if (mStopWorkers)
+            throw std::logic_error("ORB extraction requested after worker shutdown");
         (void)_mask;
         mLastStageTiming = StageTiming();
         //cout << "[ORBextractor]: Max Features: " << nfeatures << endl;

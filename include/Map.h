@@ -165,11 +165,17 @@ public:
 
   static long unsigned int nNextId;
 
-  // DEBUG: show KFs which are used in LBA
-  std::set<long unsigned int> msOptKFs;
-  std::set<long unsigned int> msFixedKFs;
+  // Publish/copy the complete debug pair under one lock. Input sets are
+  // swapped so allocation and destruction stay outside the short lock.
+  void PublishLocalBADebug(std::set<long unsigned int> optimized,
+                           std::set<long unsigned int> fixed);
+  void GetLocalBADebug(std::set<long unsigned int>& optimized,
+                       std::set<long unsigned int>& fixed);
 
 protected:
+  std::mutex mMutexLocalBADebug;
+  std::set<long unsigned int> msOptKFs;
+  std::set<long unsigned int> msFixedKFs;
   long unsigned int mnId;
 
   std::set<MapPointPtr > mspMapPoints;

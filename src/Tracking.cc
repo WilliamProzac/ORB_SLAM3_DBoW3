@@ -756,7 +756,14 @@ void Tracking::PrintTimeStats() {
 #endif
 
 Tracking::~Tracking() {
+  StopAndJoinExtractorWorkers();
   // f_track_stats.close();
+}
+
+void Tracking::StopAndJoinExtractorWorkers() {
+  if (mpORBextractorLeft) mpORBextractorLeft->StopAndJoinWorkers();
+  if (mpORBextractorRight) mpORBextractorRight->StopAndJoinWorkers();
+  if (mpIniORBextractor) mpIniORBextractor->StopAndJoinWorkers();
 }
 
 void Tracking::newParameterLoader(Settings *settings) {
