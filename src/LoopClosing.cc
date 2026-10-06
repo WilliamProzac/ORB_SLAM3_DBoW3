@@ -1275,6 +1275,10 @@ void LoopClosing::CorrectLoop() {
   mpLoopMatchedKF->AddLoopEdge(mpCurrentKF);
   mpCurrentKF->AddLoopEdge(mpLoopMatchedKF);
 
+  // Return this correction's LocalMapping stop before a new GBA worker can
+  // acquire/release its own stop. A fast worker must not race a late Release.
+  mpLocalMapper->Release();
+
   // Launch a new thread to perform Global Bundle Adjustment (Only if few
   // keyframes, if not it would take too much time)
   if (!pLoopMap->isImuInitialized() ||
@@ -1282,9 +1286,6 @@ void LoopClosing::CorrectLoop() {
     mnCorrectionGBA = mnNumCorrection;
     StartGlobalBundleAdjustment(pLoopMap, mpCurrentKF->mnId);
   }
-
-  // Loop closed. Release Local Mapping.
-  mpLocalMapper->Release();
 
   mLastLoopKFid =
       mpCurrentKF->mnId; // TODO old varible, it is not use in the new algorithm
@@ -1842,7 +1843,9 @@ void LoopClosing::MergeLocal() {
   vdMergeOptEss_ms.push_back(timeOptEss);
 #endif
 
-  mpLocalMapper->Release();
+  // Only the nonempty remainder requested a second stop. A second Release
+  // after the empty branch could delete work enqueued since the first one.
+  if (!vpCurrentMapKFs.empty()) mpLocalMapper->Release();
 
   if (bRelaunchBA &&
       (!pCurrentMap->isImuInitialized() ||
