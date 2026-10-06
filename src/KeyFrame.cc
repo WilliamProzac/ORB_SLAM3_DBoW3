@@ -384,15 +384,24 @@ vector<MapPointPtr > KeyFrame::GetMapPointMatches() {
 
 void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
     std::vector<MapPointPtr>& output,
-    RetainedPointCache& identities) {
+    RetainedPointCache& identities, LocalPointGatherCounts* counts) {
   unique_lock<mutex> lock(mMutexFeatures);
   for (const auto& slot : mvpMapPoints) {
+    if (counts) ++counts->slots;
     const auto identity = slot.identity();
     // If retained, its address cannot be recycled. An expired stale slot with
     // the same address would yield null anyway. No unowned pointer is read.
-    if (!identity || identities.count(identity)) continue;
+    if (!identity) { if (counts) ++counts->null_identity; continue; }
+    if (identities.count(identity)) { if (counts) ++counts->hint_hits; continue; }
+    if (counts) ++counts->weak_locks;
     auto point = slot.lock();
-    if (!point || point->mnTrackReferenceForFrame == frame_id || point->isBad()) continue;
+    if (!point) { if (counts) ++counts->expired; continue; }
+    if (point->mnTrackReferenceForFrame == frame_id) {
+      if (counts) ++counts->frame_marked;
+      continue;
+    }
+    if (point->isBad()) { if (counts) ++counts->bad; continue; }
+    if (counts) ++counts->accepted;
     point->mnTrackReferenceForFrame = frame_id;
     output.push_back(std::move(point));
     identities.insert(identity);

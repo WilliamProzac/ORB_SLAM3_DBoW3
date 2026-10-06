@@ -344,6 +344,7 @@ public:
   // Always enabled on the RGB-D timing debug branch. Keep these independent
   // from the legacy REGISTER_TIMES switch so detailed CSVs remain complete
   // without enabling the broader ORB-SLAM3 statistics machinery.
+  OrbTimingRecord mRgbdOrbTiming;
   double mTimeRgbdOrbExtract = 0.0;
   double mTimeRgbdOrbPyramid = 0.0;
   double mTimeRgbdOrbKeypointsOctree = 0.0;

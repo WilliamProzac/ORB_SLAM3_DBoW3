@@ -1710,6 +1710,22 @@ RgbdTimingRecord System::GetLastRgbdTiming() const {
   return mLastRgbdTiming;
 }
 
+const std::vector<LocalMappingTimingRecord>& System::CompletedLocalMappingTimings() const {
+  return mpLocalMapper->CompletedLocalMappingTimings();
+}
+std::uint64_t System::DroppedLocalMappingTimingRecords() const {
+  return mpLocalMapper->DroppedLocalMappingTimingRecords();
+}
+std::size_t System::LocalMappingTimingCapacityRecords() const {
+  return mpLocalMapper->LocalMappingTimingCapacityRecords();
+}
+std::size_t System::LocalMappingTimingCapacityBytes() const {
+  return mpLocalMapper->LocalMappingTimingCapacityBytes();
+}
+LoopLifecycleCounts System::GetLoopLifecycleCounts() const {
+  return mpLoopCloser->GetLifecycleCounts();
+}
+
 bool System::WriteDetailedTimingCsv(const string &output_directory) const {
   return mpLocalMapper &&
          mpLocalMapper->WriteDetailedTimingCsv(output_directory);

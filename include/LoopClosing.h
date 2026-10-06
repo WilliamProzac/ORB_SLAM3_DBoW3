@@ -29,11 +29,13 @@
 #include "ORBVocabulary.h"
 #include "Tracking.h"
 #include "JoinableTask.h"
+#include "LoopLifecycle.h"
 
 #include "KeyFrameDatabase.h"
 
 #include "Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h"
 #include <boost/algorithm/string.hpp>
+#include <cstdint>
 #include <mutex>
 #include <thread>
 using namespace std;
@@ -81,6 +83,12 @@ public:
     return !mGBA.Running();
   }
 
+  using LifecycleCounts = LoopLifecycleCounts;
+  LifecycleCounts GetLifecycleCounts() const {
+    return {mLoopDetected.load(), mGBAStarted.load(), mGBACompleted.load(),
+            mGBAReturned.load(), mGBAJoined.load(), mGBAErrors.load(),
+            mGBACancelled.load(), 0}; // Drain API has no cancellation operation.
+  }
   struct DrainSnapshot {
     std::size_t queued;
     bool processing;
@@ -248,6 +256,8 @@ protected:
   bool mbProcessingKeyFrame = false; // protected by mMutexLoopQueue
   std::atomic<bool> mbDrainRequested{false};
   std::atomic<bool> mbGBAJoinPending{false};
+  std::atomic<std::uint64_t> mLoopDetected{0}, mGBAStarted{0}, mGBACompleted{0};
+  std::atomic<std::uint64_t> mGBAReturned{0}, mGBAJoined{0}, mGBAErrors{0}, mGBACancelled{0};
   JoinableTask mGBA;
   bool mHaveGBA = false; // accessed only by the LoopClosing control thread
   unsigned long mGBAMapId = 0;

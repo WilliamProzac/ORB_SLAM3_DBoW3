@@ -106,7 +106,7 @@ int ORBmatcher::SearchLocalProjection(Frame& frame,
 int ORBmatcher::SearchByProjection(Frame &F,
                                    const vector<MapPointPtr > &vpMapPoints,
                                    const float th, const bool bFarPoints,
-                                   const float thFarPoints) {
+                                   const float thFarPoints, ProjectionMatchObservation* observation) {
   int nmatches = 0, left = 0, right = 0;
   std::vector<size_t> vIndices;
   unsigned char descriptorStorage[32];
@@ -115,6 +115,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
   const bool uses_float_descriptors = F.mDescriptors.type() == CV_32FC1;
 
   for (size_t iMP = 0; iMP < vpMapPoints.size(); iMP++) {
+    if (observation) ++observation->points;
     const MapPointPtr& pMP = vpMapPoints[iMP];
     if (!pMP->mbTrackInView && !pMP->mbTrackInViewR)
       continue;
@@ -141,6 +142,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
                               uses_float_descriptors ? -1
                                                      : nPredictedLevel);
 
+      if (observation) { ++observation->queries; observation->candidates += vIndices.size(); }
       if (!vIndices.empty()) {
         const cv::Mat MPdescriptor = MatchingDescriptor(pMP, F, descriptorStorage);
 
@@ -157,17 +159,22 @@ int ORBmatcher::SearchByProjection(Frame &F,
           const size_t idx = *vit;
 
           if (F.mvpMapPoints[idx])
-            if (F.mvpMapPoints[idx]->Observations() > 0)
+            if (F.mvpMapPoints[idx]->Observations() > 0) {
+              if (observation) ++observation->occupied_skips;
               continue;
+            }
 
           if (F.Nleft == -1 && F.mvuRight[idx] > 0) {
             const float er = fabs(pMP->mTrackProjXR - F.mvuRight[idx]);
-            if (er > r * F.mvScaleFactors[nPredictedLevel])
+            if (er > r * F.mvScaleFactors[nPredictedLevel]) {
+              if (observation) ++observation->stereo_gate_skips;
               continue;
+            }
           }
 
           const cv::Mat &d = F.mDescriptors.row(idx);
 
+          if (observation) ++observation->distances;
           const int dist = MatchingDistance(F, MPdescriptor, d);
 
           if (dist < bestDist) {
@@ -225,6 +232,7 @@ int ORBmatcher::SearchByProjection(Frame &F,
                                                        : nPredictedLevel,
                                 true);
 
+        if (observation) { ++observation->queries; observation->candidates += vIndices.size(); }
         if (vIndices.empty())
           continue;
 
@@ -243,11 +251,14 @@ int ORBmatcher::SearchByProjection(Frame &F,
           const size_t idx = *vit;
 
           if (F.mvpMapPoints[idx + F.Nleft])
-            if (F.mvpMapPoints[idx + F.Nleft]->Observations() > 0)
+            if (F.mvpMapPoints[idx + F.Nleft]->Observations() > 0) {
+              if (observation) ++observation->occupied_skips;
               continue;
+            }
 
           const cv::Mat &d = F.mDescriptors.row(idx + F.Nleft);
 
+          if (observation) ++observation->distances;
           const int dist = MatchingDistance(F, MPdescriptor, d);
 
           if (dist < bestDist) {

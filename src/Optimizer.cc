@@ -803,7 +803,30 @@ void Optimizer::FullInertialBA(Map *pMap, int its, const bool bFixLocal,
 }
 
 int Optimizer::PoseOptimization(Frame *pFrame,
-    const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions) {
+    const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions,
+    PoseOptimizationObservation* observation) {
+  // Declared before optimizer so the final phase includes graph destruction.
+  struct MeasuredPose {
+    PoseOptimizationObservation* out;
+    PoseObservationPhase phase = PoseObservationPhase::Setup;
+    std::uint64_t wall = 0;
+    double cpu = 0;
+    explicit MeasuredPose(PoseOptimizationObservation* p) : out(p) {
+      if (out) { ++out->calls; wall = RgbdSteadyNanoseconds(); cpu = RgbdThreadCpuMilliseconds(); }
+    }
+    void Next(PoseObservationPhase next) {
+      if (!out) return;
+      const auto now = RgbdSteadyNanoseconds();
+      const auto thread_cpu = RgbdThreadCpuMilliseconds();
+      const auto index = static_cast<unsigned>(phase);
+      out->phases_visited |= 1u << index;
+      out->wall_ms[index] += (now - wall) * 1e-6;
+      if (cpu >= 0 && thread_cpu >= 0) out->cpu_ms[index] += thread_cpu - cpu;
+      else out->cpu_available = false;
+      wall = now; cpu = thread_cpu; phase = next;
+    }
+    ~MeasuredPose() { Next(PoseObservationPhase::Destroy); }
+  } measured(observation);
   g2o::SparseOptimizer optimizer;
   g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
 
@@ -847,7 +870,9 @@ int Optimizer::PoseOptimization(Frame *pFrame,
   const float deltaStereo = sqrt(7.815);
 
   {
+    measured.Next(PoseObservationPhase::MapLockWait);
     unique_lock<mutex> lock(MapPoint::mGlobalMutex);
+    measured.Next(PoseObservationPhase::Build);
 
     for (int i = 0; i < N; i++) {
       MapPointPtr pMP = pFrame->mvpMapPoints[i];
@@ -992,8 +1017,16 @@ int Optimizer::PoseOptimization(Frame *pFrame,
     }
   }
 
-  if (nInitialCorrespondences < 3)
+  if (observation) {
+    observation->edges += nInitialCorrespondences;
+    observation->mono_edges += vpEdgesMono.size();
+    observation->stereo_edges += vpEdgesStereo.size();
+    observation->body_edges += vpEdgesMono_FHR.size();
+  }
+  if (nInitialCorrespondences < 3) {
+    measured.Next(PoseObservationPhase::Destroy);
     return 0;
+  }
 
   // We perform 4 optimizations, after each optimization we classify observation
   // as inlier/outlier At the next optimization, outliers are not included, but
@@ -1004,12 +1037,18 @@ int Optimizer::PoseOptimization(Frame *pFrame,
 
   int nBad = 0;
   for (size_t it = 0; it < 4; it++) {
+    measured.Next(PoseObservationPhase::Solve);
     Tcw = pFrame->GetPose();
     vSE3->setEstimate(g2o::SE3Quat(Tcw.unit_quaternion().cast<double>(),
                                    Tcw.translation().cast<double>()));
 
     optimizer.initializeOptimization(0);
-    optimizer.optimize(its[it]);
+    const int returned_iterations = optimizer.optimize(its[it]);
+    if (observation) {
+      ++observation->solves;
+      if (returned_iterations > 0) observation->returned_iterations += returned_iterations;
+    }
+    measured.Next(PoseObservationPhase::Classify);
 
     nBad = 0;
     for (size_t i = 0, iend = vpEdgesMono.size(); i < iend; i++) {
@@ -1088,6 +1127,7 @@ int Optimizer::PoseOptimization(Frame *pFrame,
       break;
   }
 
+  measured.Next(PoseObservationPhase::Commit);
   // Recover optimized pose and return number of inliers
   g2o::VertexSE3Expmap *vSE3_recov =
       static_cast<g2o::VertexSE3Expmap *>(optimizer.vertex(0));
@@ -1095,15 +1135,62 @@ int Optimizer::PoseOptimization(Frame *pFrame,
   Sophus::SE3<float> pose(SE3quat_recov.rotation().cast<float>(),
                           SE3quat_recov.translation().cast<float>());
   pFrame->SetPose(pose);
+  if (observation) ++observation->commits;
+  measured.Next(PoseObservationPhase::Destroy);
 
   return nInitialCorrespondences - nBad;
 }
+
+namespace {
+// Declared before local graph containers, so its destructor records the return
+// timestamp after token, graph and snapshots are destroyed on every return.
+class LocalBaMeasurement {
+public:
+  explicit LocalBaMeasurement(LocalBaObservation* record) : record_(record) {
+    if (!record_) return;
+    *record_ = {};
+    record_->outcome = LocalBaOutcome::Running;
+    record_->entered_ns = RgbdSteadyNanoseconds();
+    wall_start_ = record_->entered_ns;
+    cpu_start_ = RgbdThreadCpuMilliseconds();
+    record_->phases_visited |= 1u << static_cast<unsigned>(phase_);
+  }
+  ~LocalBaMeasurement() {
+    if (!record_) return;
+    FinishPhase();
+    record_->returned_ns = RgbdSteadyNanoseconds();
+  }
+  void Phase(LocalBaPhase next) {
+    if (!record_) return;
+    FinishPhase();
+    phase_ = next;
+    record_->phases_visited |= 1u << static_cast<unsigned>(phase_);
+  }
+private:
+  void FinishPhase() {
+    const auto now = RgbdSteadyNanoseconds();
+    const double cpu = RgbdThreadCpuMilliseconds();
+    const auto i = static_cast<unsigned>(phase_);
+    record_->wall_ms[i] += double(now - wall_start_) / 1e6;
+    if (cpu_start_ < 0 || cpu < cpu_start_) record_->cpu_ms[i] = -1;
+    else if (record_->cpu_ms[i] >= 0) record_->cpu_ms[i] += cpu - cpu_start_;
+    wall_start_ = now;
+    cpu_start_ = cpu;
+  }
+  LocalBaObservation* record_;
+  LocalBaPhase phase_ = LocalBaPhase::Collect;
+  std::uint64_t wall_start_ = 0;
+  double cpu_start_ = -1;
+};
+} // namespace
 
 void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
                                       Map *pMap, int &num_fixedKF,
                                       int &num_OptKF, int &num_MPs,
                                       int &num_edges,
-                                      const std::atomic<bool>* cancel) {
+                                      const std::atomic<bool>* cancel,
+                                      LocalBaObservation* observation) {
+  LocalBaMeasurement measure(observation);
   // Local KeyFrames: First Breath Search from Current Keyframe
   list<KeyFrame *> lLocalKeyFrames;
 
@@ -1167,13 +1254,18 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   }
   num_fixedKF = lFixedCameras.size() + num_fixedKF;
 
+  num_MPs = static_cast<int>(lLocalMapPoints.size());
+  if (observation) observation->map_points = num_MPs;
   if (num_fixedKF == 0) {
     Verbose::PrintMess(
         "LM-LBA: There are 0 fixed KF in the optimizations, LBA aborted",
         Verbose::VERBOSITY_NORMAL);
+    if (observation) observation->outcome = LocalBaOutcome::NoFixedKeyFrame;
+    measure.Phase(LocalBaPhase::Destroy);
     return;
   }
 
+  measure.Phase(LocalBaPhase::Build);
   // Setup optimizer
   g2o::SparseOptimizer optimizer;
   g2o::BlockSolver_6_3::LinearSolverType *linearSolver;
@@ -1194,7 +1286,8 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   if (pbStopFlag)
     optimizer.setForceStopFlag(pbStopFlag);
 
-  OptimizerStopToken cancellation(optimizer, cancel);
+  OptimizerStopToken cancellation(optimizer, cancel,
+      observation ? &observation->first_observed_ns : nullptr);
 
   unsigned long maxKFid = 0;
 
@@ -1213,6 +1306,10 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
                                    Tcw.translation().cast<double>()));
     vSE3->setId(pKFi->mnId);
     vSE3->setFixed(pKFi->mnId == pMap->GetInitKFid());
+    if (observation) {
+      if (vSE3->fixed()) ++observation->fixed_keyframes;
+      else ++observation->free_keyframes;
+    }
     optimizer.addVertex(vSE3);
     if (pKFi->mnId > maxKFid)
       maxKFid = pKFi->mnId;
@@ -1232,6 +1329,7 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
                                    Tcw.translation().cast<double>()));
     vSE3->setId(pKFi->mnId);
     vSE3->setFixed(true);
+    if (observation) ++observation->fixed_keyframes;
     optimizer.addVertex(vSE3);
     if (pKFi->mnId > maxKFid)
       maxKFid = pKFi->mnId;
@@ -1409,15 +1507,33 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
     MemoryStats::BA("local", lLocalKeyFrames.size()+lFixedCameras.size(), lLocalMapPoints.size(), optimizer.vertices().size(), optimizer.edges().size(), vpEdgesMono.size(), vpEdgesBody.size(), vpEdgesStereo.size(), capacities);
   }
   num_edges = nEdges;
+  if (observation) {
+    observation->mono_edges = static_cast<int>(vpEdgesMono.size());
+    observation->body_edges = static_cast<int>(vpEdgesBody.size());
+    observation->stereo_edges = static_cast<int>(vpEdgesStereo.size());
+  }
 
-  if (pbStopFlag)
-    if (*pbStopFlag)
-      return;
-  if (cancellation.Requested())
+  if ((pbStopFlag && *pbStopFlag) || cancellation.Requested()) {
+    if (observation) {
+      observation->outcome = LocalBaOutcome::CancelledBeforeSolve;
+      observation->cancel_observed = true;
+    }
+    measure.Phase(LocalBaPhase::Destroy);
     return;
+  }
 
+  measure.Phase(LocalBaPhase::Solve);
   optimizer.initializeOptimization();
-  optimizer.optimize(10);
+  if (observation) {
+    observation->solver_invoked = true;
+    observation->iterations_requested = 10;
+  }
+  const int completed_iterations = optimizer.optimize(10);
+  if (observation) {
+    observation->iterations_completed = completed_iterations;
+    observation->cancel_observed = cancellation.Observed();
+  }
+  measure.Phase(LocalBaPhase::Classify);
 
   vector<pair<KeyFrame *, MapPointPtr >> vToErase;
   vToErase.reserve(vpEdgesMono.size() + vpEdgesBody.size() +
@@ -1464,7 +1580,9 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   }
 
   // Get Map Mutex
+  measure.Phase(LocalBaPhase::MapLockWait);
   unique_lock<mutex> lock(pMap->mMutexMapUpdate);
+  measure.Phase(LocalBaPhase::Commit);
 
   if (!vToErase.empty()) {
     for (size_t i = 0; i < vToErase.size(); i++) {
@@ -1501,6 +1619,12 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   }
 
   pMap->IncreaseChangeIndex();
+  if (observation) {
+    observation->committed = true;
+    observation->outcome = observation->cancel_observed
+        ? LocalBaOutcome::CommittedAfterCancelObserved : LocalBaOutcome::Committed;
+  }
+  measure.Phase(LocalBaPhase::Destroy);
 }
 
 void Optimizer::OptimizeEssentialGraph(

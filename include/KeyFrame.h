@@ -38,6 +38,7 @@
 
 #include <mutex>
 #include "RetainedPointCache.h"
+#include "RgbdTiming.h"
 #include <unordered_set>
 
 #include <boost/serialization/base_object.hpp>
@@ -204,7 +205,7 @@ public:
   // owned by output; caller keeps output alive across all KFs in this frame.
   void AppendLocalMapPoints(unsigned long frame_id,
       std::vector<MapPointPtr>& output,
-      RetainedPointCache& identities);
+      RetainedPointCache& identities, LocalPointGatherCounts* counts = nullptr);
   // Disposable attempt collection: deduplicate only against retained owners;
   // never read MP state or write frame markers under the KF slot lock.
   void AppendLocalMapCandidates(std::vector<MapPointPtr>& output,

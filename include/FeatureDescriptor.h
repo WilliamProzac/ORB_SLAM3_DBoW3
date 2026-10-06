@@ -7,6 +7,8 @@
 
 namespace ORB_SLAM3 {
 
+struct MedoidTiming;
+
 enum class FeatureDescriptorType {
   ORB_BINARY,
   XFEAT_FLOAT,
@@ -26,7 +28,8 @@ int FeatureDescriptorDistanceExact(const cv::Mat &a, const cv::Mat &b);
 // Selects the observed descriptor whose median distance to the other
 // observations is smallest. This is the MapPoint representative descriptor
 // for both binary ORB and float XFeat observations.
-cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors);
+cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors,
+                                MedoidTiming* timing = nullptr);
 
 } // namespace ORB_SLAM3
 

@@ -103,6 +103,7 @@ Frame::Frame(const Frame &frame)
     mmProjectPoints = frame.mmProjectPoints;
     mmMatchedInImage = frame.mmMatchedInImage;
 
+    mRgbdOrbTiming = frame.mRgbdOrbTiming;
     mTimeRgbdOrbExtract = frame.mTimeRgbdOrbExtract;
     mTimeRgbdOrbPyramid = frame.mTimeRgbdOrbPyramid;
     mTimeRgbdOrbKeypointsOctree = frame.mTimeRgbdOrbKeypointsOctree;
@@ -290,6 +291,10 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
     mvInvLevelSigma2 = mpORBextractorLeft->GetInverseScaleSigmaSquares();
 
     // ORB extraction
+    const bool lightOrb = RgbdLightDiagnostics();
+    const auto observationContext = GetRgbdObservationContext();
+    mpORBextractorLeft->SetObservationTiming(lightOrb,
+        observationContext.provided && observationContext.detail_window);
     const std::chrono::steady_clock::time_point time_StartExtORB =
         std::chrono::steady_clock::now();
     ExtractORB(0,imGray,0,0);
@@ -299,6 +304,7 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
             .count();
     const ORBextractor::StageTiming &orb_stage_timing =
         mpORBextractorLeft->GetLastStageTiming();
+    mRgbdOrbTiming = orb_stage_timing.observation;
     mTimeRgbdOrbPyramid = orb_stage_timing.pyramid_ms;
     mTimeRgbdOrbKeypointsOctree = orb_stage_timing.keypoints_octree_ms;
     mTimeRgbdOrbOrientation = orb_stage_timing.orientation_ms;

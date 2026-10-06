@@ -21,6 +21,7 @@
 
 #ifndef ORBEXTRACTOR_H
 #define ORBEXTRACTOR_H
+#include "RgbdTiming.h"
 
 #include <array>
 #include <atomic>
@@ -71,6 +72,7 @@ public:
   };
 
   struct StageTiming {
+    OrbTimingRecord observation;
     double pyramid_ms = 0.0;
     double keypoints_octree_ms = 0.0;
     double orientation_ms = 0.0;
@@ -107,6 +109,12 @@ public:
 
   const StageTiming &GetLastStageTiming() const { return mLastStageTiming; }
 
+  // Set only between complete extractions on their calling thread.
+  void SetObservationTiming(bool light, bool detail) {
+    mCollectLight = light;
+    mCollectDetail = light && detail;
+  }
+
   float inline GetScaleFactor() { return scaleFactor; }
 
   std::vector<float> inline GetScaleFactors() { return mvScaleFactor; }
@@ -141,8 +149,8 @@ protected:
                          std::uint32_t *splitCount = nullptr);
 
   void RunLevelTasks(int taskCount, const std::function<void(int)> &task);
-  void WorkerLoop();
-  void ExecuteAvailableTasks();
+  void WorkerLoop(int workerSlot);
+  void ExecuteAvailableTasks(int workerSlot);
 
   void
   ComputeKeyPointsOld(std::vector<std::vector<cv::KeyPoint>> &allKeypoints);
@@ -182,6 +190,21 @@ protected:
   std::size_t mTaskGeneration = 0;
   bool mStopWorkers = false;
   std::exception_ptr mWorkerException;
+  struct WorkerTiming {
+    double cpu_ms = 0.0;
+    std::uint32_t tasks = 0;
+    // Keep slots apart without requiring over-aligned C++14 allocation.
+    std::array<unsigned char, 52> padding{};
+  };
+  std::array<WorkerTiming, kMaxRgbdOrbWorkers> mWorkerTiming{};
+  bool mCollectLight = false;
+#ifdef ORB_SLAM3_ORB_FINE_TIMING
+  bool mCollectDetail = true;
+#else
+  bool mCollectDetail = false;
+#endif
+  unsigned mObservationBatch = 0;
+  double mLastBatchHelperCpu = 0.0;
 };
 
 } // namespace ORB_SLAM3

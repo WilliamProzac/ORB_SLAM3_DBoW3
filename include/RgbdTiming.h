@@ -1,6 +1,7 @@
 #ifndef ORB_SLAM3_RGBD_TIMING_H
 #define ORB_SLAM3_RGBD_TIMING_H
 
+#include "MedoidTiming.h"
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -9,7 +10,161 @@ namespace ORB_SLAM3 {
 
 constexpr std::size_t kMaxRgbdOrbLevels = 16;
 
+// source_ordinal comes from the frozen input manifest, never a processed-frame
+// counter. Wrappers set/clear this context on the thread calling TrackRGBD.
+struct RgbdObservationContext {
+  std::int64_t source_stamp_ns = 0;
+  std::uint64_t source_ordinal = 0;
+  std::uint64_t run_id = 0;
+  bool provided = false;
+  bool detail_window = false;
+};
+struct RgbdResetCounters {
+  std::uint64_t reset = 0;
+  std::uint64_t active_reset = 0;
+};
+void SetRgbdLightDiagnostics(bool enabled);
+bool RgbdLightDiagnostics();
+constexpr std::size_t kMaxRgbdObservationInputs = 8192;
+// Configure the complete frozen input count before enabling L0/creating System.
+// Invalid counts throw; LocalMapping snapshots this limit at construction.
+void SetRgbdObservationCapacity(std::size_t expected_inputs);
+std::size_t GetRgbdObservationCapacity();
+void SetRgbdObservationContext(std::int64_t source_stamp_ns,
+    std::uint64_t source_ordinal, bool detail_window, std::uint64_t run_id = 0);
+void ClearRgbdObservationContext();
+RgbdObservationContext GetRgbdObservationContext();
+RgbdResetCounters GetRgbdResetCounters();
+double RgbdThreadCpuMilliseconds();
+std::uint64_t RgbdSteadyNanoseconds();
+
+// ORB CPU observations use fixed per-worker slots. Slot 0 is the caller;
+// helper slots include task execution/claiming, not their sleeping lifetime.
+enum class OrbObservationStage : unsigned {
+  Pyramid, Keypoints, Orientation, Blur, Descriptor, Assembly, Count
+};
+constexpr std::size_t kOrbObservationStages =
+    static_cast<std::size_t>(OrbObservationStage::Count);
+constexpr std::size_t kMaxRgbdOrbWorkers = 4;
+enum class OrbLevelObservationStage : unsigned {
+  FastInitial, FastFallback, Octree, Orientation, Copy, Gaussian, Descriptor, Count
+};
+constexpr std::size_t kOrbLevelObservationStages =
+    static_cast<std::size_t>(OrbLevelObservationStage::Count);
+struct OrbTimingRecord {
+  bool collected = false, detail_collected = false, cpu_valid = false;
+  double extract_caller_cpu_ms = -1.0;
+  double helper_cpu_ms = -1.0, total_cpu_ms = -1.0;
+  std::array<double, kOrbObservationStages> stage_caller_cpu_ms{};
+  std::array<double, kOrbObservationStages> stage_helper_cpu_ms{};
+  std::array<double, kMaxRgbdOrbWorkers> worker_cpu_ms{};
+  std::array<std::uint32_t, kMaxRgbdOrbWorkers> worker_tasks{};
+  int worker_count = 0;
+  std::array<std::uint32_t, kMaxRgbdOrbLevels> level_outputs{};
+  std::array<std::uint32_t, kMaxRgbdOrbLevels> level_rows{}, level_cols{};
+  std::array<std::uint64_t, kMaxRgbdOrbLevels> level_stride{};
+  std::array<std::array<double, kOrbLevelObservationStages>, kMaxRgbdOrbLevels>
+      level_cpu_ms{};
+  // Exactly the existing keypoints/orientation/descriptor dispatch batches.
+  // Zero outside detail_collected means unmeasured, not no waiting.
+  std::array<double, 3> dispatch_ms{}, barrier_ms{};
+};
+
+enum class KeyFrameDecisionReason : int {
+  NotEvaluated = 0, ImuStartupInsert, ImuStartupWait, OnlyTracking,
+  MappingStopped, MappingStopRequested, RelocalizationGuard,
+  ConditionsFalse, MappingAccepts, MappingInitializing,
+  BusyQueueAccepts, BusyQueueFull, BusyMonocular
+};
+enum class KeyFrameCreateResult : int {
+  NotCalled = 0, RejectedByTrackingState, Initializing,
+  StopGuardRejected, Enqueued
+};
+enum KeyFrameDecisionBit : unsigned {
+  KfImuStartup = 0, KfOnlyTracking, KfMappingStopped, KfStopRequested,
+  KfRelocalizationGuard, KfMappingIdle, KfNeedClose, KfC1a, KfC1b,
+  KfC1c, KfC2, KfC3, KfC4, KfCombinedConditions,
+  KfMappingInitializing, KfQueueBelowThree
+};
+struct KeyFrameDecisionRecord {
+  std::uint32_t evaluated_mask = 0;
+  std::uint32_t value_mask = 0;
+  KeyFrameDecisionReason reason = KeyFrameDecisionReason::NotEvaluated;
+  KeyFrameCreateResult create_result = KeyFrameCreateResult::NotCalled;
+  int need_result = -1;
+  int reference_matches = -1;
+  int matches_inliers = -1;
+  int tracked_close = -1;
+  int untracked_close = -1;
+  int map_keyframes = -1;
+  int queue_depth = -1; // Not queried in every original branch.
+  float reference_ratio = 0;
+  std::uint64_t frames_since_keyframe = 0;
+  int min_frames = 0;
+  int max_frames = 0;
+  bool interrupt_called = false;
+  std::uint64_t interrupt_request_id = 0, interrupt_attempt_id = 0;
+  std::uint64_t interrupt_request_ns = 0;
+};
+struct LocalPointGatherCounts {
+  std::uint64_t slots = 0, null_identity = 0, hint_hits = 0;
+  std::uint64_t weak_locks = 0, expired = 0, frame_marked = 0, bad = 0;
+  std::uint64_t accepted = 0;
+};
+enum class LocalBaOutcome : int {
+  NotInvoked = 0, Running, NoFixedKeyFrame, CancelledBeforeSolve,
+  Committed, CommittedAfterCancelObserved
+};
+enum class LocalBaPhase : unsigned {
+  Collect = 0, Build, Solve, Classify, MapLockWait, Commit, Destroy, Count
+};
+struct LocalBaObservation {
+  LocalBaOutcome outcome = LocalBaOutcome::NotInvoked;
+  std::uint64_t first_observed_ns = 0;
+  std::uint64_t entered_ns = 0, returned_ns = 0;
+  int iterations_requested = 0, iterations_completed = 0;
+  int free_keyframes = 0, fixed_keyframes = 0, map_points = 0;
+  int mono_edges = 0, body_edges = 0, stereo_edges = 0;
+  bool solver_invoked = false, cancel_observed = false, committed = false;
+  std::uint32_t phases_visited = 0;
+  std::array<double, static_cast<unsigned>(LocalBaPhase::Count)> wall_ms{};
+  std::array<double, static_cast<unsigned>(LocalBaPhase::Count)> cpu_ms{};
+};
+
+enum class PoseObservationPhase : unsigned {
+  Setup = 0, MapLockWait, Build, Solve, Classify, Commit, Destroy, Count
+};
+struct PoseOptimizationObservation {
+  std::uint64_t calls = 0, edges = 0, mono_edges = 0, stereo_edges = 0, body_edges = 0;
+  std::uint64_t solves = 0, returned_iterations = 0, commits = 0;
+  std::uint32_t phases_visited = 0;
+  bool cpu_available = true;
+  std::array<double, static_cast<unsigned>(PoseObservationPhase::Count)> wall_ms{};
+  std::array<double, static_cast<unsigned>(PoseObservationPhase::Count)> cpu_ms{};
+};
+struct ProjectionMatchObservation {
+  std::uint64_t points = 0, queries = 0, candidates = 0;
+  std::uint64_t occupied_skips = 0, stereo_gate_skips = 0, distances = 0;
+};
+
 struct RgbdTimingRecord {
+  PoseOptimizationObservation pose;
+  ProjectionMatchObservation projection_match;
+  bool l0_collected = false;
+  RgbdObservationContext observation;
+  std::uint64_t tracking_thread_id = 0;
+  KeyFrameDecisionRecord keyframe_decision;
+  std::uint64_t voting_slots = 0, voting_associated = 0;
+  std::uint64_t voting_observation_entries = 0, voting_unique_keyframes = 0;
+  double voting_observation_copy_ms = 0; // Only detail_window; zero otherwise.
+  double voting_observation_copy_cpu_ms = 0;
+  LocalPointGatherCounts gather;
+  std::uint64_t search_associated_slots = 0, search_local_slots = 0;
+  std::uint64_t search_seen_skips = 0, search_bad_skips = 0;
+  std::uint64_t search_projected = 0, search_rejected = 0, search_visible = 0;
+  int search_matches = 0;
+  double local_keyframes_cpu_ms = 0, local_points_cpu_ms = 0;
+  double local_search_cpu_ms = 0;
   double image_timestamp = 0.0;
   std::uint64_t frame_id = 0;
   int state_before = -1;
@@ -34,6 +189,8 @@ struct RgbdTimingRecord {
   double gray_convert_ms = 0.0;
   double depth_convert_ms = 0.0;
   double frame_construct_ms = 0.0;
+  double frame_construct_cpu_ms = -1.0;
+  OrbTimingRecord orb;
   double orb_extract_ms = 0.0;
   double orb_pyramid_ms = 0.0;
   double orb_keypoints_octree_ms = 0.0;
@@ -79,6 +236,15 @@ struct RgbdTimingRecord {
 };
 
 struct LocalMappingTimingRecord {
+  bool l0_collected = false;
+  std::uint64_t mapping_thread_id = 0;
+  RgbdObservationContext observation;
+  std::uint64_t refinement_attempt_id = 0;
+  std::uint64_t attempt_first_request_ns = 0;
+  std::uint64_t attempt_requests = 0;
+  LocalBaObservation ba;
+  KeyFrameIngestTiming ingest;
+  std::array<MedoidTiming, static_cast<std::size_t>(MedoidSite::Count)> medoid;
   std::uint64_t keyframe_id = 0;
   double image_timestamp = 0.0;
   int queue_depth_before_pop = 0;

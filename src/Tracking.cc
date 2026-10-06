@@ -37,11 +37,54 @@
 #include <memory>
 
 #include <chrono>
+#include <atomic>
+#include <ctime>
+#include <thread>
 #include <mutex>
+#include <stdexcept>
 
 using namespace std;
 
 namespace ORB_SLAM3 {
+namespace {
+std::atomic<bool> rgbd_light_diagnostics{false};
+std::atomic<std::size_t> rgbd_observation_capacity{0};
+std::atomic<std::uint64_t> rgbd_reset_count{0}, rgbd_active_reset_count{0};
+thread_local RgbdObservationContext rgbd_observation_context;
+}
+void SetRgbdLightDiagnostics(bool enabled) {
+  if (enabled && GetRgbdObservationCapacity() == 0)
+    throw std::logic_error("set frozen RGB-D observation capacity before enabling L0");
+  rgbd_light_diagnostics.store(enabled);
+}
+bool RgbdLightDiagnostics() { return rgbd_light_diagnostics.load(); }
+void SetRgbdObservationCapacity(std::size_t expected_inputs) {
+  if (expected_inputs == 0 || expected_inputs > kMaxRgbdObservationInputs)
+    throw std::invalid_argument("RGB-D observation capacity must be in 1..8192");
+  rgbd_observation_capacity.store(expected_inputs);
+}
+std::size_t GetRgbdObservationCapacity() { return rgbd_observation_capacity.load(); }
+void SetRgbdObservationContext(std::int64_t stamp, std::uint64_t ordinal,
+                               bool detail, std::uint64_t run) {
+  rgbd_observation_context = {stamp, ordinal, run, true, detail};
+}
+void ClearRgbdObservationContext() { rgbd_observation_context = {}; }
+RgbdObservationContext GetRgbdObservationContext() { return rgbd_observation_context; }
+RgbdResetCounters GetRgbdResetCounters() {
+  return {rgbd_reset_count.load(), rgbd_active_reset_count.load()};
+}
+std::uint64_t RgbdSteadyNanoseconds() {
+  return std::chrono::duration_cast<std::chrono::nanoseconds>(
+      std::chrono::steady_clock::now().time_since_epoch()).count();
+}
+double RgbdThreadCpuMilliseconds() {
+#if defined(CLOCK_THREAD_CPUTIME_ID)
+  timespec now;
+  if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &now) == 0)
+    return double(now.tv_sec) * 1000.0 + double(now.tv_nsec) / 1e6;
+#endif
+  return -1.0;
+}
 namespace { FieldSink field_sink=nullptr; void* field_context=nullptr; bool heavy_diagnostics=false; }
 void SetFieldSink(FieldSink sink,void*context){field_sink=sink;field_context=context;}
 bool FieldEnabled(){return field_sink!=nullptr;}
@@ -123,8 +166,8 @@ void PointTraceSnapshot(uint64_t source,uint32_t phase,const Frame& frame) {
 // POINT_TRACE_DRAFT_END
 
 namespace {
-int FieldPoseOptimization(Frame* frame) {
- const int n=Optimizer::PoseOptimization(frame);
+int FieldPoseOptimization(Frame* frame, PoseOptimizationObservation* observation = nullptr) {
+ const int n=Optimizer::PoseOptimization(frame, nullptr, observation);
  if(FieldEnabled()) {
   FieldEmit(14,frame->mnId,0,1,n);
   uint64_t q[4]={};
@@ -140,6 +183,20 @@ int FieldPoseOptimization(Frame* frame) {
 
 
 namespace {
+class ScopedThreadCpuAccumulator {
+public:
+  explicit ScopedThreadCpuAccumulator(double* destination)
+      : destination_(destination), start_(destination ? RgbdThreadCpuMilliseconds() : -1) {}
+  ~ScopedThreadCpuAccumulator() {
+    if (!destination_) return;
+    const double end = RgbdThreadCpuMilliseconds();
+    if (start_ < 0 || end < start_) *destination_ = -1;
+    else if (*destination_ >= 0) *destination_ += end - start_;
+  }
+private:
+  double* destination_;
+  double start_;
+};
 class ScopedTimingAccumulator {
 public:
   explicit ScopedTimingAccumulator(double *destination)
@@ -1715,6 +1772,11 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
                                      const double &timestamp, string filename,
                                      RgbdTimingRecord *timing) {
   mpCurrentRgbdTiming = timing;
+  if (timing && RgbdLightDiagnostics()) {
+    timing->l0_collected = true;
+    timing->observation = GetRgbdObservationContext();
+    timing->tracking_thread_id = std::hash<std::thread::id>{}(std::this_thread::get_id());
+  }
   if (timing) {
     timing->image_timestamp = timestamp;
     timing->state_before = static_cast<int>(mState);
@@ -1747,6 +1809,8 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   if (timing)
     timing->depth_convert_ms = ElapsedMilliseconds(depth_start);
 
+  const double frame_cpu_start = timing && timing->l0_collected
+      ? RgbdThreadCpuMilliseconds() : -1.0;
   const std::chrono::steady_clock::time_point frame_start =
       std::chrono::steady_clock::now();
   if (mSensor == System::RGBD)
@@ -1761,6 +1825,12 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   mCurrentFrame.mUseLocalMapProjection = mSensor == System::RGBD && mLocalMapMode != 0;
   if (timing) {
     timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
+    if (timing->l0_collected) {
+      const double frame_cpu_end = RgbdThreadCpuMilliseconds();
+      timing->frame_construct_cpu_ms = frame_cpu_start < 0.0 || frame_cpu_end < frame_cpu_start
+          ? -1.0 : frame_cpu_end - frame_cpu_start;
+    }
+    timing->orb = mCurrentFrame.mRgbdOrbTiming;
     timing->frame_id = mCurrentFrame.mnId;
     timing->keypoints = mCurrentFrame.N;
     timing->valid_depths = static_cast<int>(std::count_if(
@@ -2608,6 +2678,9 @@ void Tracking::Track() {
                                mSensor == System::IMU_STEREO ||
                                mSensor == System::IMU_RGBD))))
         CreateNewKeyFrame();
+      else if (bNeedKF && RgbdLightDiagnostics() && mpCurrentRgbdTiming)
+        mpCurrentRgbdTiming->keyframe_decision.create_result =
+            KeyFrameCreateResult::RejectedByTrackingState;
 
 #ifdef REGISTER_TIMES
       std::chrono::steady_clock::time_point time_EndNewKF =
@@ -3179,7 +3252,8 @@ bool Tracking::TrackReferenceKeyFrame() {
 
   // cout << " TrackReferenceKeyFrame mLastFrame.mTcw:  " << mLastFrame.mTcw <<
   // endl;
-  FieldPoseOptimization(&mCurrentFrame);
+  FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
 
   // Discard outliers
   int nmatchesMap = 0;
@@ -3450,7 +3524,8 @@ bool Tracking::TrackWithMotionModel() {
 
   // Optimize frame pose with all matches
   if(point_trace)PointTraceSnapshot(mCurrentFrame.mnId,3,mCurrentFrame);
-  FieldPoseOptimization(&mCurrentFrame);
+  FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
   if(point_trace)PointTraceSnapshot(mCurrentFrame.mnId,4,mCurrentFrame);
 
   // Discard outliers
@@ -3531,11 +3606,13 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
   const auto local_pose_start = mpCurrentRgbdTiming ? std::chrono::steady_clock::now()
                                                    : std::chrono::steady_clock::time_point();
   if (!mpAtlas->isImuInitialized())
-    FieldPoseOptimization(&mCurrentFrame);
+    FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
   else {
     if (mCurrentFrame.mnId <= mnLastRelocFrameId + mnFramesToResetIMU) {
       Verbose::PrintMess("TLM: PoseOptimization ", Verbose::VERBOSITY_DEBUG);
-      FieldPoseOptimization(&mCurrentFrame);
+      FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
     } else {
       // Check if IMU preintegration data is valid before using IMU-based
       // optimization
@@ -3550,7 +3627,8 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
         Verbose::PrintMess(
             "TLM: Falling back to PoseOptimization (IMU data unavailable)",
             Verbose::VERBOSITY_DEBUG);
-        FieldPoseOptimization(&mCurrentFrame);
+        FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
       } else if (!mbMapUpdated) {
         const bool bHasPrevPrior = mCurrentFrame.mpPrevFrame &&
                                    mCurrentFrame.mpPrevFrame->mpcpi != nullptr;
@@ -3575,7 +3653,8 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
           cout << "TLM: IMU optimization failed, falling back to "
                   "PoseOptimization"
                << endl;
-          FieldPoseOptimization(&mCurrentFrame);
+          FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
         }
       } else {
         Verbose::PrintMess("TLM: PoseInertialOptimizationLastKeyFrame ",
@@ -3587,7 +3666,8 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
           cout << "TLM: IMU optimization failed, falling back to "
                   "PoseOptimization"
                << endl;
-          FieldPoseOptimization(&mCurrentFrame);
+          FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
         }
       }
     }
@@ -3664,38 +3744,60 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
 bool Tracking::NeedNewKeyFrame() {
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->need_new_kf_ms : nullptr);
-  if ((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
+  auto* decision = (RgbdLightDiagnostics() && mpCurrentRgbdTiming)
+      ? &mpCurrentRgbdTiming->keyframe_decision : nullptr;
+  auto note = [decision](unsigned bit, bool value) {
+    if (decision) {
+      decision->evaluated_mask |= (1u << bit);
+      if (value) decision->value_mask |= (1u << bit);
+    }
+    return value;
+  };
+  auto finish = [decision](bool result, KeyFrameDecisionReason reason) {
+    if (decision) { decision->need_result = result; decision->reason = reason; }
+    return result;
+  };
+  if (decision) {
+    decision->frames_since_keyframe = mCurrentFrame.mnId - mnLastKeyFrameId;
+    decision->min_frames = mMinFrames;
+    decision->max_frames = mMaxFrames;
+    decision->matches_inliers = mnMatchesInliers;
+  }
+  if (note(KfImuStartup, (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
        mSensor == System::IMU_RGBD) &&
-      !mpAtlas->GetCurrentMap()->isImuInitialized()) {
+      !mpAtlas->GetCurrentMap()->isImuInitialized())) {
     if (mSensor == System::IMU_MONOCULAR &&
         (mCurrentFrame.mTimeStamp - mpLastKeyFrame->mTimeStamp) >= 0.25)
-      return true;
+      return finish(true, KeyFrameDecisionReason::ImuStartupInsert);
     else if ((mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) &&
              (mCurrentFrame.mTimeStamp - mpLastKeyFrame->mTimeStamp) >= 0.25)
-      return true;
+      return finish(true, KeyFrameDecisionReason::ImuStartupInsert);
     else
-      return false;
+      return finish(false, KeyFrameDecisionReason::ImuStartupWait);
   }
 
-  if (mbOnlyTracking)
-    return false;
+  if (note(KfOnlyTracking, mbOnlyTracking))
+    return finish(false, KeyFrameDecisionReason::OnlyTracking);
 
   // If Local Mapping is freezed by a Loop Closure do not insert keyframes
-  if (mpLocalMapper->isStopped() || mpLocalMapper->stopRequested()) {
+  const bool mapping_stopped = note(KfMappingStopped, mpLocalMapper->isStopped());
+  if (mapping_stopped || note(KfStopRequested, mpLocalMapper->stopRequested())) {
     /*if(mSensor == System::MONOCULAR)
     {
         std::cout << "NeedNewKeyFrame: localmap stopped" << std::endl;
     }*/
-    return false;
+    return finish(false, mapping_stopped ? KeyFrameDecisionReason::MappingStopped
+                                        : KeyFrameDecisionReason::MappingStopRequested);
   }
 
   const int nKFs = mpAtlas->KeyFramesInMap();
+  if (decision) decision->map_keyframes = nKFs;
 
   // Do not insert keyframes if not enough frames have passed from last
   // relocalisation
-  if (mCurrentFrame.mnId < mnLastRelocFrameId + mMaxFrames &&
-      nKFs > mMaxFrames) {
-    return false;
+  if (note(KfRelocalizationGuard, mCurrentFrame.mnId < mnLastRelocFrameId + mMaxFrames &&
+      nKFs > mMaxFrames)) {
+    return finish(false, KeyFrameDecisionReason::RelocalizationGuard);
   }
 
   // Tracked MapPoints in the reference keyframe
@@ -3703,9 +3805,10 @@ bool Tracking::NeedNewKeyFrame() {
   if (nKFs <= 2)
     nMinObs = 2;
   int nRefMatches = mpReferenceKF->TrackedMapPoints(nMinObs);
+  if (decision) decision->reference_matches = nRefMatches;
 
   // Local Mapping accept keyframes?
-  bool bLocalMappingIdle = mpLocalMapper->AcceptKeyFrames();
+  bool bLocalMappingIdle = note(KfMappingIdle, mpLocalMapper->AcceptKeyFrames());
 
   // Check how many "close" points are being tracked and how many could be
   // potentially created.
@@ -3729,7 +3832,11 @@ bool Tracking::NeedNewKeyFrame() {
   }
 
   bool bNeedToInsertClose;
-  bNeedToInsertClose = (nTrackedClose < 100) && (nNonTrackedClose > 70);
+  bNeedToInsertClose = note(KfNeedClose, (nTrackedClose < 100) && (nNonTrackedClose > 70));
+  if (decision) {
+    decision->tracked_close = nTrackedClose;
+    decision->untracked_close = nNonTrackedClose;
+  }
 
   // Thresholds
   float thRefRatio = 0.75f;
@@ -3802,35 +3909,54 @@ bool Tracking::NeedNewKeyFrame() {
   else
     c4 = false;
 
-  if (((c1a || c1b || c1c) && c2) || c3 || c4) {
+  if (decision) decision->reference_ratio = thRefRatio;
+  note(KfC1a, c1a); note(KfC1b, c1b); note(KfC1c, c1c);
+  note(KfC2, c2); note(KfC3, c3); note(KfC4, c4);
+  if (note(KfCombinedConditions, ((c1a || c1b || c1c) && c2) || c3 || c4)) {
     // If the mapping accepts keyframes, insert keyframe.
     // Otherwise send a signal to interrupt BA
-    if (bLocalMappingIdle || mpLocalMapper->IsInitializing()) {
-      return true;
+    if (bLocalMappingIdle || note(KfMappingInitializing, mpLocalMapper->IsInitializing())) {
+      return finish(true, bLocalMappingIdle ? KeyFrameDecisionReason::MappingAccepts
+                                           : KeyFrameDecisionReason::MappingInitializing);
     } else {
-      mpLocalMapper->InterruptBA();
+      LocalMappingCancellation::RequestRecord request;
+      mpLocalMapper->InterruptBA(decision ? &request : nullptr);
+      if (decision) {
+        decision->interrupt_called = true;
+        decision->interrupt_request_id = request.request_id;
+        decision->interrupt_attempt_id = request.attempt_id;
+        decision->interrupt_request_ns = request.request_ns;
+      }
       if (mSensor != System::MONOCULAR && mSensor != System::IMU_MONOCULAR) {
-        if (mpLocalMapper->KeyframesInQueue() < 3)
-          return true;
+        const int queue_depth = mpLocalMapper->KeyframesInQueue();
+        if (decision) decision->queue_depth = queue_depth;
+        if (note(KfQueueBelowThree, queue_depth < 3))
+          return finish(true, KeyFrameDecisionReason::BusyQueueAccepts);
         else
-          return false;
+          return finish(false, KeyFrameDecisionReason::BusyQueueFull);
       } else {
         // std::cout << "NeedNewKeyFrame: localmap is busy" << std::endl;
-        return false;
+        return finish(false, KeyFrameDecisionReason::BusyMonocular);
       }
     }
   } else
-    return false;
+    return finish(false, KeyFrameDecisionReason::ConditionsFalse);
 }
 
 void Tracking::CreateNewKeyFrame() {
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->create_new_kf_ms : nullptr);
-  if (mpLocalMapper->IsInitializing() && !mpAtlas->isImuInitialized())
+  auto* decision = (RgbdLightDiagnostics() && mpCurrentRgbdTiming)
+      ? &mpCurrentRgbdTiming->keyframe_decision : nullptr;
+  if (mpLocalMapper->IsInitializing() && !mpAtlas->isImuInitialized()) {
+    if (decision) decision->create_result = KeyFrameCreateResult::Initializing;
     return;
+  }
 
-  if (!mpLocalMapper->SetNotStop(true))
+  if (!mpLocalMapper->SetNotStop(true)) {
+    if (decision) decision->create_result = KeyFrameCreateResult::StopGuardRejected;
     return;
+  }
 
   KeyFrame *pKF =
       new KeyFrame(mCurrentFrame, mpAtlas->GetCurrentMap(), mpKeyFrameDB);
@@ -3941,6 +4067,7 @@ void Tracking::CreateNewKeyFrame() {
   }
 
   mpLocalMapper->InsertKeyFrame(pKF);
+  if (decision) decision->create_result = KeyFrameCreateResult::Enqueued;
   if (mpCurrentRgbdTiming)
     mpCurrentRgbdTiming->inserted_keyframe = 1;
 
@@ -3951,6 +4078,8 @@ void Tracking::CreateNewKeyFrame() {
 }
 
 void Tracking::SearchLocalPoints() {
+  auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
+  ScopedThreadCpuAccumulator cpu(light ? &light->local_search_cpu_ms : nullptr);
 // FIELD_MAP_BEGIN
   uint64_t field_associated=0;
 // FIELD_MAP_END
@@ -3958,6 +4087,7 @@ void Tracking::SearchLocalPoints() {
   for (vector<MapPointPtr >::iterator vit = mCurrentFrame.mvpMapPoints.begin(),
                                     vend = mCurrentFrame.mvpMapPoints.end();
        vit != vend; vit++) {
+    if (light) ++light->search_associated_slots;
     MapPointPtr pMP = *vit;
     if (pMP) {
       if (pMP->isBad()) {
@@ -3983,15 +4113,22 @@ void Tracking::SearchLocalPoints() {
     // Tracking retains this vector unchanged throughout projection.
     const MapPointPtr& pMP = *vit;
 
-    if (pMP->mnLastFrameSeen == mCurrentFrame.mnId)
+    if (light) ++light->search_local_slots;
+    if (pMP->mnLastFrameSeen == mCurrentFrame.mnId) {
+      if (light) ++light->search_seen_skips;
       continue;
-    if (pMP->isBad())
+    }
+    if (pMP->isBad()) {
+      if (light) ++light->search_bad_skips;
       continue;
+    }
+    if (light) ++light->search_projected;
     // Project (this fills MapPoint variables for matching)
     if (mCurrentFrame.isInFrustum(pMP, 0.5)) {
       pMP->IncreaseVisible();
       nToMatch++;
-    }
+      if (light) ++light->search_visible;
+    } else if (light) ++light->search_rejected;
     if (pMP->mbTrackInView && (mRgbdOptimizationLevel < 4 || mpViewer)) {
       mCurrentFrame.mmProjectPoints[pMP->mnId] =
           cv::Point2f(pMP->mTrackProjX, pMP->mTrackProjY);
@@ -4032,7 +4169,9 @@ void Tracking::SearchLocalPoints() {
 
     int matches = matcher.SearchByProjection(mCurrentFrame, mvpLocalMapPoints,
                                              th, mpLocalMapper->mbFarPoints,
-                                             mpLocalMapper->mThFarPoints);
+                                             mpLocalMapper->mThFarPoints,
+                                             light ? &light->projection_match : nullptr);
+    if (light) light->search_matches += matches;
 // FIELD_MAP_BEGIN
     FieldEmit(24,mCurrentFrame.mnId,1,3,matches,th);
 // FIELD_MAP_END
@@ -4051,6 +4190,8 @@ void Tracking::UpdateLocalMap() {
 
 void Tracking::UpdateLocalPoints() {
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_points_ms : nullptr);
+  auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
+  ScopedThreadCpuAccumulator cpu(light ? &light->local_points_cpu_ms : nullptr);
   mLocalPointIdentities.clear();
   mvpLocalMapPoints.clear();
 
@@ -4060,22 +4201,33 @@ void Tracking::UpdateLocalPoints() {
        itKF != itEndKF; ++itKF) {
     KeyFrame *pKF = *itKF;
     pKF->AppendLocalMapPoints(mCurrentFrame.mnId, mvpLocalMapPoints,
-                             mLocalPointIdentities);
+                             mLocalPointIdentities, light ? &light->gather : nullptr);
   }
 }
 
 void Tracking::UpdateLocalKeyFrames() {
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_keyframes_ms : nullptr);
+  auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
+  ScopedThreadCpuAccumulator cpu(light ? &light->local_keyframes_cpu_ms : nullptr);
   // Each map point vote for the keyframes in which it has been observed
   map<KeyFrame *, int> keyframeCounter;
   if (!mpAtlas->isImuInitialized() ||
       (mCurrentFrame.mnId < mnLastRelocFrameId + 2)) {
     for (int i = 0; i < mCurrentFrame.N; i++) {
+      if (light) ++light->voting_slots;
       MapPointPtr pMP = mCurrentFrame.mvpMapPoints[i];
       if (pMP) {
+        if (light) ++light->voting_associated;
         if (!pMP->isBad()) {
-          const map<KeyFrame *, tuple<int, int>> observations =
-              pMP->GetObservations();
+          const map<KeyFrame *, tuple<int, int>> observations = [&] {
+            const bool detail = light && light->observation.detail_window;
+            ScopedTimingAccumulator detail_wall(detail
+                ? &light->voting_observation_copy_ms : nullptr);
+            ScopedThreadCpuAccumulator detail_cpu(detail
+                ? &light->voting_observation_copy_cpu_ms : nullptr);
+            return pMP->GetObservations();
+          }();
+          if (light) light->voting_observation_entries += observations.size();
           for (map<KeyFrame *, tuple<int, int>>::const_iterator
                    it = observations.begin(),
                    itend = observations.end();
@@ -4088,14 +4240,23 @@ void Tracking::UpdateLocalKeyFrames() {
     }
   } else {
     for (int i = 0; i < mLastFrame.N; i++) {
+      if (light) ++light->voting_slots;
       // Using lastframe since current frame has not matches yet
       if (mLastFrame.mvpMapPoints[i]) {
+        if (light) ++light->voting_associated;
         MapPointPtr pMP = mLastFrame.mvpMapPoints[i];
         if (!pMP)
           continue;
         if (!pMP->isBad()) {
-          const map<KeyFrame *, tuple<int, int>> observations =
-              pMP->GetObservations();
+          const map<KeyFrame *, tuple<int, int>> observations = [&] {
+            const bool detail = light && light->observation.detail_window;
+            ScopedTimingAccumulator detail_wall(detail
+                ? &light->voting_observation_copy_ms : nullptr);
+            ScopedThreadCpuAccumulator detail_cpu(detail
+                ? &light->voting_observation_copy_cpu_ms : nullptr);
+            return pMP->GetObservations();
+          }();
+          if (light) light->voting_observation_entries += observations.size();
           for (map<KeyFrame *, tuple<int, int>>::const_iterator
                    it = observations.begin(),
                    itend = observations.end();
@@ -4109,6 +4270,7 @@ void Tracking::UpdateLocalKeyFrames() {
     }
   }
 
+  if (light) light->voting_unique_keyframes = keyframeCounter.size();
   int max = 0;
   KeyFrame *pKFmax = static_cast<KeyFrame *>(NULL);
 
@@ -4321,7 +4483,8 @@ bool Tracking::Relocalization() {
             mCurrentFrame.mvpMapPoints[j] = NULL;
         }
 
-        int nGood = FieldPoseOptimization(&mCurrentFrame);
+        int nGood = FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
         cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
              << ": inliers after 1st PoseOpt=" << nGood << endl;
 
@@ -4357,7 +4520,8 @@ bool Tracking::Relocalization() {
                << ": additional via projection+covis=" << nadditional << endl;
 
           if (nadditional + nGood >= 20) {
-            nGood = FieldPoseOptimization(&mCurrentFrame);
+            nGood = FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
             cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
                  << ": inliers after 2nd PoseOpt=" << nGood << endl;
 
@@ -4378,7 +4542,8 @@ bool Tracking::Relocalization() {
               }
 
               if (nGood + nadditional >= 20) {
-                nGood = FieldPoseOptimization(&mCurrentFrame);
+                nGood = FieldPoseOptimization(&mCurrentFrame,
+        RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
                 cout << "Relocalization KF " << vpCandidateKFs[i]->mnId
                      << ": inliers after 3rd PoseOpt=" << nGood << endl;
 
@@ -4455,6 +4620,7 @@ bool Tracking::Relocalization() {
 }
 
 void Tracking::Reset(bool bLocMap) {
+  ++rgbd_reset_count;
   ResetLocalMapBudgetHistory();
   Verbose::PrintMess("System Reseting", Verbose::VERBOSITY_NORMAL);
 
@@ -4514,6 +4680,7 @@ void Tracking::Reset(bool bLocMap) {
 }
 
 void Tracking::ResetActiveMap(bool bLocMap) {
+  ++rgbd_active_reset_count;
   ResetLocalMapBudgetHistory();
   Verbose::PrintMess("Active map Reseting", Verbose::VERBOSITY_NORMAL);
   if (mpViewer) {

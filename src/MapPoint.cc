@@ -23,6 +23,7 @@
 #include "LocalTrackingIdentity.h"
 #include <stdexcept>
 #include "FeatureDescriptor.h"
+#include "MedoidTiming.h"
 #include "ORBmatcher.h"
 
 #include <mutex>
@@ -406,21 +407,34 @@ float MapPoint::GetFoundRatio() {
 }
 
 void MapPoint::ComputeDistinctiveDescriptors() {
-  // Retrieve all observed descriptors
+  MedoidTiming* timing = CurrentMedoidTiming();
+  MedoidTiming* detail = timing && timing->detail_window ? timing : nullptr;
+  if (timing) ++timing->map_point_calls;
+  RgbdMeasurementSpan total(timing, MedoidPhase::MapPointTotal);
+  // Retrieve all observed descriptors, preserving map order and left->right.
   vector<cv::Mat> vDescriptors;
-
   map<KeyFrame *, tuple<int, int>> observations;
 
   {
+    RgbdMeasurementSpan snapshot(detail, MedoidPhase::ObservationSnapshot);
+    RgbdMeasurementSpan wait(detail, MedoidPhase::SnapshotLockWait);
     unique_lock<mutex> lock1(mMutexFeatures);
-    if (mbBad)
+    wait.Stop();
+    RgbdMeasurementSpan held(detail, MedoidPhase::SnapshotLockHeld);
+    if (mbBad) {
+      if (timing) ++timing->bad_map_points;
       return;
+    }
     observations = mObservations;
+    if (timing) timing->observation_entries += observations.size();
   }
 
-  if (observations.empty())
+  if (observations.empty()) {
+    if (timing) ++timing->empty_observations;
     return;
+  }
 
+  RgbdMeasurementSpan gather(detail, MedoidPhase::DescriptorGather);
   vDescriptors.reserve(observations.size());
 
   for (map<KeyFrame *, tuple<int, int>>::iterator mit = observations.begin(),
@@ -438,17 +452,30 @@ void MapPoint::ComputeDistinctiveDescriptors() {
       if (rightIndex != -1) {
         vDescriptors.push_back(pKF->mDescriptors.row(rightIndex));
       }
-    }
+    } else if (timing) ++timing->bad_observers;
+  }
+  if (timing) {
+    timing->descriptor_capacity_sum += vDescriptors.capacity();
+    timing->descriptor_capacity_max = std::max(timing->descriptor_capacity_max,
+        static_cast<std::uint64_t>(vDescriptors.capacity()));
+  }
+  gather.Stop();
+
+  if (vDescriptors.empty()) {
+    if (timing) ++timing->empty_descriptors;
+    return;
   }
 
-  if (vDescriptors.empty())
-    return;
-
-  const cv::Mat representative = FeatureDescriptorMedoid(vDescriptors);
+  const cv::Mat representative = FeatureDescriptorMedoid(vDescriptors, timing);
 
   {
+    RgbdMeasurementSpan publication(detail, MedoidPhase::Publish);
+    RgbdMeasurementSpan wait(detail, MedoidPhase::PublishLockWait);
     unique_lock<mutex> lock(mMutexFeatures);
+    wait.Stop();
+    RgbdMeasurementSpan held(detail, MedoidPhase::PublishLockHeld);
     mDescriptor = representative;
+    if (timing) ++timing->published_rows;
   }
 }
 

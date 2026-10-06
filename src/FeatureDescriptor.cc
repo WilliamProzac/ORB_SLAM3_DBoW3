@@ -1,4 +1,5 @@
 #include "FeatureDescriptor.h"
+#include "MedoidTiming.h"
 
 #include <algorithm>
 #include <cmath>
@@ -10,6 +11,7 @@
 
 namespace ORB_SLAM3 {
 namespace {
+thread_local MedoidTiming* medoid_timing = nullptr;
 
 void ValidateDescriptorRow(const cv::Mat &descriptor) {
   if (descriptor.empty() || descriptor.rows != 1 || descriptor.channels() != 1) {
@@ -67,6 +69,11 @@ int ScaledCosineDistance(const cv::Mat &a, const cv::Mat &b) {
 
 } // namespace
 
+MedoidTiming* CurrentMedoidTiming() { return medoid_timing; }
+MedoidTimingScope::MedoidTimingScope(MedoidTiming* timing)
+    : previous_(medoid_timing) { medoid_timing = timing; }
+MedoidTimingScope::~MedoidTimingScope() { medoid_timing = previous_; }
+
 FeatureDescriptorType GetFeatureDescriptorType(const cv::Mat &descriptor) {
   ValidateDescriptorRow(descriptor);
   return descriptor.type() == CV_8UC1
@@ -114,11 +121,16 @@ int FeatureDescriptorDistanceExact(const cv::Mat &a, const cv::Mat &b) {
   return a.type() == CV_8UC1 ? HammingDistance(a, b) : ScaledCosineDistance(a, b);
 }
 
-cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors) {
+cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors,
+                                MedoidTiming* timing) {
+  if (timing) ++timing->calls;
+  MedoidTiming* detail = timing && timing->detail_window ? timing : nullptr;
   if (descriptors.empty()) {
     return cv::Mat();
   }
+  RgbdMeasurementSpan validation(detail, MedoidPhase::Validation);
   for (const cv::Mat &descriptor : descriptors) {
+    if (timing) ++timing->validated_rows;
     ValidateDescriptorRow(descriptor);
     if (!FeatureDescriptorsCompatible(descriptors.front(), descriptor)) {
       throw std::invalid_argument(
@@ -126,22 +138,49 @@ cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors) {
     }
   }
 
+  validation.Stop();
   const std::size_t count = descriptors.size();
+  if (timing) {
+    timing->n_sum += count;
+    timing->n_squared_sum += static_cast<std::uint64_t>(count) * count;
+    timing->n_max = std::max(timing->n_max, static_cast<std::uint64_t>(count));
+    if (descriptors.front().type() == CV_8UC1 && descriptors.front().cols == 32)
+      ++timing->orb32_calls;
+    else ++timing->other_calls;
+  }
+  RgbdMeasurementSpan allocation(detail, MedoidPhase::MatrixAllocation);
   std::vector<std::vector<int>> distances(count, std::vector<int>(count, 0));
+  allocation.Stop();
+  std::uint64_t matrix_capacity = distances.capacity() * sizeof(std::vector<int>);
+  if (timing) timing->matrix_outer_capacity_sum += distances.capacity();
+  RgbdMeasurementSpan distance_time(detail, MedoidPhase::Distances);
   for (std::size_t i = 0; i < count; ++i) {
+    if (timing) {
+      timing->matrix_row_capacity_sum += distances[i].capacity();
+      matrix_capacity += distances[i].capacity() * sizeof(int);
+    }
     for (std::size_t j = i + 1; j < count; ++j) {
       const int distance =
           FeatureDescriptorDistance(descriptors[i], descriptors[j]);
+      if (timing) ++timing->pair_distances;
       distances[i][j] = distance;
       distances[j][i] = distance;
     }
   }
 
+  distance_time.Stop();
+  if (timing) timing->matrix_capacity_bytes_max =
+      std::max(timing->matrix_capacity_bytes_max, matrix_capacity);
+  RgbdMeasurementSpan median_time(detail, MedoidPhase::Median);
   int best_median = 0;
   std::size_t best_index = 0;
   bool has_best = false;
   for (std::size_t i = 0; i < count; ++i) {
     std::vector<int> row = distances[i];
+    if (timing) {
+      ++timing->median_rows;
+      timing->median_row_capacity_sum += row.capacity();
+    }
     std::sort(row.begin(), row.end());
     const int median = row[(count - 1) / 2];
     if (!has_best || median < best_median) {
@@ -150,7 +189,14 @@ cv::Mat FeatureDescriptorMedoid(const std::vector<cv::Mat> &descriptors) {
       has_best = true;
     }
   }
-  return descriptors[best_index].clone();
+  median_time.Stop();
+  RgbdMeasurementSpan clone_time(detail, MedoidPhase::Clone);
+  cv::Mat representative = descriptors[best_index].clone();
+  if (timing) {
+    ++timing->cloned_rows;
+    timing->clone_bytes += representative.total() * representative.elemSize();
+  }
+  return representative;
 }
 
 } // namespace ORB_SLAM3

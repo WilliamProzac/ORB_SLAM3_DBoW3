@@ -273,6 +273,7 @@ void LoopClosing::Run() {
           }
 
           if (bGoodLoop) {
+            ++mLoopDetected; // accepted loop, about to run CorrectLoop
 
             mvpLoopMapPoints = mvpLoopMPs;
 
@@ -2355,17 +2356,24 @@ void LoopClosing::StartGlobalBundleAdjustment(Map* map, unsigned long loopKF) {
     try {
       RunGlobalBundleAdjustment(map, loopKF, stop);
       MemoryStats::GBA(5, mapId, loopKF);
+      ++mGBAReturned;
     } catch (...) {
+      ++mGBAErrors;
+      ++mGBAReturned;
       MemoryStats::GBA(6, mapId, loopKF);
       throw;
     }
   });
+  ++mGBAStarted; // thread creation succeeded; no guessed attempt count
 }
 
 void LoopClosing::StopGlobalBundleAdjustment() {
   if (mHaveGBA && mGBA.Running()) MemoryStats::GBA(1, mGBAMapId, mGBALoopKF);
   mGBA.CancelAndJoin();
-  if (mHaveGBA) MemoryStats::GBA(4, mGBAMapId, mGBALoopKF);
+  if (mHaveGBA) {
+    ++mGBAJoined;
+    MemoryStats::GBA(4, mGBAMapId, mGBALoopKF);
+  }
   mHaveGBA = false;
   mGBA.RethrowFailure();
   mbGBAJoinPending.store(false);
@@ -2374,6 +2382,7 @@ void LoopClosing::StopGlobalBundleAdjustment() {
 void LoopClosing::JoinCompletedGlobalBundleAdjustment() {
   // LoopClosing alone owns mHaveGBA and all task control operations.
   if (!mHaveGBA || !mGBA.JoinIfFinished()) return;
+  ++mGBAJoined;
   MemoryStats::GBA(4, mGBAMapId, mGBALoopKF);
   mHaveGBA = false;
   mGBA.RethrowFailure(); // retain existing failure propagation, never certify idle
@@ -2633,6 +2642,9 @@ void LoopClosing::RunGlobalBundleAdjustment(Map *pActiveMap,
 #endif
       Verbose::PrintMess("Map updated!", Verbose::VERBOSITY_NORMAL);
       MemoryStats::GBA(3, pActiveMap->GetId(), nLoopKF);
+      ++mGBACompleted; // full map writeback completed, not merely solver return
+    } else {
+      ++mGBACancelled; // the actual pre-commit stop check rejected writeback
     }
   }
 }

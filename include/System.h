@@ -37,6 +37,7 @@
 #include "KeyFrameDatabase.h"
 #include "LocalMapping.h"
 #include "LoopClosing.h"
+#include "LoopLifecycle.h"
 #include "MapDrawer.h"
 #include "ORBVocabulary.h"
 #include "RgbdTiming.h"
@@ -205,6 +206,8 @@ public:
   // Same quiescent-input requirement; pure RGB-D + viewer off only. Keeps the
   // legacy Shutdown/Viewer path unchanged. Do not mix concurrent terminal APIs.
   bool ShutdownAndJoin();
+  // Final completion counts are stable after ShutdownAndJoin returns true.
+  LoopLifecycleCounts GetLoopLifecycleCounts() const;
 
   // Save camera trajectory in the TUM RGB-D dataset format.
   // Only for stereo and RGB-D. This method does not work for monocular.
@@ -262,6 +265,11 @@ public:
 
   FrontendStats GetLastFrontendStats(double track_total_ms = 0.0) const;
   RgbdTimingRecord GetLastRgbdTiming() const;
+  // CompletedLocalMappingTimings requires LocalMapping return + join.
+  const std::vector<LocalMappingTimingRecord>& CompletedLocalMappingTimings() const;
+  std::uint64_t DroppedLocalMappingTimingRecords() const;
+  std::size_t LocalMappingTimingCapacityRecords() const;
+  std::size_t LocalMappingTimingCapacityBytes() const;
   bool WriteDetailedTimingCsv(const string &output_directory) const;
 
 #ifdef REGISTER_TIMES

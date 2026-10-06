@@ -62,6 +62,7 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <time.h>
 
 #include "ORBextractor.h"
 
@@ -74,7 +75,6 @@ namespace ORB_SLAM3
 
     namespace
     {
-#ifdef ORB_SLAM3_ORB_FINE_TIMING
         double ElapsedMilliseconds(
             const std::chrono::steady_clock::time_point &start)
         {
@@ -84,16 +84,66 @@ namespace ORB_SLAM3
                 .count();
         }
 #define ORB_TIME_START(name) \
-        const auto name = std::chrono::steady_clock::now()
+        const auto name = mCollectDetail ? std::chrono::steady_clock::now() \
+            : std::chrono::steady_clock::time_point()
 #define ORB_TIME_SET(field, name) \
-        (field) = ElapsedMilliseconds(name)
+        do { if (mCollectDetail) (field) = ElapsedMilliseconds(name); } while (false)
 #define ORB_TIME_ADD(field, name) \
-        (field) += ElapsedMilliseconds(name)
-#else
-#define ORB_TIME_START(name) ((void)0)
-#define ORB_TIME_SET(field, name) ((void)0)
-#define ORB_TIME_ADD(field, name) ((void)0)
-#endif
+        do { if (mCollectDetail) (field) += ElapsedMilliseconds(name); } while (false)
+
+        double OrbCpuMilliseconds()
+        {
+            timespec value;
+            if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &value) != 0)
+                return -1.0;
+            return value.tv_sec * 1000.0 + value.tv_nsec * 1e-6;
+        }
+
+        double CpuDelta(double start)
+        {
+            const double end = OrbCpuMilliseconds();
+            return start < 0.0 || end < start ? -1.0 : end - start;
+        }
+
+        void AddCpu(double &sum, double value)
+        {
+            sum = sum < 0.0 || value < 0.0 ? -1.0 : sum + value;
+        }
+
+        // Coarse scopes perform no cell-level or keypoint-level clock calls.
+        struct OrbStageClock {
+            bool wall_enabled, cpu_enabled;
+            std::chrono::steady_clock::time_point wall;
+            double cpu;
+            OrbStageClock(bool enabled, bool collectCpu)
+                : wall_enabled(enabled), cpu_enabled(collectCpu),
+                  wall(enabled ? std::chrono::steady_clock::now()
+                               : std::chrono::steady_clock::time_point()),
+                  cpu(collectCpu ? OrbCpuMilliseconds() : -1.0) {}
+            void Finish(double &wallMs, OrbTimingRecord &record,
+                        OrbObservationStage stage, double helperCpu = 0.0) const
+            {
+                if (wall_enabled) wallMs += ElapsedMilliseconds(wall);
+                if (!cpu_enabled) return;
+                const auto index = static_cast<std::size_t>(stage);
+                AddCpu(record.stage_caller_cpu_ms[index], CpuDelta(cpu));
+                AddCpu(record.stage_helper_cpu_ms[index], helperCpu);
+            }
+            void FinishDetail(double &wallMs, double &cpuMs) const
+            {
+                if (wall_enabled) wallMs += ElapsedMilliseconds(wall);
+                if (cpu_enabled) AddCpu(cpuMs, CpuDelta(cpu));
+            }
+        };
+
+        struct WorkerCpuScope {
+            bool enabled;
+            double start, &destination;
+            WorkerCpuScope(bool enabled_, double &destination_)
+                : enabled(enabled_), start(enabled ? OrbCpuMilliseconds() : -1.0),
+                  destination(destination_) {}
+            ~WorkerCpuScope() { if (enabled) AddCpu(destination, CpuDelta(start)); }
+        };
 
 #ifdef ORB_SLAM3_ORB_OUTPUT_HASH
         void HashBytes(std::uint64_t &hash, const void *data, std::size_t size)
@@ -552,7 +602,7 @@ namespace ORB_SLAM3
 
         mWorkerThreads.reserve(mParallelWorkers - 1);
         for (int i = 1; i < mParallelWorkers; ++i)
-            mWorkerThreads.emplace_back(&ORBextractor::WorkerLoop, this);
+            mWorkerThreads.emplace_back(&ORBextractor::WorkerLoop, this, i);
     }
 
     ORBextractor::~ORBextractor()
@@ -573,8 +623,10 @@ namespace ORB_SLAM3
                 worker.join();
     }
 
-    void ORBextractor::ExecuteAvailableTasks()
+    void ORBextractor::ExecuteAvailableTasks(int workerSlot)
     {
+        WorkerTiming &observation = mWorkerTiming[workerSlot];
+        WorkerCpuScope cpu(mCollectLight, observation.cpu_ms);
         while (true)
         {
             const int taskIndex = mNextTask.fetch_add(1);
@@ -582,6 +634,7 @@ namespace ORB_SLAM3
                 return;
             try
             {
+                if (mCollectLight) ++observation.tasks;
                 mLevelTask(taskIndex);
             }
             catch (...)
@@ -595,7 +648,7 @@ namespace ORB_SLAM3
         }
     }
 
-    void ORBextractor::WorkerLoop()
+    void ORBextractor::WorkerLoop(int workerSlot)
     {
         std::size_t observedGeneration = 0;
         while (true)
@@ -610,7 +663,7 @@ namespace ORB_SLAM3
                 observedGeneration = mTaskGeneration;
             }
 
-            ExecuteAvailableTasks();
+            ExecuteAvailableTasks(workerSlot);
 
             {
                 std::lock_guard<std::mutex> lock(mWorkerMutex);
@@ -623,13 +676,21 @@ namespace ORB_SLAM3
     void ORBextractor::RunLevelTasks(
         int taskCount, const std::function<void(int)> &task)
     {
+        const unsigned batch = mObservationBatch++;
+        mLastBatchHelperCpu = 0.0;
         if (mWorkerThreads.empty() || taskCount <= 1)
         {
+            WorkerCpuScope cpu(mCollectLight, mWorkerTiming[0].cpu_ms);
             for (int i = 0; i < taskCount; ++i)
+            {
+                if (mCollectLight) ++mWorkerTiming[0].tasks;
                 task(i);
+            }
             return;
         }
 
+        const auto before = mWorkerTiming;
+        ORB_TIME_START(dispatchStart);
         {
             std::lock_guard<std::mutex> lock(mWorkerMutex);
             mLevelTask = task;
@@ -640,8 +701,10 @@ namespace ORB_SLAM3
             ++mTaskGeneration;
         }
         mWorkerCv.notify_all();
-        ExecuteAvailableTasks();
+        ORB_TIME_SET(mLastStageTiming.observation.dispatch_ms[batch], dispatchStart);
+        ExecuteAvailableTasks(0);
 
+        ORB_TIME_START(barrierStart);
         std::exception_ptr workerException;
         {
             std::unique_lock<std::mutex> lock(mWorkerMutex);
@@ -652,6 +715,12 @@ namespace ORB_SLAM3
             workerException = mWorkerException;
             mLevelTask = nullptr;
         }
+        ORB_TIME_SET(mLastStageTiming.observation.barrier_ms[batch], barrierStart);
+        if (mCollectLight)
+            for (int slot = 1; slot < mParallelWorkers; ++slot)
+                AddCpu(mLastBatchHelperCpu,
+                    before[slot].cpu_ms < 0.0 || mWorkerTiming[slot].cpu_ms < 0.0
+                    ? -1.0 : mWorkerTiming[slot].cpu_ms - before[slot].cpu_ms);
         if (workerException)
             std::rethrow_exception(workerException);
     }
@@ -999,16 +1068,20 @@ namespace ORB_SLAM3
                 const Mat cellImage =
                     mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX);
                 vKeysCell.clear();
-                ORB_TIME_START(fastStart);
+                const OrbStageClock fastStart(mCollectDetail, mCollectDetail);
                 FAST(cellImage, vKeysCell, iniThFAST, true);
-                ORB_TIME_ADD(timing.fast_initial_ms, fastStart);
+                fastStart.FinishDetail(timing.fast_initial_ms,
+                    mLastStageTiming.observation.level_cpu_ms[level][
+                        static_cast<unsigned>(OrbLevelObservationStage::FastInitial)]);
 
                 if(vKeysCell.empty())
                 {
                     ++timing.fallback_cells;
-                    ORB_TIME_START(fallbackStart);
+                    const OrbStageClock fallbackStart(mCollectDetail, mCollectDetail);
                     FAST(cellImage, vKeysCell, minThFAST, true);
-                    ORB_TIME_ADD(timing.fast_fallback_ms, fallbackStart);
+                    fallbackStart.FinishDetail(timing.fast_fallback_ms,
+                    mLastStageTiming.observation.level_cpu_ms[level][
+                        static_cast<unsigned>(OrbLevelObservationStage::FastFallback)]);
                 }
 
                 for(vector<cv::KeyPoint>::iterator vit=vKeysCell.begin();
@@ -1023,12 +1096,18 @@ namespace ORB_SLAM3
 
         timing.candidate_count =
             static_cast<std::uint32_t>(vToDistributeKeys.size());
-        ORB_TIME_START(octreeStart);
+        const OrbStageClock octreeStart(mCollectDetail, mCollectDetail);
         DistributeOctTree(vToDistributeKeys, minBorderX, maxBorderX,
                           minBorderY, maxBorderY,
                           mnFeaturesPerLevel[level], level, keypoints,
                           &timing.octree_splits);
-        ORB_TIME_SET(timing.octree_ms, octreeStart);
+        octreeStart.FinishDetail(timing.octree_ms,
+                    mLastStageTiming.observation.level_cpu_ms[level][
+                        static_cast<unsigned>(OrbLevelObservationStage::Octree)]);
+
+        if (mCollectLight)
+            mLastStageTiming.observation.level_outputs[level] =
+                static_cast<std::uint32_t>(keypoints.size());
 
         const int scaledPatchSize = PATCH_SIZE*mvScaleFactor[level];
         for(std::size_t i=0; i<keypoints.size(); ++i)
@@ -1249,6 +1328,12 @@ namespace ORB_SLAM3
             throw std::logic_error("ORB extraction requested after worker shutdown");
         (void)_mask;
         mLastStageTiming = StageTiming();
+        mWorkerTiming = {};
+        mObservationBatch = 0;
+        mLastStageTiming.observation.collected = mCollectLight;
+        mLastStageTiming.observation.detail_collected = mCollectLight && mCollectDetail;
+        mLastStageTiming.observation.worker_count = mParallelWorkers;
+        const double extractCpuStart = mCollectLight ? OrbCpuMilliseconds() : -1.0;
         //cout << "[ORBextractor]: Max Features: " << nfeatures << endl;
         if(_image.empty())
             return -1;
@@ -1259,23 +1344,27 @@ namespace ORB_SLAM3
         mLastStageTiming.level_count = nlevels;
 
         // Pre-compute the scale pyramid
-        ORB_TIME_START(pyramid_start);
+        const OrbStageClock pyramid_start(mCollectLight || mCollectDetail, mCollectLight);
         ComputePyramid(image);
-        ORB_TIME_SET(mLastStageTiming.pyramid_ms, pyramid_start);
+        pyramid_start.Finish(mLastStageTiming.pyramid_ms, mLastStageTiming.observation,
+            OrbObservationStage::Pyramid, 0.0);
 
-        ORB_TIME_START(keypoints_start);
+        const OrbStageClock keypoints_start(mCollectLight || mCollectDetail, mCollectLight);
         ComputeKeyPointsOctTree(mAllKeypoints);
-        ORB_TIME_SET(mLastStageTiming.keypoints_octree_ms, keypoints_start);
+        keypoints_start.Finish(mLastStageTiming.keypoints_octree_ms, mLastStageTiming.observation,
+            OrbObservationStage::Keypoints, mLastBatchHelperCpu);
         //ComputeKeyPointsOld(allKeypoints);
 
-        ORB_TIME_START(orientation_start);
+        const OrbStageClock orientation_start(mCollectLight || mCollectDetail, mCollectLight);
         RunLevelTasks(nlevels, [&](int level) {
-            ORB_TIME_START(levelStart);
+            const OrbStageClock levelStart(mCollectDetail, mCollectDetail);
             computeOrientation(mvImagePyramid[level], mAllKeypoints[level], umax);
-            ORB_TIME_SET(mLastStageTiming.levels[level].orientation_ms,
-                         levelStart);
+            levelStart.FinishDetail(mLastStageTiming.levels[level].orientation_ms,
+                mLastStageTiming.observation.level_cpu_ms[level][
+                    static_cast<unsigned>(OrbLevelObservationStage::Orientation)]);
         });
-        ORB_TIME_SET(mLastStageTiming.orientation_ms, orientation_start);
+        orientation_start.Finish(mLastStageTiming.orientation_ms, mLastStageTiming.observation,
+            OrbObservationStage::Orientation, mLastBatchHelperCpu);
 
         for (int level = 0; level < nlevels; ++level)
         {
@@ -1287,7 +1376,7 @@ namespace ORB_SLAM3
 
         Mat descriptors;
 
-        ORB_TIME_START(output_setup_start);
+        const OrbStageClock output_setup_start(mCollectLight || mCollectDetail, mCollectLight);
         int nkeypoints = 0;
         for (int level = 0; level < nlevels; ++level)
             nkeypoints += (int)mAllKeypoints[level].size();
@@ -1302,9 +1391,10 @@ namespace ORB_SLAM3
         //_keypoints.clear();
         //_keypoints.reserve(nkeypoints);
         _keypoints.assign(nkeypoints, cv::KeyPoint());
-        ORB_TIME_ADD(mLastStageTiming.result_assembly_ms, output_setup_start);
+        output_setup_start.Finish(mLastStageTiming.result_assembly_ms, mLastStageTiming.observation,
+            OrbObservationStage::Assembly, 0.0);
 
-        ORB_TIME_START(blurStart);
+        const OrbStageClock blurStart(mCollectLight || mCollectDetail, mCollectLight);
         for (int level = 0; level < nlevels; ++level)
         {
             if(mAllKeypoints[level].empty())
@@ -1313,16 +1403,18 @@ namespace ORB_SLAM3
 #ifdef ORB_SLAM3_ORB_DIRECT_ISOLATED_BLUR
             levelTiming.copy_ms = 0.0;
 #else
-            ORB_TIME_START(copyStart);
+            const OrbStageClock copyStart(mCollectDetail, mCollectDetail);
 #ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
             mBlurredPyramid[level] = mvImagePyramid[level].clone();
 #else
             mvImagePyramid[level].copyTo(mBlurredPyramid[level]);
 #endif
-            ORB_TIME_SET(levelTiming.copy_ms, copyStart);
+            copyStart.FinishDetail(levelTiming.copy_ms,
+                    mLastStageTiming.observation.level_cpu_ms[level][
+                        static_cast<unsigned>(OrbLevelObservationStage::Copy)]);
 #endif
 
-            ORB_TIME_START(gaussianStart);
+            const OrbStageClock gaussianStart(mCollectDetail, mCollectDetail);
 #ifdef ORB_SLAM3_ORB_DIRECT_ISOLATED_BLUR
             GaussianBlur(mvImagePyramid[level], mBlurredPyramid[level],
                          Size(7, 7), 2, 2,
@@ -1331,13 +1423,16 @@ namespace ORB_SLAM3
             GaussianBlur(mBlurredPyramid[level], mBlurredPyramid[level],
                          Size(7, 7), 2, 2, BORDER_REFLECT_101);
 #endif
-            ORB_TIME_SET(levelTiming.gaussian_ms, gaussianStart);
+            gaussianStart.FinishDetail(levelTiming.gaussian_ms,
+                    mLastStageTiming.observation.level_cpu_ms[level][
+                        static_cast<unsigned>(OrbLevelObservationStage::Gaussian)]);
             mLastStageTiming.copy_ms += levelTiming.copy_ms;
             mLastStageTiming.gaussian_ms += levelTiming.gaussian_ms;
         }
-        ORB_TIME_SET(mLastStageTiming.blur_ms, blurStart);
+        blurStart.Finish(mLastStageTiming.blur_ms, mLastStageTiming.observation,
+            OrbObservationStage::Blur, 0.0);
 
-        ORB_TIME_START(descriptorStart);
+        const OrbStageClock descriptorStart(mCollectLight || mCollectDetail, mCollectLight);
         RunLevelTasks(nlevels, [&](int level) {
             vector<KeyPoint>& keypoints = mAllKeypoints[level];
             if(keypoints.empty())
@@ -1345,13 +1440,15 @@ namespace ORB_SLAM3
                 mLevelDescriptors[level].release();
                 return;
             }
-            ORB_TIME_START(levelStart);
+            const OrbStageClock levelStart(mCollectDetail, mCollectDetail);
             computeDescriptors(mBlurredPyramid[level], keypoints,
                                mLevelDescriptors[level], pattern);
-            ORB_TIME_SET(mLastStageTiming.levels[level].descriptor_ms,
-                         levelStart);
+            levelStart.FinishDetail(mLastStageTiming.levels[level].descriptor_ms,
+                mLastStageTiming.observation.level_cpu_ms[level][
+                    static_cast<unsigned>(OrbLevelObservationStage::Descriptor)]);
         });
-        ORB_TIME_SET(mLastStageTiming.descriptor_ms, descriptorStart);
+        descriptorStart.Finish(mLastStageTiming.descriptor_ms, mLastStageTiming.observation,
+            OrbObservationStage::Descriptor, mLastBatchHelperCpu);
 
         //Modified for speeding up stereo fisheye matching
         int monoIndex = 0, stereoIndex = nkeypoints-1;
@@ -1364,7 +1461,7 @@ namespace ORB_SLAM3
                 continue;
             Mat &desc = mLevelDescriptors[level];
 
-            ORB_TIME_START(assembly_start);
+            const OrbStageClock assembly_start(mCollectLight || mCollectDetail, mCollectLight);
             float scale = mvScaleFactor[level]; //getScale(level, firstLevel, scaleFactor);
             int i = 0;
             for (vector<KeyPoint>::iterator keypoint = keypoints.begin(),
@@ -1387,7 +1484,27 @@ namespace ORB_SLAM3
                 }
                 i++;
             }
-            ORB_TIME_ADD(mLastStageTiming.result_assembly_ms, assembly_start);
+            assembly_start.Finish(mLastStageTiming.result_assembly_ms, mLastStageTiming.observation,
+            OrbObservationStage::Assembly, 0.0);
+        }
+        if (mCollectLight)
+        {
+            OrbTimingRecord &observation = mLastStageTiming.observation;
+            observation.extract_caller_cpu_ms = CpuDelta(extractCpuStart);
+            observation.helper_cpu_ms = 0.0;
+            for (int slot = 0; slot < mParallelWorkers; ++slot)
+            {
+                observation.worker_cpu_ms[slot] = mWorkerTiming[slot].cpu_ms;
+                observation.worker_tasks[slot] = mWorkerTiming[slot].tasks;
+                if (slot) AddCpu(observation.helper_cpu_ms, mWorkerTiming[slot].cpu_ms);
+            }
+            observation.total_cpu_ms = observation.extract_caller_cpu_ms;
+            AddCpu(observation.total_cpu_ms, observation.helper_cpu_ms);
+            observation.cpu_valid = observation.total_cpu_ms >= 0.0;
+            for (std::size_t stage = 0; stage < kOrbObservationStages; ++stage)
+                observation.cpu_valid = observation.cpu_valid &&
+                    observation.stage_caller_cpu_ms[stage] >= 0.0 &&
+                    observation.stage_helper_cpu_ms[stage] >= 0.0;
         }
         mLastStageTiming.mono_index = monoIndex;
 #ifdef ORB_SLAM3_ORB_OUTPUT_HASH
@@ -1412,6 +1529,12 @@ namespace ORB_SLAM3
             mPyramidStorage[level].create(wholeSize, image.type());
             mvImagePyramid[level] = mPyramidStorage[level](
                 Rect(EDGE_THRESHOLD, EDGE_THRESHOLD, size.width, size.height));
+            if (mCollectLight)
+            {
+                mLastStageTiming.observation.level_rows[level] = size.height;
+                mLastStageTiming.observation.level_cols[level] = size.width;
+                mLastStageTiming.observation.level_stride[level] = mvImagePyramid[level].step;
+            }
             mBlurredPyramid[level].create(size, image.type());
             if(mAllKeypoints[level].capacity() <
                static_cast<std::size_t>(nfeatures))

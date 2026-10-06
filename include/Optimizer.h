@@ -23,6 +23,7 @@
 #define OPTIMIZER_H
 
 #include "MapPointHandle.h"
+#include "RgbdTiming.h"
 #include <atomic>
 
 #include "Frame.h"
@@ -72,10 +73,12 @@ public:
   void static LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
                                     int &num_fixedKF, int &num_OptKF,
                                     int &num_MPs, int &num_edges,
-                                    const std::atomic<bool>* cancel = nullptr);
+                                    const std::atomic<bool>* cancel = nullptr,
+                                    LocalBaObservation* observation = nullptr);
 
   int static PoseOptimization(Frame *pFrame,
-      const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions = nullptr);
+      const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions = nullptr,
+      PoseOptimizationObservation* observation = nullptr);
   int static PoseInertialOptimizationLastKeyFrame(Frame *pFrame,
                                                   bool bRecInit = false);
   int static PoseInertialOptimizationLastFrame(Frame *pFrame,

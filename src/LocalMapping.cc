@@ -32,6 +32,8 @@
 #include <fstream>
 #include <iomanip>
 #include <mutex>
+#include <thread>
+#include <stdexcept>
 using namespace std;
 
 namespace ORB_SLAM3 {
@@ -79,7 +81,34 @@ LocalMapping::LocalMapping(System *pSys, Atlas *pAtlas, const float bMonocular,
   nLBA_exec = 0;
   nLBA_abort = 0;
 #endif
-  if (HeavyDiagnostics()) mvDetailedTimings.reserve(4096);
+  mBoundedRgbdTimings = RgbdLightDiagnostics();
+  if (mBoundedRgbdTimings) {
+    mDetailedTimingLimit = GetRgbdObservationCapacity();
+    if (mDetailedTimingLimit == 0 || mDetailedTimingLimit > kMaxRgbdObservationInputs)
+      throw std::logic_error("LocalMapping requires the frozen RGB-D input count");
+    mvDetailedTimings.reserve(mDetailedTimingLimit);
+  } else {
+    // Legacy heavy mode is outside the B0 observation/workspace contract.
+    mDetailedTimingLimit = 20000;
+    if (HeavyDiagnostics()) mvDetailedTimings.reserve(4096);
+  }
+}
+
+void LocalMapping::StoreCurrentTiming() {
+  if (HeavyDiagnostics() || mBoundedRgbdTimings) {
+    if (mvDetailedTimings.size() < mDetailedTimingLimit) {
+      mvDetailedTimings.push_back(mCurrentTiming);
+    } else if (mDroppedTimingRecords.fetch_add(1) == 0) {
+      // Sticky evidence failure: wrappers must reject any nonzero dropped
+      // count. Keep the worker alive so drain/join and reports can finish.
+      std::cerr << "RGBD_LM_TIMING_OVERFLOW limit=" << mDetailedTimingLimit
+                << " keyframe_id=" << mCurrentTiming.keyframe_id
+                << " source_ordinal=" << mCurrentTiming.observation.source_ordinal
+                << " source_stamp_ns=" << mCurrentTiming.observation.source_stamp_ns
+                << " source_provided=" << mCurrentTiming.observation.provided
+                << std::endl;
+    }
+  }
 }
 
 void LocalMapping::SetLoopCloser(LoopClosing *pLoopCloser) {
@@ -152,6 +181,8 @@ void LocalMapping::Run() {
 
       LocalMappingCancellation::Attempt cancellation_attempt(
           mCancellation, mbStopRequested, mlNewKeyFrames);
+      if (RgbdLightDiagnostics())
+        mCurrentTiming.refinement_attempt_id = mCancellation.GetSnapshot().attempt_id;
 
       if (!CheckNewKeyFrames()) {
         // Find more matches in neighbor keyframes and fuse point duplications
@@ -224,7 +255,7 @@ void LocalMapping::Run() {
             Optimizer::LocalBundleAdjustment(
                 mpCurrentKeyFrame, nullptr, mpCurrentKeyFrame->GetMap(),
                 num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA,
-                &mbAbortBA);
+                &mbAbortBA, RgbdLightDiagnostics() ? &mCurrentTiming.ba : nullptr);
 // FIELD_MAP_BEGIN
             if(FieldEnabled()) FieldEmit(28,mpCurrentKeyFrame->mnId,2,31,mpCurrentKeyFrame->mnFrameId,num_FixedKF_BA,num_OptKF_BA,num_MPs_BA,num_edges_BA);
 // FIELD_MAP_END
@@ -361,7 +392,12 @@ void LocalMapping::Run() {
       mCurrentTiming.lba_optimized_keyframes = num_OptKF_BA;
       mCurrentTiming.lba_fixed_keyframes = num_FixedKF_BA;
       mCurrentTiming.lba_map_points = num_MPs_BA;
-      if (HeavyDiagnostics() && mvDetailedTimings.size()<20000) mvDetailedTimings.push_back(mCurrentTiming);
+      if (RgbdLightDiagnostics()) {
+        const auto cancellation = mCancellation.GetSnapshot();
+        mCurrentTiming.attempt_first_request_ns = cancellation.first_request_ns;
+        mCurrentTiming.attempt_requests = cancellation.attempt_request_count;
+      }
+      StoreCurrentTiming();
     } else if (Stop() && !mbBadImu) {
       // Safe area to stop
       while (isStopped() && !CheckFinish()) {
@@ -393,13 +429,14 @@ void LocalMapping::Run() {
 void LocalMapping::InsertKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexNewKFs);
   mlNewKeyFrames.push_back(pKF);
-  mKeyFrameEnqueueTimes[pKF] = std::chrono::steady_clock::now();
+  mKeyFrameEnqueueTimes[pKF] = {std::chrono::steady_clock::now(),
+                                GetRgbdObservationContext()};
 // FIELD_MAP_BEGIN
   if(FieldEnabled()) FieldEmit(26,pKF->mnId,0,3,pKF->mnFrameId,mlNewKeyFrames.size());
 // FIELD_MAP_END
 
   mCancellation.RequestLocked(LocalMappingCancellation::Source::NewKeyFrame,
-                              lock);
+                              lock, RgbdLightDiagnostics());
 }
 
 bool LocalMapping::CheckNewKeyFrames() {
@@ -409,6 +446,10 @@ bool LocalMapping::CheckNewKeyFrames() {
 
 void LocalMapping::ProcessNewKeyFrame() {
   mCurrentTiming = LocalMappingTimingRecord();
+  if (RgbdLightDiagnostics()) {
+    mCurrentTiming.l0_collected = true;
+    mCurrentTiming.mapping_thread_id = std::hash<std::thread::id>{}(std::this_thread::get_id());
+  }
   {
     unique_lock<mutex> lock(mMutexNewKFs);
     mCurrentTiming.queue_depth_before_pop =
@@ -418,7 +459,8 @@ void LocalMapping::ProcessNewKeyFrame() {
     const auto enqueue_it = mKeyFrameEnqueueTimes.find(mpCurrentKeyFrame);
     if (enqueue_it != mKeyFrameEnqueueTimes.end()) {
       mCurrentTiming.queue_wait_ms =
-          LocalMappingMillisecondsSince(enqueue_it->second);
+          LocalMappingMillisecondsSince(enqueue_it->second.queued_at);
+      mCurrentTiming.observation = enqueue_it->second.observation;
       mKeyFrameEnqueueTimes.erase(enqueue_it);
     }
   }
@@ -429,38 +471,64 @@ void LocalMapping::ProcessNewKeyFrame() {
   mCurrentTiming.keyframe_id = mpCurrentKeyFrame->mnId;
   mCurrentTiming.image_timestamp = mpCurrentKeyFrame->mTimeStamp;
 
+  KeyFrameIngestTiming* ingest = mCurrentTiming.l0_collected
+      ? &mCurrentTiming.ingest : nullptr;
+  auto& medoid = mCurrentTiming.medoid[static_cast<std::size_t>(MedoidSite::KeyFrameIngest)];
+  medoid.detail_window = mCurrentTiming.observation.provided &&
+                         mCurrentTiming.observation.detail_window;
+  MedoidTimingScope medoid_scope(ingest ? &medoid : nullptr);
+  RgbdMeasurementSpan ingest_total(ingest, KeyFrameIngestPhase::Total);
+  KeyFrameIngestTiming* ingest_detail = ingest && medoid.detail_window ? ingest : nullptr;
+
   // Compute Bags of Words structures
   const std::chrono::steady_clock::time_point bow_start =
       std::chrono::steady_clock::now();
+  RgbdMeasurementSpan bow(ingest, KeyFrameIngestPhase::Bow);
   mpCurrentKeyFrame->ComputeBoW();
+  bow.Stop();
   mCurrentTiming.bow_ms = LocalMappingMillisecondsSince(bow_start);
 
   // Associate MapPoints to the new keyframe and update normal and descriptor
+  RgbdMeasurementSpan matches(ingest, KeyFrameIngestPhase::MatchSnapshot);
   const vector<MapPointPtr > vpMapPointMatches =
       mpCurrentKeyFrame->GetMapPointMatches();
+  matches.Stop();
 
   for (size_t i = 0; i < vpMapPointMatches.size(); i++) {
+    if (ingest) ++ingest->slots;
     MapPointPtr pMP = vpMapPointMatches[i];
     if (pMP) {
       if (!pMP->isBad()) {
         if (!pMP->IsInKeyFrame(mpCurrentKeyFrame)) {
-          pMP->AddObservation(mpCurrentKeyFrame, i);
-          pMP->UpdateNormalAndDepth();
+          if (ingest) ++ingest->observations_added;
+          {
+            RgbdMeasurementSpan add(ingest_detail, KeyFrameIngestPhase::ObservationAdd);
+            pMP->AddObservation(mpCurrentKeyFrame, i);
+          }
+          {
+            RgbdMeasurementSpan normal(ingest_detail, KeyFrameIngestPhase::NormalDepth);
+            pMP->UpdateNormalAndDepth();
+          }
           pMP->ComputeDistinctiveDescriptors();
         } else // this can only happen for new stereo points inserted by the
                // Tracking
         {
+          if (ingest) ++ingest->existing_observations;
           mlpRecentAddedMapPoints.push_back(pMP);
         }
-      }
-    }
+      } else if (ingest) ++ingest->bad_points;
+    } else if (ingest) ++ingest->null_points;
   }
 
   // Update links in the Covisibility Graph
+  RgbdMeasurementSpan connections(ingest, KeyFrameIngestPhase::Connections);
   mpCurrentKeyFrame->UpdateConnections();
+  connections.Stop();
 
   // Insert Keyframe in Map
+  RgbdMeasurementSpan publish(ingest, KeyFrameIngestPhase::MapPublish);
   mpAtlas->AddKeyFrame(mpCurrentKeyFrame);
+  publish.Stop();
 // FIELD_MAP_BEGIN
   if(FieldEnabled()) FieldEmit(28,mpCurrentKeyFrame->mnId,1,1,mpCurrentKeyFrame->mnFrameId);
 // FIELD_MAP_END
@@ -508,6 +576,10 @@ void LocalMapping::MapPointCulling() {
 }
 
 void LocalMapping::CreateNewMapPoints() {
+  auto& medoid = mCurrentTiming.medoid[static_cast<std::size_t>(MedoidSite::PointCreation)];
+  medoid.detail_window = mCurrentTiming.observation.provided &&
+                         mCurrentTiming.observation.detail_window;
+  MedoidTimingScope medoid_scope(mCurrentTiming.l0_collected ? &medoid : nullptr);
   // Retrieve neighbor keyframes in covisibility graph
   int nn = 10;
   // For stereo inertial case
@@ -830,6 +902,10 @@ void LocalMapping::CreateNewMapPoints() {
 }
 
 void LocalMapping::SearchInNeighbors() {
+  auto& medoid = mCurrentTiming.medoid[static_cast<std::size_t>(MedoidSite::Fusion)];
+  medoid.detail_window = mCurrentTiming.observation.provided &&
+                         mCurrentTiming.observation.detail_window;
+  MedoidTimingScope medoid_scope(mCurrentTiming.l0_collected ? &medoid : nullptr);
   // Retrieve neighbor keyframes
   int nn = 10;
   if (mbMonocular)
@@ -946,7 +1022,8 @@ void LocalMapping::RequestStop() {
   unique_lock<mutex> lock(mMutexStop);
   mbStopRequested = true;
   unique_lock<mutex> lock2(mMutexNewKFs);
-  mCancellation.RequestLocked(LocalMappingCancellation::Source::Stop, lock2);
+  mCancellation.RequestLocked(LocalMappingCancellation::Source::Stop, lock2,
+                              RgbdLightDiagnostics());
 }
 
 bool LocalMapping::Stop() {
@@ -1009,8 +1086,10 @@ bool LocalMapping::SetNotStop(bool flag) {
   return true;
 }
 
-void LocalMapping::InterruptBA() {
-  mCancellation.Request(LocalMappingCancellation::Source::Tracking);
+void LocalMapping::InterruptBA(LocalMappingCancellation::RequestRecord* record) {
+  const auto request = mCancellation.Request(LocalMappingCancellation::Source::Tracking,
+                                             RgbdLightDiagnostics());
+  if (record) *record = request;
 }
 
 void LocalMapping::KeyFrameCulling() {

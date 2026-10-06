@@ -72,7 +72,7 @@ public:
   void SetAcceptKeyFrames(bool flag);
   bool SetNotStop(bool flag);
 
-  void InterruptBA();
+  void InterruptBA(LocalMappingCancellation::RequestRecord* record = nullptr);
 
   void RequestFinish();
   bool isFinished();
@@ -88,6 +88,20 @@ public:
   double GetCurrKFTime();
   KeyFrame *GetCurrKF();
   bool WriteDetailedTimingCsv(const string &output_directory) const;
+  std::uint64_t DroppedLocalMappingTimingRecords() const {
+    return mDroppedTimingRecords.load();
+  }
+  // Read after LM join; also stable before input in the fixed-capacity L0 run.
+  std::size_t LocalMappingTimingCapacityRecords() const {
+    return mvDetailedTimings.capacity();
+  }
+  std::size_t LocalMappingTimingCapacityBytes() const {
+    return mvDetailedTimings.capacity() * sizeof(LocalMappingTimingRecord);
+  }
+  // Read only after LocalMapping has returned and joined.
+  const std::vector<LocalMappingTimingRecord>& CompletedLocalMappingTimings() const {
+    return mvDetailedTimings;
+  }
   LocalMappingCancellation::Snapshot GetCancellationSnapshot() const {
     return mCancellation.GetSnapshot();
   }
@@ -143,6 +157,7 @@ public:
 protected:
   bool CheckNewKeyFrames();
   void ProcessNewKeyFrame();
+  void StoreCurrentTiming();
   void CreateNewMapPoints();
 
   void MapPointCulling();
@@ -180,10 +195,16 @@ protected:
   std::mutex mMutexNewKFs;
   bool mbProcessingKeyFrame = false; // protected by mMutexNewKFs
 
-  std::unordered_map<KeyFrame *, std::chrono::steady_clock::time_point>
-      mKeyFrameEnqueueTimes;
+  struct EnqueuedKeyFrameTiming {
+    std::chrono::steady_clock::time_point queued_at;
+    RgbdObservationContext observation;
+  };
+  std::unordered_map<KeyFrame *, EnqueuedKeyFrameTiming> mKeyFrameEnqueueTimes;
   LocalMappingTimingRecord mCurrentTiming;
   std::vector<LocalMappingTimingRecord> mvDetailedTimings;
+  std::size_t mDetailedTimingLimit = 0;
+  bool mBoundedRgbdTimings = false;
+  std::atomic<std::uint64_t> mDroppedTimingRecords{0};
 
   std::atomic<bool> mbAbortBA;
 

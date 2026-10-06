@@ -3,6 +3,7 @@
 #include <array>
 #include <atomic>
 #include <cassert>
+#include <chrono>
 #include <cstdint>
 #include <mutex>
 
@@ -19,6 +20,7 @@ public:
     std::uint64_t request_id = 0;
     std::uint64_t attempt_id = 0; // Zero means no active refinement attempt.
     Source source = Source::Tracking;
+    std::uint64_t request_ns = 0;
   };
 
   struct Snapshot {
@@ -30,6 +32,7 @@ public:
     std::uint64_t request_count = 0;
     std::uint64_t no_active_attempt_count = 0;
     std::uint64_t attempt_request_count = 0;
+    std::uint64_t first_request_ns = 0;
     std::array<std::uint64_t, 3> requests_by_source{{0, 0, 0}};
     RequestRecord last_request;
   };
@@ -46,7 +49,8 @@ public:
   // Callers already changing the queue or stop state use this entry point while
   // retaining their existing lock. Never recursively acquire the queue mutex.
   RequestRecord RequestLocked(Source source,
-                             const std::unique_lock<std::mutex>& queue_lock) {
+                             const std::unique_lock<std::mutex>& queue_lock,
+                             bool record_time = false) {
     assert(queue_lock.owns_lock() && queue_lock.mutex() == &queue_mutex_);
     (void)queue_lock;
     requested_.store(true);
@@ -58,13 +62,15 @@ public:
       ++state_.no_active_attempt_count;
     state_.last_request = {state_.request_count,
                           state_.active_attempt ? state_.attempt_id : 0,
-                          source};
+                          source, record_time ? NowNs() : 0};
+    if (state_.active_attempt && state_.attempt_request_count == 1)
+      state_.first_request_ns = state_.last_request.request_ns;
     return state_.last_request;
   }
 
-  RequestRecord Request(Source source) {
+  RequestRecord Request(Source source, bool record_time = false) {
     std::unique_lock<std::mutex> lock(queue_mutex_);
-    return RequestLocked(source, lock);
+    return RequestLocked(source, lock, record_time);
   }
 
   Snapshot GetSnapshot() const {
@@ -107,6 +113,7 @@ private:
                      state_.began_with_queued_keyframes);
     ++state_.attempt_id;
     state_.attempt_request_count = 0;
+    state_.first_request_ns = 0;
     state_.active_attempt = true;
   }
 
@@ -115,6 +122,11 @@ private:
     assert(state_.active_attempt);
     state_.active_attempt = false;
     // Preserve the observed flag. Only the next BeginAttempt may clear it.
+  }
+
+  static std::uint64_t NowNs() {
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(
+        std::chrono::steady_clock::now().time_since_epoch()).count();
   }
 
   std::atomic<bool>& requested_;
