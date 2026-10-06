@@ -1028,7 +1028,15 @@ void LocalMapping::RequestStop() {
 
 bool LocalMapping::Stop() {
   unique_lock<mutex> lock(mMutexStop);
+  unique_lock<mutex> queueLock(mMutexNewKFs, std::defer_lock);
   if (mbStopRequested && !mbNotStop) {
+    if (!mbInertial) {
+      // A creator may enqueue after Run's earlier empty-queue check.
+      // Keep Stop -> Queue order; the next Run iteration drains late work.
+      // Preserve inertial stopping, whose bad-IMU branch cannot consume it.
+      queueLock.lock();
+      if (!mlNewKeyFrames.empty()) return false;
+    }
     mbStopped = true;
     cout << "Local Mapping STOP" << endl;
     return true;

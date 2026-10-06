@@ -2782,6 +2782,14 @@ void Tracking::StereoInitialization() {
   }
 
   if (mCurrentFrame.N > 500) {
+    // RGB-D initialization publishes KF/MP references before enqueueing.
+    // Protect this producer like CreateNewKeyFrame, including new-map startup.
+    LocalMapping* rgbd_init_mapper = mSensor == System::RGBD ? mpLocalMapper : nullptr;
+    if (rgbd_init_mapper && !rgbd_init_mapper->SetNotStop(true)) return;
+    struct RgbdInitializationStopGuard {
+      LocalMapping* mapper;
+      ~RgbdInitializationStopGuard() { if (mapper) mapper->SetNotStop(false); }
+    } rgbd_init_stop_guard{rgbd_init_mapper};
     if (mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) {
       if (!mCurrentFrame.mpImuPreintegrated || !mLastFrame.mpImuPreintegrated) {
         cout << "not IMU meas" << endl;
