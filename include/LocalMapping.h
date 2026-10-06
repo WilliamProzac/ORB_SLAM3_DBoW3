@@ -27,6 +27,7 @@
 #include "KeyFrame.h"
 #include "KeyFrameDatabase.h"
 #include "LoopClosing.h"
+#include "LocalMappingCancellation.h"
 #include "Settings.h"
 #include "RgbdTiming.h"
 #include "Tracking.h"
@@ -85,6 +86,9 @@ public:
   double GetCurrKFTime();
   KeyFrame *GetCurrKF();
   bool WriteDetailedTimingCsv(const string &output_directory) const;
+  LocalMappingCancellation::Snapshot GetCancellationSnapshot() const {
+    return mCancellation.GetSnapshot();
+  }
 
   std::mutex mMutexImuInit;
 
@@ -178,12 +182,13 @@ protected:
   LocalMappingTimingRecord mCurrentTiming;
   std::vector<LocalMappingTimingRecord> mvDetailedTimings;
 
-  bool mbAbortBA;
+  std::atomic<bool> mbAbortBA;
 
   bool mbStopped;
   bool mbStopRequested;
   bool mbNotStop;
   std::mutex mMutexStop;
+  LocalMappingCancellation mCancellation;
 
   bool mbAcceptKeyFrames;
   std::mutex mMutexAccept;

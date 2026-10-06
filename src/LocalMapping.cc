@@ -61,7 +61,9 @@ LocalMapping::LocalMapping(System *pSys, Atlas *pAtlas, const float bMonocular,
       mbFinishRequested(false), mbFinished(true), mpAtlas(pAtlas),
       mpCurrentKeyFrame(nullptr),
       bInitializing(false), mbAbortBA(false), mbStopped(false),
-      mbStopRequested(false), mbNotStop(false), mbAcceptKeyFrames(true),
+      mbStopRequested(false), mbNotStop(false),
+      mCancellation(mbAbortBA, mMutexStop, mMutexNewKFs),
+      mbAcceptKeyFrames(true),
       mIdxInit(0), mScale(1.0), mInitSect(0), mbNotBA1(true), mbNotBA2(true),
       mIdxIteration(0), infoInertial(Eigen::MatrixXd::Zero(9, 9)) {
   mnMatchesInliers = 0;
@@ -141,7 +143,8 @@ void LocalMapping::Run() {
           std::chrono::steady_clock::now();
       CreateNewMapPoints();
 
-      mbAbortBA = false;
+      LocalMappingCancellation::Attempt cancellation_attempt(
+          mCancellation, mbStopRequested, mlNewKeyFrames);
 
       if (!CheckNewKeyFrames()) {
         // Find more matches in neighbor keyframes and fuse point duplications
@@ -203,17 +206,18 @@ void LocalMapping::Run() {
                 ((mpTracker->GetMatchesInliers() > 75) && mbMonocular) ||
                 ((mpTracker->GetMatchesInliers() > 100) && !mbMonocular);
             Optimizer::LocalInertialBA(
-                mpCurrentKeyFrame, &mbAbortBA, mpCurrentKeyFrame->GetMap(),
+                mpCurrentKeyFrame, nullptr, mpCurrentKeyFrame->GetMap(),
                 num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA, bLarge,
-                !mpCurrentKeyFrame->GetMap()->GetIniertialBA2());
+                !mpCurrentKeyFrame->GetMap()->GetIniertialBA2(), &mbAbortBA);
             b_doneLBA = true;
           } else {
 // FIELD_MAP_BEGIN
             if(FieldEnabled()) FieldEmit(27,mpCurrentKeyFrame->mnId,2,1,mpCurrentKeyFrame->mnFrameId);
 // FIELD_MAP_END
             Optimizer::LocalBundleAdjustment(
-                mpCurrentKeyFrame, &mbAbortBA, mpCurrentKeyFrame->GetMap(),
-                num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA);
+                mpCurrentKeyFrame, nullptr, mpCurrentKeyFrame->GetMap(),
+                num_FixedKF_BA, num_OptKF_BA, num_MPs_BA, num_edges_BA,
+                &mbAbortBA);
 // FIELD_MAP_BEGIN
             if(FieldEnabled()) FieldEmit(28,mpCurrentKeyFrame->mnId,2,31,mpCurrentKeyFrame->mnFrameId,num_FixedKF_BA,num_OptKF_BA,num_MPs_BA,num_edges_BA);
 // FIELD_MAP_END
@@ -238,7 +242,7 @@ void LocalMapping::Run() {
           vdLBA_ms.push_back(timeLBA_ms);
 
           nLBA_exec += 1;
-          if (mbAbortBA) {
+          if (mbAbortBA.load()) {
             nLBA_abort += 1;
           }
           vnLBA_edges.push_back(num_edges_BA);
@@ -345,7 +349,7 @@ void LocalMapping::Run() {
       mCurrentTiming.total_ms =
           LocalMappingMillisecondsSince(detailed_process_start);
       mCurrentTiming.lba_executed = b_doneLBA ? 1 : 0;
-      mCurrentTiming.lba_aborted = (b_doneLBA && mbAbortBA) ? 1 : 0;
+      mCurrentTiming.lba_aborted = (b_doneLBA && mbAbortBA.load()) ? 1 : 0;
       mCurrentTiming.lba_edges = num_edges_BA;
       mCurrentTiming.lba_optimized_keyframes = num_OptKF_BA;
       mCurrentTiming.lba_fixed_keyframes = num_FixedKF_BA;
@@ -382,7 +386,8 @@ void LocalMapping::InsertKeyFrame(KeyFrame *pKF) {
   if(FieldEnabled()) FieldEmit(26,pKF->mnId,0,3,pKF->mnFrameId,mlNewKeyFrames.size());
 // FIELD_MAP_END
 
-  mbAbortBA = true;
+  mCancellation.RequestLocked(LocalMappingCancellation::Source::NewKeyFrame,
+                              lock);
 }
 
 bool LocalMapping::CheckNewKeyFrames() {
@@ -846,7 +851,7 @@ void LocalMapping::SearchInNeighbors() {
       vpTargetKFs.push_back(pKFi2);
       pKFi2->mnFuseTargetForKF = mpCurrentKeyFrame->mnId;
     }
-    if (mbAbortBA)
+    if (mbAbortBA.load())
       break;
   }
 
@@ -878,7 +883,7 @@ void LocalMapping::SearchInNeighbors() {
       matcher.Fuse(pKFi, vpMapPointMatches, true);
   }
 
-  if (mbAbortBA)
+  if (mbAbortBA.load())
     return;
 
   // Search matches by projection from target KFs in current KF
@@ -929,7 +934,7 @@ void LocalMapping::RequestStop() {
   unique_lock<mutex> lock(mMutexStop);
   mbStopRequested = true;
   unique_lock<mutex> lock2(mMutexNewKFs);
-  mbAbortBA = true;
+  mCancellation.RequestLocked(LocalMappingCancellation::Source::Stop, lock2);
 }
 
 bool LocalMapping::Stop() {
@@ -991,7 +996,9 @@ bool LocalMapping::SetNotStop(bool flag) {
   return true;
 }
 
-void LocalMapping::InterruptBA() { mbAbortBA = true; }
+void LocalMapping::InterruptBA() {
+  mCancellation.Request(LocalMappingCancellation::Source::Tracking);
+}
 
 void LocalMapping::KeyFrameCulling() {
   // Check redundant keyframes (only local keyframes)
@@ -1133,7 +1140,7 @@ void LocalMapping::KeyFrameCulling() {
         pKF->SetBadFlag();
       }
     }
-    if ((count > 20 && mbAbortBA) || count > 100) {
+    if ((count > 20 && mbAbortBA.load()) || count > 100) {
       break;
     }
   }

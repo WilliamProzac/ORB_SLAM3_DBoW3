@@ -71,7 +71,8 @@ public:
 
   void static LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
                                     int &num_fixedKF, int &num_OptKF,
-                                    int &num_MPs, int &num_edges);
+                                    int &num_MPs, int &num_edges,
+                                    const std::atomic<bool>* cancel = nullptr);
 
   int static PoseOptimization(Frame *pFrame,
       const std::map<MapPoint*, Eigen::Vector3f>* frozen_positions = nullptr);
@@ -115,7 +116,8 @@ public:
   void static LocalInertialBA(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
                               int &num_fixedKF, int &num_OptKF, int &num_MPs,
                               int &num_edges, bool bLarge = false,
-                              bool bRecInit = false);
+                              bool bRecInit = false,
+                              const std::atomic<bool>* cancel = nullptr);
   void static MergeInertialBA(KeyFrame *pCurrKF, KeyFrame *pMergeKF,
                               bool *pbStopFlag, Map *pMap,
                               LoopClosing::KeyFrameAndPose &corrPoses);

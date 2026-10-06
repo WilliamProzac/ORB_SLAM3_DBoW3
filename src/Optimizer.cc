@@ -1102,7 +1102,8 @@ int Optimizer::PoseOptimization(Frame *pFrame,
 void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
                                       Map *pMap, int &num_fixedKF,
                                       int &num_OptKF, int &num_MPs,
-                                      int &num_edges) {
+                                      int &num_edges,
+                                      const std::atomic<bool>* cancel) {
   // Local KeyFrames: First Breath Search from Current Keyframe
   list<KeyFrame *> lLocalKeyFrames;
 
@@ -1192,6 +1193,8 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
 
   if (pbStopFlag)
     optimizer.setForceStopFlag(pbStopFlag);
+
+  OptimizerStopToken cancellation(optimizer, cancel);
 
   unsigned long maxKFid = 0;
 
@@ -1407,6 +1410,8 @@ void Optimizer::LocalBundleAdjustment(KeyFrame *pKF, bool *pbStopFlag,
   if (pbStopFlag)
     if (*pbStopFlag)
       return;
+  if (cancellation.Requested())
+    return;
 
   optimizer.initializeOptimization();
   optimizer.optimize(10);
@@ -2393,7 +2398,8 @@ int Optimizer::OptimizeSim3(KeyFrame *pKF1, KeyFrame *pKF2,
 
 void Optimizer::LocalInertialBA(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
                                 int &num_fixedKF, int &num_OptKF, int &num_MPs,
-                                int &num_edges, bool bLarge, bool bRecInit) {
+                                int &num_edges, bool bLarge, bool bRecInit,
+                                const std::atomic<bool>* cancel) {
   Map *pCurrentMap = pKF->GetMap();
 
   int maxOpt = 10;
@@ -2856,6 +2862,9 @@ void Optimizer::LocalInertialBA(KeyFrame *pKF, bool *pbStopFlag, Map *pMap,
   float err_end = optimizer.activeRobustChi2();
   if (pbStopFlag)
     optimizer.setForceStopFlag(pbStopFlag);
+  // Preserve this inertial path's existing post-optimize binding point. E1
+  // adapts the shared request type; changing inertial cancellation is separate.
+  OptimizerStopToken cancellation(optimizer, cancel);
 
   vector<pair<KeyFrame *, MapPointPtr >> vToErase;
   vToErase.reserve(vpEdgesMono.size() + vpEdgesStereo.size());
