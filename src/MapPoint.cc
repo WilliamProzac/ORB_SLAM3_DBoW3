@@ -21,6 +21,7 @@
 
 #include "MapPoint.h"
 #include "LocalTrackingIdentity.h"
+#include "LocalMapTiming.h"
 #include <stdexcept>
 #include "FeatureDescriptor.h"
 #include "MedoidTiming.h"
@@ -256,8 +257,15 @@ void MapPoint::EraseObservation(KeyFrame *pKF) {
     SetBadFlag(LocalPointExit::ObservationRemoval);
 }
 
-std::map<KeyFrame *, std::tuple<int, int>> MapPoint::GetObservations() {
-  unique_lock<mutex> lock(mMutexFeatures);
+std::map<KeyFrame *, std::tuple<int, int>> MapPoint::GetObservations(
+    LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFirstFrame;
+  }
+  unique_lock<mutex> lock(mMutexFeatures, defer_lock);
+  LocalMapLockSpan span(observation);
+  lock.lock();
+  span.Acquired();
   return mObservations;
 }
 

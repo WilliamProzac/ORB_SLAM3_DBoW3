@@ -135,7 +135,8 @@ public:
 
   KeyFrame *GetReferenceKeyFrame();
 
-  std::map<KeyFrame *, std::tuple<int, int>> GetObservations();
+  std::map<KeyFrame *, std::tuple<int, int>> GetObservations(
+      LocalMapLockSample* observation = nullptr);
   int Observations();
 
   void AddObservation(KeyFrame *pKF, int idx);

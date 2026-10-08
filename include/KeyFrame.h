@@ -205,7 +205,8 @@ public:
   // owned by output; caller keeps output alive across all KFs in this frame.
   void AppendLocalMapPoints(unsigned long frame_id,
       std::vector<MapPointPtr>& output,
-      RetainedPointCache& identities, LocalPointGatherCounts* counts = nullptr);
+      RetainedPointCache& identities, LocalPointGatherCounts* counts = nullptr,
+      LocalMapLockSample* observation = nullptr);
   // Disposable attempt collection: deduplicate only against retained owners;
   // never read MP state or write frame markers under the KF slot lock.
   void AppendLocalMapCandidates(std::vector<MapPointPtr>& output,
@@ -241,7 +242,8 @@ public:
   void UpdateBestCovisibles();
   std::set<KeyFrame *> GetConnectedKeyFrames();
   std::vector<KeyFrame *> GetVectorCovisibleKeyFrames();
-  std::vector<KeyFrame *> GetBestCovisibilityKeyFrames(const int &N);
+  std::vector<KeyFrame *> GetBestCovisibilityKeyFrames(const int &N,
+      LocalMapLockSample* observation = nullptr);
   std::vector<KeyFrame *> GetCovisiblesByWeight(const int &w);
   int GetWeight(KeyFrame *pKF);
 
@@ -249,8 +251,8 @@ public:
   void AddChild(KeyFrame *pKF);
   void EraseChild(KeyFrame *pKF);
   void ChangeParent(KeyFrame *pKF);
-  std::set<KeyFrame *> GetChilds();
-  KeyFrame *GetParent();
+  std::set<KeyFrame *> GetChilds(LocalMapLockSample* observation = nullptr);
+  KeyFrame *GetParent(LocalMapLockSample* observation = nullptr);
   bool hasChild(KeyFrame *pKF);
   void SetFirstConnection(bool bFirst);
 

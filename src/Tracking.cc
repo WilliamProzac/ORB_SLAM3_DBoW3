@@ -22,6 +22,7 @@
  */
 
 #include "Tracking.h"
+#include "LocalMapTiming.h"
 
 #include "Converter.h"
 #include "FrameDrawer.h"
@@ -42,6 +43,8 @@
 #include <thread>
 #include <mutex>
 #include <stdexcept>
+#include <sys/syscall.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -72,6 +75,10 @@ void ClearRgbdObservationContext() { rgbd_observation_context = {}; }
 RgbdObservationContext GetRgbdObservationContext() { return rgbd_observation_context; }
 RgbdResetCounters GetRgbdResetCounters() {
   return {rgbd_reset_count.load(), rgbd_active_reset_count.load()};
+}
+std::uint64_t RgbdLinuxThreadId() {
+  const auto tid = syscall(SYS_gettid);
+  return tid > 0 ? static_cast<std::uint64_t>(tid) : 0;
 }
 std::uint64_t RgbdSteadyNanoseconds() {
   return std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -1775,7 +1782,7 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   if (timing && RgbdLightDiagnostics()) {
     timing->l0_collected = true;
     timing->observation = GetRgbdObservationContext();
-    timing->tracking_thread_id = std::hash<std::thread::id>{}(std::this_thread::get_id());
+    timing->tracking_thread_id = RgbdLinuxThreadId();
   }
   if (timing) {
     timing->image_timestamp = timestamp;
@@ -4200,8 +4207,18 @@ void Tracking::UpdateLocalPoints() {
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_points_ms : nullptr);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_points_cpu_ms : nullptr);
-  mLocalPointIdentities.clear();
-  mvpLocalMapPoints.clear();
+  auto* detail = light && light->observation.detail_window
+      ? &light->local_map_detail : nullptr;
+  InitializeLocalMapDetail(detail, light ? light->tracking_thread_id : 0);
+  if (detail) detail->old_owner_count = mvpLocalMapPoints.size();
+  {
+    LocalMapClearSpan span(detail ? &detail->hint_clear : nullptr);
+    mLocalPointIdentities.clear();
+  }
+  {
+    LocalMapClearSpan span(detail ? &detail->owner_clear : nullptr);
+    mvpLocalMapPoints.clear();
+  }
 
   for (vector<KeyFrame *>::const_reverse_iterator
            itKF = mvpLocalKeyFrames.rbegin(),
@@ -4209,7 +4226,9 @@ void Tracking::UpdateLocalPoints() {
        itKF != itEndKF; ++itKF) {
     KeyFrame *pKF = *itKF;
     pKF->AppendLocalMapPoints(mCurrentFrame.mnId, mvpLocalMapPoints,
-                             mLocalPointIdentities, light ? &light->gather : nullptr);
+        mLocalPointIdentities, light ? &light->gather : nullptr,
+        detail ? detail->gather_features.Next(LocalMapLockSite::GatherKeyFrameFeatures)
+               : nullptr);
   }
 }
 
@@ -4217,6 +4236,9 @@ void Tracking::UpdateLocalKeyFrames() {
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_keyframes_ms : nullptr);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_keyframes_cpu_ms : nullptr);
+  auto* local_detail = light && light->observation.detail_window
+      ? &light->local_map_detail : nullptr;
+  InitializeLocalMapDetail(local_detail, light ? light->tracking_thread_id : 0);
   // Each map point vote for the keyframes in which it has been observed
   map<KeyFrame *, int> keyframeCounter;
   if (!mpAtlas->isImuInitialized() ||
@@ -4233,7 +4255,8 @@ void Tracking::UpdateLocalKeyFrames() {
                 ? &light->voting_observation_copy_ms : nullptr);
             ScopedThreadCpuAccumulator detail_cpu(detail
                 ? &light->voting_observation_copy_cpu_ms : nullptr);
-            return pMP->GetObservations();
+            return pMP->GetObservations(local_detail ? local_detail->voting_features.Next(
+                LocalMapLockSite::VoteMapPointFeatures) : nullptr);
           }();
           if (light) light->voting_observation_entries += observations.size();
           for (map<KeyFrame *, tuple<int, int>>::const_iterator
@@ -4262,7 +4285,8 @@ void Tracking::UpdateLocalKeyFrames() {
                 ? &light->voting_observation_copy_ms : nullptr);
             ScopedThreadCpuAccumulator detail_cpu(detail
                 ? &light->voting_observation_copy_cpu_ms : nullptr);
-            return pMP->GetObservations();
+            return pMP->GetObservations(local_detail ? local_detail->voting_features.Next(
+                LocalMapLockSite::VoteMapPointFeatures) : nullptr);
           }();
           if (light) light->voting_observation_entries += observations.size();
           for (map<KeyFrame *, tuple<int, int>>::const_iterator
@@ -4315,7 +4339,9 @@ void Tracking::UpdateLocalKeyFrames() {
 
     KeyFrame *pKF = *itKF;
 
-    const vector<KeyFrame *> vNeighs = pKF->GetBestCovisibilityKeyFrames(10);
+    const vector<KeyFrame *> vNeighs = pKF->GetBestCovisibilityKeyFrames(10,
+        local_detail ? local_detail->keyframe_connections.Next(
+            LocalMapLockSite::CovisibleConnections) : nullptr);
 
     for (vector<KeyFrame *>::const_iterator itNeighKF = vNeighs.begin(),
                                             itEndNeighKF = vNeighs.end();
@@ -4330,7 +4356,9 @@ void Tracking::UpdateLocalKeyFrames() {
       }
     }
 
-    const set<KeyFrame *> spChilds = pKF->GetChilds();
+    const set<KeyFrame *> spChilds = pKF->GetChilds(local_detail
+        ? local_detail->keyframe_connections.Next(LocalMapLockSite::ChildrenConnections)
+        : nullptr);
     for (set<KeyFrame *>::const_iterator sit = spChilds.begin(),
                                          send = spChilds.end();
          sit != send; sit++) {
@@ -4344,7 +4372,9 @@ void Tracking::UpdateLocalKeyFrames() {
       }
     }
 
-    KeyFrame *pParent = pKF->GetParent();
+    KeyFrame *pParent = pKF->GetParent(local_detail
+        ? local_detail->keyframe_connections.Next(LocalMapLockSite::ParentConnections)
+        : nullptr);
     if (pParent) {
       if (pParent->mnTrackReferenceForFrame != mCurrentFrame.mnId) {
         mvpLocalKeyFrames.push_back(pParent);

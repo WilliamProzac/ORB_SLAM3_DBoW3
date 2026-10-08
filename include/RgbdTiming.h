@@ -37,6 +37,7 @@ RgbdObservationContext GetRgbdObservationContext();
 RgbdResetCounters GetRgbdResetCounters();
 double RgbdThreadCpuMilliseconds();
 std::uint64_t RgbdSteadyNanoseconds();
+std::uint64_t RgbdLinuxThreadId(); // Linux kernel TID, 0 if unavailable.
 
 // ORB CPU observations use fixed per-worker slots. Slot 0 is the caller;
 // helper slots include task execution/claiming, not their sleeping lifetime.
@@ -108,8 +109,50 @@ struct KeyFrameDecisionRecord {
 };
 struct LocalPointGatherCounts {
   std::uint64_t slots = 0, null_identity = 0, hint_hits = 0;
+  std::uint64_t hint_collisions = 0;
   std::uint64_t weak_locks = 0, expired = 0, frame_marked = 0, bad = 0;
   std::uint64_t accepted = 0;
+};
+// N01: fixed first-four samples per site group, only in detail_window.
+// Source identity is the containing record's observation; native_thread_id is
+// the Linux TID copied from the containing record, not a std::thread::id hash.
+struct LocalMapClearObservation {
+  bool collected = false;
+  // Failed clock reads: monotonic begin/end bits 0/1; thread CPU begin/end 2/3.
+  std::uint8_t clock_failures = 0;
+  double wall_ms = -1, cpu_ms = -1;
+};
+enum class LocalMapLockSite : std::uint8_t {
+  NotCollected = 0, GatherKeyFrameFeatures, VoteMapPointFeatures,
+  CovisibleConnections, ChildrenConnections, ParentConnections
+};
+struct LocalMapLockSample {
+  LocalMapLockSite site = LocalMapLockSite::NotCollected;
+  // Failed monotonic reads: request/acquired/before-unlock bits 0/1/2.
+  std::uint8_t clock_failures = 0;
+  std::uint64_t object_id = 0, object_frame_id = 0;
+  double object_timestamp = 0; // KF image timestamp; MP samples leave this 0.
+  // Reads immediately before lock(), after lock() returns, and before unlock.
+  // The last endpoint is NOT an observed unlock completion or writer trace.
+  std::uint64_t request_ns = 0, acquired_ns = 0, before_unlock_ns = 0;
+};
+constexpr std::size_t kLocalMapLockSamples = 4;
+struct LocalMapLockSamples {
+  std::array<LocalMapLockSample, kLocalMapLockSamples> samples{};
+  std::uint32_t count = 0;
+  std::uint64_t skipped = 0;
+  LocalMapLockSample* Next(LocalMapLockSite site) {
+    if (count == samples.size()) { ++skipped; return nullptr; }
+    auto* sample = &samples[count++];
+    sample->site = site;
+    return sample;
+  }
+};
+struct LocalMapDetailObservation {
+  bool collected = false;
+  std::uint64_t native_thread_id = 0, old_owner_count = 0;
+  LocalMapClearObservation hint_clear, owner_clear;
+  LocalMapLockSamples gather_features, voting_features, keyframe_connections;
 };
 enum class LocalBaOutcome : int {
   NotInvoked = 0, Running, NoFixedKeyFrame, CancelledBeforeSolve,
@@ -159,6 +202,7 @@ struct RgbdTimingRecord {
   double voting_observation_copy_ms = 0; // Only detail_window; zero otherwise.
   double voting_observation_copy_cpu_ms = 0;
   LocalPointGatherCounts gather;
+  LocalMapDetailObservation local_map_detail;
   std::uint64_t search_associated_slots = 0, search_local_slots = 0;
   std::uint64_t search_seen_skips = 0, search_bad_skips = 0;
   std::uint64_t search_projected = 0, search_rejected = 0, search_visible = 0;

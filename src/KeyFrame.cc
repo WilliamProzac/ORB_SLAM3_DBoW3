@@ -21,6 +21,7 @@
 
 #include "KeyFrame.h"
 #include "LocalTrackingIdentity.h"
+#include "LocalMapTiming.h"
 #include "Converter.h"
 #include "ImuTypes.h"
 #include <mutex>
@@ -268,8 +269,16 @@ vector<KeyFrame *> KeyFrame::GetVectorCovisibleKeyFrames() {
   return mvpOrderedConnectedKeyFrames;
 }
 
-vector<KeyFrame *> KeyFrame::GetBestCovisibilityKeyFrames(const int &N) {
-  unique_lock<mutex> lock(mMutexConnections);
+vector<KeyFrame *> KeyFrame::GetBestCovisibilityKeyFrames(const int &N,
+    LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFrameId;
+    observation->object_timestamp = mTimeStamp;
+  }
+  unique_lock<mutex> lock(mMutexConnections, defer_lock);
+  LocalMapLockSpan span(observation);
+  lock.lock();
+  span.Acquired();
   if ((int)mvpOrderedConnectedKeyFrames.size() < N)
     return mvpOrderedConnectedKeyFrames;
   else
@@ -384,8 +393,16 @@ vector<MapPointPtr > KeyFrame::GetMapPointMatches() {
 
 void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
     std::vector<MapPointPtr>& output,
-    RetainedPointCache& identities, LocalPointGatherCounts* counts) {
-  unique_lock<mutex> lock(mMutexFeatures);
+    RetainedPointCache& identities, LocalPointGatherCounts* counts,
+    LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFrameId;
+    observation->object_timestamp = mTimeStamp;
+  }
+  unique_lock<mutex> lock(mMutexFeatures, defer_lock);
+  LocalMapLockSpan span(observation);
+  lock.lock();
+  span.Acquired();
   for (const auto& slot : mvpMapPoints) {
     if (counts) ++counts->slots;
     const auto identity = slot.identity();
@@ -404,7 +421,7 @@ void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
     if (counts) ++counts->accepted;
     point->mnTrackReferenceForFrame = frame_id;
     output.push_back(std::move(point));
-    identities.insert(identity);
+    identities.insert(identity, counts ? &counts->hint_collisions : nullptr);
   }
 }
 
@@ -553,13 +570,27 @@ void KeyFrame::ChangeParent(KeyFrame *pKF) {
   pKF->AddChild(this);
 }
 
-set<KeyFrame *> KeyFrame::GetChilds() {
-  unique_lock<mutex> lockCon(mMutexConnections);
+set<KeyFrame *> KeyFrame::GetChilds(LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFrameId;
+    observation->object_timestamp = mTimeStamp;
+  }
+  unique_lock<mutex> lockCon(mMutexConnections, defer_lock);
+  LocalMapLockSpan span(observation);
+  lockCon.lock();
+  span.Acquired();
   return mspChildrens;
 }
 
-KeyFrame *KeyFrame::GetParent() {
-  unique_lock<mutex> lockCon(mMutexConnections);
+KeyFrame *KeyFrame::GetParent(LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFrameId;
+    observation->object_timestamp = mTimeStamp;
+  }
+  unique_lock<mutex> lockCon(mMutexConnections, defer_lock);
+  LocalMapLockSpan span(observation);
+  lockCon.lock();
+  span.Acquired();
   return mpParent;
 }
 

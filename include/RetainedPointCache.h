@@ -14,8 +14,10 @@ public:
   bool count(std::uintptr_t identity) const noexcept {
     return identity && identities_[index(identity)] == identity;
   }
-  void insert(std::uintptr_t identity) noexcept {
-    identities_[index(identity)] = identity;
+  void insert(std::uintptr_t identity, std::uint64_t* collisions = nullptr) noexcept {
+    auto& slot = identities_[index(identity)];
+    if (collisions && slot && slot != identity) ++*collisions;
+    slot = identity;
     ++accepted_;
   }
   // Counts accepted strong owners, not occupied cache slots.

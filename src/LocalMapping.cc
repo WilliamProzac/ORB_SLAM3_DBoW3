@@ -448,7 +448,7 @@ void LocalMapping::ProcessNewKeyFrame() {
   mCurrentTiming = LocalMappingTimingRecord();
   if (RgbdLightDiagnostics()) {
     mCurrentTiming.l0_collected = true;
-    mCurrentTiming.mapping_thread_id = std::hash<std::thread::id>{}(std::this_thread::get_id());
+    mCurrentTiming.mapping_thread_id = RgbdLinuxThreadId();
   }
   {
     unique_lock<mutex> lock(mMutexNewKFs);
