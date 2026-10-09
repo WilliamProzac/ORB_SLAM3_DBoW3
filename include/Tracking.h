@@ -225,6 +225,8 @@ public:
 protected:
   // Main tracking function. It is independent of the input sensor.
   void Track();
+  // Shared with the initialization probe to exercise the production decision.
+  bool ShouldCreateNewKeyFrame(bool bNeedKF, bool bOK) const;
 
   // Map initialization for stereo and RGB-D
   void StereoInitialization();
@@ -267,7 +269,7 @@ protected:
       RelocalizationFailed;
 
   // Imu preintegration from last frame
-  IMU::Preintegrated *mpImuPreintegratedFromLastKF;
+  IMU::Preintegrated *mpImuPreintegratedFromLastKF = nullptr;
 
   // Queue of IMU measurements between frames
   std::list<IMU::Point> mlQueueImuData;
@@ -284,7 +286,7 @@ protected:
   bool mbCurrentFrameHasValidIMU;
 
   // Imu calibration parameters
-  IMU::Calib *mpImuCalib;
+  IMU::Calib *mpImuCalib = nullptr;
 
   // Last Bias Estimation (at keyframe creation)
   IMU::Bias mLastBias;
@@ -360,16 +362,16 @@ protected:
   float mbf;
   float mImageScale;
 
-  float mImuFreq;
-  double mImuPer;
-  bool mInsertKFsLost;
+  float mImuFreq = 0.0f;
+  double mImuPer = 0.001;
+  bool mInsertKFsLost = false;
 
   // New KeyFrame rules (according to fps)
   int mMinFrames;
   int mMaxFrames;
 
   int mnFirstImuFrameId;
-  int mnFramesToResetIMU;
+  int mnFramesToResetIMU = 0;
 
   // Threshold close/far points
   // Points seen as close by the stereo/RGBD sensor are considered reliable

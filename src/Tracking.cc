@@ -245,6 +245,9 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
       mLastImuAcc(Eigen::Vector3f::Zero()),
       mLastImuGyro(Eigen::Vector3f::Zero()), mLastImuStamp(0.0),
       mbCurrentFrameHasValidIMU(false) {
+  const bool usesImu = mSensor == System::IMU_MONOCULAR ||
+                       mSensor == System::IMU_STEREO ||
+                       mSensor == System::IMU_RGBD;
   // Load camera parameters from settings file
   if (settings) {
     newParameterLoader(settings);
@@ -265,15 +268,13 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
     }
 
     bool b_parse_imu = true;
-    if (sensor == System::IMU_MONOCULAR || sensor == System::IMU_STEREO ||
-        sensor == System::IMU_RGBD) {
+    if (usesImu) {
       b_parse_imu = ParseIMUParamFile(fSettings);
       if (!b_parse_imu) {
         std::cout << "*Error with the IMU parameters in the config file*"
                   << std::endl;
       }
 
-      mnFramesToResetIMU = mMaxFrames;
     }
 
     if (!b_parse_cam || !b_parse_orb || !b_parse_imu) {
@@ -285,6 +286,8 @@ Tracking::Tracking(System *pSys, ORBVocabulary *pVoc, FrameDrawer *pFrameDrawer,
       }
     }
   }
+
+  mnFramesToResetIMU = usesImu ? mMaxFrames : 0;
 
   // Read in both legacy and Settings-based loaders; no effect on other sensors.
   if (mSensor == System::RGBD) {
@@ -906,21 +909,24 @@ void Tracking::newParameterLoader(Settings *settings) {
                                          fIniThFAST, fMinThFAST,
                                          orbParallelWorkers);
 
-  // IMU parameters
-  Sophus::SE3f Tbc = settings->Tbc();
-  mInsertKFsLost = settings->insertKFsWhenLost();
-  mImuFreq = settings->imuFrequency();
-  mImuPer = (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
-  float Ng = settings->noiseGyro();
-  float Na = settings->noiseAcc();
-  float Ngw = settings->gyroWalk();
-  float Naw = settings->accWalk();
+  // IMU settings are only populated for inertial sensors.
+  if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
+      mSensor == System::IMU_RGBD) {
+    Sophus::SE3f Tbc = settings->Tbc();
+    mInsertKFsLost = settings->insertKFsWhenLost();
+    mImuFreq = settings->imuFrequency();
+    mImuPer = (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
+    float Ng = settings->noiseGyro();
+    float Na = settings->noiseAcc();
+    float Ngw = settings->gyroWalk();
+    float Naw = settings->accWalk();
 
-  const float sf = sqrt(mImuFreq);
-  mpImuCalib = new IMU::Calib(Tbc, Ng * sf, Na * sf, Ngw / sf, Naw / sf);
+    const float sf = sqrt(mImuFreq);
+    mpImuCalib = new IMU::Calib(Tbc, Ng * sf, Na * sf, Ngw / sf, Naw / sf);
 
-  mpImuPreintegratedFromLastKF =
-      new IMU::Preintegrated(IMU::Bias(), *mpImuCalib);
+    mpImuPreintegratedFromLastKF =
+        new IMU::Preintegrated(IMU::Bias(), *mpImuCalib);
+  }
 }
 
 bool Tracking::ParseCamParamFile(cv::FileStorage &fSettings) {
@@ -1660,6 +1666,14 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings) {
   return true;
 }
 
+bool Tracking::ShouldCreateNewKeyFrame(bool bNeedKF, bool bOK) const {
+  const bool usesImu = mSensor == System::IMU_MONOCULAR ||
+                       mSensor == System::IMU_STEREO ||
+                       mSensor == System::IMU_RGBD;
+  return bNeedKF &&
+         (bOK || (usesImu && mInsertKFsLost && mState == RECENTLY_LOST));
+}
+
 void Tracking::SetLocalMapper(LocalMapping *pLocalMapper) {
   mpLocalMapper = pLocalMapper;
 }
@@ -2374,9 +2388,9 @@ void Tracking::Track() {
         }
 
         if (!bOK) {
-          if (mCurrentFrame.mnId <= (mnLastRelocFrameId + mnFramesToResetIMU) &&
-              (mSensor == System::IMU_MONOCULAR ||
-               mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD)) {
+          if ((mSensor == System::IMU_MONOCULAR ||
+               mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) &&
+              mCurrentFrame.mnId <= (mnLastRelocFrameId + mnFramesToResetIMU)) {
             (mState = LOST, FieldEmit(15,mCurrentFrame.mnId,0,1,mState));
           } else if (pCurrentMap->KeyFramesInMap() > 10) {
             // cout << "KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
@@ -2568,11 +2582,11 @@ void Tracking::Track() {
     // Save frame if recent relocalization, since they are used for IMU reset
     // (as we are making copy, it shluld be once mCurrFrame is completely
     // modified)
-    if (!mbOnlyTracking &&
+    if ((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
+         mSensor == System::IMU_RGBD) &&
+        !mbOnlyTracking &&
         (mCurrentFrame.mnId < (mnLastRelocFrameId + mnFramesToResetIMU)) &&
         (mCurrentFrame.mnId > mnFramesToResetIMU) &&
-        (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
-         mSensor == System::IMU_RGBD) &&
         pCurrentMap->isImuInitialized() && !mLastFrame.mK.empty()) {
       // TODO check this situation
       Verbose::PrintMess("Saving pointer to frame. imu needs reset...",
@@ -2680,10 +2694,7 @@ void Tracking::Track() {
 
       // Check if we need to insert a new keyframe
       // if(bNeedKF && bOK)
-      if (bNeedKF && (bOK || (mInsertKFsLost && mState == RECENTLY_LOST &&
-                              (mSensor == System::IMU_MONOCULAR ||
-                               mSensor == System::IMU_STEREO ||
-                               mSensor == System::IMU_RGBD))))
+      if (ShouldCreateNewKeyFrame(bNeedKF, bOK))
         CreateNewKeyFrame();
       else if (bNeedKF && RgbdLightDiagnostics() && mpCurrentRgbdTiming)
         mpCurrentRgbdTiming->keyframe_decision.create_result =
