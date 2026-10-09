@@ -20,6 +20,7 @@
  */
 
 #include "Settings.h"
+#include "ImuParameterValidation.h"
 
 #include "CameraModels/KannalaBrandt8.h"
 #include "CameraModels/Pinhole.h"
@@ -453,22 +454,38 @@ void Settings::readImageInfo(cv::FileStorage &fSettings) {
 
 void Settings::readIMU(cv::FileStorage &fSettings) {
   bool found;
-  noiseGyro_ = readParameter<float>(fSettings, "IMU.NoiseGyro", found);
-  noiseAcc_ = readParameter<float>(fSettings, "IMU.NoiseAcc", found);
-  gyroWalk_ = readParameter<float>(fSettings, "IMU.GyroWalk", found);
-  accWalk_ = readParameter<float>(fSettings, "IMU.AccWalk", found);
-  imuFrequency_ = readParameter<float>(fSettings, "IMU.Frequency", found);
+  const float noiseGyro =
+      readParameter<float>(fSettings, "IMU.NoiseGyro", found);
+  const float noiseAcc = readParameter<float>(fSettings, "IMU.NoiseAcc", found);
+  const float gyroWalk = readParameter<float>(fSettings, "IMU.GyroWalk", found);
+  const float accWalk = readParameter<float>(fSettings, "IMU.AccWalk", found);
+  const float imuFrequency =
+      readParameter<float>(fSettings, "IMU.Frequency", found);
+  const cv::Mat cvTbc =
+      readParameter<cv::Mat>(fSettings, "IMU.T_b_c1", found);
+  const int insertKFsWhenLost =
+      readParameter<int>(fSettings, "IMU.InsertKFsWhenLost", found, false);
+  const bool insertKFsLost = found ? (bool)insertKFsWhenLost : true;
 
-  cv::Mat cvTbc = readParameter<cv::Mat>(fSettings, "IMU.T_b_c1", found);
-  Tbc_ = Converter::toSophus(cvTbc);
-
-  readParameter<int>(fSettings, "IMU.InsertKFsWhenLost", found, false);
-  if (found) {
-    insertKFsWhenLost_ = (bool)readParameter<int>(
-        fSettings, "IMU.InsertKFsWhenLost", found, false);
-  } else {
-    insertKFsWhenLost_ = true;
+  std::string error;
+  imu_parameter_validation::ScaledNoise scaledNoise;
+  if (!imu_parameter_validation::ValidateTransform(cvTbc, error) ||
+      !imu_parameter_validation::ScaleNoise(imuFrequency, noiseGyro, noiseAcc,
+                                          gyroWalk, accWalk, scaledNoise,
+                                          error)) {
+    std::cerr << "Invalid IMU parameters: " << error << ", aborting..."
+              << std::endl;
+    exit(-1);
   }
+
+  const Sophus::SE3f Tbc = Converter::toSophus(cvTbc);
+  noiseGyro_ = noiseGyro;
+  noiseAcc_ = noiseAcc;
+  gyroWalk_ = gyroWalk;
+  accWalk_ = accWalk;
+  imuFrequency_ = imuFrequency;
+  Tbc_ = Tbc;
+  insertKFsWhenLost_ = insertKFsLost;
 }
 
 void Settings::readRGBD(cv::FileStorage &fSettings) {

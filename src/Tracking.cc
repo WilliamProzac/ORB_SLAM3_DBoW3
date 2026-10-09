@@ -22,6 +22,7 @@
  */
 
 #include "Tracking.h"
+#include "ImuParameterValidation.h"
 #include "LocalMapTiming.h"
 
 #include "Converter.h"
@@ -912,20 +913,28 @@ void Tracking::newParameterLoader(Settings *settings) {
   // IMU settings are only populated for inertial sensors.
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
       mSensor == System::IMU_RGBD) {
-    Sophus::SE3f Tbc = settings->Tbc();
-    mInsertKFsLost = settings->insertKFsWhenLost();
-    mImuFreq = settings->imuFrequency();
-    mImuPer = (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
-    float Ng = settings->noiseGyro();
-    float Na = settings->noiseAcc();
-    float Ngw = settings->gyroWalk();
-    float Naw = settings->accWalk();
+    const Sophus::SE3f Tbc = settings->Tbc();
+    const bool insertKFsLost = settings->insertKFsWhenLost();
+    const float imuFrequency = settings->imuFrequency();
+    const double imuPeriod = (imuFrequency > 1e-3f)
+        ? (1.0 / static_cast<double>(imuFrequency)) : 0.001;
+    imu_parameter_validation::ScaledNoise noise;
+    std::string error;
+    if (!imu_parameter_validation::ScaleNoise(
+            imuFrequency, settings->noiseGyro(), settings->noiseAcc(),
+            settings->gyroWalk(), settings->accWalk(), noise, error))
+      throw std::invalid_argument(error);
 
-    const float sf = sqrt(mImuFreq);
-    mpImuCalib = new IMU::Calib(Tbc, Ng * sf, Na * sf, Ngw / sf, Naw / sf);
-
-    mpImuPreintegratedFromLastKF =
-        new IMU::Preintegrated(IMU::Bias(), *mpImuCalib);
+    std::unique_ptr<IMU::Calib> calib(new IMU::Calib(
+        Tbc, noise.gyro, noise.acc, noise.gyroWalk, noise.accWalk));
+    std::unique_ptr<IMU::Preintegrated> preintegrated(
+        new IMU::Preintegrated(IMU::Bias(), *calib));
+    // Publish only a complete pair; preserve the existing runtime ownership.
+    mInsertKFsLost = insertKFsLost;
+    mImuFreq = imuFrequency;
+    mImuPer = imuPeriod;
+    mpImuCalib = calib.release();
+    mpImuPreintegratedFromLastKF = preintegrated.release();
   }
 }
 
@@ -1557,6 +1566,10 @@ bool Tracking::ParseORBParamFile(cv::FileStorage &fSettings) {
 
 bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings) {
   bool b_miss_params = false;
+  std::string error;
+  float imuFrequency = 0.0f;
+  bool insertKFsLost = true;
+  bool fastInit = false;
 
   cv::Mat cvTbc;
   cv::FileNode node = fSettings["Tbc"];
@@ -1571,27 +1584,22 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings) {
     std::cerr << "*Tbc matrix doesn't exist*" << std::endl;
     b_miss_params = true;
   }
-  cout << endl;
-  cout << "Left camera to Imu Transform (Tbc): " << endl << cvTbc << endl;
-  Eigen::Matrix<float, 4, 4, Eigen::RowMajor> eigTbc(cvTbc.ptr<float>(0));
-  Sophus::SE3f Tbc(eigTbc);
-
-  node = fSettings["InsertKFsWhenLost"];
-  mInsertKFsLost = true;
-  if (!node.empty() && node.isInt()) {
-    mInsertKFsLost = (bool)node.operator int();
+  // Reject invalid storage or geometry before ptr<float>() / Sophus conversion.
+  if (b_miss_params ||
+      !imu_parameter_validation::ValidateTransform(cvTbc, error)) {
+    if (!error.empty()) std::cerr << "*" << error << "*" << std::endl;
+    return false;
   }
 
-  if (!mInsertKFsLost)
-    cout << "Do not insert keyframes when lost visual tracking " << endl;
+  node = fSettings["InsertKFsWhenLost"];
+  if (!node.empty() && node.isInt())
+    insertKFsLost = static_cast<bool>(static_cast<int>(node));
 
   float Ng, Na, Ngw, Naw;
 
   node = fSettings["IMU.Frequency"];
   if (!node.empty() && node.isInt()) {
-    mImuFreq = node.operator int();
-    mImuPer =
-        (mImuFreq > 1e-3f) ? (1.0 / static_cast<double>(mImuFreq)) : 0.001;
+    imuFrequency = node.operator int();
   } else {
     std::cerr << "*IMU.Frequency parameter doesn't exist or is not an integer*"
               << std::endl;
@@ -1638,31 +1646,47 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings) {
   }
 
   node = fSettings["IMU.fastInit"];
-  mFastInit = false;
   if (!node.empty()) {
-    mFastInit = static_cast<int>(fSettings["IMU.fastInit"]) != 0;
+    fastInit = static_cast<int>(fSettings["IMU.fastInit"]) != 0;
   }
-
-  if (mFastInit)
-    cout << "Fast IMU initialization. Acceleration is not checked \n";
 
   if (b_miss_params) {
     return false;
   }
 
-  const float sf = sqrt(mImuFreq);
+  imu_parameter_validation::ScaledNoise noise;
+  if (!imu_parameter_validation::ScaleNoise(
+          imuFrequency, Ng, Na, Ngw, Naw, noise, error)) {
+    std::cerr << "*" << error << "*" << std::endl;
+    return false;
+  }
+  Eigen::Matrix<float, 4, 4, Eigen::RowMajor> eigTbc(cvTbc.ptr<float>(0));
+  const Sophus::SE3f Tbc(eigTbc);
+  const double imuPeriod = (imuFrequency > 1e-3f)
+      ? (1.0 / static_cast<double>(imuFrequency)) : 0.001;
+
   cout << endl;
-  cout << "IMU frequency: " << mImuFreq << " Hz" << endl;
+  cout << "Left camera to Imu Transform (Tbc): " << endl << cvTbc << endl;
+  if (!insertKFsLost)
+    cout << "Do not insert keyframes when lost visual tracking " << endl;
+  if (fastInit)
+    cout << "Fast IMU initialization. Acceleration is not checked \n";
+  cout << "IMU frequency: " << imuFrequency << " Hz" << endl;
   cout << "IMU gyro noise: " << Ng << " rad/s/sqrt(Hz)" << endl;
   cout << "IMU gyro walk: " << Ngw << " rad/s^2/sqrt(Hz)" << endl;
   cout << "IMU accelerometer noise: " << Na << " m/s^2/sqrt(Hz)" << endl;
   cout << "IMU accelerometer walk: " << Naw << " m/s^3/sqrt(Hz)" << endl;
 
-  mpImuCalib = new IMU::Calib(Tbc, Ng * sf, Na * sf, Ngw / sf, Naw / sf);
-
-  mpImuPreintegratedFromLastKF =
-      new IMU::Preintegrated(IMU::Bias(), *mpImuCalib);
-
+  std::unique_ptr<IMU::Calib> calib(new IMU::Calib(
+      Tbc, noise.gyro, noise.acc, noise.gyroWalk, noise.accWalk));
+  std::unique_ptr<IMU::Preintegrated> preintegrated(
+      new IMU::Preintegrated(IMU::Bias(), *calib));
+  mInsertKFsLost = insertKFsLost;
+  mImuFreq = imuFrequency;
+  mImuPer = imuPeriod;
+  mFastInit = fastInit;
+  mpImuCalib = calib.release();
+  mpImuPreintegratedFromLastKF = preintegrated.release();
   return true;
 }
 
