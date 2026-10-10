@@ -22,6 +22,7 @@ class LocalMapClearSpan {
     record_->collected = true;
     if (!LocalMapClockNanoseconds(CLOCK_MONOTONIC, wall_begin_))
       record_->clock_failures |= 1;
+    record_->begin_ns = wall_begin_;
     if (!LocalMapClockNanoseconds(CLOCK_THREAD_CPUTIME_ID, cpu_begin_))
       record_->clock_failures |= 4;
   }
@@ -32,6 +33,7 @@ class LocalMapClearSpan {
       record_->clock_failures |= 8;
     if (!LocalMapClockNanoseconds(CLOCK_MONOTONIC, wall_end))
       record_->clock_failures |= 2;
+    record_->end_ns = wall_end;
     if (!(record_->clock_failures & 3) && wall_end >= wall_begin_)
       record_->wall_ms = (wall_end - wall_begin_) * 1e-6;
     if (!(record_->clock_failures & 12) && cpu_end >= cpu_begin_)

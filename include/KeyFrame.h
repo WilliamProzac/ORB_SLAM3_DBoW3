@@ -299,7 +299,7 @@ public:
 
   // Set/check bad flag
   void SetBadFlag();
-  bool isBad();
+  bool isBad(LocalMapLockSample* observation = nullptr);
 
   // Compute Scene Depth (q=2 median). Used in monocular.
   float ComputeSceneMedianDepth(const int q);

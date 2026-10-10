@@ -4275,7 +4275,10 @@ void Tracking::UpdateLocalKeyFrames() {
       ? &light->local_map_detail : nullptr;
   InitializeLocalMapDetail(local_detail, light ? light->tracking_thread_id : 0);
   // Each map point vote for the keyframes in which it has been observed
+  LocalMapClearSpan total_span(local_detail ? &local_detail->a1_total : nullptr);
   map<KeyFrame *, int> keyframeCounter;
+  {
+  LocalMapClearSpan voting_span(local_detail ? &local_detail->a1_voting : nullptr);
   if (!mpAtlas->isImuInitialized() ||
       (mCurrentFrame.mnId < mnLastRelocFrameId + 2)) {
     for (int i = 0; i < mCurrentFrame.N; i++) {
@@ -4283,7 +4286,8 @@ void Tracking::UpdateLocalKeyFrames() {
       MapPointPtr pMP = mCurrentFrame.mvpMapPoints[i];
       if (pMP) {
         if (light) ++light->voting_associated;
-        if (!pMP->isBad()) {
+        if (!pMP->isBad(local_detail ? local_detail->voting_is_bad.NextRotating(
+            LocalMapLockSite::VoteMapPointIsBadFeatures, light->observation.source_ordinal) : nullptr)) {
           const map<KeyFrame *, tuple<int, int>> observations = [&] {
             const bool detail = light && light->observation.detail_window;
             ScopedTimingAccumulator detail_wall(detail
@@ -4313,7 +4317,8 @@ void Tracking::UpdateLocalKeyFrames() {
         MapPointPtr pMP = mLastFrame.mvpMapPoints[i];
         if (!pMP)
           continue;
-        if (!pMP->isBad()) {
+        if (!pMP->isBad(local_detail ? local_detail->voting_is_bad.NextRotating(
+            LocalMapLockSite::VoteMapPointIsBadFeatures, light->observation.source_ordinal) : nullptr)) {
           const map<KeyFrame *, tuple<int, int>> observations = [&] {
             const bool detail = light && light->observation.detail_window;
             ScopedTimingAccumulator detail_wall(detail
@@ -4338,6 +4343,7 @@ void Tracking::UpdateLocalKeyFrames() {
   }
 
   if (light) light->voting_unique_keyframes = keyframeCounter.size();
+  } // complete voting loop, including observation copies and vote insertion
   int max = 0;
   KeyFrame *pKFmax = static_cast<KeyFrame *>(NULL);
 
@@ -4346,12 +4352,15 @@ void Tracking::UpdateLocalKeyFrames() {
 
   // All keyframes that observe a map point are included in the local map. Also
   // check which keyframe shares most points
+  {
+  LocalMapClearSpan filter_span(local_detail ? &local_detail->a1_filter : nullptr);
   for (map<KeyFrame *, int>::const_iterator it = keyframeCounter.begin(),
                                             itEnd = keyframeCounter.end();
        it != itEnd; it++) {
     KeyFrame *pKF = it->first;
 
-    if (pKF->isBad())
+    if (pKF->isBad(local_detail ? local_detail->filter_is_bad.NextRotating(
+        LocalMapLockSite::FilterKeyFrameIsBadConnections, light->observation.source_ordinal) : nullptr))
       continue;
 
     if (it->second > max) {
@@ -4364,6 +4373,7 @@ void Tracking::UpdateLocalKeyFrames() {
   }
 
   // Include also some not-already-included keyframes that are neighbors to
+  } // complete filter loop; allocation/clear and neighbor work remain remainder
   // already-included keyframes
   for (vector<KeyFrame *>::const_iterator itKF = mvpLocalKeyFrames.begin(),
                                           itEndKF = mvpLocalKeyFrames.end();

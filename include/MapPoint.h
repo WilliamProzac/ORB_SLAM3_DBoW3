@@ -147,7 +147,7 @@ public:
 
   void SetBadFlag(LocalPointExit reason=LocalPointExit::Other, unsigned long cull_key=static_cast<unsigned long>(-1));
   void RecordLocalBirth();
-  bool isBad();
+  bool isBad(LocalMapLockSample* observation = nullptr);
 
   void Replace(MapPointPtr pMP);
   MapPointPtr GetReplaced();

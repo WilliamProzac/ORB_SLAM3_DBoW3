@@ -749,8 +749,15 @@ void KeyFrame::SetBadFlag() {
   mpKeyFrameDB->erase(this);
 }
 
-bool KeyFrame::isBad() {
-  unique_lock<mutex> lock(mMutexConnections);
+bool KeyFrame::isBad(LocalMapLockSample* observation) {
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFrameId;
+    observation->object_timestamp = mTimeStamp;
+  }
+  unique_lock<mutex> lock(mMutexConnections, defer_lock);
+  LocalMapLockSpan span(observation);
+  lock.lock();
+  span.Acquired();
   return mbBad;
 }
 

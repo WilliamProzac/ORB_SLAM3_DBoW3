@@ -121,10 +121,12 @@ struct LocalMapClearObservation {
   // Failed clock reads: monotonic begin/end bits 0/1; thread CPU begin/end 2/3.
   std::uint8_t clock_failures = 0;
   double wall_ms = -1, cpu_ms = -1;
+  std::uint64_t begin_ns = 0, end_ns = 0;
 };
 enum class LocalMapLockSite : std::uint8_t {
   NotCollected = 0, GatherKeyFrameFeatures, VoteMapPointFeatures,
-  CovisibleConnections, ChildrenConnections, ParentConnections
+  CovisibleConnections, ChildrenConnections, ParentConnections,
+  VoteMapPointIsBadFeatures, FilterKeyFrameIsBadConnections
 };
 struct LocalMapLockSample {
   LocalMapLockSite site = LocalMapLockSite::NotCollected;
@@ -135,16 +137,33 @@ struct LocalMapLockSample {
   // Reads immediately before lock(), after lock() returns, and before unlock.
   // The last endpoint is NOT an observed unlock completion or writer trace.
   std::uint64_t request_ns = 0, acquired_ns = 0, before_unlock_ns = 0;
+  std::uint64_t call_ordinal = 0;
 };
 constexpr std::size_t kLocalMapLockSamples = 4;
 struct LocalMapLockSamples {
   std::array<LocalMapLockSample, kLocalMapLockSamples> samples{};
   std::uint32_t count = 0;
   std::uint64_t skipped = 0;
+  std::uint64_t calls = 0;
   LocalMapLockSample* Next(LocalMapLockSite site) {
+    ++calls;
     if (count == samples.size()) { ++skipped; return nullptr; }
     auto* sample = &samples[count++];
     sample->site = site;
+    sample->call_ordinal = calls;
+    return sample;
+  }
+  // D: one residue per 128 calls, rotated before capture by source identity.
+  // Four samples maximum; calls beyond the fourth selected call are omitted.
+  LocalMapLockSample* NextRotating(LocalMapLockSite site, std::uint64_t source) {
+    ++calls;
+    const auto offset = (source * 17 + static_cast<unsigned>(site) * 13) % 128;
+    if ((calls - 1) % 128 != offset || count == samples.size()) {
+      ++skipped; return nullptr;
+    }
+    auto* sample = &samples[count++];
+    sample->site = site;
+    sample->call_ordinal = calls;
     return sample;
   }
 };
@@ -153,6 +172,8 @@ struct LocalMapDetailObservation {
   std::uint64_t native_thread_id = 0, old_owner_count = 0;
   LocalMapClearObservation hint_clear, owner_clear;
   LocalMapLockSamples gather_features, voting_features, keyframe_connections;
+  LocalMapClearObservation a1_total, a1_voting, a1_filter;
+  LocalMapLockSamples voting_is_bad, filter_is_bad;
 };
 enum class LocalBaOutcome : int {
   NotInvoked = 0, Running, NoFixedKeyFrame, CancelledBeforeSolve,

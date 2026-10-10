@@ -392,10 +392,16 @@ void MapPoint::Replace(MapPointPtr pMP) {
   mpMap->EraseMapPoint(keepAlive);
 }
 
-bool MapPoint::isBad() {
+bool MapPoint::isBad(LocalMapLockSample* observation) {
   // Both published writes (SetBadFlag/Replace) hold mMutexFeatures. Position
   // reads/writes do not modify mbBad, so taking mMutexPos adds no protection.
-  unique_lock<mutex> lock(mMutexFeatures);
+  if (observation) {
+    observation->object_id = mnId; observation->object_frame_id = mnFirstFrame;
+  }
+  unique_lock<mutex> lock(mMutexFeatures, defer_lock);
+  LocalMapLockSpan span(observation);
+  lock.lock();
+  span.Acquired();
   return mbBad;
 }
 
