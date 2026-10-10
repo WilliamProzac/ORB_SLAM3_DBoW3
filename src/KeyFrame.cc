@@ -403,8 +403,9 @@ void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
   LocalMapLockSpan span(observation);
   lock.lock();
   span.Acquired();
+  if (counts) counts->slots += mvpMapPoints.size();
   for (const auto& slot : mvpMapPoints) {
-    if (counts) ++counts->slots;
+    if (counts) ++counts->visited_slots;
     const auto identity = slot.identity();
     // If retained, its address cannot be recycled. An expired stale slot with
     // the same address would yield null anyway. No unowned pointer is read.

@@ -108,6 +108,13 @@ struct KeyFrameDecisionRecord {
   std::uint64_t interrupt_request_ns = 0;
 };
 struct LocalPointGatherCounts {
+  // slots/null_identity keep their logical meaning in both implementations.
+  std::uint64_t visited_slots = 0, skipped_empty_slots = 0, bitmap_words = 0;
+  std::uint64_t bitmap_fallback_keyframes = 0, index_retained_bytes = 0;
+  // Cumulative writer counters summed over the currently visited KF set.
+  // These are set-dependent snapshots, not per-frame deltas or wall timings.
+  std::uint64_t index_updates_cumulative = 0, index_rebuilds_cumulative = 0;
+  std::uint64_t index_releases_cumulative = 0, index_alloc_failures_cumulative = 0;
   std::uint64_t slots = 0, null_identity = 0, hint_hits = 0;
   std::uint64_t hint_collisions = 0;
   std::uint64_t weak_locks = 0, expired = 0, frame_marked = 0, bad = 0;
