@@ -178,7 +178,7 @@ LocalPointSnapshot MapPoint::SnapshotLocalTracking() {
   result.geometry.normal = mNormalVector;
   result.geometry.min_distance = mfMinDistance;
   result.geometry.max_distance = mfMaxDistance;
-  result.valid = !mbBad && !mpReplaced && mDescriptor.type() == CV_8UC1 &&
+  result.valid = !mbBad.load(std::memory_order_relaxed) && !mpReplaced && mDescriptor.type() == CV_8UC1 &&
                  mDescriptor.rows == 1 && mDescriptor.cols == 32;
   if (result.valid)
     std::copy_n(mDescriptor.ptr<unsigned char>(), 32, result.descriptor.begin());
@@ -290,7 +290,7 @@ void MapPoint::SetBadFlag(LocalPointExit reason, unsigned long cull_key) {
   {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
-    if (mbBad) return;
+    if (mbBad.load(std::memory_order_relaxed)) return;
     if(LocalLifetime::Enabled()) {
       static const char* names[]={"retire_other","retire_found_ratio","retire_low_observation_age",
                                   "retire_observation_removal","retire_reset"};
@@ -299,10 +299,11 @@ void MapPoint::SetBadFlag(LocalPointExit reason, unsigned long cull_key) {
                          int64_t(cull_key-static_cast<unsigned long>(mnFirstKFid)):-1;
       LocalLifetime::Event(mpMap,names[static_cast<unsigned>(reason)],mnId,cull_key,age,nObs);
     }
-    mMemoryLifetime.Retire();
-    mbBad = true;
+    // Copy may allocate: complete it before committing retirement.
     obs = mObservations;
+    mMemoryLifetime.Retire();
     mObservations.clear();
+    mbBad.store(true, std::memory_order_release);
   }
   for (map<KeyFrame *, tuple<int, int>>::iterator mit = obs.begin(),
                                                   mend = obs.end();
@@ -347,15 +348,16 @@ void MapPoint::Replace(MapPointPtr pMP) {
   {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
-    if (mbBad) return;
+    if (mbBad.load(std::memory_order_relaxed)) return;
     obs = mObservations;
     mObservations.clear();
     mMemoryLifetime.Retire();
-    mbBad = true;
     nvisible = mnVisible;
     nfound = mnFound;
     mpReplaced = pMP;
     if(LocalLifetime::Enabled()) LocalLifetime::Event(mpMap,"mp_replace",mnId,0,pMP->mnId);
+    // Publish the local transition after its replacement edge is installed.
+    mbBad.store(true, std::memory_order_release);
   }
 
   for (map<KeyFrame *, tuple<int, int>>::iterator mit = obs.begin(),
@@ -393,16 +395,16 @@ void MapPoint::Replace(MapPointPtr pMP) {
 }
 
 bool MapPoint::isBad(LocalMapLockSample* observation) {
-  // Both published writes (SetBadFlag/Replace) hold mMutexFeatures. Position
-  // reads/writes do not modify mbBad, so taking mMutexPos adds no protection.
+  // No feature lock is acquired. Do not manufacture lock timing endpoints
+  // for legacy optional diagnostics; the query has no mutex interval.
   if (observation) {
-    observation->object_id = mnId; observation->object_frame_id = mnFirstFrame;
+    const auto ordinal = observation->call_ordinal;
+    *observation = LocalMapLockSample{};
+    observation->call_ordinal = ordinal;
+    observation->object_id = mnId;
+    observation->object_frame_id = mnFirstFrame;
   }
-  unique_lock<mutex> lock(mMutexFeatures, defer_lock);
-  LocalMapLockSpan span(observation);
-  lock.lock();
-  span.Acquired();
-  return mbBad;
+  return mbBad.load(std::memory_order_acquire);
 }
 
 void MapPoint::IncreaseVisible(int n) {
@@ -435,7 +437,7 @@ void MapPoint::ComputeDistinctiveDescriptors() {
     unique_lock<mutex> lock1(mMutexFeatures);
     wait.Stop();
     RgbdMeasurementSpan held(detail, MedoidPhase::SnapshotLockHeld);
-    if (mbBad) {
+    if (mbBad.load(std::memory_order_relaxed)) {
       if (timing) ++timing->bad_map_points;
       return;
     }
@@ -527,7 +529,7 @@ void MapPoint::UpdateNormalAndDepth() {
   {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
-    if (mbBad)
+    if (mbBad.load(std::memory_order_relaxed))
       return;
     observations = mObservations;
     pRefKF = mpRefKF;

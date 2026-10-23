@@ -635,7 +635,7 @@ namespace ORB_SLAM3
             try
             {
                 if (mCollectLight) ++observation.tasks;
-                mLevelTask(taskIndex);
+                mLevelTask(taskIndex, workerSlot);
             }
             catch (...)
             {
@@ -674,7 +674,7 @@ namespace ORB_SLAM3
     }
 
     void ORBextractor::RunLevelTasks(
-        int taskCount, const std::function<void(int)> &task)
+        int taskCount, const std::function<void(int, int)> &task)
     {
         const unsigned batch = mObservationBatch++;
         mLastBatchHelperCpu = 0.0;
@@ -684,7 +684,7 @@ namespace ORB_SLAM3
             for (int i = 0; i < taskCount; ++i)
             {
                 if (mCollectLight) ++mWorkerTiming[0].tasks;
-                task(i);
+                task(i, 0);
             }
             return;
         }
@@ -1094,6 +1094,17 @@ namespace ORB_SLAM3
             }
         }
 
+        FinishKeyPointsOctTreeLevel(level, vToDistributeKeys, keypoints, timing);
+    }
+
+    void ORBextractor::FinishKeyPointsOctTreeLevel(
+        int level, const vector<KeyPoint> &vToDistributeKeys,
+        vector<KeyPoint> &keypoints, LevelTiming &timing)
+    {
+        const int minBorderX = EDGE_THRESHOLD-3;
+        const int minBorderY = minBorderX;
+        const int maxBorderX = mvImagePyramid[level].cols-EDGE_THRESHOLD+3;
+        const int maxBorderY = mvImagePyramid[level].rows-EDGE_THRESHOLD+3;
         timing.candidate_count =
             static_cast<std::uint32_t>(vToDistributeKeys.size());
         const OrbStageClock octreeStart(mCollectDetail, mCollectDetail);
@@ -1119,13 +1130,150 @@ namespace ORB_SLAM3
         }
     }
 
+    void ORBextractor::PrepareFastRowTasks(const Size &imageSize)
+    {
+        if (mFastWorkspaceImageSize == imageSize)
+            return;
+        // Keep a failed allocation retryable, including a later size change back.
+        mFastWorkspaceImageSize = Size();
+        mUseFastRows = false;
+        int totalRows = 0;
+        for (int level = 0; level < nlevels; ++level)
+        {
+            FastLevelWorkspace &grid = mFastLevels[level];
+            const int minBorder = EDGE_THRESHOLD-3;
+            grid.max_border_x = mvImagePyramid[level].cols-EDGE_THRESHOLD+3;
+            grid.max_border_y = mvImagePyramid[level].rows-EDGE_THRESHOLD+3;
+            const float width = grid.max_border_x-minBorder;
+            const float height = grid.max_border_y-minBorder;
+            const float W = 35;
+            grid.col_count = width/W;
+            grid.row_count = height/W;
+            if (grid.col_count <= 0 || grid.row_count <= 0)
+                return; // Retain the original path for its existing size domain.
+            grid.cell_width = ceil(width/grid.col_count);
+            grid.cell_height = ceil(height/grid.row_count);
+            grid.first_row = totalRows;
+            totalRows += grid.row_count;
+        }
+        mFastRows.resize(totalRows);
+        for (int level = 0; level < nlevels; ++level)
+        {
+            const FastLevelWorkspace &grid = mFastLevels[level];
+            for (int row = 0; row < grid.row_count; ++row)
+            {
+                FastRowWorkspace &workspace = mFastRows[grid.first_row+row];
+                workspace.level = level;
+                workspace.row = row;
+                workspace.cells.resize(grid.col_count);
+            }
+        }
+        mFastWorkspaceImageSize = imageSize;
+        mUseFastRows = true;
+    }
+
+    void ORBextractor::ComputeFastRow(
+        int taskIndex, int workerSlot, vector<vector<KeyPoint>> &allKeypoints)
+    {
+        FastGridWorkspace &fastWorkspace = mFastKernelWorkspaces[workerSlot];
+        FastRowWorkspace &row = mFastRows[taskIndex];
+        const int level = row.level;
+        const FastLevelWorkspace &grid = mFastLevels[level];
+        row.timing = LevelTiming();
+        row.initial_cpu_ms = row.fallback_cpu_ms = 0.0;
+        const int minBorder = EDGE_THRESHOLD-3;
+        const float iniY = minBorder+row.row*grid.cell_height;
+        float maxY = iniY+grid.cell_height+6;
+        if (maxY > grid.max_border_y)
+            maxY = grid.max_border_y;
+        for (int j = 0; j < grid.col_count; ++j)
+        {
+            vector<KeyPoint> &cellKeys = row.cells[j];
+            cellKeys.clear();
+            if (iniY >= grid.max_border_y-3)
+                continue;
+            const float iniX = minBorder+j*grid.cell_width;
+            float maxX = iniX+grid.cell_width+6;
+            if (iniX >= grid.max_border_x-6)
+                continue;
+            if (maxX > grid.max_border_x)
+                maxX = grid.max_border_x;
+            const Mat cellImage =
+                mvImagePyramid[level].rowRange(iniY,maxY).colRange(iniX,maxX);
+            const OrbStageClock fastStart(mCollectDetail, mCollectDetail);
+            FastGridDetect(cellImage, cellKeys, iniThFAST, true, fastWorkspace);
+            fastStart.FinishDetail(row.timing.fast_initial_ms, row.initial_cpu_ms);
+            if (cellKeys.empty())
+            {
+                ++row.timing.fallback_cells;
+                const OrbStageClock fallbackStart(mCollectDetail, mCollectDetail);
+                FastGridDetect(cellImage, cellKeys, minThFAST, true, fastWorkspace);
+                fallbackStart.FinishDetail(row.timing.fast_fallback_ms,
+                                           row.fallback_cpu_ms);
+            }
+        }
+        // Every row publishes its exclusive cells/timing before decrementing.
+        // The final acq_rel RMW acquires the preceding release sequence, so it
+        // alone can read/merge all rows and run the unchanged level octree.
+        if (mFastRowsRemaining[level].fetch_sub(1, std::memory_order_acq_rel) != 1)
+            return;
+        vector<KeyPoint> &candidates = mCandidateKeypoints[level];
+        candidates.clear();
+        LevelTiming &timing = mLastStageTiming.levels[level];
+        timing = LevelTiming();
+        auto &levelCpu = mLastStageTiming.observation.level_cpu_ms[level];
+        const OrbStageClock mergeStart(mCollectDetail, mCollectDetail);
+        for (int i = 0; i < grid.row_count; ++i)
+        {
+            const FastRowWorkspace &sourceRow = mFastRows[grid.first_row+i];
+            timing.fast_initial_ms += sourceRow.timing.fast_initial_ms;
+            timing.fast_fallback_ms += sourceRow.timing.fast_fallback_ms;
+            timing.fallback_cells += sourceRow.timing.fallback_cells;
+            if (mCollectDetail)
+            {
+                AddCpu(levelCpu[static_cast<unsigned>(OrbLevelObservationStage::FastInitial)],
+                       sourceRow.initial_cpu_ms);
+                AddCpu(levelCpu[static_cast<unsigned>(OrbLevelObservationStage::FastFallback)],
+                       sourceRow.fallback_cpu_ms);
+            }
+            for (int j = 0; j < grid.col_count; ++j)
+                for (const KeyPoint &cellKey : sourceRow.cells[j])
+                {
+                    KeyPoint key = cellKey;
+                    key.pt.x += j*grid.cell_width;
+                    key.pt.y += i*grid.cell_height;
+                    candidates.push_back(key);
+                }
+        }
+        mergeStart.FinishDetail(timing.merge_ms, timing.merge_cpu_ms);
+        FinishKeyPointsOctTreeLevel(level, candidates, allKeypoints[level], timing);
+    }
+
     void ORBextractor::ComputeKeyPointsOctTree(
         vector<vector<KeyPoint> >& allKeypoints)
     {
         allKeypoints.resize(nlevels);
-        RunLevelTasks(nlevels, [&](int level) {
-            ComputeKeyPointsOctTreeLevel(
-                level, allKeypoints[level], mLastStageTiming.levels[level]);
+#ifdef ORB_SLAM3_ORB_LEGACY_REFERENCE
+        const bool useRows = false;
+#else
+        const bool useRows = mUseFastRows;
+#endif
+        if (!useRows)
+        {
+            RunLevelTasks(nlevels, [&](int level, int) {
+                ComputeKeyPointsOctTreeLevel(
+                    level, allKeypoints[level], mLastStageTiming.levels[level]);
+            });
+            return;
+        }
+        for (int level = 0; level < nlevels; ++level)
+            mFastRowsRemaining[level].store(mFastLevels[level].row_count,
+                                             std::memory_order_relaxed);
+        // The existing dispatch barrier also waits for each last-row octree.
+        // A throwing FAST row never decrements: its level is not finalized, and
+        // RunLevelTasks waits for all helpers before propagating the exception.
+        RunLevelTasks(static_cast<int>(mFastRows.size()), [&](int taskIndex, int workerSlot) {
+            ComputeFastRow(taskIndex, workerSlot, allKeypoints);
         });
     }
 
@@ -1356,7 +1504,7 @@ namespace ORB_SLAM3
         //ComputeKeyPointsOld(allKeypoints);
 
         const OrbStageClock orientation_start(mCollectLight || mCollectDetail, mCollectLight);
-        RunLevelTasks(nlevels, [&](int level) {
+        RunLevelTasks(nlevels, [&](int level, int) {
             const OrbStageClock levelStart(mCollectDetail, mCollectDetail);
             computeOrientation(mvImagePyramid[level], mAllKeypoints[level], umax);
             levelStart.FinishDetail(mLastStageTiming.levels[level].orientation_ms,
@@ -1433,7 +1581,7 @@ namespace ORB_SLAM3
             OrbObservationStage::Blur, 0.0);
 
         const OrbStageClock descriptorStart(mCollectLight || mCollectDetail, mCollectLight);
-        RunLevelTasks(nlevels, [&](int level) {
+        RunLevelTasks(nlevels, [&](int level, int) {
             vector<KeyPoint>& keypoints = mAllKeypoints[level];
             if(keypoints.empty())
             {
@@ -1543,6 +1691,7 @@ namespace ORB_SLAM3
                static_cast<std::size_t>(nfeatures*10))
                 mCandidateKeypoints[level].reserve(nfeatures*10);
         }
+        PrepareFastRowTasks(image.size());
     }
 
     void ORBextractor::ComputePyramid(cv::Mat image)

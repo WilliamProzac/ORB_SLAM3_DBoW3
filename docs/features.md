@@ -1,3 +1,11 @@
+# RGBD27 source publication — 2026-10-23
+
+This isolated publication checkout records RGBD27: publish the
+RGBD25 atomic_02 core and matching ROS1 workspace to a separate GitHub research
+branch. Source verification is python3 -B runtime/rgbd/verify_source.py.
+This is publication qualification; historical runtime acceptance below remains
+unchanged. See [runtime results](../runtime/rgbd/VALIDATION.md).
+
 # Feature List
 
 Valid states: `not_started`, `active`, `blocked`, `passing`.
@@ -36,6 +44,7 @@ Imported runtime experiments use RD26–RD35. Their historical scripts and artif
 
 | ID | Lane | Behavior | Verification | State | Evidence |
 |---|---|---|---|---|---|
+| RGBD27 | core / publication | Package the validated RGBD25 atomic source and matching ROS workspace on a research branch. | runtime/rgbd/verify_source.py, exact compile-input bindings, host catkin build and actual-DSO method probes. | passing | 2026-10-23 source packaging passed: 130 published files/116 original ARM inputs, final independent398 checks, host41+2 compile units plus2 probes, MapPoint11 contract cases and geometry4411 cases. Runtime acceptance remains limited as documented in runtime/rgbd/VALIDATION.md. GitHub push identity is recorded by the publication session. |
 | F01 | core | ORB-SLAM3 DBoW3 core build completes from repo root. | `./build.sh` | not_started | TODO |
 | F02 | ros | ROS package builds through the checked-in wrapper. | `./build_ros.sh` | passing | Verified on 2026-05-25 with `./build_ros.sh`. rosbuild regenerated `ORB_SLAM3/RelocalizationStatus` and linked `Stereo`, `RGBD`, `Mono`, `Mono_Inertial`, and `Stereo_Inertial` successfully. |
 | F03 | ros | The runtime wrapper starts a stereo-inertial mapping session from repo root and produces the expected side outputs for logs, resource monitoring, and bag recording. | `./run_stereo_inertial.sh mapping stereo_inertial --log` | not_started | TODO |

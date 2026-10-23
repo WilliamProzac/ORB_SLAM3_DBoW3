@@ -1,3 +1,4 @@
+#include "MapScaleObservation.h"
 /**
  * This file is part of ORB-SLAM3
  *
@@ -25,6 +26,7 @@
 #include "Converter.h"
 #include "ImuTypes.h"
 #include <mutex>
+#include <utility>
 
 namespace ORB_SLAM3 {
 namespace {
@@ -242,17 +244,24 @@ void KeyFrame::UpdateBestCovisibles() {
     vPairs.push_back(make_pair(mit->second, mit->first));
 
   sort(vPairs.begin(), vPairs.end());
-  list<KeyFrame *> lKFs;
-  list<int> lWs;
+  size_t accepted = 0;
   for (size_t i = 0, iend = vPairs.size(); i < iend; i++) {
-    if (!vPairs[i].second->isBad()) {
-      lKFs.push_front(vPairs[i].second);
-      lWs.push_front(vPairs[i].first);
-    }
+    const pair<int, KeyFrame *> connection = vPairs[i];
+    if (!connection.second->isBad())
+      vPairs[accepted++] = connection;
   }
 
-  mvpOrderedConnectedKeyFrames = vector<KeyFrame *>(lKFs.begin(), lKFs.end());
-  mvOrderedWeights = vector<int>(lWs.begin(), lWs.end());
+  vector<KeyFrame *> orderedKeyFrames;
+  orderedKeyFrames.reserve(accepted);
+  for (size_t i = accepted; i > 0; --i)
+    orderedKeyFrames.push_back(vPairs[i - 1].second);
+  mvpOrderedConnectedKeyFrames = std::move(orderedKeyFrames);
+
+  vector<int> orderedWeights;
+  orderedWeights.reserve(accepted);
+  for (size_t i = accepted; i > 0; --i)
+    orderedWeights.push_back(vPairs[i - 1].first);
+  mvOrderedWeights = std::move(orderedWeights);
 }
 
 set<KeyFrame *> KeyFrame::GetConnectedKeyFrames() {
@@ -403,8 +412,11 @@ void KeyFrame::AppendLocalMapPoints(unsigned long frame_id,
   LocalMapLockSpan span(observation);
   lock.lock();
   span.Acquired();
+  auto* scale = ActiveMapScaleObservation();
+  if (scale) scale->gather_slots += mvpMapPoints.size();
   if (counts) counts->slots += mvpMapPoints.size();
   for (const auto& slot : mvpMapPoints) {
+    if (scale) ++scale->visited_slots;
     if (counts) ++counts->visited_slots;
     const auto identity = slot.identity();
     // If retained, its address cannot be recycled. An expired stale slot with
@@ -743,7 +755,7 @@ void KeyFrame::SetBadFlag() {
       mTcp = mTcw * mpParent->GetPoseInverse();
     }
     mMemoryLifetime.Retire();
-    mbBad = true;
+    mbBad.store(true, std::memory_order_release);
   }
 
   mpMap->EraseKeyFrame(this);
@@ -754,12 +766,16 @@ bool KeyFrame::isBad(LocalMapLockSample* observation) {
   if (observation) {
     observation->object_id = mnId; observation->object_frame_id = mnFrameId;
     observation->object_timestamp = mTimeStamp;
+    // No connections lock is requested by this candidate. Preserve the old
+    // optional interface, but explicitly invalidate its lock measurement;
+    // zero endpoints with NotCollected must not be reported as a fast lock.
+    observation->site = LocalMapLockSite::NotCollected;
+    observation->clock_failures = 0;
+    observation->request_ns = 0;
+    observation->acquired_ns = 0;
+    observation->before_unlock_ns = 0;
   }
-  unique_lock<mutex> lock(mMutexConnections, defer_lock);
-  LocalMapLockSpan span(observation);
-  lock.lock();
-  span.Acquired();
-  return mbBad;
+  return mbBad.load(std::memory_order_acquire);
 }
 
 void KeyFrame::EraseConnection(KeyFrame *pKF) {

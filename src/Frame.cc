@@ -1,3 +1,4 @@
+#include "MapScaleObservation.h"
 /**
 * This file is part of ORB-SLAM3
 *
@@ -297,7 +298,10 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
         observationContext.provided && observationContext.detail_window);
     const std::chrono::steady_clock::time_point time_StartExtORB =
         std::chrono::steady_clock::now();
-    ExtractORB(0,imGray,0,0);
+    {
+      MapScaleSpan scale_orb(MapScaleStage::Orb);
+      ExtractORB(0,imGray,0,0);
+    }
     mTimeRgbdOrbExtract =
         std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
             std::chrono::steady_clock::now() - time_StartExtORB)

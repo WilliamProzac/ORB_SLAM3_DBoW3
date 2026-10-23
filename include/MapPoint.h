@@ -34,6 +34,7 @@
 #include "MemoryStats.h"
 
 #include <mutex>
+#include <atomic>
 #include <opencv2/core/core.hpp>
 
 #include <boost/serialization/array.hpp>
@@ -101,8 +102,14 @@ class MapPoint : public std::enable_shared_from_this<MapPoint> {
     // ar & mnVisible;
     // ar & mnFound;
 
-    ar & mbBad;
-    if (Archive::is_loading::value && mbBad) mMemoryLifetime.Retire();
+    // Keep the existing bool archive field and its exact position. Loading
+    // occurs before the restored object is published to runtime threads.
+    bool bad = mbBad.load(std::memory_order_acquire);
+    ar & bad;
+    if (Archive::is_loading::value) {
+      mbBad.store(bad, std::memory_order_release);
+      if (bad) mMemoryLifetime.Retire();
+    }
     ar & mBackupReplacedId;
 
     ar & mfMinDistance;
@@ -251,8 +258,8 @@ protected:
   unsigned long mnLocalAssociationFrame = 0;
   bool mbLocalAssociationKnown = false;
 
-  // Bad flag (we do not currently erase MapPoint from memory)
-  bool mbBad;
+  // Published retirement state; ownership still protects object lifetime.
+  std::atomic<bool> mbBad;
   MapPointPtr mpReplaced;
   // For save relation without pointer, this is necessary for save/load function
   long long int mBackupReplacedId;

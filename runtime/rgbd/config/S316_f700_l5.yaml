@@ -1,0 +1,46 @@
+%YAML:1.0
+
+File.version: "1.0"
+Camera.type: "Rectified"
+Camera1.fx: 288.13
+Camera1.fy: 288.13
+Camera1.cx: 312.32
+Camera1.cy: 264.73
+Camera.width: 640
+Camera.height: 544
+Camera.fps: 11
+Camera.RGB: 1
+Stereo.b: 0.0604567
+Stereo.ThDepth: 40.0
+RGBD.DepthMapFactor: 1.0
+ORBextractor.nFeatures: 700
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 5
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+ORBextractor.parallelWorkers: 3
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0
+
+RGBD.ExactOptimizationLevel: 4
+
+RGBD.LocalMapMode: "off"
+RGBD.LocalMapKFs: 80
+RGBD.LocalMapLog: "localmap.csv"
+
+RGBD.LocalMapAdaptive: 0
+
+RGBD.LocalMapKFStrategy: "votes"
+RGBD.LocalMapDiagnostics: 0
+RGBD.LocalMapMPs: 0
+RGBD.LocalMapStatistics: "legacy"
+RGBD.LocalMapReserveYoung: 0
+RGBD.LocalMapSelectionLog: "selection.csv"

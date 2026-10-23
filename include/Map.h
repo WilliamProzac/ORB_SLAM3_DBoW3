@@ -87,6 +87,9 @@ public:
   std::vector<MapPointPtr > GetAllMapPoints();
   std::vector<MapPointPtr > GetReferenceMapPoints();
 
+  // O(1), coherent sizes only: no graph traversal or owning snapshot.
+  void GetScaleObservationCounts(long unsigned int& keyframes,
+                                 long unsigned int& points);
   long unsigned int MapPointsInMap();
   long unsigned KeyFramesInMap();
 

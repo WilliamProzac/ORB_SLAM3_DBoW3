@@ -1,0 +1,821 @@
+{
+  "schema": 1,
+  "candidate": "RGBD25 atomic_02",
+  "source_date": "2026-10-20",
+  "publication_date": "2026-10-23",
+  "core_parent": "5ea9afb683224d2245ce31455c41187f54c67b42",
+  "matching_ros_parent": "2dc402ce0c08d0658eba508f87436ecf7da69c33",
+  "candidate_composition": [
+    "covisibility container optimization",
+    "KeyFrame atomic bad-state query",
+    "ORB row parallelism and FAST workspace reuse",
+    "MapPoint atomic bad-state query"
+  ],
+  "excluded_candidates": [
+    "ordinary-RGBD merged-geometry snapshot",
+    "geometry plus MapPoint atomic combination"
+  ],
+  "tested_source_ready_sha256": "7ba026629ec3d2b16a677f4b14738d07500950e37af34202db633e37cd8d352d",
+  "tested_arm_core_sha256": "471f66f76f683c0ef22eb8e151b0efb056ef49615a887ac9158474937b95b6f4",
+  "tested_arm_node_sha256": "20a17635abf62bde699f83b6ca832324094986bdd9d1a2c53df28e4ef75981c4",
+  "original_native_cases": 168,
+  "original_geometry_static_cases_per_variant": 4411,
+  "compiled_inputs_sha256": {
+    "src/Atlas.cc": "3dc1a89288d937f176ca7c5d41acc9dfdf9098d086d8dd3df9972ae0cb076e2e",
+    "src/Config.cc": "8a9e6982af8a365b22a4beb0d97116989df292abdc66e97fd12275b498d0abbb",
+    "src/Converter.cc": "9f5b2dccf715b3c4c955c7cff63fb7ef0bf2bb014e766260ce7ec26d04f5290e",
+    "src/FastGridKernel.cc": "917b83363795ea37f250798f5d75fedd0a7f28b18952d17f8497aa9cb12dc23b",
+    "src/FeatureDescriptor.cc": "11661cdc9e54392e812ca4fa7dc0fd84d587a3dbf17bcba19d118b1011f333b6",
+    "src/Frame.cc": "9e52d6e95ca6f01f5d4c6c22f979911b58bc7f0ecf5d4b96b4981ce9ced101b8",
+    "src/FrameDrawer.cc": "210f7229d9784bc5735788f86a70c64e609896dd14f5ceb0b1092af88717d3bf",
+    "src/G2oTypes.cc": "0a96d5600440601ce9c8dcdedfa8c63c80b2285fbca6c81db3d983180ff34252",
+    "src/GeometricTools.cc": "7bbd9e2b379665e1e1951de05786c156dc2d4f80efa090b8d203e97e16e09d2b",
+    "src/ImuTypes.cc": "d33f157fea6efeefa5ba5ce43ee110e971ff08087f212de6a9fee1ea72dd3762",
+    "src/KeyFrame.cc": "dd1af14a9bded4dcd9113602e3eded95ba75cc8abe832c80676a1777f8ae2da0",
+    "src/KeyFrameDatabase.cc": "c4f07a5d07c0544f984e3a836cef76a70aae17f53027de354ecacd2d3caec1bd",
+    "src/LocalMapBudget.cc": "3300beeca7f2db49b741302cfebae2160785bdedae8026f851d8b06f4d517fc4",
+    "src/LocalMapDiagnostics.cc": "4e787e5fd030a0bae73ac604104ad92df2dd47c012801d10803bada6c0149bf3",
+    "src/LocalMapEvents.cc": "57f487e06e3f6ccd8e5842da0488888e45aa7f76c74a8b86d9f54d8db99e74c7",
+    "src/LocalMapLifetime.cc": "190b045d34653095e4947b9ac5f5d8aa4bbb10d3d9b0a27d966228e8eb1485ce",
+    "src/LocalMapPointBudget.cc": "c1b636b3bde2e35cb3766ff4a31eee0e006501db941030663c67bdd8adb6a6bc",
+    "src/LocalMapping.cc": "e1722212c8696d382a5881cd7fa5ddf202c75e061a601ba0d2479387ef7c5fce",
+    "src/LocalTrackingAttempt.cc": "d10db1126bdbce7b9ebc5becf1ad6e47c0b136374fcf59ffb034b64694ee71ce",
+    "src/LoopClosing.cc": "17e4940d28583ca1c3606e7785bf352540605ddee27bf2372cd1170dae9998da",
+    "src/Map.cc": "87b81ffe0f9496954223b14f661857cd99df24fe7d14e5c940d1a9dd16e2f453",
+    "src/MapDrawer.cc": "e70f3857d0a40491a9db0cd207c012f48c40544527fb42c019c61f3d6f82e0da",
+    "src/MapPoint.cc": "4ca1bbb3387ebf7da588e6da5b47b8b8b1ad18e70618424834b33a5f4836b910",
+    "src/MapScaleObservation.cc": "113dbe3a1acb6081ddfc03b5a866205987232b2cce42400cb27c50f5b5df7418",
+    "src/MemoryStats.cc": "1f5170af96a9df19775537bca1574826ce73b09d813a87aae94cd9303376b8df",
+    "src/ORBextractor.cc": "c31bd3a819a71d1dd3b0cf45c0a62cbf3e6dcc1097a1a4be17108f1568183196",
+    "src/ORBmatcher.cc": "f864e2dd26caa4026e737ea51d781acb1cf87705a0a09b819c3907aef09a8fe8",
+    "src/Optimizer.cc": "033abd4044a1a0d23b76f6b9f9b06ef4dfb05c4e6e5e9f858205289d19b35498",
+    "src/Settings.cc": "ab6dd501c217aae5ec5e35a844663403745ec2f9e98722b070be18559d376b82",
+    "src/Sim3Solver.cc": "0a8ed064b7f4125b16eae05c84a5b282a87e949916a9441a98bc8d2cd6686731",
+    "src/System.cc": "fefe0ac8310be722a0edf27136b81b44b5025d091386d5129bffff64ff6c48c7",
+    "src/Tracking.cc": "d1d3c5c03520c6820511bfdebeb8afb6daa239408215d22c7ccea8c0f891f0bf",
+    "src/TrackingLocalMap.cc": "d4e747a58a672624b270bdea61c78a76e1d97c945cf17f1ce7c496ee00a8827e",
+    "src/TwoViewReconstruction.cc": "a49af94656878fd556cd03c283644f490511a14aeacdf98861a1f83e719a7e4f",
+    "src/Viewer.cc": "a6a15d3055654dc44db5209f2ae0cff4daa670508a42ab9dc623c46b197e2388",
+    "src/MLPnPsolver.cpp": "706a8e8ed181b79f1fc50aac669197a156d8f2871d42d9df76fcb8d92464b80b",
+    "src/OptimizableTypes.cpp": "7ef517d975a99a657b892d6582f68b46cf96436edde14114b706fd3d5d3c13c7",
+    "src/Random.cpp": "7c7e5f675e7b13bb8769f0fc0292a30e34d577179254ac1954ca8c8f610078ec",
+    "src/Timestamp.cpp": "886a1d8c20e196602a78a12c8664d524a2822652e8dbd9197393f9770d646f3a",
+    "src/CameraModels/KannalaBrandt8.cpp": "e73819dc9326325adaf1e3c1b26ec0100b5d9788a399cd23208caedaf8ec0e81",
+    "src/CameraModels/Pinhole.cpp": "9862467de077ffcf49a0aa70fc68dcd3ffa5ea9310c3645574c97aecee981850",
+    "include/Atlas.h": "8f3a1476610f47bb337344a415276148aec1df402e6d2d01e7b6791b25236b2a",
+    "include/CameraModels/GeometricCamera.h": "0d19c3f1299fc162959a720a24da1f97b7c110ed687e6237c2e5c070070d7d89",
+    "include/CameraModels/KannalaBrandt8.h": "99429f3cd47fcff65052edb2d925e8a36b4e53d0920f9d73aefdbb9868ce0b23",
+    "include/CameraModels/Pinhole.h": "380e4f8204b32fb725fc3f8fb2b6196d574f72609ef4fbe7de6da11ed2c2266b",
+    "include/Config.h": "5e491daf93006f08317d9ee508de2972378062045ec7243d1ca4197836c68340",
+    "include/Converter.h": "8e298357241ab523a4f2c4bc774d4cb0ea840b1cdb09938c3eaa629476007942",
+    "include/DBoW3Serialization.h": "38146d5793076c755a9a576bd30ce0e7e3a1e4da81690c9d3daf27671cded627",
+    "include/FastGridKernel.h": "ee9a42b28a971c30ec4688558c180ba27997a123bda60b8d465e47f2d5076e54",
+    "include/FeatureDescriptor.h": "8ab4d464ead2f93c46e0a8baeb2f64b7f7c19325cf71fa633b5941dcd0fb7fc3",
+    "include/FieldObservation.h": "9ae80e5ed021ef6752512b477cf8d426ff45ccbcc3026fc36f9ef81efdebe4fe",
+    "include/Frame.h": "12bcd302d64d155eb7cc327acd95e7488a560e6f31d03861a7a555de55d6fbe3",
+    "include/FrameDrawer.h": "b6dfd5f44ed86d73316b5eba2065661061e7d99f9a13f3e387ccfcff50e53e42",
+    "include/G2oTypes.h": "d95980e1bd59dae116ca091862be7e16ec5ef84b38a310e3a707c4048a2a9133",
+    "include/GeometricTools.h": "c4a300089ffd0e3c8c45b2d66b093b9aa116a7a7c503e0e477d7a9f11ca25313",
+    "include/ImuParameterValidation.h": "6ca0cce9d265cb5432b731b2884801a4bb3a7460db4792785736a0d92ae1d3da",
+    "include/ImuTypes.h": "a8fbe7bdb9925c52cebc4ea6f91bd48686a8d12666995cbe84c796aca6140fc4",
+    "include/JoinableTask.h": "993c579288eaf0e9648999a01505e5f2228b08d57488f484a7c524966c0026bd",
+    "include/KeyFrame.h": "6838cc7d717157694dff8110de4d6d64b0281617fe8f6449f3a1ae22cb29088f",
+    "include/KeyFrameDatabase.h": "66b767475e3e36a421c0e203186616e841897dbbc6a484694991d02688eb3f14",
+    "include/LocalMapBudget.h": "8a17ea6817eff92d2c9cad32df13e41045ef8fb171472938865d6c6fdd9f4d42",
+    "include/LocalMapController.h": "7f6a574f99600028a961e8f5f70c480fb9a41ec6023f218b058066612350e470",
+    "include/LocalMapDiagnostics.h": "d1336c0c008e2c7dc6cf4cb7db858e4fd83fa59086f64b233393ca769bdaea2e",
+    "include/LocalMapEvents.h": "f3a2182a457180639ab3549865d007eff63277b600536616aae1db6eb037bbb4",
+    "include/LocalMapGrid.h": "940ae61d47c73abfa1ccf09f78747b063850627531f377cff8c0db5419bb0880",
+    "include/LocalMapLifetime.h": "937230b6fea4a984a9359b1401501e38382fab5be0fca976099f6857ac8a07ed",
+    "include/LocalMapPointBudget.h": "1e0e3df715cfe7264a148272ec6330a11c31ae874a3d815db8c4c3297bf2d0e5",
+    "include/LocalMapProjection.h": "ae994f3cde80f791127804cc137af68bc08be6c7a18969ed74a48316833fa7d6",
+    "include/LocalMapTiming.h": "4ca8d4732aaff0428d471139c703139ffb451e1a230d4e8650774390148dafaf",
+    "include/LocalMapping.h": "b1f9eadf0b50cf96ee438ebb0d9312cd50e5a09af3ae61502660de767a08ccb3",
+    "include/LocalMappingCancellation.h": "9aa8c33254d079cc8f607c6ecc13345812226966755a55eaa82c5d543795dc0b",
+    "include/LocalTrackingAttempt.h": "8bbb0a904431caac323b8c38b0751bb1557eb1d51e8b3757ca29e304ed22940b",
+    "include/LocalTrackingIdentity.h": "08aec52c47594aca555b978a485f699642c23f159c23dd0b5751cf18646d8253",
+    "include/LoopClosing.h": "91c6ce560de0db931816e41a362579ebe124ea59086377a5a432e2db7fd362b2",
+    "include/LoopLifecycle.h": "2d631e91ff344a8a1cf9c36a2f32481501c4885ba95c8a3a003e4a128df093b0",
+    "include/MLPnPsolver.h": "8753c231e5f0c973651b5240d0fddfb44876a70cdf2ee57ba51eec462a52a516",
+    "include/Map.h": "f1c96038b0fb65d78ecb5a9330809162c1285a85c16661f3ebe5ab73e391a32c",
+    "include/MapDrawer.h": "28b97f206d77d95ec524c745e0af212ed5ad92d3869cf3c93494acbc5b0ad869",
+    "include/MapPoint.h": "bc97b547b3f380bf6bc3cdc7699c3a632a437b88de34f659d031311bcf3948f4",
+    "include/MapPointHandle.h": "a6cb0a05d9d28c186b4450ddc7ba2d372cd89132cbe3cb9d38de097fe1da1ec6",
+    "include/MapScaleObservation.h": "6caa74b8b1cd58f76a9f50321ee0e79a6159b1c2d47ef5665062b12305ccf139",
+    "include/MedoidTiming.h": "15dfe6ea68adf28506d36058bab02310a0b15458f19bb92dbfea34404b6d12f5",
+    "include/MemoryStats.h": "08c2a9419e76de6cf02f33e3b053b547206cd52c38e63755dffdeeffd1c5bc11",
+    "include/ORBVocabulary.h": "58b74f1a1613c115044e907fe2762ee03ecbd271a37f178457c9a7edab2df06b",
+    "include/ORBextractor.h": "f2da78a88b20f4f5d0c719a57e9bcdbd6183be8d7bc74a033d5648bc2a964526",
+    "include/ORBmatcher.h": "ea698bdac5ca18f4e6788c056d108d4e3eaf1ab96a29a9307bb5e42bc4c8cf4f",
+    "include/ObservationCapacity.h": "824c88a6ada47f840e79a346e6f779b9c8bffc6144f8410623b8c2e3ae9e6da6",
+    "include/OptimizableTypes.h": "3389f1fbcfa62621be49fe7d2e2fcd1c6018ed4668acadb3286fc1d8e0eb649c",
+    "include/Optimizer.h": "6a52d077fca91b69a9d47b82be3eb7c99b876b433e396c8065c4685185d56d93",
+    "include/OptimizerStopToken.h": "6ddd668b5f41bf828e088fca211200a3a04fcad4d14a27dbc19f3be66ecbab13",
+    "include/PointTrace.h": "dacc71170c98e7464dd785593533e3c65df79e479b15c62e3756cbc877376c23",
+    "include/Random.h": "b498dcfc320c2969ef31b7c22e662702b2c6582bbe0317e519d3d74ec4bfb3a2",
+    "include/RetainedPointCache.h": "71a5f4640d0036e2dece585f03addb466859e026b2bb9f78bfb22f2e35388373",
+    "include/RgbdTiming.h": "a30191ddf6b2ee81e904f89fb96848f0e7d77af2914197e5a8b8207447b8647b",
+    "include/SerializationUtils.h": "b8c39708654ccd5a694f82553d24ba914bb098317bdab9b27b2f97cf373cc528",
+    "include/Settings.h": "107a7a63438e906dedcb2afcb66a492d0d106ae20d71b3646d45bda1125d453d",
+    "include/Sim3Solver.h": "34b660f517ab7cdb96281d2af853f041c6506d22cf9d0d00fe48e3465e9fbe0d",
+    "include/StereoDepthProvider.h": "08c26265d86893b9e241c464d794982ed9831ba0fa56907a3f3253f0fac54fd6",
+    "include/StereoFeatureProvider.h": "b48150f4a24d1c8cf3cd33f294734bbca9c04b72742763b7ca09eb576f2197fd",
+    "include/System.h": "fbbcc8e06842bb1939ce3fb3d96a12102f9c6347e5fa005e3bb0fe771dbbed45",
+    "include/Timestamp.h": "b1cbdad7ca368c044ff1ce72ed8799e235bff2d99016b8f9733f70a36fb5f07a",
+    "include/Tracking.h": "eaf0bcf76ce45a98b3a58dc344716f368a9da87dff0ef22a3dc5f3b91eefb751",
+    "include/TwoViewReconstruction.h": "2df68f1268cfd2c2539ab0edfc7c8ff06c21e414ce483d26da7946596eb26e82",
+    "include/Viewer.h": "3d8898a9bb3da923652139bcfd6461d9ffcd318a227c19c506f3f013d7b024f5",
+    "include/WeakIdentitySlot.h": "45b13d27973c41c6e0ea7b9be09604384718d4c62127f8b29e2d0f5fa337e745",
+    "runtime/rgbd/src/orb_slam3_ros-master/include/PointCloudToOccupancyGridConverter.h": "fb5a01b000c64dba370b5b2cc40d48c97896156ea76bc36118625d9ed6056bd5",
+    "runtime/rgbd/src/orb_slam3_ros-master/include/RgbdV2Recorder.h": "32bbda9f887457021f916ea06738e0eb543c4c441a1f5f6ef7e82c584b74d2f9",
+    "runtime/rgbd/src/orb_slam3_ros-master/include/ScaleRgbdExperiment.h": "9eae2889e9a4aa98c210823a65ce84ea53859fc5de2b538c7286504122f6f01d",
+    "runtime/rgbd/src/orb_slam3_ros-master/include/common.h": "06d6172df19321e689865af460469172517e857da259dc537a458454ba24a6c3",
+    "runtime/rgbd/diagnostics/benchmark.h": "7d0810790463cfbbd9670fd3807d3ddcbcae63fcfd72842e3b2281cedfdbff7a",
+    "runtime/rgbd/diagnostics/camera_delivery/bridge.h": "4f70d0ac990877f195b0f92e0ddc7f7d8dd285d36c0e27a921b15f1c20f4bcf8",
+    "runtime/rgbd/diagnostics/camera_delivery/bus.h": "98842be82b12ea330236203329fe60c63d5a7614826484681fbd36258859f9b6",
+    "runtime/rgbd/diagnostics/recorder.h": "7a5f421c1c9b892b38701cb16b0629ee104b265b3db800fee437e44dd8d84b38",
+    "runtime/rgbd/memory/tools/rgbd_v2_timing_csv.h": "62a7911e1b5fcb958c070bb0ec5494ca531cc0c1d5f7261b68de6fb822a5c418",
+    "runtime/rgbd/src/orb_slam3_ros-master/src/ros_rgbd.cc": "0708c59732fbc31841420f0454ee4de366204e7812a379bf65a5479b1fb4473d",
+    "runtime/rgbd/src/orb_slam3_ros-master/src/common.cc": "bc5bdfeebe8832b458d2f8ceb9f6784f5bd4af1eb58d517ae7da2ddee48f3d95"
+  },
+  "published_files": {
+    "CMakeLists.txt": {
+      "sha256": "265ea5a4872ef50d0b0e695ee539b88acaa2295a0eda54609a535380c7f0ea9e",
+      "original_sha256": "265ea5a4872ef50d0b0e695ee539b88acaa2295a0eda54609a535380c7f0ea9e",
+      "kind": "tested-source"
+    },
+    "include/Atlas.h": {
+      "sha256": "8f3a1476610f47bb337344a415276148aec1df402e6d2d01e7b6791b25236b2a",
+      "original_sha256": "8f3a1476610f47bb337344a415276148aec1df402e6d2d01e7b6791b25236b2a",
+      "kind": "tested-source"
+    },
+    "include/CameraModels/GeometricCamera.h": {
+      "sha256": "0d19c3f1299fc162959a720a24da1f97b7c110ed687e6237c2e5c070070d7d89",
+      "original_sha256": "0d19c3f1299fc162959a720a24da1f97b7c110ed687e6237c2e5c070070d7d89",
+      "kind": "tested-source"
+    },
+    "include/CameraModels/KannalaBrandt8.h": {
+      "sha256": "99429f3cd47fcff65052edb2d925e8a36b4e53d0920f9d73aefdbb9868ce0b23",
+      "original_sha256": "99429f3cd47fcff65052edb2d925e8a36b4e53d0920f9d73aefdbb9868ce0b23",
+      "kind": "tested-source"
+    },
+    "include/CameraModels/Pinhole.h": {
+      "sha256": "380e4f8204b32fb725fc3f8fb2b6196d574f72609ef4fbe7de6da11ed2c2266b",
+      "original_sha256": "380e4f8204b32fb725fc3f8fb2b6196d574f72609ef4fbe7de6da11ed2c2266b",
+      "kind": "tested-source"
+    },
+    "include/Config.h": {
+      "sha256": "5e491daf93006f08317d9ee508de2972378062045ec7243d1ca4197836c68340",
+      "original_sha256": "5e491daf93006f08317d9ee508de2972378062045ec7243d1ca4197836c68340",
+      "kind": "tested-source"
+    },
+    "include/Converter.h": {
+      "sha256": "8e298357241ab523a4f2c4bc774d4cb0ea840b1cdb09938c3eaa629476007942",
+      "original_sha256": "8e298357241ab523a4f2c4bc774d4cb0ea840b1cdb09938c3eaa629476007942",
+      "kind": "tested-source"
+    },
+    "include/DBoW3Serialization.h": {
+      "sha256": "38146d5793076c755a9a576bd30ce0e7e3a1e4da81690c9d3daf27671cded627",
+      "original_sha256": "38146d5793076c755a9a576bd30ce0e7e3a1e4da81690c9d3daf27671cded627",
+      "kind": "tested-source"
+    },
+    "include/FastGridKernel.h": {
+      "sha256": "ee9a42b28a971c30ec4688558c180ba27997a123bda60b8d465e47f2d5076e54",
+      "original_sha256": "ee9a42b28a971c30ec4688558c180ba27997a123bda60b8d465e47f2d5076e54",
+      "kind": "tested-source"
+    },
+    "include/FeatureDescriptor.h": {
+      "sha256": "8ab4d464ead2f93c46e0a8baeb2f64b7f7c19325cf71fa633b5941dcd0fb7fc3",
+      "original_sha256": "8ab4d464ead2f93c46e0a8baeb2f64b7f7c19325cf71fa633b5941dcd0fb7fc3",
+      "kind": "tested-source"
+    },
+    "include/FieldObservation.h": {
+      "sha256": "9ae80e5ed021ef6752512b477cf8d426ff45ccbcc3026fc36f9ef81efdebe4fe",
+      "original_sha256": "9ae80e5ed021ef6752512b477cf8d426ff45ccbcc3026fc36f9ef81efdebe4fe",
+      "kind": "tested-source"
+    },
+    "include/Frame.h": {
+      "sha256": "12bcd302d64d155eb7cc327acd95e7488a560e6f31d03861a7a555de55d6fbe3",
+      "original_sha256": "12bcd302d64d155eb7cc327acd95e7488a560e6f31d03861a7a555de55d6fbe3",
+      "kind": "tested-source"
+    },
+    "include/FrameDrawer.h": {
+      "sha256": "b6dfd5f44ed86d73316b5eba2065661061e7d99f9a13f3e387ccfcff50e53e42",
+      "original_sha256": "b6dfd5f44ed86d73316b5eba2065661061e7d99f9a13f3e387ccfcff50e53e42",
+      "kind": "tested-source"
+    },
+    "include/G2oTypes.h": {
+      "sha256": "d95980e1bd59dae116ca091862be7e16ec5ef84b38a310e3a707c4048a2a9133",
+      "original_sha256": "d95980e1bd59dae116ca091862be7e16ec5ef84b38a310e3a707c4048a2a9133",
+      "kind": "tested-source"
+    },
+    "include/GeometricTools.h": {
+      "sha256": "c4a300089ffd0e3c8c45b2d66b093b9aa116a7a7c503e0e477d7a9f11ca25313",
+      "original_sha256": "c4a300089ffd0e3c8c45b2d66b093b9aa116a7a7c503e0e477d7a9f11ca25313",
+      "kind": "tested-source"
+    },
+    "include/ImuParameterValidation.h": {
+      "sha256": "6ca0cce9d265cb5432b731b2884801a4bb3a7460db4792785736a0d92ae1d3da",
+      "original_sha256": "6ca0cce9d265cb5432b731b2884801a4bb3a7460db4792785736a0d92ae1d3da",
+      "kind": "tested-source"
+    },
+    "include/ImuTypes.h": {
+      "sha256": "a8fbe7bdb9925c52cebc4ea6f91bd48686a8d12666995cbe84c796aca6140fc4",
+      "original_sha256": "a8fbe7bdb9925c52cebc4ea6f91bd48686a8d12666995cbe84c796aca6140fc4",
+      "kind": "tested-source"
+    },
+    "include/JoinableTask.h": {
+      "sha256": "993c579288eaf0e9648999a01505e5f2228b08d57488f484a7c524966c0026bd",
+      "original_sha256": "993c579288eaf0e9648999a01505e5f2228b08d57488f484a7c524966c0026bd",
+      "kind": "tested-source"
+    },
+    "include/KeyFrame.h": {
+      "sha256": "6838cc7d717157694dff8110de4d6d64b0281617fe8f6449f3a1ae22cb29088f",
+      "original_sha256": "6838cc7d717157694dff8110de4d6d64b0281617fe8f6449f3a1ae22cb29088f",
+      "kind": "tested-source"
+    },
+    "include/KeyFrameDatabase.h": {
+      "sha256": "66b767475e3e36a421c0e203186616e841897dbbc6a484694991d02688eb3f14",
+      "original_sha256": "66b767475e3e36a421c0e203186616e841897dbbc6a484694991d02688eb3f14",
+      "kind": "tested-source"
+    },
+    "include/LocalMapBudget.h": {
+      "sha256": "8a17ea6817eff92d2c9cad32df13e41045ef8fb171472938865d6c6fdd9f4d42",
+      "original_sha256": "8a17ea6817eff92d2c9cad32df13e41045ef8fb171472938865d6c6fdd9f4d42",
+      "kind": "tested-source"
+    },
+    "include/LocalMapController.h": {
+      "sha256": "7f6a574f99600028a961e8f5f70c480fb9a41ec6023f218b058066612350e470",
+      "original_sha256": "7f6a574f99600028a961e8f5f70c480fb9a41ec6023f218b058066612350e470",
+      "kind": "tested-source"
+    },
+    "include/LocalMapDiagnostics.h": {
+      "sha256": "d1336c0c008e2c7dc6cf4cb7db858e4fd83fa59086f64b233393ca769bdaea2e",
+      "original_sha256": "d1336c0c008e2c7dc6cf4cb7db858e4fd83fa59086f64b233393ca769bdaea2e",
+      "kind": "tested-source"
+    },
+    "include/LocalMapEvents.h": {
+      "sha256": "f3a2182a457180639ab3549865d007eff63277b600536616aae1db6eb037bbb4",
+      "original_sha256": "f3a2182a457180639ab3549865d007eff63277b600536616aae1db6eb037bbb4",
+      "kind": "tested-source"
+    },
+    "include/LocalMapGrid.h": {
+      "sha256": "940ae61d47c73abfa1ccf09f78747b063850627531f377cff8c0db5419bb0880",
+      "original_sha256": "940ae61d47c73abfa1ccf09f78747b063850627531f377cff8c0db5419bb0880",
+      "kind": "tested-source"
+    },
+    "include/LocalMapLifetime.h": {
+      "sha256": "937230b6fea4a984a9359b1401501e38382fab5be0fca976099f6857ac8a07ed",
+      "original_sha256": "937230b6fea4a984a9359b1401501e38382fab5be0fca976099f6857ac8a07ed",
+      "kind": "tested-source"
+    },
+    "include/LocalMapPointBudget.h": {
+      "sha256": "1e0e3df715cfe7264a148272ec6330a11c31ae874a3d815db8c4c3297bf2d0e5",
+      "original_sha256": "1e0e3df715cfe7264a148272ec6330a11c31ae874a3d815db8c4c3297bf2d0e5",
+      "kind": "tested-source"
+    },
+    "include/LocalMapProjection.h": {
+      "sha256": "ae994f3cde80f791127804cc137af68bc08be6c7a18969ed74a48316833fa7d6",
+      "original_sha256": "ae994f3cde80f791127804cc137af68bc08be6c7a18969ed74a48316833fa7d6",
+      "kind": "tested-source"
+    },
+    "include/LocalMapTiming.h": {
+      "sha256": "4ca8d4732aaff0428d471139c703139ffb451e1a230d4e8650774390148dafaf",
+      "original_sha256": "4ca8d4732aaff0428d471139c703139ffb451e1a230d4e8650774390148dafaf",
+      "kind": "tested-source"
+    },
+    "include/LocalMapping.h": {
+      "sha256": "b1f9eadf0b50cf96ee438ebb0d9312cd50e5a09af3ae61502660de767a08ccb3",
+      "original_sha256": "b1f9eadf0b50cf96ee438ebb0d9312cd50e5a09af3ae61502660de767a08ccb3",
+      "kind": "tested-source"
+    },
+    "include/LocalMappingCancellation.h": {
+      "sha256": "9aa8c33254d079cc8f607c6ecc13345812226966755a55eaa82c5d543795dc0b",
+      "original_sha256": "9aa8c33254d079cc8f607c6ecc13345812226966755a55eaa82c5d543795dc0b",
+      "kind": "tested-source"
+    },
+    "include/LocalTrackingAttempt.h": {
+      "sha256": "8bbb0a904431caac323b8c38b0751bb1557eb1d51e8b3757ca29e304ed22940b",
+      "original_sha256": "8bbb0a904431caac323b8c38b0751bb1557eb1d51e8b3757ca29e304ed22940b",
+      "kind": "tested-source"
+    },
+    "include/LocalTrackingIdentity.h": {
+      "sha256": "08aec52c47594aca555b978a485f699642c23f159c23dd0b5751cf18646d8253",
+      "original_sha256": "08aec52c47594aca555b978a485f699642c23f159c23dd0b5751cf18646d8253",
+      "kind": "tested-source"
+    },
+    "include/LoopClosing.h": {
+      "sha256": "91c6ce560de0db931816e41a362579ebe124ea59086377a5a432e2db7fd362b2",
+      "original_sha256": "91c6ce560de0db931816e41a362579ebe124ea59086377a5a432e2db7fd362b2",
+      "kind": "tested-source"
+    },
+    "include/LoopLifecycle.h": {
+      "sha256": "2d631e91ff344a8a1cf9c36a2f32481501c4885ba95c8a3a003e4a128df093b0",
+      "original_sha256": "2d631e91ff344a8a1cf9c36a2f32481501c4885ba95c8a3a003e4a128df093b0",
+      "kind": "tested-source"
+    },
+    "include/MLPnPsolver.h": {
+      "sha256": "8753c231e5f0c973651b5240d0fddfb44876a70cdf2ee57ba51eec462a52a516",
+      "original_sha256": "8753c231e5f0c973651b5240d0fddfb44876a70cdf2ee57ba51eec462a52a516",
+      "kind": "tested-source"
+    },
+    "include/Map.h": {
+      "sha256": "f1c96038b0fb65d78ecb5a9330809162c1285a85c16661f3ebe5ab73e391a32c",
+      "original_sha256": "f1c96038b0fb65d78ecb5a9330809162c1285a85c16661f3ebe5ab73e391a32c",
+      "kind": "tested-source"
+    },
+    "include/MapDrawer.h": {
+      "sha256": "28b97f206d77d95ec524c745e0af212ed5ad92d3869cf3c93494acbc5b0ad869",
+      "original_sha256": "28b97f206d77d95ec524c745e0af212ed5ad92d3869cf3c93494acbc5b0ad869",
+      "kind": "tested-source"
+    },
+    "include/MapPoint.h": {
+      "sha256": "bc97b547b3f380bf6bc3cdc7699c3a632a437b88de34f659d031311bcf3948f4",
+      "original_sha256": "bc97b547b3f380bf6bc3cdc7699c3a632a437b88de34f659d031311bcf3948f4",
+      "kind": "tested-source"
+    },
+    "include/MapPointHandle.h": {
+      "sha256": "a6cb0a05d9d28c186b4450ddc7ba2d372cd89132cbe3cb9d38de097fe1da1ec6",
+      "original_sha256": "a6cb0a05d9d28c186b4450ddc7ba2d372cd89132cbe3cb9d38de097fe1da1ec6",
+      "kind": "tested-source"
+    },
+    "include/MapScaleObservation.h": {
+      "sha256": "6caa74b8b1cd58f76a9f50321ee0e79a6159b1c2d47ef5665062b12305ccf139",
+      "original_sha256": "6caa74b8b1cd58f76a9f50321ee0e79a6159b1c2d47ef5665062b12305ccf139",
+      "kind": "tested-source"
+    },
+    "include/MedoidTiming.h": {
+      "sha256": "15dfe6ea68adf28506d36058bab02310a0b15458f19bb92dbfea34404b6d12f5",
+      "original_sha256": "15dfe6ea68adf28506d36058bab02310a0b15458f19bb92dbfea34404b6d12f5",
+      "kind": "tested-source"
+    },
+    "include/MemoryStats.h": {
+      "sha256": "08c2a9419e76de6cf02f33e3b053b547206cd52c38e63755dffdeeffd1c5bc11",
+      "original_sha256": "08c2a9419e76de6cf02f33e3b053b547206cd52c38e63755dffdeeffd1c5bc11",
+      "kind": "tested-source"
+    },
+    "include/ORBVocabulary.h": {
+      "sha256": "58b74f1a1613c115044e907fe2762ee03ecbd271a37f178457c9a7edab2df06b",
+      "original_sha256": "58b74f1a1613c115044e907fe2762ee03ecbd271a37f178457c9a7edab2df06b",
+      "kind": "tested-source"
+    },
+    "include/ORBextractor.h": {
+      "sha256": "f2da78a88b20f4f5d0c719a57e9bcdbd6183be8d7bc74a033d5648bc2a964526",
+      "original_sha256": "f2da78a88b20f4f5d0c719a57e9bcdbd6183be8d7bc74a033d5648bc2a964526",
+      "kind": "tested-source"
+    },
+    "include/ORBmatcher.h": {
+      "sha256": "ea698bdac5ca18f4e6788c056d108d4e3eaf1ab96a29a9307bb5e42bc4c8cf4f",
+      "original_sha256": "ea698bdac5ca18f4e6788c056d108d4e3eaf1ab96a29a9307bb5e42bc4c8cf4f",
+      "kind": "tested-source"
+    },
+    "include/ObservationCapacity.h": {
+      "sha256": "824c88a6ada47f840e79a346e6f779b9c8bffc6144f8410623b8c2e3ae9e6da6",
+      "original_sha256": "824c88a6ada47f840e79a346e6f779b9c8bffc6144f8410623b8c2e3ae9e6da6",
+      "kind": "tested-source"
+    },
+    "include/OptimizableTypes.h": {
+      "sha256": "3389f1fbcfa62621be49fe7d2e2fcd1c6018ed4668acadb3286fc1d8e0eb649c",
+      "original_sha256": "3389f1fbcfa62621be49fe7d2e2fcd1c6018ed4668acadb3286fc1d8e0eb649c",
+      "kind": "tested-source"
+    },
+    "include/Optimizer.h": {
+      "sha256": "6a52d077fca91b69a9d47b82be3eb7c99b876b433e396c8065c4685185d56d93",
+      "original_sha256": "6a52d077fca91b69a9d47b82be3eb7c99b876b433e396c8065c4685185d56d93",
+      "kind": "tested-source"
+    },
+    "include/OptimizerStopToken.h": {
+      "sha256": "6ddd668b5f41bf828e088fca211200a3a04fcad4d14a27dbc19f3be66ecbab13",
+      "original_sha256": "6ddd668b5f41bf828e088fca211200a3a04fcad4d14a27dbc19f3be66ecbab13",
+      "kind": "tested-source"
+    },
+    "include/PointTrace.h": {
+      "sha256": "dacc71170c98e7464dd785593533e3c65df79e479b15c62e3756cbc877376c23",
+      "original_sha256": "dacc71170c98e7464dd785593533e3c65df79e479b15c62e3756cbc877376c23",
+      "kind": "tested-source"
+    },
+    "include/Random.h": {
+      "sha256": "b498dcfc320c2969ef31b7c22e662702b2c6582bbe0317e519d3d74ec4bfb3a2",
+      "original_sha256": "b498dcfc320c2969ef31b7c22e662702b2c6582bbe0317e519d3d74ec4bfb3a2",
+      "kind": "tested-source"
+    },
+    "include/RetainedPointCache.h": {
+      "sha256": "71a5f4640d0036e2dece585f03addb466859e026b2bb9f78bfb22f2e35388373",
+      "original_sha256": "71a5f4640d0036e2dece585f03addb466859e026b2bb9f78bfb22f2e35388373",
+      "kind": "tested-source"
+    },
+    "include/RgbdTiming.h": {
+      "sha256": "a30191ddf6b2ee81e904f89fb96848f0e7d77af2914197e5a8b8207447b8647b",
+      "original_sha256": "a30191ddf6b2ee81e904f89fb96848f0e7d77af2914197e5a8b8207447b8647b",
+      "kind": "tested-source"
+    },
+    "include/SerializationUtils.h": {
+      "sha256": "b8c39708654ccd5a694f82553d24ba914bb098317bdab9b27b2f97cf373cc528",
+      "original_sha256": "b8c39708654ccd5a694f82553d24ba914bb098317bdab9b27b2f97cf373cc528",
+      "kind": "tested-source"
+    },
+    "include/Settings.h": {
+      "sha256": "107a7a63438e906dedcb2afcb66a492d0d106ae20d71b3646d45bda1125d453d",
+      "original_sha256": "107a7a63438e906dedcb2afcb66a492d0d106ae20d71b3646d45bda1125d453d",
+      "kind": "tested-source"
+    },
+    "include/Sim3Solver.h": {
+      "sha256": "34b660f517ab7cdb96281d2af853f041c6506d22cf9d0d00fe48e3465e9fbe0d",
+      "original_sha256": "34b660f517ab7cdb96281d2af853f041c6506d22cf9d0d00fe48e3465e9fbe0d",
+      "kind": "tested-source"
+    },
+    "include/StereoDepthProvider.h": {
+      "sha256": "08c26265d86893b9e241c464d794982ed9831ba0fa56907a3f3253f0fac54fd6",
+      "original_sha256": "08c26265d86893b9e241c464d794982ed9831ba0fa56907a3f3253f0fac54fd6",
+      "kind": "tested-source"
+    },
+    "include/StereoFeatureProvider.h": {
+      "sha256": "b48150f4a24d1c8cf3cd33f294734bbca9c04b72742763b7ca09eb576f2197fd",
+      "original_sha256": "b48150f4a24d1c8cf3cd33f294734bbca9c04b72742763b7ca09eb576f2197fd",
+      "kind": "tested-source"
+    },
+    "include/System.h": {
+      "sha256": "fbbcc8e06842bb1939ce3fb3d96a12102f9c6347e5fa005e3bb0fe771dbbed45",
+      "original_sha256": "fbbcc8e06842bb1939ce3fb3d96a12102f9c6347e5fa005e3bb0fe771dbbed45",
+      "kind": "tested-source"
+    },
+    "include/Timestamp.h": {
+      "sha256": "b1cbdad7ca368c044ff1ce72ed8799e235bff2d99016b8f9733f70a36fb5f07a",
+      "original_sha256": "b1cbdad7ca368c044ff1ce72ed8799e235bff2d99016b8f9733f70a36fb5f07a",
+      "kind": "tested-source"
+    },
+    "include/Tracking.h": {
+      "sha256": "eaf0bcf76ce45a98b3a58dc344716f368a9da87dff0ef22a3dc5f3b91eefb751",
+      "original_sha256": "eaf0bcf76ce45a98b3a58dc344716f368a9da87dff0ef22a3dc5f3b91eefb751",
+      "kind": "tested-source"
+    },
+    "include/TwoViewReconstruction.h": {
+      "sha256": "2df68f1268cfd2c2539ab0edfc7c8ff06c21e414ce483d26da7946596eb26e82",
+      "original_sha256": "2df68f1268cfd2c2539ab0edfc7c8ff06c21e414ce483d26da7946596eb26e82",
+      "kind": "tested-source"
+    },
+    "include/Viewer.h": {
+      "sha256": "3d8898a9bb3da923652139bcfd6461d9ffcd318a227c19c506f3f013d7b024f5",
+      "original_sha256": "3d8898a9bb3da923652139bcfd6461d9ffcd318a227c19c506f3f013d7b024f5",
+      "kind": "tested-source"
+    },
+    "include/WeakIdentitySlot.h": {
+      "sha256": "45b13d27973c41c6e0ea7b9be09604384718d4c62127f8b29e2d0f5fa337e745",
+      "original_sha256": "45b13d27973c41c6e0ea7b9be09604384718d4c62127f8b29e2d0f5fa337e745",
+      "kind": "tested-source"
+    },
+    "src/Atlas.cc": {
+      "sha256": "3dc1a89288d937f176ca7c5d41acc9dfdf9098d086d8dd3df9972ae0cb076e2e",
+      "original_sha256": "3dc1a89288d937f176ca7c5d41acc9dfdf9098d086d8dd3df9972ae0cb076e2e",
+      "kind": "tested-source"
+    },
+    "src/CameraModels/KannalaBrandt8.cpp": {
+      "sha256": "e73819dc9326325adaf1e3c1b26ec0100b5d9788a399cd23208caedaf8ec0e81",
+      "original_sha256": "e73819dc9326325adaf1e3c1b26ec0100b5d9788a399cd23208caedaf8ec0e81",
+      "kind": "tested-source"
+    },
+    "src/CameraModels/Pinhole.cpp": {
+      "sha256": "9862467de077ffcf49a0aa70fc68dcd3ffa5ea9310c3645574c97aecee981850",
+      "original_sha256": "9862467de077ffcf49a0aa70fc68dcd3ffa5ea9310c3645574c97aecee981850",
+      "kind": "tested-source"
+    },
+    "src/Config.cc": {
+      "sha256": "8a9e6982af8a365b22a4beb0d97116989df292abdc66e97fd12275b498d0abbb",
+      "original_sha256": "8a9e6982af8a365b22a4beb0d97116989df292abdc66e97fd12275b498d0abbb",
+      "kind": "tested-source"
+    },
+    "src/Converter.cc": {
+      "sha256": "9f5b2dccf715b3c4c955c7cff63fb7ef0bf2bb014e766260ce7ec26d04f5290e",
+      "original_sha256": "9f5b2dccf715b3c4c955c7cff63fb7ef0bf2bb014e766260ce7ec26d04f5290e",
+      "kind": "tested-source"
+    },
+    "src/FastGridKernel.cc": {
+      "sha256": "917b83363795ea37f250798f5d75fedd0a7f28b18952d17f8497aa9cb12dc23b",
+      "original_sha256": "917b83363795ea37f250798f5d75fedd0a7f28b18952d17f8497aa9cb12dc23b",
+      "kind": "tested-source"
+    },
+    "src/FeatureDescriptor.cc": {
+      "sha256": "11661cdc9e54392e812ca4fa7dc0fd84d587a3dbf17bcba19d118b1011f333b6",
+      "original_sha256": "11661cdc9e54392e812ca4fa7dc0fd84d587a3dbf17bcba19d118b1011f333b6",
+      "kind": "tested-source"
+    },
+    "src/Frame.cc": {
+      "sha256": "9e52d6e95ca6f01f5d4c6c22f979911b58bc7f0ecf5d4b96b4981ce9ced101b8",
+      "original_sha256": "9e52d6e95ca6f01f5d4c6c22f979911b58bc7f0ecf5d4b96b4981ce9ced101b8",
+      "kind": "tested-source"
+    },
+    "src/FrameDrawer.cc": {
+      "sha256": "210f7229d9784bc5735788f86a70c64e609896dd14f5ceb0b1092af88717d3bf",
+      "original_sha256": "210f7229d9784bc5735788f86a70c64e609896dd14f5ceb0b1092af88717d3bf",
+      "kind": "tested-source"
+    },
+    "src/G2oTypes.cc": {
+      "sha256": "0a96d5600440601ce9c8dcdedfa8c63c80b2285fbca6c81db3d983180ff34252",
+      "original_sha256": "0a96d5600440601ce9c8dcdedfa8c63c80b2285fbca6c81db3d983180ff34252",
+      "kind": "tested-source"
+    },
+    "src/GeometricTools.cc": {
+      "sha256": "7bbd9e2b379665e1e1951de05786c156dc2d4f80efa090b8d203e97e16e09d2b",
+      "original_sha256": "7bbd9e2b379665e1e1951de05786c156dc2d4f80efa090b8d203e97e16e09d2b",
+      "kind": "tested-source"
+    },
+    "src/ImuTypes.cc": {
+      "sha256": "d33f157fea6efeefa5ba5ce43ee110e971ff08087f212de6a9fee1ea72dd3762",
+      "original_sha256": "d33f157fea6efeefa5ba5ce43ee110e971ff08087f212de6a9fee1ea72dd3762",
+      "kind": "tested-source"
+    },
+    "src/KeyFrame.cc": {
+      "sha256": "dd1af14a9bded4dcd9113602e3eded95ba75cc8abe832c80676a1777f8ae2da0",
+      "original_sha256": "dd1af14a9bded4dcd9113602e3eded95ba75cc8abe832c80676a1777f8ae2da0",
+      "kind": "tested-source"
+    },
+    "src/KeyFrameDatabase.cc": {
+      "sha256": "c4f07a5d07c0544f984e3a836cef76a70aae17f53027de354ecacd2d3caec1bd",
+      "original_sha256": "c4f07a5d07c0544f984e3a836cef76a70aae17f53027de354ecacd2d3caec1bd",
+      "kind": "tested-source"
+    },
+    "src/LocalMapBudget.cc": {
+      "sha256": "3300beeca7f2db49b741302cfebae2160785bdedae8026f851d8b06f4d517fc4",
+      "original_sha256": "3300beeca7f2db49b741302cfebae2160785bdedae8026f851d8b06f4d517fc4",
+      "kind": "tested-source"
+    },
+    "src/LocalMapDiagnostics.cc": {
+      "sha256": "4e787e5fd030a0bae73ac604104ad92df2dd47c012801d10803bada6c0149bf3",
+      "original_sha256": "4e787e5fd030a0bae73ac604104ad92df2dd47c012801d10803bada6c0149bf3",
+      "kind": "tested-source"
+    },
+    "src/LocalMapEvents.cc": {
+      "sha256": "57f487e06e3f6ccd8e5842da0488888e45aa7f76c74a8b86d9f54d8db99e74c7",
+      "original_sha256": "57f487e06e3f6ccd8e5842da0488888e45aa7f76c74a8b86d9f54d8db99e74c7",
+      "kind": "tested-source"
+    },
+    "src/LocalMapLifetime.cc": {
+      "sha256": "190b045d34653095e4947b9ac5f5d8aa4bbb10d3d9b0a27d966228e8eb1485ce",
+      "original_sha256": "190b045d34653095e4947b9ac5f5d8aa4bbb10d3d9b0a27d966228e8eb1485ce",
+      "kind": "tested-source"
+    },
+    "src/LocalMapPointBudget.cc": {
+      "sha256": "c1b636b3bde2e35cb3766ff4a31eee0e006501db941030663c67bdd8adb6a6bc",
+      "original_sha256": "c1b636b3bde2e35cb3766ff4a31eee0e006501db941030663c67bdd8adb6a6bc",
+      "kind": "tested-source"
+    },
+    "src/LocalMapping.cc": {
+      "sha256": "e1722212c8696d382a5881cd7fa5ddf202c75e061a601ba0d2479387ef7c5fce",
+      "original_sha256": "e1722212c8696d382a5881cd7fa5ddf202c75e061a601ba0d2479387ef7c5fce",
+      "kind": "tested-source"
+    },
+    "src/LocalTrackingAttempt.cc": {
+      "sha256": "d10db1126bdbce7b9ebc5becf1ad6e47c0b136374fcf59ffb034b64694ee71ce",
+      "original_sha256": "d10db1126bdbce7b9ebc5becf1ad6e47c0b136374fcf59ffb034b64694ee71ce",
+      "kind": "tested-source"
+    },
+    "src/LoopClosing.cc": {
+      "sha256": "17e4940d28583ca1c3606e7785bf352540605ddee27bf2372cd1170dae9998da",
+      "original_sha256": "17e4940d28583ca1c3606e7785bf352540605ddee27bf2372cd1170dae9998da",
+      "kind": "tested-source"
+    },
+    "src/MLPnPsolver.cpp": {
+      "sha256": "706a8e8ed181b79f1fc50aac669197a156d8f2871d42d9df76fcb8d92464b80b",
+      "original_sha256": "706a8e8ed181b79f1fc50aac669197a156d8f2871d42d9df76fcb8d92464b80b",
+      "kind": "tested-source"
+    },
+    "src/Map.cc": {
+      "sha256": "87b81ffe0f9496954223b14f661857cd99df24fe7d14e5c940d1a9dd16e2f453",
+      "original_sha256": "87b81ffe0f9496954223b14f661857cd99df24fe7d14e5c940d1a9dd16e2f453",
+      "kind": "tested-source"
+    },
+    "src/MapDrawer.cc": {
+      "sha256": "e70f3857d0a40491a9db0cd207c012f48c40544527fb42c019c61f3d6f82e0da",
+      "original_sha256": "e70f3857d0a40491a9db0cd207c012f48c40544527fb42c019c61f3d6f82e0da",
+      "kind": "tested-source"
+    },
+    "src/MapPoint.cc": {
+      "sha256": "4ca1bbb3387ebf7da588e6da5b47b8b8b1ad18e70618424834b33a5f4836b910",
+      "original_sha256": "4ca1bbb3387ebf7da588e6da5b47b8b8b1ad18e70618424834b33a5f4836b910",
+      "kind": "tested-source"
+    },
+    "src/MapScaleObservation.cc": {
+      "sha256": "113dbe3a1acb6081ddfc03b5a866205987232b2cce42400cb27c50f5b5df7418",
+      "original_sha256": "113dbe3a1acb6081ddfc03b5a866205987232b2cce42400cb27c50f5b5df7418",
+      "kind": "tested-source"
+    },
+    "src/MemoryStats.cc": {
+      "sha256": "1f5170af96a9df19775537bca1574826ce73b09d813a87aae94cd9303376b8df",
+      "original_sha256": "1f5170af96a9df19775537bca1574826ce73b09d813a87aae94cd9303376b8df",
+      "kind": "tested-source"
+    },
+    "src/ORBextractor.cc": {
+      "sha256": "c31bd3a819a71d1dd3b0cf45c0a62cbf3e6dcc1097a1a4be17108f1568183196",
+      "original_sha256": "c31bd3a819a71d1dd3b0cf45c0a62cbf3e6dcc1097a1a4be17108f1568183196",
+      "kind": "tested-source"
+    },
+    "src/ORBmatcher.cc": {
+      "sha256": "f864e2dd26caa4026e737ea51d781acb1cf87705a0a09b819c3907aef09a8fe8",
+      "original_sha256": "f864e2dd26caa4026e737ea51d781acb1cf87705a0a09b819c3907aef09a8fe8",
+      "kind": "tested-source"
+    },
+    "src/OptimizableTypes.cpp": {
+      "sha256": "7ef517d975a99a657b892d6582f68b46cf96436edde14114b706fd3d5d3c13c7",
+      "original_sha256": "7ef517d975a99a657b892d6582f68b46cf96436edde14114b706fd3d5d3c13c7",
+      "kind": "tested-source"
+    },
+    "src/Optimizer.cc": {
+      "sha256": "033abd4044a1a0d23b76f6b9f9b06ef4dfb05c4e6e5e9f858205289d19b35498",
+      "original_sha256": "033abd4044a1a0d23b76f6b9f9b06ef4dfb05c4e6e5e9f858205289d19b35498",
+      "kind": "tested-source"
+    },
+    "src/Random.cpp": {
+      "sha256": "7c7e5f675e7b13bb8769f0fc0292a30e34d577179254ac1954ca8c8f610078ec",
+      "original_sha256": "7c7e5f675e7b13bb8769f0fc0292a30e34d577179254ac1954ca8c8f610078ec",
+      "kind": "tested-source"
+    },
+    "src/Settings.cc": {
+      "sha256": "ab6dd501c217aae5ec5e35a844663403745ec2f9e98722b070be18559d376b82",
+      "original_sha256": "ab6dd501c217aae5ec5e35a844663403745ec2f9e98722b070be18559d376b82",
+      "kind": "tested-source"
+    },
+    "src/Sim3Solver.cc": {
+      "sha256": "0a8ed064b7f4125b16eae05c84a5b282a87e949916a9441a98bc8d2cd6686731",
+      "original_sha256": "0a8ed064b7f4125b16eae05c84a5b282a87e949916a9441a98bc8d2cd6686731",
+      "kind": "tested-source"
+    },
+    "src/System.cc": {
+      "sha256": "fefe0ac8310be722a0edf27136b81b44b5025d091386d5129bffff64ff6c48c7",
+      "original_sha256": "fefe0ac8310be722a0edf27136b81b44b5025d091386d5129bffff64ff6c48c7",
+      "kind": "tested-source"
+    },
+    "src/Timestamp.cpp": {
+      "sha256": "886a1d8c20e196602a78a12c8664d524a2822652e8dbd9197393f9770d646f3a",
+      "original_sha256": "886a1d8c20e196602a78a12c8664d524a2822652e8dbd9197393f9770d646f3a",
+      "kind": "tested-source"
+    },
+    "src/Tracking.cc": {
+      "sha256": "d1d3c5c03520c6820511bfdebeb8afb6daa239408215d22c7ccea8c0f891f0bf",
+      "original_sha256": "d1d3c5c03520c6820511bfdebeb8afb6daa239408215d22c7ccea8c0f891f0bf",
+      "kind": "tested-source"
+    },
+    "src/TrackingLocalMap.cc": {
+      "sha256": "d4e747a58a672624b270bdea61c78a76e1d97c945cf17f1ce7c496ee00a8827e",
+      "original_sha256": "d4e747a58a672624b270bdea61c78a76e1d97c945cf17f1ce7c496ee00a8827e",
+      "kind": "tested-source"
+    },
+    "src/TwoViewReconstruction.cc": {
+      "sha256": "a49af94656878fd556cd03c283644f490511a14aeacdf98861a1f83e719a7e4f",
+      "original_sha256": "a49af94656878fd556cd03c283644f490511a14aeacdf98861a1f83e719a7e4f",
+      "kind": "tested-source"
+    },
+    "src/Viewer.cc": {
+      "sha256": "a6a15d3055654dc44db5209f2ae0cff4daa670508a42ab9dc623c46b197e2388",
+      "original_sha256": "a6a15d3055654dc44db5209f2ae0cff4daa670508a42ab9dc623c46b197e2388",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/diagnostics/benchmark.h": {
+      "sha256": "7d0810790463cfbbd9670fd3807d3ddcbcae63fcfd72842e3b2281cedfdbff7a",
+      "original_sha256": "7d0810790463cfbbd9670fd3807d3ddcbcae63fcfd72842e3b2281cedfdbff7a",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/diagnostics/camera_delivery/bridge.h": {
+      "sha256": "4f70d0ac990877f195b0f92e0ddc7f7d8dd285d36c0e27a921b15f1c20f4bcf8",
+      "original_sha256": "4f70d0ac990877f195b0f92e0ddc7f7d8dd285d36c0e27a921b15f1c20f4bcf8",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/diagnostics/camera_delivery/bus.h": {
+      "sha256": "98842be82b12ea330236203329fe60c63d5a7614826484681fbd36258859f9b6",
+      "original_sha256": "98842be82b12ea330236203329fe60c63d5a7614826484681fbd36258859f9b6",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/diagnostics/recorder.h": {
+      "sha256": "7a5f421c1c9b892b38701cb16b0629ee104b265b3db800fee437e44dd8d84b38",
+      "original_sha256": "7a5f421c1c9b892b38701cb16b0629ee104b265b3db800fee437e44dd8d84b38",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/CMakeLists.txt": {
+      "sha256": "7147609edcac8fcac5c52aa712e4e275df52fd23e3adabd1bbad0abe6b77218d",
+      "original_sha256": "6034dfb5ed229b8a01900bbc03e9c7d6ec848d0d96bab00b87ff138b7a177aaf",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/include/PointCloudToOccupancyGridConverter.h": {
+      "sha256": "fb5a01b000c64dba370b5b2cc40d48c97896156ea76bc36118625d9ed6056bd5",
+      "original_sha256": "fb5a01b000c64dba370b5b2cc40d48c97896156ea76bc36118625d9ed6056bd5",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/include/RgbdV2Recorder.h": {
+      "sha256": "32bbda9f887457021f916ea06738e0eb543c4c441a1f5f6ef7e82c584b74d2f9",
+      "original_sha256": "32bbda9f887457021f916ea06738e0eb543c4c441a1f5f6ef7e82c584b74d2f9",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/include/ScaleRgbdExperiment.h": {
+      "sha256": "9eae2889e9a4aa98c210823a65ce84ea53859fc5de2b538c7286504122f6f01d",
+      "original_sha256": "9eae2889e9a4aa98c210823a65ce84ea53859fc5de2b538c7286504122f6f01d",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/include/common.h": {
+      "sha256": "06d6172df19321e689865af460469172517e857da259dc537a458454ba24a6c3",
+      "original_sha256": "06d6172df19321e689865af460469172517e857da259dc537a458454ba24a6c3",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/common.cc": {
+      "sha256": "bc5bdfeebe8832b458d2f8ceb9f6784f5bd4af1eb58d517ae7da2ddee48f3d95",
+      "original_sha256": "bc5bdfeebe8832b458d2f8ceb9f6784f5bd4af1eb58d517ae7da2ddee48f3d95",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/local_map.cpp": {
+      "sha256": "0c00caf2e25d8b683a1574feb4242c6719bc2616f07eedba900e9abec392b067",
+      "original_sha256": "0c00caf2e25d8b683a1574feb4242c6719bc2616f07eedba900e9abec392b067",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/occupancy_grid_publisher_node.cpp": {
+      "sha256": "583535f530fc8449762dae231bdb1f224468339e27972e28345532ad8b033863",
+      "original_sha256": "583535f530fc8449762dae231bdb1f224468339e27972e28345532ad8b033863",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/ros_rgbd.cc": {
+      "sha256": "0708c59732fbc31841420f0454ee4de366204e7812a379bf65a5479b1fb4473d",
+      "original_sha256": "0708c59732fbc31841420f0454ee4de366204e7812a379bf65a5479b1fb4473d",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/ros_rgbd_inertial.cc": {
+      "sha256": "b0db51230d7e49966c4d192756be3359076823fb191d7f340701ab7ae0edde96",
+      "original_sha256": "b0db51230d7e49966c4d192756be3359076823fb191d7f340701ab7ae0edde96",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/src/ros_stereo.cc": {
+      "sha256": "94ca7b42131befe30d23b8359ae90c89657f1418cf60b5505dd54b7b7f9a0586",
+      "original_sha256": "94ca7b42131befe30d23b8359ae90c89657f1418cf60b5505dd54b7b7f9a0586",
+      "kind": "tested-source"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/package.xml": {
+      "sha256": "8284595020e714d97a0be3c1c1adf732376a24d25cf8eed82626f392603b76ed",
+      "original_sha256": "69aa1adcad4dfa778a352367a5916b42d4afb32998e1430c73f5150fa28c2a00",
+      "kind": "matching-wrapper-support"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/srv/SaveMap.srv": {
+      "sha256": "74da56e3c05fa2e786699b94c7230a56db943e54e02db771eb8756923786d749",
+      "original_sha256": "74da56e3c05fa2e786699b94c7230a56db943e54e02db771eb8756923786d749",
+      "kind": "matching-wrapper-support"
+    },
+    "runtime/rgbd/src/robot_interfaces/CMakeLists.txt": {
+      "sha256": "24581f040eaaba05a161994a33d393a40afffd476f0d0517d50f493e9b61652a",
+      "original_sha256": "24581f040eaaba05a161994a33d393a40afffd476f0d0517d50f493e9b61652a",
+      "kind": "matching-wrapper-support"
+    },
+    "runtime/rgbd/src/robot_interfaces/package.xml": {
+      "sha256": "b92d79b815c5a1ecd7d22bd906aa433d8c450d0f97b58f002f4bdfe2133df2bb",
+      "original_sha256": "b92d79b815c5a1ecd7d22bd906aa433d8c450d0f97b58f002f4bdfe2133df2bb",
+      "kind": "matching-wrapper-support"
+    },
+    "runtime/rgbd/src/robot_interfaces/srv/SetTypeService.srv": {
+      "sha256": "f6e4e2f210f1231b2f9af12c1b8ce765414ea90a395afe0b653178328f72119d",
+      "original_sha256": "f6e4e2f210f1231b2f9af12c1b8ce765414ea90a395afe0b653178328f72119d",
+      "kind": "matching-wrapper-support"
+    },
+    "runtime/rgbd/memory/tools/rgbd_v2_timing_csv.h": {
+      "sha256": "62a7911e1b5fcb958c070bb0ec5494ca531cc0c1d5f7261b68de6fb822a5c418",
+      "original_sha256": "62a7911e1b5fcb958c070bb0ec5494ca531cc0c1d5f7261b68de6fb822a5c418",
+      "kind": "tested-build-support"
+    },
+    "runtime/rgbd/tests/map_point_probe.cc": {
+      "sha256": "2430a4ed2a00c25228f1ac16cbfa52354b2feecebf73e3f54b7b4a0165908a75",
+      "original_sha256": "2430a4ed2a00c25228f1ac16cbfa52354b2feecebf73e3f54b7b4a0165908a75",
+      "kind": "tested-fixture"
+    },
+    "runtime/rgbd/tests/geometry_probe.cc": {
+      "sha256": "de6dc96845f744d5ebc0d2f76465944ea987bf24b5164c6a5ccbab915a1e70ae",
+      "original_sha256": "de6dc96845f744d5ebc0d2f76465944ea987bf24b5164c6a5ccbab915a1e70ae",
+      "kind": "tested-fixture"
+    },
+    "runtime/rgbd/config/S316_f700_l5.yaml": {
+      "sha256": "a6736839b7ddb147eccdddf5b13c8bf706d3674558563b6defdf8de207c1d988",
+      "original_sha256": "a6736839b7ddb147eccdddf5b13c8bf706d3674558563b6defdf8de207c1d988",
+      "kind": "tested-configuration"
+    }
+  },
+  "build_adaptations": {
+    "runtime/rgbd/src/orb_slam3_ros-master/CMakeLists.txt": {
+      "original_sha256": "6034dfb5ed229b8a01900bbc03e9c7d6ec848d0d96bab00b87ff138b7a177aaf",
+      "published_sha256": "7147609edcac8fcac5c52aa712e4e275df52fd23e3adabd1bbad0abe6b77218d",
+      "reason": "Publication build integration only; compiled C++ sources unchanged"
+    },
+    "runtime/rgbd/src/orb_slam3_ros-master/package.xml": {
+      "original_sha256": "69aa1adcad4dfa778a352367a5916b42d4afb32998e1430c73f5150fa28c2a00",
+      "published_sha256": "8284595020e714d97a0be3c1c1adf732376a24d25cf8eed82626f392603b76ed",
+      "reason": "Publication build integration only; compiled C++ sources unchanged"
+    }
+  },
+  "local_evidence_ids": [
+    "rgbd_a1_combined_20261016",
+    "rgbd_a1_orbp_20261019",
+    "rgbd_tracking_cost_20261019",
+    "rgbd_tracking_optimizations_20261020"
+  ],
+  "evidence_scope": "Source and fixture publication; binary hashes identify the tested ARM artifacts. Large bags, raw logs, sysroots, vocabulary and binaries are not added by this publication.",
+  "reference_only_files_omitted": [
+    "runtime/rgbd/diagnostics/map_support/before/LocalMapping.cc",
+    "runtime/rgbd/diagnostics/map_support/before/Tracking.cc",
+    "runtime/rgbd/diagnostics/camera_delivery/source/s316_camera_node.baseline.cpp",
+    "runtime/rgbd/diagnostics/camera_delivery/source/s316_camera_node.cpp",
+    "runtime/rgbd/src/orb_slam3_ros-master/src/AR/ViewerAR.cc",
+    "runtime/rgbd/src/orb_slam3_ros-master/src/AR/ViewerAR.h",
+    "runtime/rgbd/src/orb_slam3_ros-master/src/AR/ros_mono_ar.cc"
+  ]
+}

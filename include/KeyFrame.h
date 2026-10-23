@@ -37,6 +37,7 @@
 #include "MemoryStats.h"
 
 #include <mutex>
+#include <atomic>
 #include "RetainedPointCache.h"
 #include "RgbdTiming.h"
 #include <unordered_set>
@@ -167,8 +168,14 @@ class KeyFrame {
     // Bad flags
     ar & mbNotErase;
     ar & mbToBeErased;
-    ar & mbBad;
-    if (Archive::is_loading::value && mbBad) mMemoryLifetime.Retire();
+    // Keep the historical bool archive field and its exact position. Loading
+    // an archive still requires the existing quiescent object/Atlas contract.
+    bool bad = mbBad.load(std::memory_order_acquire);
+    ar & bad;
+    if (Archive::is_loading::value) {
+      mbBad.store(bad, std::memory_order_release);
+      if (bad) mMemoryLifetime.Retire();
+    }
 
     ar & mHalfBaseline;
 
@@ -510,7 +517,9 @@ protected:
   // Bad flags
   bool mbNotErase;
   bool mbToBeErased;
-  bool mbBad;
+  // Published only at the original end of SetBadFlag's object critical section.
+  // This state query does not pin lifetime or lock the remaining KF fields.
+  std::atomic<bool> mbBad;
 
   float mHalfBaseline; // Only for visualization
 

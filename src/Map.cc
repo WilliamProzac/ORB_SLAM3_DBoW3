@@ -163,6 +163,13 @@ vector<MapPointPtr > Map::GetAllMapPoints() {
   return vector<MapPointPtr >(mspMapPoints.begin(), mspMapPoints.end());
 }
 
+void Map::GetScaleObservationCounts(long unsigned int& keyframes,
+                                    long unsigned int& points) {
+  unique_lock<mutex> lock(mMutexMap);
+  keyframes = mspKeyFrames.size();
+  points = mspMapPoints.size();
+}
+
 long unsigned int Map::MapPointsInMap() {
   unique_lock<mutex> lock(mMutexMap);
   return mspMapPoints.size();

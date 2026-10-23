@@ -302,7 +302,7 @@ bool LocalTrackingAttempt::Commit(Frame& destination) {
     // Snapshot callers still take the map mutex because they need not hold
     // that barrier. Commit need not acquire a redundant third lock per MP.
     const auto& snapshot = state->snapshot;
-    if (point.mbBad || point.mpReplaced || point.mpMap != input.map) {
+    if (point.mbBad.load(std::memory_order_relaxed) || point.mpReplaced || point.mpMap != input.map) {
       if (state->found>0) return fail("point_invalidated");
       // Mapping can retire an unused candidate while matching. Its scratch
       // result has no pose constraint to invalidate: discard that point's

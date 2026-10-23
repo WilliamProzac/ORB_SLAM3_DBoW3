@@ -1,3 +1,24 @@
+# RGBD27 source publication — 2026-10-23
+
+Source selected: RGBD25 atomic_02, based on core5ea9afb6 with container
+optimization, atomic KeyFrame status, ORB row tasks/FAST reuse and atomic
+MapPoint status. Ordinary RGB-D geometry stays unchanged. ROS sources are
+consolidated under runtime/rgbd with their package/service/timing support.
+
+The isolated checkout preserves the existing XFeat and runtime worktrees.
+The requested remote branch is research/rgbd-mappoint-atomic-20261023 in
+WilliamProzac/ORB_SLAM3_DBoW3. Full commit details record numerical results
+and remaining qualification failures. Exact source hashes and build
+adaptations are in runtime/rgbd/PROVENANCE.json.
+
+Source packaging passed the read-only verifier, independent398 checks, host
+catkin41+2 units plus2 fixtures, MapPoint11 cases and geometry4411 cases.
+The host build tests only publication build integration; historical ARM
+functional/long-run evidence remains separate. No new board replay or
+production promotion is part of this task. Source verification and matching
+build commands are in runtime/rgbd/README.md; remaining TODOs are full-input,
+90ms, comparable map workload, GT and full lifecycle qualifications.
+
 # LM01 current handoff — 2026-09-24
 
 Active feature: LM01. C0 source snapshots committed; C1 transaction foundation

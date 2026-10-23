@@ -1,3 +1,4 @@
+#include "MapScaleObservation.h"
 #include "FieldObservation.h"
 #include "PointTrace.h"
 /**
@@ -1931,6 +1932,11 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   const std::chrono::steady_clock::time_point track_start =
       std::chrono::steady_clock::now();
   Track();
+  if (auto* scale = ActiveMapScaleObservation()) {
+    scale->frame_id = mCurrentFrame.mnId;
+    scale->frame_keypoints = mCurrentFrame.N;
+    scale->tracking_state = static_cast<int>(mState);
+  }
   if (timing) {
     timing->track_internal_ms = ElapsedMilliseconds(track_start);
     timing->state_after = static_cast<int>(mState);
@@ -2330,7 +2336,9 @@ void Tracking::Track() {
   const bool field_measure_map_wait = FieldEnabled();
   const std::chrono::steady_clock::time_point map_lock_start =
       std::chrono::steady_clock::now();
+  MapScaleSpan scale_map_wait(MapScaleStage::MapUpdateWait);
   unique_lock<mutex> lock(pCurrentMap->mMutexMapUpdate);
+  scale_map_wait.Finish();
   // Capture immediately after lock acquisition: later map reads are excluded.
   // Reuse this endpoint for both sinks; diagnostics-off adds no clock read.
   const std::chrono::steady_clock::time_point map_lock_acquired =
@@ -2341,6 +2349,16 @@ void Tracking::Track() {
     mpCurrentRgbdTiming->map_mutex_wait_ms =
         std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(
             map_lock_acquired - map_lock_start).count();
+
+  if (auto* scale = ActiveMapScaleObservation()) {
+    MapScaleSpan snapshot(MapScaleStage::ScaleSnapshot);
+    long unsigned int keyframes = 0, points = 0;
+    scale->scale_snapshot_mono_ns = MapScaleMonotonicNanoseconds();
+    pCurrentMap->GetScaleObservationCounts(keyframes, points);
+    scale->global_kf = keyframes;
+    scale->global_mp = points;
+    scale->map_id = pCurrentMap->GetId();
+  }
 
   mbMapUpdated = false;
 
@@ -3615,6 +3633,7 @@ bool Tracking::TrackWithMotionModel() {
 }
 
 bool Tracking::TrackLocalMap(Map* locked_map) {
+  MapScaleSpan scale_local(MapScaleStage::TrackLocalMap);
   FieldStage field_stage(mCurrentFrame.mnId,3);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_map_ms : nullptr);
@@ -3655,6 +3674,7 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
   int inliers;
   const auto local_pose_start = mpCurrentRgbdTiming ? std::chrono::steady_clock::now()
                                                    : std::chrono::steady_clock::time_point();
+  MapScaleSpan scale_pose(MapScaleStage::LocalPoseOptimization);
   if (!mpAtlas->isImuInitialized())
     FieldPoseOptimization(&mCurrentFrame,
         RgbdLightDiagnostics() && mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->pose : nullptr);
@@ -3723,6 +3743,7 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
     }
   }
 
+  scale_pose.Finish();
   if (mpCurrentRgbdTiming)
     mpCurrentRgbdTiming->local_pose_ms += ElapsedMilliseconds(local_pose_start);
   aux1 = 0, aux2 = 0;
@@ -3755,6 +3776,8 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
 
   // Decide if the tracking was succesful
   // More restrictive if there was a relocalization recently
+  if (auto* scale = ActiveMapScaleObservation())
+    scale->tracking_inliers = mnMatchesInliers;
   mpLocalMapper->mnMatchesInliers = mnMatchesInliers;
   FieldEmit(13,mCurrentFrame.mnId,3,1,mnMatchesInliers);
   if (mCurrentFrame.mnId < mnLastRelocFrameId + mMaxFrames &&
@@ -4128,6 +4151,7 @@ void Tracking::CreateNewKeyFrame() {
 }
 
 void Tracking::SearchLocalPoints() {
+  MapScaleSpan scale_search(MapScaleStage::SearchLocalPoints);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_search_cpu_ms : nullptr);
 // FIELD_MAP_BEGIN
@@ -4231,7 +4255,10 @@ void Tracking::SearchLocalPoints() {
 
 void Tracking::UpdateLocalMap() {
   // This is for visualization
-  mpAtlas->SetReferenceMapPoints(mvpLocalMapPoints);
+  {
+    MapScaleSpan scale_reference(MapScaleStage::ReferenceCopy);
+    mpAtlas->SetReferenceMapPoints(mvpLocalMapPoints);
+  }
 
   // Update
   UpdateLocalKeyFrames();
@@ -4239,6 +4266,13 @@ void Tracking::UpdateLocalMap() {
 }
 
 void Tracking::UpdateLocalPoints() {
+  MapScaleSpan scale_a3(MapScaleStage::A3);
+  auto* scale = ActiveMapScaleObservation();
+  if (scale) {
+    scale->gather_slots = 0;
+    scale->visited_slots = 0;
+    scale->accepted_points = 0;
+  }
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_points_ms : nullptr);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_points_cpu_ms : nullptr);
@@ -4246,6 +4280,7 @@ void Tracking::UpdateLocalPoints() {
       ? &light->local_map_detail : nullptr;
   InitializeLocalMapDetail(detail, light ? light->tracking_thread_id : 0);
   if (detail) detail->old_owner_count = mvpLocalMapPoints.size();
+  MapScaleSpan scale_clear(MapScaleStage::A3Clear);
   {
     LocalMapClearSpan span(detail ? &detail->hint_clear : nullptr);
     mLocalPointIdentities.clear();
@@ -4255,6 +4290,8 @@ void Tracking::UpdateLocalPoints() {
     mvpLocalMapPoints.clear();
   }
 
+  scale_clear.Finish();
+  MapScaleSpan scale_gather(MapScaleStage::A3Gather);
   for (vector<KeyFrame *>::const_reverse_iterator
            itKF = mvpLocalKeyFrames.rbegin(),
            itEndKF = mvpLocalKeyFrames.rend();
@@ -4265,9 +4302,15 @@ void Tracking::UpdateLocalPoints() {
         detail ? detail->gather_features.Next(LocalMapLockSite::GatherKeyFrameFeatures)
                : nullptr);
   }
+  scale_gather.Finish();
+  if (scale) {
+    scale->local_mp = mvpLocalMapPoints.size();
+    scale->accepted_points = mvpLocalMapPoints.size();
+  }
 }
 
 void Tracking::UpdateLocalKeyFrames() {
+  MapScaleSpan scale_a1(MapScaleStage::A1);
   ScopedTimingAccumulator timer(mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->local_keyframes_ms : nullptr);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_keyframes_cpu_ms : nullptr);
@@ -4277,6 +4320,7 @@ void Tracking::UpdateLocalKeyFrames() {
   // Each map point vote for the keyframes in which it has been observed
   LocalMapClearSpan total_span(local_detail ? &local_detail->a1_total : nullptr);
   map<KeyFrame *, int> keyframeCounter;
+  MapScaleSpan scale_vote(MapScaleStage::A1Vote);
   {
   LocalMapClearSpan voting_span(local_detail ? &local_detail->a1_voting : nullptr);
   if (!mpAtlas->isImuInitialized() ||
@@ -4344,6 +4388,9 @@ void Tracking::UpdateLocalKeyFrames() {
 
   if (light) light->voting_unique_keyframes = keyframeCounter.size();
   } // complete voting loop, including observation copies and vote insertion
+  scale_vote.Finish();
+  if (auto* scale = ActiveMapScaleObservation())
+    scale->voting_kf = keyframeCounter.size();
   int max = 0;
   KeyFrame *pKFmax = static_cast<KeyFrame *>(NULL);
 
@@ -4354,6 +4401,7 @@ void Tracking::UpdateLocalKeyFrames() {
   // check which keyframe shares most points
   {
   LocalMapClearSpan filter_span(local_detail ? &local_detail->a1_filter : nullptr);
+  MapScaleSpan scale_filter(MapScaleStage::A1Filter);
   for (map<KeyFrame *, int>::const_iterator it = keyframeCounter.begin(),
                                             itEnd = keyframeCounter.end();
        it != itEnd; it++) {
@@ -4371,6 +4419,8 @@ void Tracking::UpdateLocalKeyFrames() {
     mvpLocalKeyFrames.push_back(pKF);
     pKF->mnTrackReferenceForFrame = mCurrentFrame.mnId;
   }
+
+  scale_filter.Finish();
 
   // Include also some not-already-included keyframes that are neighbors to
   } // complete filter loop; allocation/clear and neighbor work remain remainder
@@ -4446,6 +4496,9 @@ void Tracking::UpdateLocalKeyFrames() {
       }
     }
   }
+
+  if (auto* scale = ActiveMapScaleObservation())
+    scale->local_kf = mvpLocalKeyFrames.size();
 
   if (pKFmax) {
     mpReferenceKF = pKFmax;

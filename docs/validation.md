@@ -1,3 +1,19 @@
+## RGBD27 latest RGB-D source publication (2026-10-23)
+
+The exact atomic_02 C++ implementation and headers are published at the repository
+root with their matching wrapper in runtime/rgbd. The original 106 core files
+and 116 ARM compilation inputs are hash-bound; only ROS build/package
+declarations are adapted for this single-repository layout.
+
+Read-only check: python3 -B runtime/rgbd/verify_source.py.
+Build and fixture commands: [runtime/rgbd/README.md](../runtime/rgbd/README.md).
+Original long-bag results, rejected candidates and acceptance limits:
+[runtime/rgbd/VALIDATION.md](../runtime/rgbd/VALIDATION.md).
+
+Do not use the old root build_ros.sh to infer validation of this matching
+catkin workspace. Publication neither deploys a board binary nor reruns the
+long bag. The candidate still fails the complete-input/90ms/workload gates.
+
 # Validation
 
 Latest memory-task state: [current session summary](../../memory/SESSION_SUMMARY_20260920_MEM18.md).
