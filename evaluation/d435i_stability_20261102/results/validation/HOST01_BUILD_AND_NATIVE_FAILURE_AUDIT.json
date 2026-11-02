@@ -1,0 +1,52 @@
+{
+  "build_name": "diagnostic_host_01",
+  "source_ready_sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+  "source_and_snapshot_after_build_verified": true,
+  "driver_before_after_verified": true,
+  "actual_objects": {
+    "orb_slam3_ros": 42,
+    "ros_rgbd": 2,
+    "rgbd_mappoint_probe": 1,
+    "rgbd_geometry_probe": 1
+  },
+  "binaries": {
+    "liborb_slam3_ros.so": "b594c0d79ed72d18c136b9b541e9d96378d4fc891f02bb198a5ec0101ccdfc06",
+    "ros_rgbd": "e2649c9981d7cdc816bace11593869efca73cb3b5692a3b8d68bbcd3445cd401",
+    "rgbd_mappoint_probe": "752d197e5106e42c7c45585788d47a31fd9861fe83553969ac0dff88fd9d3b2b",
+    "rgbd_geometry_probe": "7415a986339d6fb9938cf19a7c6a5f439a30fcf77c9aac62b46e0780bc08692d"
+  },
+  "stability_native_sha256": "26dc8a1586ac83540ff8f744a9de5097c0b6c1f28ede414cf8df345b02b48f1e",
+  "native_resolved_core": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/lib/liborb_slam3_ros.so",
+  "native_resolved_core_sha256": "b594c0d79ed72d18c136b9b541e9d96378d4fc891f02bb198a5ec0101ccdfc06",
+  "probe_log_passes": {
+    "mappoint_contract_cases": 11,
+    "geometry_static_4411": true
+  },
+  "native_modes": {
+    "disabled": {
+      "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/stability_native_modes/disabled",
+      "timeout_seconds": 60,
+      "executed": true,
+      "passed": true,
+      "exit_code": 0
+    },
+    "off": {
+      "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/stability_native_modes/off",
+      "timeout_seconds": 60,
+      "executed": true,
+      "passed": true,
+      "exit_code": 0
+    },
+    "on": {
+      "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/stability_native_modes/on",
+      "timeout_seconds": 60,
+      "executed": true,
+      "passed": false,
+      "exit_code": 1
+    }
+  },
+  "all_native_passed": false,
+  "failure_reason": "single-document TF-IDF vocabulary zero weights caused empty BowVec/FeatVec; on mode readiness assertion failed",
+  "flush_failure_mode_executed": false,
+  "recorded_wall_ns": 1793605997890267293
+}

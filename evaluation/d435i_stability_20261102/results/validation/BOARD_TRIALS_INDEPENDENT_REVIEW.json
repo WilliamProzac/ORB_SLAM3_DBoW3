@@ -1,0 +1,2726 @@
+{
+  "schema": "rgbd36_board_trials_independent_review_v1",
+  "reviewed_at": "2026-11-02T18:57:07+08:00",
+  "status": "passed",
+  "scope": "独立读取原CSV和JSON重算；未调用本轮reducer，未修改runs/封存/源bag/旧档案，无SSH、Git、外发。仅新增本JSON。",
+  "plan_sha256": "7c6892bd74f6bf55d6fb82f22809a6736c4411014f58931545e3fba81b38774d",
+  "run_freeze_sha256": "153b29cdd9ccc367d3c75b5e5f93710c79efd3dd67f8c87fce516024bce7052c",
+  "frozen_files_verified": 54,
+  "freeze_mismatches": [],
+  "planned_run_count": 16,
+  "actual_run_directories": [
+    "B_bow_01_off",
+    "B_bow_02_on",
+    "B_bow_03_on",
+    "B_bow_04_off",
+    "B_obs_01_off",
+    "B_obs_02_on",
+    "B_obs_03_on",
+    "B_obs_04_off",
+    "C_01_P0",
+    "C_02_P1",
+    "C_03_P2",
+    "C_04_P3",
+    "C_05_P3",
+    "C_06_P2",
+    "C_07_P1",
+    "C_08_P0"
+  ],
+  "sealed_run_count": 16,
+  "sealed_files_checked": 840,
+  "returned_board_files_sha_checked": 280,
+  "total_input_denominator": 94048,
+  "total_processed": 94048,
+  "total_fresh": 77716,
+  "total_nonfresh": 16332,
+  "all_round_checks_passed": true,
+  "rounds": [
+    {
+      "id": "B_obs_01_off",
+      "stage": "observation",
+      "config_id": "P0",
+      "observation": false,
+      "bow_ready": false,
+      "seal_sha256": "a55fe7ca6003958eea6fa413492befaded90db199cf3a63c80b1aca8e9122148",
+      "sealed_files_checked": 49,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4759,
+      "nonfresh": 1119,
+      "fresh_fraction": 0.8096291255529091,
+      "state_counts": {
+        "OK": 4759,
+        "RECENTLY_LOST": 1084,
+        "NO_IMAGES_YET": 30,
+        "LOST": 5
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 44.84077178359986,
+        "p50": 42.502117,
+        "p95": 59.671360799999995,
+        "p99": 77.92499308999996,
+        "max": 285.798583,
+        "over_100_ms": 13
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4759
+      },
+      "raw_event_records": 28271,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4759,
+          "matched_nonfresh": 1119,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1084,
+            "NO_IMAGES_YET": 30,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4759,
+          "matched_nonfresh": 1119,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1084,
+            "NO_IMAGES_YET": 30,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 572,
+        "max_rss_kib": 886484.0,
+        "max_pss_kib": 888270.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0397779837653576,
+        "temperature_c_range": [
+          43.339,
+          47.052
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 22,
+          "delta": 22
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33196,
+          "last": 33197,
+          "delta": 1
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": null,
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 425648,
+        "start_ticks": 355911416
+      },
+      "run_start_epoch_s": 1793606691.8682284,
+      "seal_created": "2026-11-02T16:15:09+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_obs_02_on",
+      "stage": "observation",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false,
+      "seal_sha256": "c7b9861e217e7734759f6ecd88b678e81b6e886a41294ce3bfe952a713e848b7",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4816,
+      "nonfresh": 1062,
+      "fresh_fraction": 0.8193263014630827,
+      "state_counts": {
+        "OK": 4816,
+        "RECENTLY_LOST": 1027,
+        "NO_IMAGES_YET": 30,
+        "LOST": 5
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 44.72509216042871,
+        "p50": 42.495034,
+        "p95": 59.26832619999999,
+        "p99": 73.31907651999995,
+        "max": 270.955055,
+        "over_100_ms": 13
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4816
+      },
+      "raw_event_records": 28328,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4816,
+          "matched_nonfresh": 1062,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1027,
+            "NO_IMAGES_YET": 30,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4816,
+          "matched_nonfresh": 1062,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1027,
+            "NO_IMAGES_YET": 30,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 575,
+        "max_rss_kib": 924180.0,
+        "max_pss_kib": 925290.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0427787087002658,
+        "temperature_c_range": [
+          44.707,
+          47.199
+        ],
+        "frequency_mhz_range": [
+          600.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33197,
+          "last": 33204,
+          "delta": 7
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 30,
+        "points_retained": 262144,
+        "point_drops": 185590,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 840142,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 41080,
+            "stored": 41080,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 38816,
+            "stored": 38816,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 79779,
+            "stored": 79779,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 70148,
+            "stored": 70148,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 40460,
+            "stored": 32321,
+            "dropped": 8139
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 177451,
+            "stored": 0,
+            "dropped": 177451
+          }
+        ],
+        "bow_prepares": 0,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 426010,
+        "start_ticks": 355973167
+      },
+      "run_start_epoch_s": 1793607309.0901682,
+      "seal_created": "2026-11-02T16:25:32+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_obs_03_on",
+      "stage": "observation",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false,
+      "seal_sha256": "22a9a0668e996fab91936eda39cf7ab78245fa7ed4074a2db5600acba8045909",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4770,
+      "nonfresh": 1108,
+      "fresh_fraction": 0.8115005103776795,
+      "state_counts": {
+        "OK": 4770,
+        "RECENTLY_LOST": 1071,
+        "NO_IMAGES_YET": 30,
+        "LOST": 7
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 45.227029239707385,
+        "p50": 42.7707815,
+        "p95": 60.00622294999999,
+        "p99": 75.79605123999978,
+        "max": 291.574795,
+        "over_100_ms": 12
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4770
+      },
+      "raw_event_records": 28282,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4770,
+          "matched_nonfresh": 1108,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1071,
+            "NO_IMAGES_YET": 30,
+            "LOST": 7
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4770,
+          "matched_nonfresh": 1108,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1071,
+            "NO_IMAGES_YET": 30,
+            "LOST": 7
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 575,
+        "max_rss_kib": 925088.0,
+        "max_pss_kib": 926262.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0424151868398792,
+        "temperature_c_range": [
+          44.707,
+          47.296
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33204,
+          "last": 33453,
+          "delta": 249
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 30,
+        "points_retained": 262144,
+        "point_drops": 176710,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 852993,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 40344,
+            "stored": 40344,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 40242,
+            "stored": 40242,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 87895,
+            "stored": 87895,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 67549,
+            "stored": 67549,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 40408,
+            "stored": 26114,
+            "dropped": 14294
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 162416,
+            "stored": 0,
+            "dropped": 162416
+          }
+        ],
+        "bow_prepares": 0,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 426393,
+        "start_ticks": 356035481
+      },
+      "run_start_epoch_s": 1793607932.4184446,
+      "seal_created": "2026-11-02T16:35:55+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_obs_04_off",
+      "stage": "observation",
+      "config_id": "P0",
+      "observation": false,
+      "bow_ready": false,
+      "seal_sha256": "01abf0ccb9f27f62b3e09292fe67d06d709728ef3539f84f529c23ea47b5f24e",
+      "sealed_files_checked": 49,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4827,
+      "nonfresh": 1051,
+      "fresh_fraction": 0.8211976862878531,
+      "state_counts": {
+        "OK": 4827,
+        "RECENTLY_LOST": 1018,
+        "NO_IMAGES_YET": 29,
+        "LOST": 4
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 44.73907444334808,
+        "p50": 42.3987845,
+        "p95": 59.736829349999994,
+        "p99": 73.94975049999998,
+        "max": 158.497794,
+        "over_100_ms": 9
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4827
+      },
+      "raw_event_records": 28339,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4827,
+          "matched_nonfresh": 1051,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1018,
+            "NO_IMAGES_YET": 29,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4827,
+          "matched_nonfresh": 1051,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1018,
+            "NO_IMAGES_YET": 29,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 570,
+        "max_rss_kib": 896488.0,
+        "max_pss_kib": 897814.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0419586234339733,
+        "temperature_c_range": [
+          44.56,
+          47.247
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33453,
+          "last": 33453,
+          "delta": 0
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": null,
+      "map_id_change_count": 29,
+      "loaded_process_identity": {
+        "pid": 426753,
+        "start_ticks": 356097848
+      },
+      "run_start_epoch_s": 1793608555.9202747,
+      "seal_created": "2026-11-02T16:46:13+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_bow_01_off",
+      "stage": "bow",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false,
+      "seal_sha256": "9b41b972ce4c570d96172cdd7296d75a293800a83640f3e20b07a43299d7c1aa",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4779,
+      "nonfresh": 1099,
+      "fresh_fraction": 0.8130316434161279,
+      "state_counts": {
+        "OK": 4779,
+        "RECENTLY_LOST": 1064,
+        "NO_IMAGES_YET": 29,
+        "LOST": 6
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 44.72331396376318,
+        "p50": 42.3899095,
+        "p95": 58.565128499999986,
+        "p99": 71.69437646999985,
+        "max": 306.712946,
+        "over_100_ms": 8
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4779
+      },
+      "raw_event_records": 28291,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4779,
+          "matched_nonfresh": 1099,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1064,
+            "NO_IMAGES_YET": 29,
+            "LOST": 6
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4779,
+          "matched_nonfresh": 1099,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1064,
+            "NO_IMAGES_YET": 29,
+            "LOST": 6
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 579,
+        "max_rss_kib": 920136.0,
+        "max_pss_kib": 921630.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0329251304844065,
+        "temperature_c_range": [
+          44.267,
+          47.199
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 1,
+          "delta": 1
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33453,
+          "last": 33609,
+          "delta": 156
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 29,
+        "points_retained": 262144,
+        "point_drops": 176819,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 835341,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 39011,
+            "stored": 39011,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 34450,
+            "stored": 34450,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 107796,
+            "stored": 107796,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 36709,
+            "stored": 36709,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 40484,
+            "stored": 40484,
+            "dropped": 0
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 180513,
+            "stored": 3694,
+            "dropped": 176819
+          }
+        ],
+        "bow_prepares": 0,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 29,
+      "loaded_process_identity": {
+        "pid": 427114,
+        "start_ticks": 356162423
+      },
+      "run_start_epoch_s": 1793609201.857622,
+      "seal_created": "2026-11-02T16:57:03+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_bow_02_on",
+      "stage": "bow",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "4b05c065d52c98298d7550e2ed2371da03e77219964f22018d26a72d003296d3",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4815,
+      "nonfresh": 1063,
+      "fresh_fraction": 0.8191561755699217,
+      "state_counts": {
+        "OK": 4815,
+        "RECENTLY_LOST": 1029,
+        "NO_IMAGES_YET": 30,
+        "LOST": 4
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 46.601665538618576,
+        "p50": 43.8463165,
+        "p95": 61.81016104999999,
+        "p99": 72.26701592999999,
+        "max": 200.61343399999998,
+        "over_100_ms": 3
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4815
+      },
+      "raw_event_records": 28327,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4815,
+          "matched_nonfresh": 1063,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1029,
+            "NO_IMAGES_YET": 30,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4815,
+          "matched_nonfresh": 1063,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1029,
+            "NO_IMAGES_YET": 30,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 580,
+        "max_rss_kib": 922116.0,
+        "max_pss_kib": 923550.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0319197826788782,
+        "temperature_c_range": [
+          44.658,
+          47.296
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33609,
+          "last": 33822,
+          "delta": 213
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 30,
+        "points_retained": 262144,
+        "point_drops": 149084,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 840323,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 35439,
+            "stored": 35439,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 32007,
+            "stored": 32007,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 79466,
+            "stored": 79466,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 39207,
+            "stored": 39207,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 48219,
+            "stored": 48219,
+            "dropped": 0
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 176890,
+            "stored": 27806,
+            "dropped": 149084
+          }
+        ],
+        "bow_prepares": 1122,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 427477,
+        "start_ticks": 356224659
+      },
+      "run_start_epoch_s": 1793609824.0997243,
+      "seal_created": "2026-11-02T17:07:26+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_bow_03_on",
+      "stage": "bow",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "cc219fdce76769bc0c25a15f74b202f56cbde9cfedf3c94859dc7791ed4d7c44",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4796,
+      "nonfresh": 1082,
+      "fresh_fraction": 0.815923783599864,
+      "state_counts": {
+        "OK": 4796,
+        "RECENTLY_LOST": 1049,
+        "NO_IMAGES_YET": 30,
+        "LOST": 3
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 46.440448280537595,
+        "p50": 43.845816,
+        "p95": 61.8476297,
+        "p99": 70.77906158999997,
+        "max": 205.70127499999998,
+        "over_100_ms": 3
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4796
+      },
+      "raw_event_records": 28308,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4796,
+          "matched_nonfresh": 1082,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1049,
+            "NO_IMAGES_YET": 30,
+            "LOST": 3
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4796,
+          "matched_nonfresh": 1082,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1049,
+            "NO_IMAGES_YET": 30,
+            "LOST": 3
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 580,
+        "max_rss_kib": 921084.0,
+        "max_pss_kib": 922790.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0326730386733636,
+        "temperature_c_range": [
+          44.854,
+          47.247
+        ],
+        "frequency_mhz_range": [
+          600.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33822,
+          "last": 33945,
+          "delta": 123
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 30,
+        "points_retained": 262144,
+        "point_drops": 163763,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 830051,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 37671,
+            "stored": 37671,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 42449,
+            "stored": 42449,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 81467,
+            "stored": 81467,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 36212,
+            "stored": 36212,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 45732,
+            "stored": 45732,
+            "dropped": 0
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 182376,
+            "stored": 18613,
+            "dropped": 163763
+          }
+        ],
+        "bow_prepares": 1120,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 427839,
+        "start_ticks": 356286986
+      },
+      "run_start_epoch_s": 1793610447.1821148,
+      "seal_created": "2026-11-02T17:17:50+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "B_bow_04_off",
+      "stage": "bow",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false,
+      "seal_sha256": "b26aff0d8dd5d3477020d3607edbf7d7297a1a9dd3bcdef561590f12d5a1d4bf",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4769,
+      "nonfresh": 1109,
+      "fresh_fraction": 0.8113303844845186,
+      "state_counts": {
+        "OK": 4769,
+        "RECENTLY_LOST": 1071,
+        "NO_IMAGES_YET": 31,
+        "LOST": 7
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 45.15084243211977,
+        "p50": 42.716824,
+        "p95": 59.60387059999999,
+        "p99": 75.23099185999988,
+        "max": 287.342156,
+        "over_100_ms": 18
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4769
+      },
+      "raw_event_records": 28281,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4769,
+          "matched_nonfresh": 1109,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1071,
+            "NO_IMAGES_YET": 31,
+            "LOST": 7
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4769,
+          "matched_nonfresh": 1109,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1071,
+            "NO_IMAGES_YET": 31,
+            "LOST": 7
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 580,
+        "max_rss_kib": 924156.0,
+        "max_pss_kib": 925422.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0332667481480728,
+        "temperature_c_range": [
+          44.854,
+          47.296
+        ],
+        "frequency_mhz_range": [
+          600.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 33945,
+          "last": 34097,
+          "delta": 152
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 31,
+        "points_retained": 262144,
+        "point_drops": 177742,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 846093,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 40268,
+            "stored": 40268,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 39208,
+            "stored": 39208,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 116916,
+            "stored": 116916,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 45591,
+            "stored": 45591,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 30782,
+            "stored": 20161,
+            "dropped": 10621
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 167121,
+            "stored": 0,
+            "dropped": 167121
+          }
+        ],
+        "bow_prepares": 0,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 31,
+      "loaded_process_identity": {
+        "pid": 428197,
+        "start_ticks": 356349308
+      },
+      "run_start_epoch_s": 1793611070.5999126,
+      "seal_created": "2026-11-02T17:28:13+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_01_P0",
+      "stage": "matrix",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "b0e558679d0803ba423042a65f69d92a75965347b82d2aee8b91e51c5cbc7e43",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4927,
+      "nonfresh": 951,
+      "fresh_fraction": 0.8382102756039469,
+      "state_counts": {
+        "OK": 4927,
+        "RECENTLY_LOST": 923,
+        "NO_IMAGES_YET": 23,
+        "LOST": 5
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 46.8616451964954,
+        "p50": 44.129627,
+        "p95": 62.09437234999998,
+        "p99": 74.43657835999988,
+        "max": 207.360973,
+        "over_100_ms": 5
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4927
+      },
+      "raw_event_records": 28439,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4927,
+          "matched_nonfresh": 951,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 923,
+            "NO_IMAGES_YET": 23,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4927,
+          "matched_nonfresh": 951,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 923,
+            "NO_IMAGES_YET": 23,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 579,
+        "max_rss_kib": 911212.0,
+        "max_pss_kib": 912478.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.033922842507183,
+        "temperature_c_range": [
+          44.219,
+          47.443
+        ],
+        "frequency_mhz_range": [
+          600.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 1,
+          "delta": 1
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 34097,
+          "last": 34251,
+          "delta": 154
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 23,
+        "points_retained": 262144,
+        "point_drops": 183375,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 803792,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 37184,
+            "stored": 37184,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 25665,
+            "stored": 25665,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 83384,
+            "stored": 83384,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 72997,
+            "stored": 72997,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 45760,
+            "stored": 42914,
+            "dropped": 2846
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 180529,
+            "stored": 0,
+            "dropped": 180529
+          }
+        ],
+        "bow_prepares": 1086,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 23,
+      "loaded_process_identity": {
+        "pid": 428580,
+        "start_ticks": 356414781
+      },
+      "run_start_epoch_s": 1793611725.2431943,
+      "seal_created": "2026-11-02T17:39:07+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_02_P1",
+      "stage": "matrix",
+      "config_id": "P1",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "63017500d96464ac0cfc308c92baf14ddc78c4021165599de59a9f68229df2f6",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4884,
+      "nonfresh": 994,
+      "fresh_fraction": 0.8308948621980266,
+      "state_counts": {
+        "OK": 4884,
+        "RECENTLY_LOST": 962,
+        "NO_IMAGES_YET": 28,
+        "LOST": 4
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 55.73916146988772,
+        "p50": 52.876381499999994,
+        "p95": 75.25063725,
+        "p99": 90.38526591999971,
+        "max": 279.896039,
+        "over_100_ms": 26
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4884
+      },
+      "raw_event_records": 28396,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4884,
+          "matched_nonfresh": 994,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 962,
+            "NO_IMAGES_YET": 28,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4884,
+          "matched_nonfresh": 994,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 962,
+            "NO_IMAGES_YET": 28,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 577,
+        "max_rss_kib": 1022280.0,
+        "max_pss_kib": 1023758.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0364112063940008,
+        "temperature_c_range": [
+          44.805,
+          47.736
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 16,
+          "delta": 15
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 34251,
+          "last": 35053,
+          "delta": 802
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 28,
+        "points_retained": 262144,
+        "point_drops": 475472,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 1098207,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 55572,
+            "stored": 55572,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 52633,
+            "stored": 52633,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 118216,
+            "stored": 118216,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 95800,
+            "stored": 35723,
+            "dropped": 60077
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 108946,
+            "stored": 0,
+            "dropped": 108946
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 306449,
+            "stored": 0,
+            "dropped": 306449
+          }
+        ],
+        "bow_prepares": 1069,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 28,
+      "loaded_process_identity": {
+        "pid": 428942,
+        "start_ticks": 356477055
+      },
+      "run_start_epoch_s": 1793612347.9779632,
+      "seal_created": "2026-11-02T17:49:30+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_03_P2",
+      "stage": "matrix",
+      "config_id": "P2",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "47f8075054141779fb163a4be77624d677500095289d95413e9b8e6c27231deb",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4852,
+      "nonfresh": 1026,
+      "fresh_fraction": 0.8254508336168764,
+      "state_counts": {
+        "OK": 4852,
+        "RECENTLY_LOST": 994,
+        "NO_IMAGES_YET": 29,
+        "LOST": 3
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 49.07161159237835,
+        "p50": 46.8871925,
+        "p95": 62.9521156,
+        "p99": 72.76549524999999,
+        "max": 297.707963,
+        "over_100_ms": 5
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4852
+      },
+      "raw_event_records": 28364,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4852,
+          "matched_nonfresh": 1026,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 994,
+            "NO_IMAGES_YET": 29,
+            "LOST": 3
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4852,
+          "matched_nonfresh": 1026,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 994,
+            "NO_IMAGES_YET": 29,
+            "LOST": 3
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 577,
+        "max_rss_kib": 933708.0,
+        "max_pss_kib": 935158.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0369068147604896,
+        "temperature_c_range": [
+          44.902,
+          47.394
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 35125,
+          "last": 35125,
+          "delta": 0
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 29,
+        "points_retained": 262144,
+        "point_drops": 287917,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 861730,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 38293,
+            "stored": 38293,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 42289,
+            "stored": 42289,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 76270,
+            "stored": 76270,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 64672,
+            "stored": 64672,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 61370,
+            "stored": 40620,
+            "dropped": 20750
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 267167,
+            "stored": 0,
+            "dropped": 267167
+          }
+        ],
+        "bow_prepares": 1096,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 29,
+      "loaded_process_identity": {
+        "pid": 429300,
+        "start_ticks": 356539370
+      },
+      "run_start_epoch_s": 1793612970.717003,
+      "seal_created": "2026-11-02T17:59:53+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_04_P3",
+      "stage": "matrix",
+      "config_id": "P3",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "a2dd96e64d2155a97930b9e0b9fb5b4331975f25452cd2689beb71fb33fa72fd",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 5137,
+      "nonfresh": 741,
+      "fresh_fraction": 0.8739367131677441,
+      "state_counts": {
+        "OK": 5137,
+        "RECENTLY_LOST": 725,
+        "NO_IMAGES_YET": 15,
+        "LOST": 1
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 60.434417249574686,
+        "p50": 58.321201,
+        "p95": 80.92061534999999,
+        "p99": 97.09207976999994,
+        "max": 257.517227,
+        "over_100_ms": 54
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 5137
+      },
+      "raw_event_records": 28649,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 5137,
+          "matched_nonfresh": 741,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 725,
+            "NO_IMAGES_YET": 15,
+            "LOST": 1
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 5137,
+          "matched_nonfresh": 741,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 725,
+            "NO_IMAGES_YET": 15,
+            "LOST": 1
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 578,
+        "max_rss_kib": 1048452.0,
+        "max_pss_kib": 1050214.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0356532651543668,
+        "temperature_c_range": [
+          44.609,
+          48.127
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 19,
+          "delta": 19
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 35125,
+          "last": 36108,
+          "delta": 983
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 15,
+        "points_retained": 262144,
+        "point_drops": 621489,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 1206768,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 77526,
+            "stored": 77526,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 90144,
+            "stored": 90144,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 263975,
+            "stored": 94474,
+            "dropped": 169501
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 106706,
+            "stored": 0,
+            "dropped": 106706
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 80144,
+            "stored": 0,
+            "dropped": 80144
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 265138,
+            "stored": 0,
+            "dropped": 265138
+          }
+        ],
+        "bow_prepares": 1165,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 15,
+      "loaded_process_identity": {
+        "pid": 429655,
+        "start_ticks": 356601595
+      },
+      "run_start_epoch_s": 1793613593.7593598,
+      "seal_created": "2026-11-02T18:10:16+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_05_P3",
+      "stage": "matrix",
+      "config_id": "P3",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "50992d61c82df4cc15153f337473832989dd2154b4ac1506bd727857e24fc4d1",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 5093,
+      "nonfresh": 785,
+      "fresh_fraction": 0.8664511738686628,
+      "state_counts": {
+        "OK": 5093,
+        "RECENTLY_LOST": 771,
+        "NO_IMAGES_YET": 13,
+        "LOST": 1
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 60.931930802824084,
+        "p50": 58.00386949999999,
+        "p95": 84.7760182,
+        "p99": 115.07293807999966,
+        "max": 229.73878399999998,
+        "over_100_ms": 89
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 5093
+      },
+      "raw_event_records": 28605,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 5093,
+          "matched_nonfresh": 785,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 771,
+            "NO_IMAGES_YET": 13,
+            "LOST": 1
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 5093,
+          "matched_nonfresh": 785,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 771,
+            "NO_IMAGES_YET": 13,
+            "LOST": 1
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 576,
+        "max_rss_kib": 1100692.0,
+        "max_pss_kib": 1101850.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.038574561415969,
+        "temperature_c_range": [
+          44.854,
+          47.931
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 36108,
+          "last": 36761,
+          "delta": 653
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 13,
+        "points_retained": 262144,
+        "point_drops": 404546,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 1209956,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 77383,
+            "stored": 77383,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 42105,
+            "stored": 42105,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 99792,
+            "stored": 99792,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 88071,
+            "stored": 42864,
+            "dropped": 45207
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 86638,
+            "stored": 0,
+            "dropped": 86638
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 272701,
+            "stored": 0,
+            "dropped": 272701
+          }
+        ],
+        "bow_prepares": 1215,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 13,
+      "loaded_process_identity": {
+        "pid": 430023,
+        "start_ticks": 356663938
+      },
+      "run_start_epoch_s": 1793614216.734567,
+      "seal_created": "2026-11-02T18:20:39+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_06_P2",
+      "stage": "matrix",
+      "config_id": "P2",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "2316a5b8cce63ffaed456f5ec50ca1eb754673ee8743e1fc9e89f2dee5632b83",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4789,
+      "nonfresh": 1089,
+      "fresh_fraction": 0.8147329023477373,
+      "state_counts": {
+        "OK": 4789,
+        "RECENTLY_LOST": 1055,
+        "NO_IMAGES_YET": 30,
+        "LOST": 4
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 48.90545942310309,
+        "p50": 46.8430465,
+        "p95": 62.50030245,
+        "p99": 71.03818983999997,
+        "max": 286.79641,
+        "over_100_ms": 6
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4789
+      },
+      "raw_event_records": 28301,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4789,
+          "matched_nonfresh": 1089,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1055,
+            "NO_IMAGES_YET": 30,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4789,
+          "matched_nonfresh": 1089,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1055,
+            "NO_IMAGES_YET": 30,
+            "LOST": 4
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 576,
+        "max_rss_kib": 925984.0,
+        "max_pss_kib": 927246.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.037868250325808,
+        "temperature_c_range": [
+          44.805,
+          47.443
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 36761,
+          "last": 36761,
+          "delta": 0
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 30,
+        "points_retained": 262144,
+        "point_drops": 309153,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 838091,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 64241,
+            "stored": 64241,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 26919,
+            "stored": 26919,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 66287,
+            "stored": 66287,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 69844,
+            "stored": 69844,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 59817,
+            "stored": 34853,
+            "dropped": 24964
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 284189,
+            "stored": 0,
+            "dropped": 284189
+          }
+        ],
+        "bow_prepares": 1069,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 30,
+      "loaded_process_identity": {
+        "pid": 430381,
+        "start_ticks": 356726304
+      },
+      "run_start_epoch_s": 1793614840.4909568,
+      "seal_created": "2026-11-02T18:31:02+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_07_P1",
+      "stage": "matrix",
+      "config_id": "P1",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "2ea63ddbe6cd2d38c071ab41b3b55bbf95dbd854f3f1b8b95597d9b707ec95a8",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4900,
+      "nonfresh": 978,
+      "fresh_fraction": 0.8336168764886016,
+      "state_counts": {
+        "OK": 4900,
+        "RECENTLY_LOST": 949,
+        "NO_IMAGES_YET": 29
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 54.98976125042531,
+        "p50": 52.232907,
+        "p95": 73.05930045,
+        "p99": 89.48394092999996,
+        "max": 138.357093,
+        "over_100_ms": 19
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4900
+      },
+      "raw_event_records": 28412,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4900,
+          "matched_nonfresh": 978,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 949,
+            "NO_IMAGES_YET": 29
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4900,
+          "matched_nonfresh": 978,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 949,
+            "NO_IMAGES_YET": 29
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 576,
+        "max_rss_kib": 1027400.0,
+        "max_pss_kib": 1028538.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.039027042720143,
+        "temperature_c_range": [
+          44.658,
+          47.492
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 36761,
+          "last": 36761,
+          "delta": 0
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 29,
+        "points_retained": 262144,
+        "point_drops": 470555,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 1072695,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 79758,
+            "stored": 79758,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 86370,
+            "stored": 86370,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 109154,
+            "stored": 96016,
+            "dropped": 13138
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 88919,
+            "stored": 0,
+            "dropped": 88919
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 84034,
+            "stored": 0,
+            "dropped": 84034
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 284464,
+            "stored": 0,
+            "dropped": 284464
+          }
+        ],
+        "bow_prepares": 1068,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 29,
+      "loaded_process_identity": {
+        "pid": 430761,
+        "start_ticks": 356788544
+      },
+      "run_start_epoch_s": 1793615463.3219633,
+      "seal_created": "2026-11-02T18:41:25+08:00",
+      "checks_passed": true,
+      "errors": []
+    },
+    {
+      "id": "C_08_P0",
+      "stage": "matrix",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": true,
+      "seal_sha256": "f0017acf90c5375a33e11a28571fc2e77c1b0bdbb1d87c4a855e7accb6b5975e",
+      "sealed_files_checked": 53,
+      "source_ordinals": 5878,
+      "processed": 5878,
+      "fresh": 4803,
+      "nonfresh": 1075,
+      "fresh_fraction": 0.8171146648519905,
+      "state_counts": {
+        "OK": 4803,
+        "RECENTLY_LOST": 1041,
+        "NO_IMAGES_YET": 29,
+        "LOST": 5
+      },
+      "callback_ms": {
+        "count": 5878,
+        "mean": 46.836963776794825,
+        "p50": 44.08894,
+        "p95": 62.45447394999999,
+        "p99": 73.91962598999976,
+        "max": 297.172591,
+        "over_100_ms": 7
+      },
+      "source_counter_totals": {
+        "received_rgb": 5878,
+        "received_depth": 5878,
+        "sync_drop_rgb": 0,
+        "sync_drop_depth": 0,
+        "paired": 5878,
+        "returned": 5878,
+        "valid_fresh": 4803
+      },
+      "raw_event_records": 28315,
+      "consumers": {
+        "raw": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4803,
+          "matched_nonfresh": 1075,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1041,
+            "NO_IMAGES_YET": 29,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        },
+        "continuous": {
+          "records": 5878,
+          "finite": 5878,
+          "matched_fresh": 4803,
+          "matched_nonfresh": 1075,
+          "matched_nonfresh_states": {
+            "RECENTLY_LOST": 1041,
+            "NO_IMAGES_YET": 29,
+            "LOST": 5
+          },
+          "unknown_stamp_count": 0
+        }
+      },
+      "memory": {
+        "samples": 579,
+        "max_rss_kib": 929052.0,
+        "max_pss_kib": 930390.0,
+        "max_swap_kib": 0.0,
+        "sample_interval_mean_s": 1.0328057621803883,
+        "temperature_c_range": [
+          44.707,
+          47.199
+        ],
+        "frequency_mhz_range": [
+          1200.0,
+          1500.0
+        ],
+        "majflt": {
+          "first": 0,
+          "last": 0,
+          "delta": 0
+        },
+        "pswpin": {
+          "first": 2241,
+          "last": 2241,
+          "delta": 0
+        },
+        "pswpout": {
+          "first": 36761,
+          "last": 36761,
+          "delta": 0
+        },
+        "oom_kill": {
+          "first": 1,
+          "last": 1,
+          "delta": 0
+        }
+      },
+      "diagnostic": {
+        "frame_records": 5878,
+        "frame_drops": 0,
+        "current_frame_reset_rows": 29,
+        "points_retained": 262144,
+        "point_drops": 193958,
+        "lifetime_retained": 100000,
+        "lifetime_drops": 847287,
+        "workers_joined": false,
+        "coordinate_windows": [
+          {
+            "start": 23,
+            "end": 100,
+            "attempted": 36951,
+            "stored": 36951,
+            "dropped": 0
+          },
+          {
+            "start": 640,
+            "end": 710,
+            "attempted": 32113,
+            "stored": 32113,
+            "dropped": 0
+          },
+          {
+            "start": 1320,
+            "end": 1420,
+            "attempted": 76609,
+            "stored": 76609,
+            "dropped": 0
+          },
+          {
+            "start": 2180,
+            "end": 2270,
+            "attempted": 69127,
+            "stored": 69127,
+            "dropped": 0
+          },
+          {
+            "start": 3380,
+            "end": 3470,
+            "attempted": 61809,
+            "stored": 47344,
+            "dropped": 14465
+          },
+          {
+            "start": 5000,
+            "end": 5220,
+            "attempted": 179493,
+            "stored": 0,
+            "dropped": 179493
+          }
+        ],
+        "bow_prepares": 1139,
+        "lossless_all_streams": false
+      },
+      "map_id_change_count": 29,
+      "loaded_process_identity": {
+        "pid": 431123,
+        "start_ticks": 356850784
+      },
+      "run_start_epoch_s": 1793616085.6781104,
+      "seal_created": "2026-11-02T18:51:47+08:00",
+      "checks_passed": true,
+      "errors": []
+    }
+  ],
+  "gates_recomputed_from_raw": {
+    "observation": {
+      "off_p95_mean_ms": 59.704095075,
+      "on_p95_mean_ms": 59.63727457499999,
+      "p95_increase_ms": -0.06682050000000572,
+      "p95_allowed_increase_ms": 2.98520475375,
+      "off_fresh_mean": 0.815413405920381,
+      "on_fresh_mean": 0.815413405920381,
+      "off_fresh_range": 0.011568560734943945,
+      "absolute_fresh_difference": 0.0,
+      "allowed_fresh_difference": 0.02,
+      "gate_passed": true
+    },
+    "bow": {
+      "off_fresh_mean": 0.8121810139503232,
+      "on_fresh_mean": 0.8175399795848928,
+      "off_replicate_range": 0.0017012589316093285,
+      "off_p95_mean_ms": 59.08449954999999,
+      "on_p95_mean_ms": 61.828895374999995,
+      "allowed_fresh_decline": 0.02,
+      "on_input_completion_failure": false,
+      "fresh_gate_failed": false,
+      "latency_gate_failed": false,
+      "gate_passed": true
+    },
+    "matrix_candidate_screening": {
+      "P0_nonfresh_replicates": [
+        951,
+        1075
+      ],
+      "P0_nonfresh_mean": 1013,
+      "candidate_max_allowed_nonfresh_each": 709.0999999999999,
+      "configs": {
+        "P0": {
+          "fresh": [
+            4927,
+            4803
+          ],
+          "nonfresh": [
+            951,
+            1075
+          ],
+          "p95_ms": [
+            62.09437234999998,
+            62.45447394999999
+          ],
+          "mean_callback_ms": 46.84930448664511,
+          "quality_gate_both": null,
+          "latency_gate_both": true
+        },
+        "P1": {
+          "fresh": [
+            4884,
+            4900
+          ],
+          "nonfresh": [
+            994,
+            978
+          ],
+          "p95_ms": [
+            75.25063725,
+            73.05930045
+          ],
+          "mean_callback_ms": 55.36446136015651,
+          "quality_gate_both": false,
+          "latency_gate_both": true
+        },
+        "P2": {
+          "fresh": [
+            4852,
+            4789
+          ],
+          "nonfresh": [
+            1026,
+            1089
+          ],
+          "p95_ms": [
+            62.9521156,
+            62.50030245
+          ],
+          "mean_callback_ms": 48.98853550774072,
+          "quality_gate_both": false,
+          "latency_gate_both": true
+        },
+        "P3": {
+          "fresh": [
+            5137,
+            5093
+          ],
+          "nonfresh": [
+            741,
+            785
+          ],
+          "p95_ms": [
+            80.92061534999999,
+            84.7760182
+          ],
+          "mean_callback_ms": 60.68317402619938,
+          "quality_gate_both": false,
+          "latency_gate_both": true
+        }
+      }
+    }
+  },
+  "stage_binding_sha256": {
+    "bow": "8c42d4ef8058778a3ec7e70f2a363fa91e29f220b1126d00cb9f8ba531bffbc6",
+    "matrix": "a83fc62ce795bb9b04f0e3f6aa4dbfb453056b2ae4909bc23fe7745f8b04de9c"
+  },
+  "runtime_source": {
+    "source_commit": "5c8b936fe1a01e594d4866ac6d2ea0d1dea9b0b5",
+    "current118_compile_inputs_equal_arm_build": true,
+    "binary_sha256": {
+      "ros_rgbd": "b1e1b7f8e7df6b2a27ba9dbdc99271ac03baa7dde8c9e64c0d1af2308e5c2114",
+      "liborb_slam3_ros.so": "12c7f4987922635d3de56728936e6979804f01d5b3d79f70647a31edfb46ab7c"
+    },
+    "source_ready_at_build_sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32"
+  },
+  "preservation": {
+    "input_bag_sha256": "dda9cc56ac095d6bfa5c7c2265995b6e8791615f4ecc880ccbe63a176c4bcbf1",
+    "input_bag_metadata_matches": true,
+    "old_archive_manifests": [
+      {
+        "archive": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_map_decay_20261102",
+        "manifest_sha256": "3606e84f57c322720860bb275da200264bb17c3469b6c14981c135633a3bad12",
+        "sealed_files_checked": 48,
+        "mismatches": []
+      },
+      {
+        "archive": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_d435i_003015_20261030",
+        "manifest_sha256": "2205ad8747ed9d45cdbfa1f89e1c81e1208a963d96f4c2227324a7eb2e0efdcd",
+        "sealed_files_checked": 73,
+        "mismatches": []
+      }
+    ],
+    "scope": "内容及预记录size/mtime对照证明保留；本审查只读。不能从最终内容哈希推断所有历史进程从未打开过写权限。"
+  },
+  "diagnostic_scope": {
+    "on_rounds": 14,
+    "all_on_frames_5878_complete": true,
+    "all_on_point_and_lifetime_details_truncated": true,
+    "all_workers_joined_false": true,
+    "interpretation": "逐帧CSV完整，不等同坐标/寿命明细完整；点/寿命明细是有界前缀，窗口丢失不均匀，不可作全程逐点无偏统计。寿命聚合仅截至关闭准入，legacy后台join未验证。"
+  },
+  "consumer_scope": "两消费者有限topic输出含同stamp非fresh帧，已逐帧身份配对；全部收到不等于全部输出新有效位姿。",
+  "limits": [
+    "全部输入完整/正常退出不等于跟踪质量通过。",
+    "每配置两次测量与顺序对照不支持普遍稳定性能因果承诺；P95<100ms不能消除尾延迟或替代旧90ms资格。",
+    "没有GT，不推断ATE/RPE、尺度/地图几何精度、错误重定位已被完全排除。",
+    "1Hz资源采样最大值不是连续峰值；系统分页/oom绝对初值与差量不能全部归因SLAM。",
+    "backend_joined/joined_verified为null且diagnostic workers_joined=false，不承诺后台全join。"
+  ],
+  "errors": [],
+  "hashing": {
+    "unique_files_hashed": 1277,
+    "bytes_hashed": 5479636057
+  },
+  "report_review": {
+    "status": "not_yet_available_at_audit_start",
+    "note": "主REPORT尚未生成；先向主控提供原始审计数字及必要表述边界。"
+  }
+}

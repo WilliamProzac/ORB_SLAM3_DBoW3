@@ -1,0 +1,158 @@
+{
+  "schema": "rgbd36_report_review_v1",
+  "reviewed_at": "2026-11-02T19:04:06+08:00",
+  "status": "passed",
+  "report": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/REPORT.md",
+  "report_sha256": "14a2922619724210de29e8b79201562280fcdf2589a65fb1d4abffe30c3cfe36",
+  "review_scope": "只读主报告、已归档独立审计及派生数值/诊断/现有图表验证证据；未重新hash840文件、未跑测试、未修改封存或报告。仅新增本JSON。",
+  "tables_verified_against_independent_raw_audit": {
+    "round_rows": 16,
+    "parameter_rows": 4,
+    "all_displayed_fields_agree_at_report_rounding": true,
+    "raw_audit_status": "passed",
+    "total_processed": 94048,
+    "total_fresh": 77716
+  },
+  "parameter_screen": {
+    "P0_nonfresh_mean": 1013,
+    "candidate_each_run_limit": 709.1,
+    "P3_nonfresh": [
+      741,
+      785
+    ],
+    "P3_nonfresh_mean": 763,
+    "P3_nonfresh_reduction_percent": 24.679170779861796,
+    "P3_callback_mean_increase_percent": 29.528441651674385,
+    "all_candidate_quality_gates_failed": true,
+    "P0_is_reference": true,
+    "interpretation": "P95门通过不替代30%质量门、旧90ms资格或每帧100ms截止时间；P3不能作为已通过的新默认。"
+  },
+  "failure_shape": {
+    "P0_onsets": [
+      61,
+      69
+    ],
+    "P3_onsets": [
+      69,
+      82
+    ],
+    "P0_new_maps": [
+      23,
+      29
+    ],
+    "P3_new_maps": [
+      15,
+      13
+    ],
+    "P0_same_id_resets": [
+      5,
+      5
+    ],
+    "P3_same_id_resets": [
+      1,
+      1
+    ],
+    "P0_recovery_category_counts": [
+      32,
+      34
+    ],
+    "P3_recovery_category_counts": [
+      52,
+      67
+    ],
+    "recovery_category_scope": "未观察到新图/同ID活动reset前恢复fresh；不是同一坐标系未变或合图正确性的证明。"
+  },
+  "merge_scope": {
+    "C_04_P3": {
+      "merge_detected_lines": 2,
+      "merge_finished_lines": 2,
+      "source_frame_localization": "unknown",
+      "translation_step_statistics": null,
+      "step_statistics_suppressed": true
+    },
+    "C_05_P3": {
+      "merge_detected_lines": 3,
+      "merge_finished_lines": 3,
+      "source_frame_localization": "unknown",
+      "translation_step_statistics": null,
+      "step_statistics_suppressed": true
+    }
+  },
+  "wording_checks": {
+    "parameter_none_pass": true,
+    "p3_fewer_nonfresh_more_onsets": true,
+    "recovery_coordinate_claim_removed": true,
+    "p3_unlocalized_merge_and_suppression": true,
+    "bounded_rows_not_unique_points": true,
+    "lifetime_cutoff_scope": true,
+    "no_backend_join_claim": true,
+    "no_gt_qualification": true,
+    "no_unmeasured_queue_absorption": true,
+    "input_rate_and_queue_preserved": true,
+    "p3_tail_retained": true,
+    "conditional_later_experiments_not_claimed_done": true
+  },
+  "local_markdown_links": [
+    {
+      "label": "诊断结果",
+      "target": "analysis/DIAGNOSTIC_FINDINGS.md",
+      "exists": true
+    },
+    {
+      "label": "字段和源码边界",
+      "target": "analysis/SOURCE_INTERPRETATION.md",
+      "exists": true
+    },
+    {
+      "label": "原始汇总",
+      "target": "SUMMARY.json",
+      "exists": true
+    },
+    {
+      "label": "独立数值对比",
+      "target": "analysis/NUMERICAL_COMPARISON.md",
+      "exists": true
+    },
+    {
+      "label": "独立封存审计",
+      "target": "validation/BOARD_TRIALS_INDEPENDENT_REVIEW.json",
+      "exists": true
+    },
+    {
+      "label": "16轮交互图",
+      "target": "../rgbd_stability_charts_20261102/callback_breakdown.html",
+      "exists": true
+    }
+  ],
+  "all_local_links_exist": true,
+  "diagnostic_limits": {
+    "on_rounds": 14,
+    "frame_rows_per_round": 5878,
+    "frame_drops": 0,
+    "coordinate_rows_cap": 262144,
+    "lifetime_rows_cap": 100000,
+    "all_point_lifetime_detail_truncated": true,
+    "life_aggregates_scope": "诊断关闭准入前累计，非完整墙钟生命周期/后台所有工作",
+    "workers_joined": false,
+    "no_gt_or_full_trajectory_qualification": true
+  },
+  "existing_chart_validation_read": {
+    "data_validation_status": "passed",
+    "data_validation_scope": "data integrity and chart accounting, not performance acceptance",
+    "browser_validation_status": "passed",
+    "browser_checks": 129,
+    "exceptions": 0,
+    "external_requests": 0,
+    "reviewer_used_browser": false,
+    "scope": "只读既有验证记录，未重复浏览器检查。"
+  },
+  "corrections_confirmed": [
+    "删除原坐标恢复标签，限定为未观察到新图/同ID重置的恢复。",
+    "明确P3两轮2/3组合图日志未定位源帧，抑制轨迹步长，同ID不能保证同坐标，合图正确性未验证。",
+    "区分262144条坐标记录与唯一地图点，寿命聚合限制到关闭准入前。",
+    "不再以无输入缺失推断队列实际吸收或测得端到端延迟。",
+    "诊断结果文档及全部6个Markdown本地链接已到位。"
+  ],
+  "errors": [],
+  "pending_findings": []
+}

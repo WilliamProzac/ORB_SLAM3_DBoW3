@@ -1,0 +1,18 @@
+{
+  "active": [],
+  "binaries": {
+    "old": {
+      "ros_rgbd": "20a17635abf62bde699f83b6ca832324094986bdd9d1a2c53df28e4ef75981c4",
+      "liborb_slam3_ros.so": "471f66f76f683c0ef22eb8e151b0efb056ef49615a887ac9158474937b95b6f4"
+    },
+    "new": {
+      "ros_rgbd": "b1e1b7f8e7df6b2a27ba9dbdc99271ac03baa7dde8c9e64c0d1af2308e5c2114",
+      "liborb_slam3_ros.so": "12c7f4987922635d3de56728936e6979804f01d5b3d79f70647a31edfb46ab7c"
+    }
+  },
+  "free_bytes": 2113359872,
+  "temperature_c": 42.802,
+  "wall_ns": 1793616919324086015,
+  "host_master_port_reusable": true,
+  "all_round_seals": true
+}

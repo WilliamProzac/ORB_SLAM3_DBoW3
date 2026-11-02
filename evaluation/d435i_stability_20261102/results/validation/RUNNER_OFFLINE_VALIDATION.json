@@ -1,0 +1,53 @@
+{
+  "schema": "rgbd36_runner_offline_validation_v1",
+  "passed": true,
+  "py_compile": {
+    "exit_code": 0,
+    "scope": "all tools/*.py"
+  },
+  "targeted_tests": {
+    "command": "python3 test_trials.py",
+    "tests": 13,
+    "passed": 13,
+    "exit_code": 0,
+    "scope": "no SSH, ROS master, SLAM or board process; actual127.0.0.1 LISTEN/TIME_WAIT fixtures only"
+  },
+  "initial_sandbox_socket_attempt": {
+    "tests_without_sockets_passed": 9,
+    "socket_errors": 2,
+    "reason": "sandbox EPERM creating AF_INET socket; repeated only in local socket-capable context, all11passed"
+  },
+  "identity_and_behavior": [
+    "full bag SHA detects unchanged-metadata replacement",
+    "extra config change rejected",
+    "partial input preparation safely resumed; operator INPUT_IDENTITY preserved",
+    "stage predecessor gates and binding overwrite rejection",
+    "sealed output tamper rejected",
+    "reviewed candidate failure remains failed and is resumable",
+    "residual process cannot be waived by failure review",
+    "review cannot waive observed stamp/sequence mismatch even with valid transfer SHA",
+    "review cannot waive board source identity error counters; missing inputs and board overflow remain failed evidence",
+    "runtime observer independent from base scale recorder",
+    "header weighting partitions unknown vs fresh vs nonfresh; merge suppresses trajectory steps",
+    "real LISTEN rejects probe",
+    "TIME_WAIT permits SO_REUSEADDR probe"
+  ],
+  "files_sha256": {
+    "checkout/evaluation/d435i_stability_20261102/tools/RUNNER_CONTRACT.md": "80d6c50239f8fb9381346777f911f7c71bc33aff77e2caae2473784aff23590f",
+    "checkout/evaluation/d435i_stability_20261102/tools/build_arm.py": "614ac28df183b13a92bf15ff306dcd132090bccba76c43020c16404d27cf3f79",
+    "checkout/evaluation/d435i_stability_20261102/tools/build_arm_inner.py": "97b7b879927e7f535d51cd0e848bce1b983009e1835585212feea1392efa0241",
+    "checkout/evaluation/d435i_stability_20261102/tools/build_common.py": "d59a9ca6414ca7ba45b43d3fc5c3c87bbb61f65cdcde224e45e464dd02222023",
+    "checkout/evaluation/d435i_stability_20261102/tools/build_host.py": "c80471fabc32e6470f67f8dbfcbc04e3503289db00145a944bf590046efcf9f6",
+    "checkout/evaluation/d435i_stability_20261102/tools/legacy_reduce.py": "4db3295116228223478d4df95ece098e91fde8bf3e9542e1630fef4618c300ce",
+    "checkout/evaluation/d435i_stability_20261102/tools/localmap_resource_sample.py": "3a5f0de8e255b3bf8add4336878dae2522e0461440f02f04113aec00e062fd80",
+    "checkout/evaluation/d435i_stability_20261102/tools/make_plan.py": "41e160fa85e3ef5647d1ba040580498489491bda54a5171a74b34ec0e67db7ce",
+    "checkout/evaluation/d435i_stability_20261102/tools/pose_observer.py": "1a1defc737ca7bb08c5896ba273dc82c17c7478c275f3ba6cad607b38fe41ee4",
+    "checkout/evaluation/d435i_stability_20261102/tools/rgbd_v2_sequence_monitor.py": "68da5cdbaf82d9d6990454dd5f9653788b05260259aeceeb23411f6f55adac5b",
+    "checkout/evaluation/d435i_stability_20261102/tools/run_trials.py": "c3499ec621b3595a54804ccafb5f4c9b375f400626947f78d24e1cbdea21482b",
+    "checkout/evaluation/d435i_stability_20261102/tools/summarize_trials.py": "c0b3d23a658f8b8a273166b4f7f3210545a3f948cc06323ee58acea2f6ae8460",
+    "checkout/evaluation/d435i_stability_20261102/tools/test_trials.py": "954cadcad824b5ebc51d77e714a6369716c396deafc2bca5f8d31930933e89c5",
+    "checkout/evaluation/d435i_stability_20261102/tools/trial_common.py": "f72b2cadee487b04147e54ffc598ecfe9a88674a4d5aefd4120362d8864a968a",
+    "checkout/evaluation/d435i_stability_20261102/tools/validate_native_only.py": "cb6e47e36dc5d36c7ecd6921ad73f917e731af4e4da37b917aca6dc9ab47d149"
+  },
+  "runtime_not_verified": "No board/SSH/ROS replay performed by this sub-agent; actual package/helper paths, runtime loading, transport and shutdown await main agent execution."
+}

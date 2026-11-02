@@ -1,0 +1,61 @@
+{
+  "package_id": "runtime",
+  "observation": true,
+  "bow_ready": true,
+  "decision_evidence": {
+    "protocol": "preflight/EXPERIMENT_PROTOCOL.json",
+    "protocol_sha256": "61d03f2ba7048e89103c9559e948f5b2ba9273a05d96feabd08c469bba67f291",
+    "summary_sha256": "274ff66460a86bb0e6b05cd0e903f9fd42a0f87a9b477c47155fdefefe5f1c70",
+    "native_validation": "builds/native_fixture_02/RESULT.json",
+    "rows": [
+      {
+        "id": "B_bow_01_off",
+        "on": false,
+        "trial_valid": true,
+        "fresh": 4779,
+        "fraction": 0.8130316434161279,
+        "mean_ms": 44.72331396376318,
+        "p95_ms": 58.565128499999986
+      },
+      {
+        "id": "B_bow_02_on",
+        "on": true,
+        "trial_valid": true,
+        "fresh": 4815,
+        "fraction": 0.8191561755699217,
+        "mean_ms": 46.601665538618576,
+        "p95_ms": 61.81016104999999
+      },
+      {
+        "id": "B_bow_03_on",
+        "on": true,
+        "trial_valid": true,
+        "fresh": 4796,
+        "fraction": 0.815923783599864,
+        "mean_ms": 46.440448280537595,
+        "p95_ms": 61.8476297
+      },
+      {
+        "id": "B_bow_04_off",
+        "on": false,
+        "trial_valid": true,
+        "fresh": 4769,
+        "fraction": 0.8113303844845186,
+        "mean_ms": 45.15084243211977,
+        "p95_ms": 59.60387059999999
+      }
+    ],
+    "off_fresh_mean": 0.8121810139503232,
+    "on_fresh_mean": 0.8175399795848928,
+    "off_replicate_range": 0.0017012589316093285,
+    "allowed_fresh_decline": 0.02,
+    "off_p95_mean_ms": 59.08449954999999,
+    "on_p95_mean_ms": 61.828895374999995,
+    "on_input_completion_failure": false,
+    "fresh_gate_failed": false,
+    "latency_gate_failed": false,
+    "gate_passed": true,
+    "reason": "Apply pre-data BoW gate once. No failure/incorrectness identified by completed trials; no GT accuracy claim. Fix selected for safe publication, not a claimed large tracking benefit.",
+    "wall_ns": 1793611704800504039
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "feature": "RGBD36",
+  "scheduled_rounds": 16,
+  "completed_sealed_rounds": 16,
+  "processed_sources": 94048,
+  "fresh_sources": 77716,
+  "input_complete": true,
+  "trial_execution_integrity_passed": true,
+  "parameter_screen_passed": false,
+  "selected_default_parameter": null,
+  "reference": "P0",
+  "research_candidate": "P3",
+  "conditional_stages": {
+    "D1_ThDepth": "not_triggered: first matrix did not pass quality screen;2\u20134m physical quality not verified",
+    "D2_depth_filter": "not_triggered: no known-distance/repeated-plane evidence or65535 validity identification",
+    "heldout_winner_validation": "not_triggered: no candidate passed pre-frozen screen",
+    "higher_fps_or_IMU": "not_run: no new true source recordings"
+  },
+  "quality_scope": "Fresh output is not GT accuracy; no single-world trajectory across unlocalized P3 merges; no production performance qualification."
+}

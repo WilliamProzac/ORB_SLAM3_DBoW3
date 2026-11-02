@@ -1,0 +1,586 @@
+{
+  "schema": "rgbd36_independent_review_v1",
+  "reviewed_at": "2026-11-02T16:05:11+08:00",
+  "status": "passed_static_native_and_runner_review",
+  "scope": "独立只读核查本轮隔离checkout与实验工具；仅本证据文件由审查者写入。未启动板端、未执行网络、未修改实现，未重复旧RGBD35分析。",
+  "source_freeze": {
+    "path": "artifacts/rgbd_stability_trials_20261102/preflight/SOURCE_READY_01.json",
+    "sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+    "files_verified": 123,
+    "current_mismatches": [
+      {
+        "path": "evaluation/d435i_stability_20261102/native/stability_native.cc",
+        "original_sha256": "ff826feca89b284b2e94680727ea0fbd2a0782e4526dfc0ced386fc0600497b3",
+        "current_sha256": "ff034670f8bd528f7de1ddbdb8c84382dd7ea7ddefb238ec0d1d1a43d0591c09"
+      },
+      {
+        "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION.md",
+        "original_sha256": "ec097ff06fabde8af3cbc1f2549c1f3386fd63310ef8001ac37a3982739bf2ee",
+        "current_sha256": "5c385a7e24042b5e1c10e3a7e60976967dee769bf1f7b7ada790b0c79645d6b8"
+      },
+      {
+        "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION_FILES.json",
+        "original_sha256": "c036a39d5fea81963d0bc966af1bf06c72048ab6a7a43b197a997712a17dd039",
+        "current_sha256": "0b4c2373071789284be37770debb91b0e77b7d54536cfae549797889e5e1d4aa"
+      }
+    ],
+    "core_compiles_expected": 42,
+    "node_compiles_expected": 2,
+    "implementation_manifest": "artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/native/IMPLEMENTATION_FILES.json",
+    "implementation_manifest_sha256": "c036a39d5fea81963d0bc966af1bf06c72048ab6a7a43b197a997712a17dd039",
+    "implementation_files_verified": 14,
+    "implementation_files": [
+      {
+        "path": "CMakeLists.txt",
+        "sha256": "2d1cbb59b93af176d00764c285e1d06c3e0c6b5d5e3b0c72dcb14d5b2675dd6d",
+        "bytes": 13030
+      },
+      {
+        "path": "include/StabilityDiagnostics.h",
+        "sha256": "b8bd12836a352d0d01064a67972a299741080826ff9cc59577347e2c8b038f59",
+        "bytes": 2376
+      },
+      {
+        "path": "src/StabilityDiagnostics.cc",
+        "sha256": "8ee912e7c9b4a55d669795aa4a605cc9c91955d8e346ea5d093ec9f33746ecb4",
+        "bytes": 11113
+      },
+      {
+        "path": "src/Frame.cc",
+        "sha256": "571211ca12c3226064b6e365fc0cadf4b2c5973504677e10ea88e00fafc3e408",
+        "bytes": 52275
+      },
+      {
+        "path": "src/Tracking.cc",
+        "sha256": "ea5c15fefc04687e95214f72ad1916b5b526c899e92cbf383bf0d8492b063753",
+        "bytes": 192583
+      },
+      {
+        "path": "src/System.cc",
+        "sha256": "c7ad6c7c9e00aa772ee24c61046a1ad0d4fdf8f5bc634222d17608f51627073e",
+        "bytes": 63980
+      },
+      {
+        "path": "src/MapPoint.cc",
+        "sha256": "50a1102a1839c9388f1e26d1b16abed6b9bffe8cfb9d5f13a815ce5d7f9c59b0",
+        "bytes": 25501
+      },
+      {
+        "path": "src/Map.cc",
+        "sha256": "182e002a541c1c48a86fd475609cf5fbbecc574ddfc280cc8aa799de6e22087e",
+        "bytes": 14137
+      },
+      {
+        "path": "src/LocalMapping.cc",
+        "sha256": "d06e4f59ba629de78b3b8310e09993f53e88e0e30f969173cbc970784e46771f",
+        "bytes": 59201
+      },
+      {
+        "path": "runtime/rgbd/src/orb_slam3_ros-master/CMakeLists.txt",
+        "sha256": "7645c57233b43fccefa48ed8a31411f93899ac7683dcf1e4532b74abc02f22c9",
+        "bytes": 13253
+      },
+      {
+        "path": "runtime/rgbd/src/orb_slam3_ros-master/include/ScaleRgbdExperiment.h",
+        "sha256": "9667d7f46d07fb0fd864ab41bc8b4c691f705a82e59abb8327c2fac1f6b4c26e",
+        "bytes": 15698
+      },
+      {
+        "path": "runtime/rgbd/src/orb_slam3_ros-master/src/ros_rgbd.cc",
+        "sha256": "5e550d149f189dbce0d35158bfec30798f8fc03f7cab9887e6971fd385cabe80",
+        "bytes": 43012
+      },
+      {
+        "path": "evaluation/d435i_stability_20261102/native/stability_native.cc",
+        "sha256": "ff826feca89b284b2e94680727ea0fbd2a0782e4526dfc0ced386fc0600497b3",
+        "bytes": 7681
+      },
+      {
+        "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION.md",
+        "sha256": "ec097ff06fabde8af3cbc1f2549c1f3386fd63310ef8001ac37a3982739bf2ee",
+        "bytes": 7275
+      }
+    ],
+    "initial_current_mismatches": [],
+    "after_build_fixture_publication_revision": {
+      "observed": true,
+      "scope": "host01/ARM01/core与native02完成之后，默认夹具同步为已验证idf2版本，说明与实现清单同步；原SOURCE_READY不覆盖。先前123项完全相符结论是构建及原生审查时点事实，当前仅118编译输入继续完全相同。",
+      "backup_path": "artifacts/rgbd_stability_trials_20261102/validation/fixture_failure_01",
+      "canonicalization_sha256": "8203e4ad655fc8f89bb96c13016c8adb7a004d1afc451b1c2547975b862dead2",
+      "original_default_fixture_backup_sha256": "ff826feca89b284b2e94680727ea0fbd2a0782e4526dfc0ced386fc0600497b3",
+      "original_manifest_backup_sha256": "c036a39d5fea81963d0bc966af1bf06c72048ab6a7a43b197a997712a17dd039",
+      "current_manifest_sha256": "0b4c2373071789284be37770debb91b0e77b7d54536cfae549797889e5e1d4aa",
+      "current_manifest_all14_match": true,
+      "current_default_equals_verified_idf2": true,
+      "changed_items": [
+        {
+          "path": "evaluation/d435i_stability_20261102/native/stability_native.cc",
+          "original_sha256": "ff826feca89b284b2e94680727ea0fbd2a0782e4526dfc0ced386fc0600497b3",
+          "current_sha256": "ff034670f8bd528f7de1ddbdb8c84382dd7ea7ddefb238ec0d1d1a43d0591c09"
+        },
+        {
+          "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION.md",
+          "original_sha256": "ec097ff06fabde8af3cbc1f2549c1f3386fd63310ef8001ac37a3982739bf2ee",
+          "current_sha256": "5c385a7e24042b5e1c10e3a7e60976967dee769bf1f7b7ada790b0c79645d6b8"
+        },
+        {
+          "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION_FILES.json",
+          "original_sha256": "c036a39d5fea81963d0bc966af1bf06c72048ab6a7a43b197a997712a17dd039",
+          "current_sha256": "0b4c2373071789284be37770debb91b0e77b7d54536cfae549797889e5e1d4aa"
+        }
+      ]
+    },
+    "path_at_build": "artifacts/rgbd_stability_trials_20261102/preflight/SOURCE_READY.json",
+    "publication_freeze_02": {
+      "path": "artifacts/rgbd_stability_trials_20261102/preflight/SOURCE_READY_02.json",
+      "sha256": "2c9953305b6f2163671e4d11881abb11cd03cb16160e3f4a772d5a7ebedc9f14",
+      "current_alias": "artifacts/rgbd_stability_trials_20261102/preflight/SOURCE_READY.json",
+      "files_verified": 123,
+      "current_mismatches": [],
+      "original_build_freeze_01_retained": true,
+      "changed_from_01_only_fixture_doc_manifest": true,
+      "core_node_compile_inputs_118_identical": true,
+      "verification_timing": "已在最后R4审核前逐项核对；按主控启动计时要求停止后续批量hash/测试。"
+    }
+  },
+  "unchanged_bow_database_contract_files": {
+    "src/KeyFrame.cc": "dd1af14a9bded4dcd9113602e3eded95ba75cc8abe832c80676a1777f8ae2da0",
+    "include/KeyFrame.h": "6838cc7d717157694dff8110de4d6d64b0281617fe8f6449f3a1ae22cb29088f",
+    "src/KeyFrameDatabase.cc": "c4f07a5d07c0544f984e3a836cef76a70aae17f53027de354ecacd2d3caec1bd",
+    "include/KeyFrameDatabase.h": "66b767475e3e36a421c0e203186616e841897dbbc6a484694991d02688eb3f14"
+  },
+  "reviewed_tool_sha256": {
+    "RUNNER_CONTRACT.md": "80d6c50239f8fb9381346777f911f7c71bc33aff77e2caae2473784aff23590f",
+    "build_arm.py": "614ac28df183b13a92bf15ff306dcd132090bccba76c43020c16404d27cf3f79",
+    "build_arm_inner.py": "97b7b879927e7f535d51cd0e848bce1b983009e1835585212feea1392efa0241",
+    "build_common.py": "d59a9ca6414ca7ba45b43d3fc5c3c87bbb61f65cdcde224e45e464dd02222023",
+    "build_host.py": "c80471fabc32e6470f67f8dbfcbc04e3503289db00145a944bf590046efcf9f6",
+    "legacy_reduce.py": "4db3295116228223478d4df95ece098e91fde8bf3e9542e1630fef4618c300ce",
+    "localmap_resource_sample.py": "3a5f0de8e255b3bf8add4336878dae2522e0461440f02f04113aec00e062fd80",
+    "make_plan.py": "41e160fa85e3ef5647d1ba040580498489491bda54a5171a74b34ec0e67db7ce",
+    "pose_observer.py": "1a1defc737ca7bb08c5896ba273dc82c17c7478c275f3ba6cad607b38fe41ee4",
+    "rgbd_v2_sequence_monitor.py": "68da5cdbaf82d9d6990454dd5f9653788b05260259aeceeb23411f6f55adac5b",
+    "run_trials.py": "c3499ec621b3595a54804ccafb5f4c9b375f400626947f78d24e1cbdea21482b",
+    "summarize_trials.py": "c0b3d23a658f8b8a273166b4f7f3210545a3f948cc06323ee58acea2f6ae8460",
+    "test_trials.py": "954cadcad824b5ebc51d77e714a6369716c396deafc2bca5f8d31930933e89c5",
+    "trial_common.py": "f72b2cadee487b04147e54ffc598ecfe9a88674a4d5aefd4120362d8864a968a",
+    "validate_native_only.py": "cb6e47e36dc5d36c7ecd6921ad73f917e731af4e4da37b917aca6dc9ab47d149"
+  },
+  "checks": {
+    "bow_publication": {
+      "status": "static_passed",
+      "detail": "纯RGBD初始化关键帧在mpAtlas->AddKeyFrame前调用PrepareKeyFrame；正常关键帧在mpReferenceKF/mCurrentFrame参考、prev/next链和LocalMapping队列发布前调用。KeyFrame构造器未发布自身；现有ComputeBoW/数据库/序列化未修改。仅0/1启动固定开关；off不调用新增BoW计算，on在独占拥有阶段调用既有方法。"
+    },
+    "off_path_algorithm": {
+      "status": "static_passed",
+      "detail": "未改原匹配、优化、阈值或建点分支；新增计数读取已算出的局部值，原有queue查询处复用结果。未启用诊断时BeginFrame/PoseSnapshot/Life提前返回，Counts为空；没有新增点容器遍历、重投影或缓冲预留。仅Frame默认N/ID定义及scale输入元数据修正不受开关控制；不承诺零函数调用开销或运行结果逐位等同。"
+    },
+    "input_snapshot": {
+      "status": "static_passed",
+      "detail": "实际RGBD Frame构造后、Track之前捕获mnId/N；Track后scale读取捕获值，独立current_frame_valid比较返回对象身份。默认Frame明确定义N=0、mnId=ULONG_MAX；不读取其余未初始化标量，不再把清图后的默认Frame当该输入。wrapper保留toNSec与实际两路seq及source ordinal。"
+    },
+    "bounded_thread_safe_diagnostics": {
+      "status": "static_passed",
+      "detail": "逐帧活动上下文/源身份/stage为thread_local；全局缓冲只保留标量值，20000帧/262144坐标/100000寿命硬上限。所有追加和StopAndFlush共用mutex，停止先关闭入口再遍历写盘，后续追加被拒绝；重复停止不重写。配置在System工作线程创建前call_once读取并固定。新增MapPoint地图访问沿用对象锁/身份屏障，未发现新增锁反向依赖。"
+    },
+    "diagnostic_semantics": {
+      "status": "static_passed_with_limits",
+      "detail": "complete只表示CSV刷盘；各drops、窗口attempted/stored及workers_joined必须独立解释。寿命明细截断后仅前缀，life_totals为已准入事件总计；closed_appends_at_flush不反映未来拒绝。pose_last_*仅最后一次方法边界，非内部求解迭代或固定chi2，后台可在两次坐标读取间改图。NA与实际0分开。"
+    },
+    "shutdown_actual_path": {
+      "status": "static_passed_with_limits",
+      "detail": "runner启用scale且v2=false，实际走legacy System::Shutdown(false)，不是ShutdownAndJoin。它停止前台入口并等待LM/Loop finished后flush，summary workers_joined=false必须保留；安全封存缓冲不等同后台全join/后台全部工作完成。"
+    },
+    "native_assertions_and_link_plan": {
+      "status": "passed_actual_matching_dso",
+      "detail": "夹具使用Require(bool)抛std::runtime_error，未依赖assert，NDEBUG不会移除检查。通过真实RGBD Frame/ORBextractor、真实小词典和KeyFrame调用既有ComputeBoW；release/acquire发布后并发读取与后端重复调用。off先独占Compute再发布，不故意构造旧UB。包含default Frame重置身份、真实MapPoint事件、容量耗尽、并发生产者尚运行时停止与重复停止、真实路径打开失败。host driver从本轮真实core编译参数及probe链接参数构建matching DSO夹具，四模式各独立进程/空目录/60秒超时；全exit0后才置executed。实际编译链接和运行结果尚未出现，不声明通过或TSan覆盖。 后续native02以实际-DNDEBUG编译，eager前独立transform真实提取描述子证明TF_IDF非空前置；不填Frame BoW来绕过开关。四模式实际通过，详见native_execution；host01原失败未改。"
+    },
+    "runner_identity_and_baseline": {
+      "status": "passed_final_static_review",
+      "detail": "原bag实际stamp/seq、全部5878输入索引与记录表核查；1x及8/8/10队列固定。每轮独立进程/目录，无Atlas加载，package成套node/core SHA及加载路径/实际内容、配置SHA、启动开关在发布前核对，运行后重核与SHA回传。legacy_reduce的旧BINARIES由resolved package临时显式绑定，非放宽身份检查。16轮顺序与单次阶段绑定、已封存才可跳过、失败保留停止均有约束。 R3已修：host清理异常或owned_children_exited=false均使complete=false；SO_REUSEADDR实际LISTEN/TIME_WAIT测试、准备幂等、OFF显式env-u已核。新增reviewed_candidate_failure继续机制保留trial_valid=false，必须显式分类/理由/证据并核安全、binary/settings/返回SHA；最终R4已补：host/board错误计数须为0，所有已观测host/frames/sources/events/可选diagnostic原stamp/seq逐条核冻结输入；允许missing与board overflow保留为失败，不能豁免错身份。"
+    },
+    "python_ast": {
+      "status": "passed",
+      "files": [
+        "build_arm.py",
+        "build_arm_inner.py",
+        "build_common.py",
+        "build_host.py",
+        "legacy_reduce.py",
+        "localmap_resource_sample.py",
+        "make_plan.py",
+        "pose_observer.py",
+        "rgbd_v2_sequence_monitor.py",
+        "run_trials.py",
+        "summarize_trials.py",
+        "test_trials.py",
+        "trial_common.py",
+        "validate_native_only.py"
+      ],
+      "execution": "python3 -B ast.parse only；未导入runner或执行board/network入口"
+    }
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "build_blocker",
+      "state": "resolved",
+      "detail": "首版driver无参启动强制argc==3的native会必失败；已改disabled/off/on/flush-failure四模式独立进程及目录，全部exit0才置stability_native_executed。"
+    },
+    {
+      "id": "R2",
+      "severity": "preparation_blocker",
+      "state": "resolved",
+      "detail": "首版prepare独占写已存在INPUT_IDENTITY且先创建16目录；现保留旧预检，改写RUNNER_INPUT_IDENTITY并对已有准备输入逐个SHA复核，不覆盖不符文件。"
+    },
+    {
+      "id": "R3",
+      "severity": "runner_completion_integrity",
+      "state": "resolved",
+      "detail": "当前host_postflight的owned_children_exited仅写JSON，False未强制complete=False；host cleanup异常也仅记录。已通知owner在实际执行前将未退出子进程/清理异常纳入complete否决。此项不阻断core/DSO构建。",
+      "resolution": "host stop异常明确complete=False，host_postflight写实际exited后require(exited)，失败路径同样complete=False。"
+    },
+    {
+      "id": "R4",
+      "severity": "failure_review_source_identity",
+      "state": "resolved",
+      "detail": "新增review_failure允许显式candidate_overload后继续预定轮次，但目前尚未独立否决已收到源消息stamp/seq身份错误；已通知root与owner。允许过载缺失不应等同允许错误源身份。此项不阻断核心/原生/ARM构建。",
+      "resolution": "verify_failure_source_identity覆盖host与board身份及错误计数；实际stamp/seq错配即使返回SHA同步更新仍拒绝，identity_errors=1也拒绝。两项针对回归已纳入13/13，已读源码与证据并核所有当前SHA一致。"
+    }
+  ],
+  "native_execution": {
+    "status": "passed_independent_native_fixture_02",
+    "result_path": "artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/RESULT.json",
+    "result_sha256": "8ffc9275cbd89983b6d5bcad7520b3a86ba3f0e3b5d857b1a6c5dc9575c2ebb6",
+    "manifest_sha256": "8ffc9275cbd89983b6d5bcad7520b3a86ba3f0e3b5d857b1a6c5dc9575c2ebb6",
+    "fixture_path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/native/stability_native_idf2.cc",
+    "fixture_sha256": "ff034670f8bd528f7de1ddbdb8c84382dd7ea7ddefb238ec0d1d1a43d0591c09",
+    "binary_sha256": "0e985ccdd3c5113a881271f6d934a0fd5ad91403d5f6d556ada10de4dc57333d",
+    "matching_host_dso_path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/lib/liborb_slam3_ros.so",
+    "matching_host_dso_sha256": "b594c0d79ed72d18c136b9b541e9d96378d4fc891f02bb198a5ec0101ccdfc06",
+    "core_input_count": 118,
+    "all_core_inputs_match_frozen_current_and_host_snapshot": true,
+    "original_four_build_drivers_still_unchanged": true,
+    "actual_compilation_dependency_count": 1222,
+    "all_dependency_current_sha_and_before_after_verified": true,
+    "actual_loader_library_count": 199,
+    "all_loader_library_current_sha_and_before_after_verified": true,
+    "actual_loader_contains_matching_host_dso": true,
+    "release_ndebug_in_actual_fixture_compile": true,
+    "core_compiles": 0,
+    "node_compiles": 0,
+    "fixture_compiles": 1,
+    "all_four_modes": {
+      "disabled": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/disabled",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "off": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/off",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "on": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/on",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "flush-failure": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/flush-failure",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      }
+    },
+    "disabled_output_directory_empty": true,
+    "actual_mode_outputs": {
+      "off": {
+        "summary": {
+          "schema": "rgbd_stability_v1",
+          "complete": true,
+          "workers_joined": false,
+          "eager_bow": false,
+          "frames": 1,
+          "points": 262144,
+          "lifetime": 100000,
+          "frame_capacity": 20000,
+          "point_capacity": 262144,
+          "lifetime_capacity": 100000,
+          "frame_drops": 0,
+          "point_drops": 6,
+          "lifetime_drops": 20003,
+          "closed_appends_at_flush": 0,
+          "retained_capacity_bytes": 32971520,
+          "life_totals": [
+            0,
+            60001,
+            0,
+            60000,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "windows": [
+            {
+              "start": 1,
+              "end": 1,
+              "attempted": 262150,
+              "stored": 262144,
+              "dropped": 6
+            }
+          ],
+          "pose_scope": "last pose call counts; window coordinates are native RGBD monocular-camera projections at each call; other sensors omitted"
+        },
+        "frame_rows": [
+          {
+            "source_ordinal": "1",
+            "source_stamp_ns": "1234567890123456789",
+            "rgb_seq": "11",
+            "depth_seq": "12",
+            "frame_id": "0",
+            "input_keypoints": "704",
+            "state_before": "2",
+            "state_after": "0",
+            "current_frame_valid": "0",
+            "finite_positive_depths": "704",
+            "close_depths": "0",
+            "far_depths": "704",
+            "motion_first": "NA",
+            "motion_final": "NA",
+            "motion_map": "NA",
+            "reference_coarse": "NA",
+            "reference_map": "NA",
+            "local_points": "NA",
+            "search_seen": "NA",
+            "search_bad": "NA",
+            "search_projected": "NA",
+            "search_visible": "NA",
+            "search_matches": "NA",
+            "local_inliers": "NA",
+            "local_threshold": "NA",
+            "pose_calls": "0",
+            "pose_last_before": "NA",
+            "pose_last_after": "NA",
+            "pose_last_outliers": "NA",
+            "kf_id": "NA",
+            "kf_depth_slots": "NA",
+            "kf_new_points": "NA",
+            "bow_prepares": "0",
+            "kf_tracked_close": "NA",
+            "kf_untracked_close": "NA",
+            "kf_need_close": "NA",
+            "kf_ref_matches": "NA",
+            "kf_c1a": "NA",
+            "kf_c1b": "NA",
+            "kf_c1c": "NA",
+            "kf_c2": "NA",
+            "kf_mapper_idle": "NA",
+            "kf_queue": "NA",
+            "bow_prepare_ms": "0"
+          }
+        ],
+        "actual_point_rows": 262144,
+        "actual_lifetime_rows": 100000
+      },
+      "on": {
+        "summary": {
+          "schema": "rgbd_stability_v1",
+          "complete": true,
+          "workers_joined": false,
+          "eager_bow": true,
+          "frames": 1,
+          "points": 262144,
+          "lifetime": 100000,
+          "frame_capacity": 20000,
+          "point_capacity": 262144,
+          "lifetime_capacity": 100000,
+          "frame_drops": 0,
+          "point_drops": 6,
+          "lifetime_drops": 20003,
+          "closed_appends_at_flush": 0,
+          "retained_capacity_bytes": 32971520,
+          "life_totals": [
+            0,
+            60001,
+            0,
+            60000,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "windows": [
+            {
+              "start": 1,
+              "end": 1,
+              "attempted": 262150,
+              "stored": 262144,
+              "dropped": 6
+            }
+          ],
+          "pose_scope": "last pose call counts; window coordinates are native RGBD monocular-camera projections at each call; other sensors omitted"
+        },
+        "frame_rows": [
+          {
+            "source_ordinal": "1",
+            "source_stamp_ns": "1234567890123456789",
+            "rgb_seq": "11",
+            "depth_seq": "12",
+            "frame_id": "0",
+            "input_keypoints": "704",
+            "state_before": "2",
+            "state_after": "0",
+            "current_frame_valid": "0",
+            "finite_positive_depths": "704",
+            "close_depths": "0",
+            "far_depths": "704",
+            "motion_first": "NA",
+            "motion_final": "NA",
+            "motion_map": "NA",
+            "reference_coarse": "NA",
+            "reference_map": "NA",
+            "local_points": "NA",
+            "search_seen": "NA",
+            "search_bad": "NA",
+            "search_projected": "NA",
+            "search_visible": "NA",
+            "search_matches": "NA",
+            "local_inliers": "NA",
+            "local_threshold": "NA",
+            "pose_calls": "0",
+            "pose_last_before": "NA",
+            "pose_last_after": "NA",
+            "pose_last_outliers": "NA",
+            "kf_id": "NA",
+            "kf_depth_slots": "NA",
+            "kf_new_points": "NA",
+            "bow_prepares": "1",
+            "kf_tracked_close": "NA",
+            "kf_untracked_close": "NA",
+            "kf_need_close": "NA",
+            "kf_ref_matches": "NA",
+            "kf_c1a": "NA",
+            "kf_c1b": "NA",
+            "kf_c1c": "NA",
+            "kf_c2": "NA",
+            "kf_mapper_idle": "NA",
+            "kf_queue": "NA",
+            "bow_prepare_ms": "0.214346"
+          }
+        ],
+        "actual_point_rows": 262144,
+        "actual_lifetime_rows": 100000
+      },
+      "flush-failure": {
+        "summary": {
+          "schema": "rgbd_stability_v1",
+          "complete": false,
+          "workers_joined": true,
+          "eager_bow": true,
+          "frames": 1,
+          "points": 262144,
+          "lifetime": 100000,
+          "frame_capacity": 20000,
+          "point_capacity": 262144,
+          "lifetime_capacity": 100000,
+          "frame_drops": 0,
+          "point_drops": 6,
+          "lifetime_drops": 20003,
+          "closed_appends_at_flush": 0,
+          "retained_capacity_bytes": 32971520,
+          "life_totals": [
+            0,
+            60001,
+            0,
+            60000,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "windows": [
+            {
+              "start": 1,
+              "end": 1,
+              "attempted": 262150,
+              "stored": 262144,
+              "dropped": 6
+            }
+          ],
+          "pose_scope": "last pose call counts; window coordinates are native RGBD monocular-camera projections at each call; other sensors omitted"
+        }
+      }
+    },
+    "old_failed_attempt": {
+      "path": "artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/RESULT.json",
+      "sha256": "4c75aad052ce693c52ebd04d94dacb75250040084376afd7669f1e571554605d",
+      "unchanged_from_native02_before_after": true,
+      "build_complete": true,
+      "core_compiles": 42,
+      "node_compiles": 2,
+      "fixtures_complete": false,
+      "stability_native_executed": false,
+      "on_exit": 1,
+      "failure_reason": "原单训练文档令TF_IDF ln(1/1)=0，库仅在w>0时向Bow/Feature加项。独立核本地DBoW3实现及on失败日志；属于夹具非空前提失败，旧失败未改为成功。",
+      "qualification": "native02独立补充资格，不覆盖host01 RESULT。"
+    },
+    "reviewer_reexecuted_native": false,
+    "reviewer_verified_actual_outputs_and_hashes": true,
+    "board_execution_by_reviewer": false,
+    "coverage_limits": "真实方法/同步发布/只读并发/有界关闭与失败flush覆盖；不是TSan、全应用调度确定性、后台全join或GT精度资格。",
+    "source_ready_123_files_matched_at_native_review_before_later_fixture_publication_update": true
+  },
+  "limits": [
+    "源码静态检查和native02实际matching DSO四模式资格已通过；完整板端运行与ARM构建不由本证据推断。",
+    "诊断开启存在额外遍历、锁、约33MiB预留及离线刷盘；需预声明off/on对照评估扰动。",
+    "不推断GT精度、不承诺后台全join，不以单次结果宣称稳定性能；不重做未改动的序列化资格。"
+  ],
+  "runner_offline_validation": {
+    "path": "artifacts/rgbd_stability_trials_20261102/validation/RUNNER_OFFLINE_VALIDATION.json",
+    "sha256": "916f1c7153540ca4126c6134f413000ee1d8f693b224f0e88a654f399c75b7ca",
+    "all_recorded_file_hashes_match": true,
+    "reported_tests": 13,
+    "reported_passed": 13,
+    "reviewer_read_test_source": true,
+    "reviewer_reran_tests": false,
+    "scope": "最终13项既有通过证据、错误seq同步更新transfer SHA仍拒绝及identity error拒绝回归源码均核对；当前工具SHA与证据一致。最终仅轻量读取/AST及本证据写入，未重跑测试/批量分析。"
+  },
+  "review_updates": [
+    {
+      "at": "2026-11-02T15:59:17+08:00",
+      "change": "复核最终runner R3/准备/SO_REUSEADDR；核native02实际四模式与118输入、1222依赖、199库及原失败不可变，新增R4待owner补源身份门槛。"
+    },
+    {
+      "at": "2026-11-02T16:01:51+08:00",
+      "change": "补记后续默认夹具/说明/manifest发布修正；保留原SOURCE_READY及失败备份，不把当前3项变更误报为原freeze全相同。118编译输入和4driver未改，既有核心/原生资格不变。"
+    },
+    {
+      "at": "2026-11-02T16:05:11+08:00",
+      "change": "最终R4及13cases证据/SHA审核通过；关闭全部4发现，记录SOURCE_READY_01/02版本关系。未重跑原生或离线测试，不启动板端；已停止进一步测试/批量hash，供主控启动observation。"
+    }
+  ]
+}

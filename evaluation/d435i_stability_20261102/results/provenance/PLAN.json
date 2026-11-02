@@ -1,0 +1,209 @@
+{
+  "schema": "rgbd_stability_trials_v1",
+  "feature": "RGBD36",
+  "input": {
+    "bag": "/home/ywl/Project/ORB_SLAM3_DBoW3/bags/d435i_local_20261029/d435i10_local_20261029_003015_7ea2c9/rgbd.bag",
+    "bag_sha256": "dda9cc56ac095d6bfa5c7c2265995b6e8791615f4ecc880ccbe63a176c4bcbf1",
+    "bag_bytes": 4815717371,
+    "bag_mtime_ns": 1793259629000000000,
+    "expected_pairs": 5878,
+    "original_record_start_ns": 1793259039246482905,
+    "original_record_end_ns": 1793259628755254598,
+    "bag_record_duration_s": 589.6784996986389,
+    "index": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_d435i_003015_20261030/inputs/003015_7ea2c9/input_index.csv",
+    "index_sha256": "7cfbf8c6499d5572ce565a587109a10692d85a3c3b3a0de257b396c3b0d31adb",
+    "records": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_d435i_003015_20261030/inputs/003015_7ea2c9/original_input_records.csv",
+    "records_sha256": "1cc4bf67a84bc007be320682f91f670cb529e36a93a77ae33d60a7dfc27ad8f5",
+    "rgb_topic": "/camera_10fps/color/image_raw",
+    "depth_topic": "/camera_10fps/aligned_depth_to_color/image_raw"
+  },
+  "packages": {
+    "runtime": {
+      "remote_path": "/userdata/rgbd_stability_trials_20261102/packages/diagnostic_arm_01",
+      "binaries": {
+        "ros_rgbd": "b1e1b7f8e7df6b2a27ba9dbdc99271ac03baa7dde8c9e64c0d1af2308e5c2114",
+        "liborb_slam3_ros.so": "12c7f4987922635d3de56728936e6979804f01d5b3d79f70647a31edfb46ab7c"
+      },
+      "source_commit": "5c8b936fe1a01e594d4866ac6d2ea0d1dea9b0b5",
+      "shared_lib_dir": "/userdata/rgbd_tracking_optimizations_20261020/atomic_02/lib",
+      "vocabulary": "/userdata/rgbd_tracking_optimizations_20261020/atomic_02/Vocabulary/orbvoc.dbow3",
+      "helpers_dir": "/userdata/rgbd_stability_trials_20261102/packages/diagnostic_arm_01/tools",
+      "build_result": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_arm_01/RESULT.json",
+      "source_ready_sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+      "build_manifest": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_arm_01/manifest.json"
+    }
+  },
+  "configs": {
+    "P0": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/configs/P0_700_5.yaml",
+      "sha256": "bfd9ed5d82e3e80d6cb6fa6636e77c2f6741605e4a365af04be063502a41dfb5",
+      "features": 700,
+      "levels": 5
+    },
+    "P1": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/configs/P1_1000_5.yaml",
+      "sha256": "9095526ad39787cddc53782effd9f25ca53778343592d8d374b20ff9b86c4258",
+      "features": 1000,
+      "levels": 5
+    },
+    "P2": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/configs/P2_700_8.yaml",
+      "sha256": "7e8dd6db4567f1cf43a534fbae126cf6fdc9f46640b1937469286ffc1306ef80",
+      "features": 700,
+      "levels": 8
+    },
+    "P3": {
+      "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/checkout/evaluation/d435i_stability_20261102/configs/P3_1000_8.yaml",
+      "sha256": "1640832f24b39066d1741580ffc5f810417238b65131f96306e4587a76b3ad7f",
+      "features": 1000,
+      "levels": 8
+    }
+  },
+  "runs": [
+    {
+      "id": "B_obs_01_off",
+      "stage": "observation",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": false,
+      "bow_ready": false
+    },
+    {
+      "id": "B_obs_02_on",
+      "stage": "observation",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false
+    },
+    {
+      "id": "B_obs_03_on",
+      "stage": "observation",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": true,
+      "bow_ready": false
+    },
+    {
+      "id": "B_obs_04_off",
+      "stage": "observation",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": false,
+      "bow_ready": false
+    },
+    {
+      "id": "B_bow_01_off",
+      "stage": "bow",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": false
+    },
+    {
+      "id": "B_bow_02_on",
+      "stage": "bow",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": true
+    },
+    {
+      "id": "B_bow_03_on",
+      "stage": "bow",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": true
+    },
+    {
+      "id": "B_bow_04_off",
+      "stage": "bow",
+      "package_id": "runtime",
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": false
+    },
+    {
+      "id": "C_01_P0",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_02_P1",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P1",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_03_P2",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P2",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_04_P3",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P3",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_05_P3",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P3",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_06_P2",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P2",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_07_P1",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P1",
+      "observation": null,
+      "bow_ready": null
+    },
+    {
+      "id": "C_08_P0",
+      "stage": "matrix",
+      "package_id": null,
+      "config_id": "P0",
+      "observation": null,
+      "bow_ready": null
+    }
+  ],
+  "rate": 1.0,
+  "queues": [
+    8,
+    8,
+    10
+  ],
+  "network": {
+    "board": "sunrise@192.168.1.11",
+    "board_ip": "192.168.1.11",
+    "host_ip": "192.168.1.3",
+    "master_port": 11431
+  },
+  "remote_root": "/userdata/rgbd_stability_trials_20261102",
+  "min_board_free_bytes": 1073741824,
+  "diagnostic_windows": "23-100,640-710,1320-1420,2180-2270,3380-3470,5000-5220",
+  "protocol_file": "preflight/EXPERIMENT_PROTOCOL.json",
+  "scope": "Input-complete original1x repeated trials. Stage decisions are immutable separate bindings; no automatic repeat, candidate winner or GT precision claim."
+}

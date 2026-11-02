@@ -1,0 +1,55 @@
+{
+  "package_id": "runtime",
+  "observation": true,
+  "decision_evidence": {
+    "protocol": "preflight/EXPERIMENT_PROTOCOL.json",
+    "protocol_sha256": "61d03f2ba7048e89103c9559e948f5b2ba9273a05d96feabd08c469bba67f291",
+    "summary_sha256": "0e66e8222d835e51c5db1df3f5cebba83149b4036b4ad301d96f5e35eff1ce4f",
+    "rows": [
+      {
+        "id": "B_obs_01_off",
+        "on": false,
+        "fresh": 4759,
+        "fresh_fraction": 0.8096291255529091,
+        "mean_ms": 44.84077178359986,
+        "p95_ms": 59.671360799999995
+      },
+      {
+        "id": "B_obs_02_on",
+        "on": true,
+        "fresh": 4816,
+        "fresh_fraction": 0.8193263014630827,
+        "mean_ms": 44.72509216042871,
+        "p95_ms": 59.26832619999999
+      },
+      {
+        "id": "B_obs_03_on",
+        "on": true,
+        "fresh": 4770,
+        "fresh_fraction": 0.8115005103776795,
+        "mean_ms": 45.227029239707385,
+        "p95_ms": 60.00622294999999
+      },
+      {
+        "id": "B_obs_04_off",
+        "on": false,
+        "fresh": 4827,
+        "fresh_fraction": 0.8211976862878531,
+        "mean_ms": 44.73907444334808,
+        "p95_ms": 59.736829349999994
+      }
+    ],
+    "off_p95_mean_ms": 59.704095075,
+    "on_p95_mean_ms": 59.63727457499999,
+    "p95_increase_ms": -0.06682050000000572,
+    "p95_allowed_increase_ms": 2.98520475375,
+    "off_fresh_mean": 0.815413405920381,
+    "on_fresh_mean": 0.815413405920381,
+    "off_fresh_range": 0.011568560734943945,
+    "absolute_fresh_difference": 0.0,
+    "allowed_fresh_difference": 0.02,
+    "gate_passed": true,
+    "reason": "Apply pre-data observer qualification gate once. Passing does not prove zero observer effect.",
+    "wall_ns": 1793609188054364953
+  }
+}

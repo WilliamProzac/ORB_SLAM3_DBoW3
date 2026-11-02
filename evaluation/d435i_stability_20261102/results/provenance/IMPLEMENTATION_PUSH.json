@@ -1,0 +1,8 @@
+{
+  "branch": "research/d435i-stability-20261102",
+  "commit": "5c8b936fe1a01e594d4866ac6d2ea0d1dea9b0b5",
+  "remote_exact_sha": "5c8b936fe1a01e594d4866ac6d2ea0d1dea9b0b5",
+  "verified": true,
+  "source_ready_build_time_sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+  "source_ready_publication_sha256": "2c9953305b6f2163671e4d11881abb11cd03cb16160e3f4a772d5a7ebedc9f14"
+}

@@ -1,0 +1,37 @@
+{
+  "source_archive": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102",
+  "source_report_sha256": "14a2922619724210de29e8b79201562280fcdf2589a65fb1d4abffe30c3cfe36",
+  "note": "Report links adjusted for repository; original data CSVs and source images excluded; analysis code and aggregate evidence copied verbatim except round_results.csv CRLF converted to LF with parsed cells verified identical.",
+  "files": {
+    "results/EXPERIMENT_OUTCOME.json": "19e50a2f096912330bbb8a81e11454af06d0a4d8fc0a58c3013be2f0126d5935",
+    "results/provenance/SOURCE_READY_01.json": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+    "results/provenance/IMPLEMENTATION_PUSH.json": "a2f29272338e0c69bdca5199b67f7d4193b242372a1b46f413bb4a38fa9302f5",
+    "results/provenance/FINAL_BOARD_POSTFLIGHT.json": "db7611ed9b56496bc75119a044cff3dba8354eba68f2c6cc0a5546d484159d8c",
+    "results/provenance/PLAN.json": "7c6892bd74f6bf55d6fb82f22809a6736c4411014f58931545e3fba81b38774d",
+    "results/provenance/MATRIX_STAGE_DECISION.json": "2fde8d5165d866acf48c9ac8040379e7f65d00c9a63a7a81d6f2b669827f6d77",
+    "results/provenance/SOURCE_READY_02.json": "2c9953305b6f2163671e4d11881abb11cd03cb16160e3f4a772d5a7ebedc9f14",
+    "results/provenance/BOW_STAGE_DECISION.json": "cc7c92325a942b5225f50c9ae30e222571301ef482d25038154a2dd73c7f28a0",
+    "results/analysis/NUMERICAL_COMPARISON.md": "4bbfa784c6f8ff5f468cd042ed0f6a39739d5078b134907993501b395993d19e",
+    "results/analysis/compare_results.py": "5e647e7d402eedfe74482245bdb5078699e8ac7f21fd76dae706567e3ec7a11a",
+    "results/analysis/COMPARISON.json": "33d18c2591f6fbaf5f9cd9b967bb3aec6a2d3b6fbe70f05d75da275cc19c7c3d",
+    "results/analysis/round_results.csv": "bd9d7fd2026a74d9049e0f9004cdba441e6800f6d2acdfa5d66f33e1c148b7d8",
+    "results/analysis/SOURCE_INTERPRETATION.md": "13103868a7df3ba318f9418d6d72940f4405d0da0a1d42b105f8c0aa9e2b215e",
+    "results/analysis/DIAGNOSTIC_ANALYSIS.json": "27a47d8e3b40b197ef538731a35b9f500fa62ecbcd602a94b9e5c407441575a1",
+    "results/analysis/DIAGNOSTIC_FINDINGS.md": "422765cd8542e49e2d11a20fd567caa91d1a6c3558f4cdd50cb66df5a75b39e3",
+    "results/analysis/analyze_diagnostics.py": "2996f752b762962b5b6ee1cf3a4e999f8f80523c7df8673d56038efeca792a51",
+    "results/validation/HOST01_BUILD_AND_NATIVE_FAILURE_AUDIT.json": "740b9950f66e3c464acf2564a6eba08f5c2577441f6f0fd5b3836af63c7a28c9",
+    "results/validation/CHART_DELIVERY.json": "5a082e144a9cc12930fd05dbb1180e9c65b6466e022a4c897994eda1a7af9111",
+    "results/validation/REPORT_REVIEW.json": "7ccc83c47df02fc6f3ae7fcd5ce29c4f739d9c47617cdb5b802a6ba4fdc0be56",
+    "results/validation/BOARD_TRIALS_INDEPENDENT_REVIEW.json": "0188bca6be85a62953a6e0a559a29fc2d5fa6d6301f2dcdfc145007614d626b5",
+    "results/validation/BUILD_AND_NATIVE_SUMMARY.json": "cac04f7c2765bff2fd768d0348e5fb8db5b2e9e95be8f7e36b4c09c9fdfe89fb",
+    "results/validation/RUNNER_OFFLINE_VALIDATION.json": "916f1c7153540ca4126c6134f413000ee1d8f693b224f0e88a654f399c75b7ca",
+    "results/validation/INDEPENDENT_REVIEW.json": "5b18189da16aee9e5649d09e79db16984e35b713510d6588f64215ca9e3d4abb",
+    "RESULTS.md": "a4307dbbfef0cf227949146f7ad3a5f16e01d180cbafd4adc95a4769f7c2c491"
+  },
+  "csv_export": {
+    "original_sha256": "368cf935c012d463741ccf6181b5e5f6563683b95135c527094d6f3b92e69e97",
+    "git_sha256": "bd9d7fd2026a74d9049e0f9004cdba441e6800f6d2acdfa5d66f33e1c148b7d8",
+    "parsed_rows_identical": true,
+    "original_artifact_unchanged": true
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "source_ready_sha256": "cde8dd2138ffc7bb0281d9a15d1b30b24ea20f64c8df028340bdd50684277f32",
+  "source_ready_file_count": 123,
+  "original_compile_inputs": 116,
+  "actual_compile_inputs": 118,
+  "original_core_units": 41,
+  "actual_core_units": 42,
+  "actual_node_units": 2,
+  "new_core_unit": "src/StabilityDiagnostics.cc",
+  "full_cold_builds": {
+    "arm": {
+      "directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_arm_01",
+      "complete": true,
+      "cached_objects_reused": 0,
+      "driver_stable": true
+    },
+    "host": {
+      "directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01",
+      "complete": true,
+      "cached_objects_reused": 0,
+      "driver_stable": true
+    }
+  },
+  "binaries": {
+    "arm": {
+      "ros_rgbd": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_arm_01/ros_rgbd",
+        "sha256": "b1e1b7f8e7df6b2a27ba9dbdc99271ac03baa7dde8c9e64c0d1af2308e5c2114"
+      },
+      "liborb_slam3_ros.so": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_arm_01/liborb_slam3_ros.so",
+        "sha256": "12c7f4987922635d3de56728936e6979804f01d5b3d79f70647a31edfb46ab7c"
+      }
+    },
+    "host": {
+      "liborb_slam3_ros.so": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/liborb_slam3_ros.so",
+        "sha256": "b594c0d79ed72d18c136b9b541e9d96378d4fc891f02bb198a5ec0101ccdfc06"
+      },
+      "ros_rgbd": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/ros_rgbd",
+        "sha256": "e2649c9981d7cdc816bace11593869efca73cb3b5692a3b8d68bbcd3445cd401"
+      },
+      "rgbd_mappoint_probe": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/rgbd_mappoint_probe",
+        "sha256": "752d197e5106e42c7c45585788d47a31fd9861fe83553969ac0dff88fd9d3b2b"
+      },
+      "rgbd_geometry_probe": {
+        "path": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/diagnostic_host_01/rgbd_geometry_probe",
+        "sha256": "7415a986339d6fb9938cf19a7c6a5f439a30fcf77c9aac62b46e0780bc08692d"
+      }
+    }
+  },
+  "original_host_method_probes": {
+    "mappoint_contract_cases_passed": 11,
+    "geometry_static_cases_passed": 4411,
+    "concurrent_snapshot_probe_passed": true
+  },
+  "host01_failed_fixture_preserved": {
+    "fixtures_complete": false,
+    "reason": "single-document TF-IDF training gave zero IDF weights; native-on readiness test failed",
+    "result_sha256": "4c75aad052ce693c52ebd04d94dacb75250040084376afd7669f1e571554605d"
+  },
+  "fixture_only_followup": {
+    "directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02",
+    "fixture_sha256": "ff034670f8bd528f7de1ddbdb8c84382dd7ea7ddefb238ec0d1d1a43d0591c09",
+    "binary_sha256": "0e985ccdd3c5113a881271f6d934a0fd5ad91403d5f6d556ada10de4dc57333d",
+    "matching_host_core_sha256": "b594c0d79ed72d18c136b9b541e9d96378d4fc891f02bb198a5ec0101ccdfc06",
+    "core_compiles": 0,
+    "node_compiles": 0,
+    "fixture_compiles": 1,
+    "modes": {
+      "disabled": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/disabled",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "off": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/off",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "on": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/on",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      },
+      "flush-failure": {
+        "output_directory": "/home/ywl/Project/ORB_SLAM3_DBoW3/artifacts/rgbd_stability_trials_20261102/builds/native_fixture_02/stability_native_modes/flush-failure",
+        "timeout_seconds": 60,
+        "executed": true,
+        "passed": true,
+        "exit_code": 0
+      }
+    },
+    "all_passed": true,
+    "actual_compiler_dependencies_verified": 1222,
+    "resolved_loader_libraries_verified": 199,
+    "core_input_bytes_stable": true
+  },
+  "independent_review": "review_replay reported 21 checks true; independent review JSON written separately",
+  "scope": "Host integration and method-level checks plus ARM cold compilation. No board execution, deployment, Git or SSH by this worker."
+}
