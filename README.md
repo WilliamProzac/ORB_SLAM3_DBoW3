@@ -6,7 +6,9 @@
 
 板卡相机独立录包：在笔记本执行 `./record_rgbd_loop.sh`，自动初始化 S316、检查 RGB-D、录制、停止后回传并校验 bag，校验通过后删除板卡对应 bag；用法见 [闭环录制说明](docs/rgbd-loop-recording.md)。
 
-D435i 10 FPS RGB-D 录包：执行 `./record_d435i_10fps_bag.sh`，板卡以 30 FPS 采集并录制严格同步的 10 FPS RGB/对齐深度，停止后回传、完整校验并安全清理板卡 bag；用法见 [D435i 10 FPS 录制说明](docs/d435i-10fps-recording.md)。
+D435i 10 FPS RGB-D 录包：新机器只需复制 `record_d435i_10fps_standalone.py`，运行 `python3 record_d435i_10fps_standalone.py --board 用户名@地址`，主机无需 ROS；内置相机启动配置、严格同步的 30→10 FPS 抽帧和录包程序。原仓库入口 `./record_d435i_10fps_bag.sh` 仍可用；用法及基础环境要求见 [D435i 10 FPS 录制说明](docs/d435i-10fps-recording.md)。
+
+D435i 直接连接本机 USB：复制 `record_d435i_10fps_local.py`，在具备 ROS1/RealSense 驱动的主机运行 `python3 record_d435i_10fps_local.py --duration 10`，本机完成 30→10 FPS 同步抽帧、录包与完整检查；文件保存在当前目录的 `bags/` 下。用法见同一份 [录制说明](docs/d435i-10fps-recording.md)。
 
 D435i + MEM18/perf20 联合验证：执行 `./run_d435i_slam.sh 120 off`，自动读取实机标定并在独立目录运行；用法及验收边界见 [D435i SLAM 适配说明](docs/d435i-slam.md)。
 

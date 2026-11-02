@@ -1,0 +1,5 @@
+id,nFeatures,nLevels,repetitions_planned,order_slots,status,config,sha256,changed_keys
+P0,700,5,2,"1,8",prepared_not_replayed,configs/P0_700_5.yaml,bfd9ed5d82e3e80d6cb6fa6636e77c2f6741605e4a365af04be063502a41dfb5,
+P1,1000,5,2,"2,7",prepared_not_replayed,configs/P1_1000_5.yaml,9095526ad39787cddc53782effd9f25ca53778343592d8d374b20ff9b86c4258,ORBextractor.nFeatures
+P2,700,8,2,"3,6",prepared_not_replayed,configs/P2_700_8.yaml,7e8dd6db4567f1cf43a534fbae126cf6fdc9f46640b1937469286ffc1306ef80,ORBextractor.nLevels
+P3,1000,8,2,"4,5",prepared_not_replayed,configs/P3_1000_8.yaml,1640832f24b39066d1741580ffc5f810417238b65131f96306e4587a76b3ad7f,ORBextractor.nFeatures;ORBextractor.nLevels

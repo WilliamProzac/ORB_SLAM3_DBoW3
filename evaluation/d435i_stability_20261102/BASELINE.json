@@ -1,0 +1,11 @@
+{
+  "runtime_commit": "f75a3ffd9addd94d23224574c4fbced2b58f4224",
+  "runtime_branch": "research/rgbd-mappoint-atomic-20261023",
+  "runtime_variant": "atomic_02",
+  "bag_id": "003015_7ea2c9",
+  "bag_sha256": "dda9cc56ac095d6bfa5c7c2265995b6e8791615f4ecc880ccbe63a176c4bcbf1",
+  "expected_pairs": 5878,
+  "settings_sha256": "bfd9ed5d82e3e80d6cb6fa6636e77c2f6741605e4a365af04be063502a41dfb5",
+  "parameter_candidates_status": "prepared_not_replayed",
+  "note": "Main workspace source is the separate XFeat line. The board experiment source baseline is the runtime commit above; no raw images/bag embedded."
+}

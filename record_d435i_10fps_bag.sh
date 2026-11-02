@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Run on the laptop. The board starts D435i 30 FPS capture, publishes exact-pair
+# Run on the host computer. The board starts D435i 30 FPS capture, publishes exact-pair
 # 10 FPS RGB-D, and records the 10 FPS product locally on the board.
+# SSH target: --board user@host overrides D435I_BOARD and the default below.
+# Example: ./record_d435i_10fps_bag.sh --board robot@192.168.1.20
 set -eo pipefail
 ARGS=("$@")
 # ROS/catkin setup scripts inspect positional arguments themselves.
 set --
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+BOARD="${D435I_BOARD:-sunrise@192.168.1.11}"
 ROS_SETUP="${LOCAL_ROS_SETUP:-/opt/ros/noetic/setup.bash}"
 if [[ ! -r "$ROS_SETUP" ]]; then
   echo "找不到本机 ROS 环境: $ROS_SETUP；可设置 LOCAL_ROS_SETUP。" >&2
@@ -13,7 +16,7 @@ if [[ ! -r "$ROS_SETUP" ]]; then
 fi
 source "$ROS_SETUP"
 exec /usr/bin/python3 "$SCRIPT_DIR/evaluation/rgbd_recorder.py" host \
-  --board sunrise@192.168.1.11 \
+  --board "$BOARD" \
   --remote-root /userdata/d435i_10fps_bags \
   --ros-setup /opt/ros/noetic/setup.bash \
   --camera-setup /userdata/ros1_realsense_ws/devel/setup.bash \
