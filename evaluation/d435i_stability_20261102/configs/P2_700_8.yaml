@@ -1,0 +1,40 @@
+%YAML:1.0
+File.version: "1.0"
+Camera.type: "PinHole"
+Camera1.fx: 607.1082763671875
+Camera1.fy: 607.0069580078125
+Camera1.cx: 331.2611389160156
+Camera1.cy: 250.9746856689453
+Camera1.k1: 0.0
+Camera1.k2: 0.0
+Camera1.p1: 0.0
+Camera1.p2: 0.0
+Camera1.k3: 0.0
+Camera.width: 640
+Camera.height: 480
+Camera.fps: 10
+Camera.RGB: 1
+# D435 nominal 50 mm stereo baseline; used for RGB-D close-point threshold.
+Stereo.b: 0.05
+Stereo.ThDepth: 40.0
+RGBD.DepthMapFactor: 1000.0
+ORBextractor.nFeatures: 700
+ORBextractor.scaleFactor: 1.2
+ORBextractor.nLevels: 8
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+ORBextractor.parallelWorkers: 3
+RGBD.ExactOptimizationLevel: 4
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -3.5
+Viewer.ViewpointF: 500.0
+# Camera K/D from every CameraInfo in the recorded bag; fps10, aligned depth.
+# RealSense ROS1 16UC1 millimetre convention; no independent distance calibration.
+RGBD.LocalMapMode: "off"
