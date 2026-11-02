@@ -1,5 +1,16 @@
 # BAG03 D435i ZIP 导入归档 — 2026-10-30
 
+## RGBD36 — Git保存与16轮板卡稳定性对照（2026-11-02）
+
+passing仅指实验与交付。代码/参数检查点a131e3c2及隔离ORB实现5c8b936f已上传相应checkpoint/research分支并核远端SHA；未混用根XFeat源码。主机/ARM冷编译42核心+2节点，118实际输入保持；原host01单文档TF-IDF夹具失败保留，8文档修正夹具链接同一真实DSO后disabled/off/on/flush-failure通过。主机MapPoint11/几何4411/并发探针及runner13检查通过。
+
+原003015包完整SHA、5878精确输入、1×与8/8/10队列冻结，观测4轮、BoW4轮、矩阵8轮按预定顺序全部执行，无重跑。全部94048回调、77716 fresh；840封存文件SHA、54冻结项和1044独立数值检查通过，原RGBD31/35与旧部署保持。最终owned进程退出、11431可复用。14个ON帧表完整，但坐标/寿命截断及workers_joined=false保留。
+
+P3均值有效率87.02%对P0 82.77%，nonfresh741/785对951/1075，平均少24.68%，均未达每轮≤709.1的30%门；成本60.68对46.85ms、P95两轮80.92/84.78ms，第二轮P99 115.07ms。P3新图/reset减少但onset更多，且有2/3组合图日志未定位/正确性未验证，不能拼世界轨迹或授予精度资格。四参数候选均未过预定质量门，条件深度/独立场景试验未触发。
+
+主报告artifacts/rgbd_stability_trials_20261102/REPORT.md；数值复算analysis/compare_results.py、诊断analysis/analyze_diagnostics.py；独立审计validation/BOARD_TRIALS_INDEPENDENT_REVIEW.json。新图artifacts/rgbd_stability_charts_20261102/callback_breakdown.html，全16轮/82数据检查及129浏览器检查、桌面/窄屏目视通过。原8768网页由另一工作流维护，本实验未修改。没有待运行板测或后台构建；后续先核几何/合图与深度质量，不把本轮筛选失败写成算法验收通过。
+
+
 ## RGBD35 — 新地图内点衰减与参数实验方案（2026-11-02）
 
 passing仅指分析和方案交付，报告为artifacts/rgbd_map_decay_20261102/REPORT.md，计划为NEXT_STEPS.md。没有算法改动、新板测或参数收益验收。原5878行输入身份/时间边界/阶段缺失/8分量和、5个原归档SHA核验通过；31个新图边界无效快照、36初始化未调用TLM按口径排除。首次失跟前首末5帧35组32降、localMP33增；固定年龄26组19降；独立原CSV逐行复核一致。全fresh相邻4655对中1984内点上升，不称单调下降或年龄因果。

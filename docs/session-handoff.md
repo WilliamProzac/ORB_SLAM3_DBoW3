@@ -1,3 +1,13 @@
+# RGBD36 代码上传与板卡对照已完成 — 2026-11-02
+
+状态passing仅指保存、测试和对比交付，跟踪质量未通过原定筛选。原工作区/参数已上传checkpoint/d435i-workspace-20261102（a131e3c2），板测从已发布f75a3ffd隔离构建，实验代码分支research/d435i-stability-20261102（实现5c8b936f），不与根XFeat开发线混用。主报告artifacts/rgbd_stability_trials_20261102/REPORT.md，完整证据/逐轮封存均在同归档；16轮交互图在artifacts/rgbd_stability_charts_20261102/callback_breakdown.html。
+
+预定观测OFF/ON/ON/OFF、BoW OFF/ON/ON/OFF及P0/P1/P2/P3/P3/P2/P1/P0全部完成，每轮5878/5878、总94048回调，未重跑。原生检查/runner13、840封存SHA、1044独立数值及129浏览器检查通过，最终板端测试进程全退出、11431可复用、旧程序SHA不变，无待执行部署/回放。新包仅位于/userdata/rgbd_stability_trials_20261102/packages/diagnostic_arm_01，未覆盖旧atomic_02。
+
+P3有效率均87.02%（P0 82.77%），非fresh均763对1013，减24.68%未达30%门；回调60.68对46.85ms，第二轮P99 115.07ms。P3新图/reset少但短暂onset更多，且合图2/3组不能定位源帧/尚未核正确性；不拼P3跨合图轨迹。14个ON诊断帧完整，点/寿命细节截断及后台未join明确保留。保留P0参考与P3候选，不直接改默认；深度/高帧率/IMU/独立场景条件未触发或缺实际质量数据，不冒充完成。后续先按真实失败分支核几何和合图、分窗口补完整逐点证据。
+
+以下既有工作流记录保留；RGBD34预览导航的服务/证据仍按其记录管理。
+
 # RGBD35 地图内点衰减分析与参数计划 — 2026-11-02
 
 状态passing仅指分析交付，主报告artifacts/rgbd_map_decay_20261102/REPORT.md；NEXT_STEPS.md包含分阶段观测/BoW修复/四组参数/深度与采集侧对照、建议筛选标准。未启动新板测或修改算法，不能称参数已提升。
