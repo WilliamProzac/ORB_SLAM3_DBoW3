@@ -20,6 +20,7 @@
  */
 
 #include "MapPoint.h"
+#include "StabilityDiagnostics.h"
 #include "LocalTrackingIdentity.h"
 #include "LocalMapTiming.h"
 #include <stdexcept>
@@ -216,6 +217,10 @@ void MapPoint::AddObservation(KeyFrame *pKF, int idx) {
     nObs += 2;
   else
     nObs++;
+  if(Stability::Enabled()) {
+    unique_lock<mutex> map_lock(mMutexMap);
+    Stability::Life(mpMap,Stability::ObservationAdd,mnId,pKF->mnId,nObs);
+  }
 }
 
 void MapPoint::EraseObservation(KeyFrame *pKF) {
@@ -239,6 +244,10 @@ void MapPoint::EraseObservation(KeyFrame *pKF) {
       }
 
       mObservations.erase(pKF);
+      if(Stability::Enabled()) {
+        unique_lock<mutex> map_lock(mMutexMap);
+        Stability::Life(mpMap,Stability::ObservationErase,mnId,pKF->mnId,nObs);
+      }
       if(LocalLifetime::Enabled()) {
         unique_lock<mutex> map_lock(mMutexMap);
         LocalLifetime::Event(mpMap,"observation_erase",mnId,pKF->mnId,0,0,pKF->mTimeStamp);
@@ -275,9 +284,11 @@ int MapPoint::Observations() {
 }
 
 void MapPoint::RecordLocalBirth() {
-  if(!LocalLifetime::Enabled()) return;
+  if(!LocalLifetime::Enabled() && !Stability::Enabled()) return;
   const auto map=GetMap();
   if(!map) return;
+  Stability::Life(map,Stability::Birth,mnId,mnFirstKFid,mnFirstFrame);
+  if(!LocalLifetime::Enabled()) return;
   const auto reference=GetReferenceKeyFrame();
   LocalLifetime::Event(map,"mp_birth",mnId,static_cast<uint64_t>(mnFirstKFid),
                        mnFirstFrame,0,reference?reference->mTimeStamp:0);
@@ -291,6 +302,13 @@ void MapPoint::SetBadFlag(LocalPointExit reason, unsigned long cull_key) {
     unique_lock<mutex> lock1(mMutexFeatures);
     unique_lock<mutex> lock2(mMutexPos);
     if (mbBad.load(std::memory_order_relaxed)) return;
+    if(Stability::Enabled()) {
+      unique_lock<mutex> map_lock(mMutexMap);
+      const int64_t age=cull_key!=static_cast<unsigned long>(-1) && mnFirstKFid>=0 &&
+          cull_key>=static_cast<unsigned long>(mnFirstKFid)?int64_t(cull_key-mnFirstKFid):-1;
+      Stability::Life(mpMap,static_cast<Stability::LifeKind>(Stability::RetireOther+unsigned(reason)),
+          mnId,cull_key==static_cast<unsigned long>(-1)?-1:int64_t(cull_key),age,nObs,mnFound,mnVisible);
+    }
     if(LocalLifetime::Enabled()) {
       static const char* names[]={"retire_other","retire_found_ratio","retire_low_observation_age",
                                   "retire_observation_removal","retire_reset"};
@@ -355,6 +373,10 @@ void MapPoint::Replace(MapPointPtr pMP) {
     nvisible = mnVisible;
     nfound = mnFound;
     mpReplaced = pMP;
+    if(Stability::Enabled()) {
+      unique_lock<mutex> map_lock(mMutexMap);
+      Stability::Life(mpMap,Stability::Replace,mnId,-1,pMP->mnId,nObs,mnFound,mnVisible);
+    }
     if(LocalLifetime::Enabled()) LocalLifetime::Event(mpMap,"mp_replace",mnId,0,pMP->mnId);
     // Publish the local transition after its replacement edge is installed.
     mbBad.store(true, std::memory_order_release);

@@ -20,6 +20,7 @@
  */
 
 #include "Map.h"
+#include "StabilityDiagnostics.h"
 
 #include <mutex>
 
@@ -72,6 +73,7 @@ void Map::AddKeyFrame(KeyFrame *pKF) {
     mpKFlowerID = pKF;
   }
   const bool newly_inserted=mspKeyFrames.insert(pKF).second;
+  if(newly_inserted)Stability::Life(this,Stability::KeyFrameAdd,0,pKF->mnId,pKF->mnFrameId);
   if(newly_inserted && LocalLifetime::Enabled())
     LocalLifetime::Event(this,"kf_add",0,pKF->mnId,pKF->mnFrameId,0,pKF->mTimeStamp);
   if (pKF->mnId > mnMaxKFid) {
@@ -107,6 +109,7 @@ void Map::EraseMapPoint(MapPointPtr pMP) {
 void Map::EraseKeyFrame(KeyFrame *pKF) {
   unique_lock<mutex> lock(mMutexMap);
   const bool removed=mspKeyFrames.erase(pKF)!=0;
+  if(removed)Stability::Life(this,Stability::KeyFrameErase,0,pKF->mnId);
   if(removed && LocalLifetime::Enabled())
     LocalLifetime::Event(this,"kf_erase",0,pKF->mnId,0,0,pKF->mTimeStamp);
   if (mspKeyFrames.size() > 0) {

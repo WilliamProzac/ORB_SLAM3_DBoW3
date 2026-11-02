@@ -1,0 +1,84 @@
+{
+  "schema": "rgbd36_core_implementation_files_v1",
+  "frozen": true,
+  "compiled_by_implementation_agent": false,
+  "native_entry": "evaluation/d435i_stability_20261102/native/stability_native.cc",
+  "native_modes": [
+    "disabled",
+    "off",
+    "on",
+    "flush-failure"
+  ],
+  "files": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "2d1cbb59b93af176d00764c285e1d06c3e0c6b5d5e3b0c72dcb14d5b2675dd6d",
+      "bytes": 13030
+    },
+    {
+      "path": "include/StabilityDiagnostics.h",
+      "sha256": "b8bd12836a352d0d01064a67972a299741080826ff9cc59577347e2c8b038f59",
+      "bytes": 2376
+    },
+    {
+      "path": "src/StabilityDiagnostics.cc",
+      "sha256": "8ee912e7c9b4a55d669795aa4a605cc9c91955d8e346ea5d093ec9f33746ecb4",
+      "bytes": 11113
+    },
+    {
+      "path": "src/Frame.cc",
+      "sha256": "571211ca12c3226064b6e365fc0cadf4b2c5973504677e10ea88e00fafc3e408",
+      "bytes": 52275
+    },
+    {
+      "path": "src/Tracking.cc",
+      "sha256": "ea5c15fefc04687e95214f72ad1916b5b526c899e92cbf383bf0d8492b063753",
+      "bytes": 192583
+    },
+    {
+      "path": "src/System.cc",
+      "sha256": "c7ad6c7c9e00aa772ee24c61046a1ad0d4fdf8f5bc634222d17608f51627073e",
+      "bytes": 63980
+    },
+    {
+      "path": "src/MapPoint.cc",
+      "sha256": "50a1102a1839c9388f1e26d1b16abed6b9bffe8cfb9d5f13a815ce5d7f9c59b0",
+      "bytes": 25501
+    },
+    {
+      "path": "src/Map.cc",
+      "sha256": "182e002a541c1c48a86fd475609cf5fbbecc574ddfc280cc8aa799de6e22087e",
+      "bytes": 14137
+    },
+    {
+      "path": "src/LocalMapping.cc",
+      "sha256": "d06e4f59ba629de78b3b8310e09993f53e88e0e30f969173cbc970784e46771f",
+      "bytes": 59201
+    },
+    {
+      "path": "runtime/rgbd/src/orb_slam3_ros-master/CMakeLists.txt",
+      "sha256": "7645c57233b43fccefa48ed8a31411f93899ac7683dcf1e4532b74abc02f22c9",
+      "bytes": 13253
+    },
+    {
+      "path": "runtime/rgbd/src/orb_slam3_ros-master/include/ScaleRgbdExperiment.h",
+      "sha256": "9667d7f46d07fb0fd864ab41bc8b4c691f705a82e59abb8327c2fac1f6b4c26e",
+      "bytes": 15698
+    },
+    {
+      "path": "runtime/rgbd/src/orb_slam3_ros-master/src/ros_rgbd.cc",
+      "sha256": "5e550d149f189dbce0d35158bfec30798f8fc03f7cab9887e6971fd385cabe80",
+      "bytes": 43012
+    },
+    {
+      "path": "evaluation/d435i_stability_20261102/native/stability_native.cc",
+      "sha256": "ff034670f8bd528f7de1ddbdb8c84382dd7ea7ddefb238ec0d1d1a43d0591c09",
+      "bytes": 8819
+    },
+    {
+      "path": "evaluation/d435i_stability_20261102/native/IMPLEMENTATION.md",
+      "sha256": "5c385a7e24042b5e1c10e3a7e60976967dee769bf1f7b7ada790b0c79645d6b8",
+      "bytes": 8088
+    }
+  ]
+}

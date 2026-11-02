@@ -19,6 +19,8 @@
 #include <time.h>
 #include <vector>
 
+#include "StabilityDiagnostics.h"
+
 namespace rgbd_scale {
 inline std::uint64_t Now() {
     return std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -236,6 +238,11 @@ private:
         f.bridge_ms=double(Now()-bridge_start)*1e-6;
         f.track_called=true;
         const auto track_start=Now();
+        ORB_SLAM3::Stability::SetSource(f.source,rgb_msg->header.stamp.toNSec(),
+            rgb_msg->header.seq,depth_msg->header.seq);
+        struct StabilityContextClear {
+          ~StabilityContextClear(){ORB_SLAM3::Stability::ClearSource();}
+        } stability_context_clear;
         const Sophus::SE3f Tcw=slam->TrackRGBD(rgb->image,depth->image,rgb_msg->header.stamp.toSec());
         f.track_ms=double(Now()-track_start)*1e-6;
         f.track_returned=true;

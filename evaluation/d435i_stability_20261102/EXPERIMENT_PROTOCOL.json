@@ -1,0 +1,74 @@
+{
+  "feature": "RGBD36",
+  "frozen_wall_ns": 1793604430003473152,
+  "input_id": "003015_7ea2c9",
+  "expected_pairs": 5878,
+  "replay_rate": 1.0,
+  "queues": [
+    8,
+    8,
+    10
+  ],
+  "base_scale_detail": true,
+  "source_baseline": "f75a3ffd9addd94d23224574c4fbced2b58f4224",
+  "stages": {
+    "observation": {
+      "sequence": [
+        "off",
+        "on",
+        "on",
+        "off"
+      ],
+      "config": "P0",
+      "eager_bow": false
+    },
+    "bow": {
+      "sequence": [
+        "off",
+        "on",
+        "on",
+        "off"
+      ],
+      "config": "P0",
+      "observation": "bound once after observation stage"
+    },
+    "matrix": {
+      "sequence": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P3",
+        "P2",
+        "P1",
+        "P0"
+      ],
+      "observation": "same for all eight",
+      "eager_bow": "bound once after bow stage"
+    }
+  },
+  "binding_rules": {
+    "observation": "Use ON for subsequent stages unless mean run-level P95 grows by >max(2ms,5% of OFF mean) OR absolute mean fresh-rate difference >max(0.02, OFF replicate range); otherwise use OFF and report failed disturbance qualification. Passing this gate is not proof of zero observer effect.",
+    "eager_bow": "Prefer ON after native validation unless an ON run fails input/completion/correctness, ON mean fresh-rate is lower than OFF by >max(0.02,OFF replicate range), or ON mean P95>100ms while OFF mean P95<=100ms. On failure use OFF and retain fix qualification failure.",
+    "matrix": "All eight use the same code, package and once-selected switches. No edits to source or inputs between runs."
+  },
+  "parameter_candidate_screening": {
+    "input_complete": "Both replicates must process all5878 exact identities.",
+    "quality": "Both candidate replicates nonfresh count <=0.70 * mean P0 nonfresh count. Compare both means and replicate variation; retain all outcomes.",
+    "latency": "P95<100ms for10Hz; report P99 and >100ms counts plus overall latency, queues and memory. Does not replace prior90ms project qualification.",
+    "trajectory": "Reject diagnosed wrong relocalization/pose jumps; no ground truth available, so no ATE/RPE or metric accuracy qualification.",
+    "none_pass": "Keep P0 as reference, no claimed improvement; inspect measured losses instead of adding features indefinitely."
+  },
+  "execution_policy": {
+    "resume": "Only skip already sealed complete rounds; never silently replay a failed/invalid round.",
+    "run_failure": "Stop next round, preserve all logs, correct infrastructure if necessary and document the event before proceeding; no selective successful reruns.",
+    "workload": "Finish builds, native tests, input hashing and bulk analysis before timed playback. Only lightweight control/status and documented resource observers during playback.",
+    "later_stages": "ThDepth/depth-filter/capture experiments are conditional on evidence and hardware/data availability; do not fake unknown distance truth or higher-fps data."
+  },
+  "runtime_switch_contract": {
+    "eager_bow": "ORB_RGBD_EAGER_BOW=0/1",
+    "observation": "ORB_RGBD_STABILITY_DIR set/unset",
+    "coordinate_windows": "ORB_RGBD_STABILITY_WINDOWS"
+  },
+  "publication": "Code/configuration and aggregate comparison can be committed to the existing GitHub repository; source bag/images remain local."
+}

@@ -669,6 +669,11 @@ void ImageGrabber::GrabRGBDBody(const sensor_msgs::ImageConstPtr &msg_rgb,
       ~ContextClear(){if(enabled)ORB_SLAM3::ClearRgbdObservationContext();}
     } context_clear{v2_frame!=nullptr};
     const auto v2_track_start=v2_frame?rgbd_v2::Now():0;
+    ORB_SLAM3::Stability::SetSource(v2_frame?v2_frame->source.ordinal:0,stamp.toNSec(),
+        msg_rgb->header.seq,msg_depth->header.seq);
+    struct StabilityContextClear {
+      ~StabilityContextClear(){ORB_SLAM3::Stability::ClearSource();}
+    } stability_context_clear;
     const Sophus::SE3f Tcw =
         slam_->TrackRGBD(rgb->image, depth->image, stamp.toSec());
     if(v2_frame){

@@ -57,6 +57,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 add_library(${PROJECT_NAME} SHARED
 src/System.cc
 src/MapScaleObservation.cc
+src/StabilityDiagnostics.cc
 src/MemoryStats.cc
 src/Tracking.cc
 src/LocalTrackingAttempt.cc

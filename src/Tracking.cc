@@ -1,6 +1,7 @@
 #include "MapScaleObservation.h"
 #include "FieldObservation.h"
 #include "PointTrace.h"
+#include "StabilityDiagnostics.h"
 /**
  * This file is part of ORB-SLAM3
  *
@@ -176,7 +177,9 @@ void PointTraceSnapshot(uint64_t source,uint32_t phase,const Frame& frame) {
 
 namespace {
 int FieldPoseOptimization(Frame* frame, PoseOptimizationObservation* observation = nullptr) {
+ Stability::PoseSnapshot(*frame,false);
  const int n=Optimizer::PoseOptimization(frame, nullptr, observation);
+ Stability::PoseSnapshot(*frame,true);
  if(FieldEnabled()) {
   FieldEmit(14,frame->mnId,0,1,n);
   uint64_t q[4]={};
@@ -1869,6 +1872,9 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
               mK, mDistCoef, mbf, mThDepth, mpCamera, &mLastFrame, *mpImuCalib);
   mCurrentFrame.mRgbdOptimizationLevel = mRgbdOptimizationLevel;
   mCurrentFrame.mUseLocalMapProjection = mSensor == System::RGBD && mLocalMapMode != 0;
+  // Preserve the actual input before Track can reset mCurrentFrame to Frame().
+  const auto input_identity = Stability::CaptureInput(mCurrentFrame);
+  Stability::BeginFrame(mCurrentFrame,static_cast<int>(mState),mThDepth);
   if (timing) {
     timing->frame_construct_ms = ElapsedMilliseconds(frame_start);
     if (timing->l0_collected) {
@@ -1932,9 +1938,10 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB, const cv::Mat &imD,
   const std::chrono::steady_clock::time_point track_start =
       std::chrono::steady_clock::now();
   Track();
+  Stability::EndFrame(mCurrentFrame,static_cast<int>(mState));
   if (auto* scale = ActiveMapScaleObservation()) {
-    scale->frame_id = mCurrentFrame.mnId;
-    scale->frame_keypoints = mCurrentFrame.N;
+    scale->frame_id = input_identity.frame_id;
+    scale->frame_keypoints = input_identity.keypoints;
     scale->tracking_state = static_cast<int>(mState);
   }
   if (timing) {
@@ -2884,6 +2891,8 @@ void Tracking::StereoInitialization() {
     // Create KeyFrame
     KeyFrame *pKFini =
         new KeyFrame(mCurrentFrame, mpAtlas->GetCurrentMap(), mpKeyFrameDB);
+    Stability::PrepareKeyFrame(pKFini,mSensor==System::RGBD);
+    if(auto* c=Stability::Counts()){c->kf_id=pKFini->mnId;c->kf_new_points=0;}
 
     // Insert KeyFrame in the map
     mpAtlas->AddKeyFrame(pKFini);
@@ -3240,6 +3249,7 @@ void Tracking::CheckReplacedInLastFrame() {
 }
 
 bool Tracking::TrackReferenceKeyFrame() {
+  Stability::StageScope stability_stage(Stability::Reference);
   FieldStage field_stage(mCurrentFrame.mnId,2);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->reference_kf_ms : nullptr);
@@ -3299,6 +3309,7 @@ bool Tracking::TrackReferenceKeyFrame() {
     mCurrentFrame.ApplyKeypointRefinements(keypoint_refinements);
   }
 
+  if(auto* c=Stability::Counts())c->reference_coarse=nmatches;
   // Only Tracking-owned BoW sizes: reference-KF BoW has no synchronized
   // publication contract, so its size is deliberately absent (e invalid).
   if(FieldEnabled()) FieldEmit(12,mCurrentFrame.mnId,2,15,nmatches,
@@ -3346,6 +3357,7 @@ bool Tracking::TrackReferenceKeyFrame() {
     }
   }
 
+  if(auto* c=Stability::Counts())c->reference_map=nmatchesMap;
   if (mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO ||
       mSensor == System::IMU_RGBD) {
     if (mbOnlyTracking)
@@ -3423,6 +3435,7 @@ void Tracking::UpdateLastFrame() {
 }
 
 bool Tracking::TrackWithMotionModel() {
+  Stability::StageScope stability_stage(Stability::Motion);
   FieldStage field_stage(mCurrentFrame.mnId,1);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->motion_model_ms : nullptr);
@@ -3552,6 +3565,7 @@ bool Tracking::TrackWithMotionModel() {
   // Preserve the initial count to identify which search produced each
   // existing diagnostic row; no extra row, match search or point traversal.
   const int field_first_nmatches = nmatches;
+  if(auto* c=Stability::Counts())c->motion_first=nmatches;
   // If few matches, uses a wider window search
   if(FieldEnabled()) {
     const bool projection = !(uses_float_descriptors && mpStereoFeatureProvider);
@@ -3571,6 +3585,7 @@ bool Tracking::TrackWithMotionModel() {
                        Verbose::VERBOSITY_NORMAL);
   }
 
+  if(auto* c=Stability::Counts())c->motion_final=nmatches;
   if(FieldEnabled()) {
     const bool retried = field_first_nmatches < 20;
     const bool projection = retried ||
@@ -3618,6 +3633,7 @@ bool Tracking::TrackWithMotionModel() {
   }
 
   if(point_trace)PointTraceSnapshot(mCurrentFrame.mnId,5,mCurrentFrame);
+  if(auto* c=Stability::Counts())c->motion_map=nmatchesMap;
   if (mbOnlyTracking) {
     mbVO = nmatchesMap < 10;
     return field_stage.ResultMotionLocalization(nmatches > 20 && nmatchesMap >= 10,
@@ -3633,6 +3649,7 @@ bool Tracking::TrackWithMotionModel() {
 }
 
 bool Tracking::TrackLocalMap(Map* locked_map) {
+  Stability::StageScope stability_stage(Stability::Local);
   MapScaleSpan scale_local(MapScaleStage::TrackLocalMap);
   FieldStage field_stage(mCurrentFrame.mnId,3);
   ScopedTimingAccumulator detailed_timing(
@@ -3775,6 +3792,11 @@ bool Tracking::TrackLocalMap(Map* locked_map) {
   }
 
   // Decide if the tracking was succesful
+  if(auto* c=Stability::Counts()){
+    c->local_inliers=mnMatchesInliers;
+    c->local_threshold=mSensor==System::RGBD ?
+        (mCurrentFrame.mnId<mnLastRelocFrameId+mMaxFrames?50:(mState==RECENTLY_LOST?11:30)):-1;
+  }
   // More restrictive if there was a relocalization recently
   if (auto* scale = ActiveMapScaleObservation())
     scale->tracking_inliers = mnMatchesInliers;
@@ -3878,10 +3900,12 @@ bool Tracking::NeedNewKeyFrame() {
   if (nKFs <= 2)
     nMinObs = 2;
   int nRefMatches = mpReferenceKF->TrackedMapPoints(nMinObs);
+  if(auto* c=Stability::Counts())c->kf_ref_matches=nRefMatches;
   if (decision) decision->reference_matches = nRefMatches;
 
   // Local Mapping accept keyframes?
   bool bLocalMappingIdle = note(KfMappingIdle, mpLocalMapper->AcceptKeyFrames());
+  if(auto* c=Stability::Counts())c->kf_mapper_idle=bLocalMappingIdle;
 
   // Check how many "close" points are being tracked and how many could be
   // potentially created.
@@ -3906,6 +3930,10 @@ bool Tracking::NeedNewKeyFrame() {
 
   bool bNeedToInsertClose;
   bNeedToInsertClose = note(KfNeedClose, (nTrackedClose < 100) && (nNonTrackedClose > 70));
+  if(auto* c=Stability::Counts()){
+    c->kf_tracked_close=nTrackedClose;c->kf_untracked_close=nNonTrackedClose;
+    c->kf_need_close=bNeedToInsertClose;
+  }
   if (decision) {
     decision->tracked_close = nTrackedClose;
     decision->untracked_close = nNonTrackedClose;
@@ -3955,6 +3983,9 @@ bool Tracking::NeedNewKeyFrame() {
   const bool c2 =
       (((mnMatchesInliers < nRefMatches * thRefRatio || bNeedToInsertClose)) &&
        mnMatchesInliers > 15);
+  if(auto* c=Stability::Counts()){
+    c->kf_c1a=c1a;c->kf_c1b=c1b;c->kf_c1c=c1c;c->kf_c2=c2;
+  }
 
   // std::cout << "NeedNewKF: c1a=" << c1a << "; c1b=" << c1b << "; c1c=" << c1c
   // << "; c2=" << c2 << std::endl;
@@ -4002,6 +4033,7 @@ bool Tracking::NeedNewKeyFrame() {
       }
       if (mSensor != System::MONOCULAR && mSensor != System::IMU_MONOCULAR) {
         const int queue_depth = mpLocalMapper->KeyframesInQueue();
+        if(auto* c=Stability::Counts())c->kf_queue=queue_depth;
         if (decision) decision->queue_depth = queue_depth;
         if (note(KfQueueBelowThree, queue_depth < 3))
           return finish(true, KeyFrameDecisionReason::BusyQueueAccepts);
@@ -4033,6 +4065,10 @@ void Tracking::CreateNewKeyFrame() {
 
   KeyFrame *pKF =
       new KeyFrame(mCurrentFrame, mpAtlas->GetCurrentMap(), mpKeyFrameDB);
+  Stability::PrepareKeyFrame(pKF,mSensor==System::RGBD);
+  if(auto* c=Stability::Counts()){
+    c->kf_id=pKF->mnId;c->kf_depth_slots=0;c->kf_new_points=0;
+  }
 
   if (mpAtlas->isImuInitialized()) //  || mpLocalMapper->IsInitializing())
     pKF->bImu = true;
@@ -4082,6 +4118,7 @@ void Tracking::CreateNewKeyFrame() {
 
       int nPoints = 0;
       for (size_t j = 0; j < vDepthIdx.size(); j++) {
+        if(auto* c=Stability::Counts())++c->kf_depth_slots;
         int i = vDepthIdx[j].second;
 
         bool bCreateNew = false;
@@ -4151,6 +4188,10 @@ void Tracking::CreateNewKeyFrame() {
 }
 
 void Tracking::SearchLocalPoints() {
+  auto* stability=Stability::Counts();
+  if(stability){stability->local_points=mvpLocalMapPoints.size();
+    stability->search_seen=0;stability->search_bad=0;stability->search_projected=0;
+    stability->search_visible=0;stability->search_matches=0;}
   MapScaleSpan scale_search(MapScaleStage::SearchLocalPoints);
   auto* light = RgbdLightDiagnostics() ? mpCurrentRgbdTiming : nullptr;
   ScopedThreadCpuAccumulator cpu(light ? &light->local_search_cpu_ms : nullptr);
@@ -4189,18 +4230,23 @@ void Tracking::SearchLocalPoints() {
 
     if (light) ++light->search_local_slots;
     if (pMP->mnLastFrameSeen == mCurrentFrame.mnId) {
+      if(stability)++stability->search_seen;
       if (light) ++light->search_seen_skips;
       continue;
     }
     if (pMP->isBad()) {
+      if(stability)++stability->search_bad;
       if (light) ++light->search_bad_skips;
       continue;
     }
     if (light) ++light->search_projected;
+    if(stability)++stability->search_projected;
     // Project (this fills MapPoint variables for matching)
     if (mCurrentFrame.isInFrustum(pMP, 0.5)) {
       pMP->IncreaseVisible();
       nToMatch++;
+      if(stability){++stability->search_visible;
+        Stability::SearchProjection(pMP->mnId,pMP->mTrackProjX,pMP->mTrackProjY);}
       if (light) ++light->search_visible;
     } else if (light) ++light->search_rejected;
     if (pMP->mbTrackInView && (mRgbdOptimizationLevel < 4 || mpViewer)) {
@@ -4246,6 +4292,7 @@ void Tracking::SearchLocalPoints() {
                                              mpLocalMapper->mThFarPoints,
                                              light ? &light->projection_match : nullptr);
     if (light) light->search_matches += matches;
+    if(stability)stability->search_matches=matches;
 // FIELD_MAP_BEGIN
     FieldEmit(24,mCurrentFrame.mnId,1,3,matches,th);
 // FIELD_MAP_END
@@ -4507,6 +4554,7 @@ void Tracking::UpdateLocalKeyFrames() {
 }
 
 bool Tracking::Relocalization() {
+  Stability::StageScope stability_stage(Stability::Relocalization);
   FieldStage field_stage(mCurrentFrame.mnId,4);
   ScopedTimingAccumulator detailed_timing(
       mpCurrentRgbdTiming ? &mpCurrentRgbdTiming->relocalization_ms : nullptr);

@@ -152,6 +152,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ORB_SLAM3_LIBRARY_OUTPUT_DIRECTORY})
 add_library(${PROJECT_NAME} SHARED
   ${ORB_SLAM3_SOURCE_DIR}/src/System.cc
   ${ORB_SLAM3_SOURCE_DIR}/src/MapScaleObservation.cc
+  ${ORB_SLAM3_SOURCE_DIR}/src/StabilityDiagnostics.cc
   ${ORB_SLAM3_SOURCE_DIR}/src/MemoryStats.cc
   ${ORB_SLAM3_SOURCE_DIR}/src/Tracking.cc
   ${ORB_SLAM3_SOURCE_DIR}/src/LocalTrackingAttempt.cc

@@ -20,6 +20,7 @@
  */
 
 #include "System.h"
+#include "StabilityDiagnostics.h"
 #include "Converter.h"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
@@ -64,6 +65,7 @@ System::System(const string &strVocFile, const string &strSettingsFile,
     : mSensor(sensor), mpViewer(static_cast<Viewer *>(NULL)), mbReset(false),
       mbResetActiveMap(false), mbActivateLocalizationMode(false),
       mbDeactivateLocalizationMode(false), mbShutDown(false) {
+  Stability::Configure();
   // Output welcome message
   cout << endl
        << "ORB-SLAM3 Copyright (C) 2017-2020 Carlos Campos, Richard Elvira, "
@@ -721,6 +723,8 @@ void System::ShutdownImpl(bool joinWorkers) {
   }
   if (mpTracker) mpTracker->FinishLocalMapDiagnostics();
   LocalLifetime::Finish();
+  if (!Stability::StopAndFlush(joinWorkers))
+    cerr << "Stability diagnostics flush failed" << endl;
   if (!joinWorkers) {
     cout << "Shutdown: Waiting 100ms..." << flush;
     usleep(100000);

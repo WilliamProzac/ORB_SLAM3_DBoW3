@@ -21,6 +21,7 @@
  */
 
 #include "LocalMapping.h"
+#include "StabilityDiagnostics.h"
 #include "Converter.h"
 #include "GeometricTools.h"
 #include "LoopClosing.h"
@@ -566,9 +567,11 @@ void LocalMapping::MapPointCulling() {
                pMP->Observations() <= cnThObs) {
       pMP->SetBadFlag(LocalPointExit::AgeLowObservation,nCurrentKFid);
       lit = mlpRecentAddedMapPoints.erase(lit);
-    } else if (((int)nCurrentKFid - (int)pMP->mnFirstKFid) >= 3)
+    } else if (((int)nCurrentKFid - (int)pMP->mnFirstKFid) >= 3) {
+      if(Stability::Enabled())Stability::Life(pMP->GetMap(),Stability::RecentGraduate,
+          pMP->mnId,nCurrentKFid,nCurrentKFid-pMP->mnFirstKFid,pMP->Observations());
       lit = mlpRecentAddedMapPoints.erase(lit);
-    else {
+    } else {
       lit++;
       borrar--;
     }
